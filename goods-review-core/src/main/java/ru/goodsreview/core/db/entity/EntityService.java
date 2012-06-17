@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.goodsreview.core.util.Batch;
+import ru.goodsreview.core.util.Md5Helper;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,18 +23,14 @@ public class EntityService {
 
     private JdbcTemplate jdbcTemplate;
 
+
     @Required
     public void setJdbcTemplate(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public void writeEntities(final Collection<JsonObject> entities) {
-        final MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+
 
         final Batch<StorageEntity> batchForWrite = new Batch<StorageEntity>() {
             @Override
@@ -53,8 +50,7 @@ public class EntityService {
 
 
         for (final JsonObject entity : entities) {
-            digest.update(entity.toString().getBytes());
-            final String hash = new String(digest.digest());
+            final String hash = new String(Md5Helper.hash(entity.toString().getBytes()));
             final long typeId = entity.get(TYPE_ID_ATTR).getAsLong();
             final long id = entity.get(ID_ATTR).getAsLong();
 
@@ -64,7 +60,6 @@ public class EntityService {
             } else if (!oldHash.equals(hash)) {
                 batchForUpdate.submit(new StorageEntity(entity, hash, id, typeId));
             }
-            digest.reset();
         }
     }
 
