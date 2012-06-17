@@ -1,4 +1,4 @@
-use goodsreview
+use goodsreview;
 
 drop table if exists ENTITY
 create table ENTITY(
