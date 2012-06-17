@@ -6,8 +6,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import ru.goodsreview.core.util.Batch;
 import ru.goodsreview.core.util.Md5Helper;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
 
