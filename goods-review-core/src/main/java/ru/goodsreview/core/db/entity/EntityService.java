@@ -1,11 +1,16 @@
 package ru.goodsreview.core.db.entity;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import ru.goodsreview.core.util.Batch;
 import ru.goodsreview.core.util.Md5Helper;
+import ru.goodsreview.core.util.Visitor;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,7 +34,6 @@ public class EntityService {
 
     public void writeEntities(final Collection<JsonObject> entities) {
 
-
         final Batch<StorageEntity> batchForWrite = new Batch<StorageEntity>() {
             @Override
             public void handle(final List<StorageEntity> storageEntities) {
@@ -46,7 +50,6 @@ public class EntityService {
             }
         };
 
-
         for (final JsonObject entity : entities) {
             final String hash = new String(Md5Helper.hash(entity.toString().getBytes()));
             final long typeId = entity.get(TYPE_ID_ATTR).getAsLong();
@@ -59,6 +62,21 @@ public class EntityService {
                 batchForUpdate.submit(new StorageEntity(entity, hash, id, typeId));
             }
         }
+
+        batchForUpdate.flush();
+        batchForWrite.flush();
+    }
+
+    public void visitEntities(final long entityTypeId, final Visitor<JsonObject> visitor) {
+
+        final Gson gson = new Gson();
+
+        jdbcTemplate.query("SELECT entity_attrs FROM entity WHERE entity_type_id = ?", new RowCallbackHandler() {
+            @Override
+            public void processRow(ResultSet rs) throws SQLException {
+                visitor.visit(gson.toJsonTree(rs.getString("entity_attrs")).getAsJsonObject());
+            }
+        });
     }
 
 }

@@ -10,7 +10,6 @@ import java.security.NoSuchAlgorithmException;
  */
 public class Md5Helper {
 
-
     private final static MessageDigest DIGEST;
 
     static {
