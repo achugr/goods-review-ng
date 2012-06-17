@@ -76,7 +76,7 @@ public class EntityService {
             public void processRow(ResultSet rs) throws SQLException {
                 visitor.visit(gson.toJsonTree(rs.getString("entity_attrs")).getAsJsonObject());
             }
-        });
+        }, entityTypeId);
     }
 
 }
