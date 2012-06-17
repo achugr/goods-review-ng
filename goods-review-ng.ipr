@@ -176,6 +176,7 @@
       <module fileurl="file://$PROJECT_DIR$/goods-review-core/goods-review-core.iml" filepath="$PROJECT_DIR$/goods-review-core/goods-review-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-core/goods-review-core.iml" filepath="$PROJECT_DIR$/goods-review-core/goods-review-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-parent.iml" filepath="$PROJECT_DIR$/goods-review-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/goods-review-scheduler/goods-review-scheduler.iml" filepath="$PROJECT_DIR$/goods-review-scheduler/goods-review-scheduler.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
