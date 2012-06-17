@@ -1,7 +1,10 @@
 package ru.goodsreview.core.db.entity;
 
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.Collection;
 
 /**
  * User: daddy-bear
@@ -17,5 +20,7 @@ public class EntityService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public void writeEntities(final Collection<JsonObject> entities) {
 
+    }
 }

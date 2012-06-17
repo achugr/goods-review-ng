@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AntConfiguration">
+    <defaultAnt bundledAnt="true" />
+  </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
     <resourceExtensions />
@@ -43,6 +46,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/goods-review-core/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -171,6 +175,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/goods-review-core/goods-review-core.iml" filepath="$PROJECT_DIR$/goods-review-core/goods-review-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-core/goods-review-core.iml" filepath="$PROJECT_DIR$/goods-review-core/goods-review-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/goods-review-parent.iml" filepath="$PROJECT_DIR$/goods-review-parent.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
@@ -194,6 +199,17 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/aopalliance/aopalliance/1.0/aopalliance-1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.google.code.gson:gson:1.7.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/1.7.1/gson-1.7.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/1.7.1/gson-1.7.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/1.7.1/gson-1.7.1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: com.sun.jdmk:jmxtools:1.2.1">
