@@ -51,7 +51,7 @@ public class EntityService {
         };
 
         for (final JsonObject entity : entities) {
-            final String hash = new String(Md5Helper.hash(entity.toString().getBytes()));
+            final String hash = Md5Helper.hash(entity.toString());
             final long typeId = entity.get(TYPE_ID_ATTR).getAsLong();
             final long id = entity.get(ID_ATTR).getAsLong();
 

@@ -1,5 +1,6 @@
 package ru.goodsreview.core.util;
 
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -20,9 +21,14 @@ public class Md5Helper {
         }
     }
 
-    public static byte[] hash(byte[] data) {
+    public static String hash(byte[] data) {
         DIGEST.reset();
         DIGEST.update(data);
-        return DIGEST.digest();
+        BigInteger hash = new BigInteger(1, DIGEST.digest());
+        return hash.toString(16);
+    }
+
+    public static String hash(String data) {
+        return hash(data.getBytes());
     }
 }
