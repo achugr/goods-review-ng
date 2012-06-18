@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -19,7 +20,6 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
     private final static Logger log = Logger.getLogger(Scheduler.class);
 
     private JdbcTemplate jdbcTemplate;
-    private String schedulerName;
     private int threadsCount;
     private ApplicationContext applicationContext;
 
@@ -31,11 +31,6 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
     @Required
     public void setThreadsCount(final int threadsCount) {
         this.threadsCount = threadsCount;
-    }
-
-    @Required
-    public void setSchedulerName(final String schedulerName) {
-        this.schedulerName = schedulerName;
     }
 
     @Required
@@ -56,7 +51,8 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
                 try {
                     while (true) {
 
-                        //jdbcTemplate.getJdbcOperations().query("SELECT * ")
+
+                        //jdbcTemplate.getJdbcOperations().query("SELECT * ");
 
                         Thread.sleep(30000); // = 1/2 of minute
                         log.info("heartbeat");
