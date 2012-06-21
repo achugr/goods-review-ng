@@ -7,9 +7,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * User: daddy-bear
@@ -44,6 +46,7 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
         new Thread(new Runnable() {
 
             private final ExecutorService executorService = Executors.newFixedThreadPool(Scheduler.this.threadsCount);
+            private final Map<Long, Future<TaskResult>> currentTasksFuture = new HashMap<Long, Future<TaskResult>>();
 
             @Override
             public void run() {
@@ -51,17 +54,54 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
                 try {
                     while (true) {
 
+                        checkTasks();
 
-                        //jdbcTemplate.getJdbcOperations().query("SELECT * ");
+                        //TODO
+                        //try find new tasks
+                        //dont execute task if it already running !!!
 
-                        Thread.sleep(30000); // = 1/2 of minute
+                        Thread.sleep(10000); // 10 seconds
                         log.info("heartbeat");
                     }
                 } catch (InterruptedException e) {
-                    log.error("", e);
+                    log.error("thread was interrupted", e);
                 }
 
             }
+
+            private void executeTask(final TaskParameters parameters) {
+                final SchedulerTask task = (SchedulerTask) Scheduler.this.applicationContext.getBean(parameters.getBeanName());
+
+                final Future<TaskResult> futureResult = executorService.submit(new Callable<TaskResult>() {
+                    @Override
+                    public TaskResult call() throws Exception {
+                        return new ThrowableCatchingSchedulerTask(task).run(parameters.getContext());
+                    }
+                });
+
+                currentTasksFuture.put(parameters.getId(), futureResult);
+            }
+
+            private void checkTasks() {
+                final List<Long> finishedTasks = new LinkedList<Long>();
+                for (Map.Entry<Long, Future<TaskResult>> e : currentTasksFuture.entrySet()) {
+                    if (e.getValue().isDone()) {
+                        //TODO
+                        // write result in table
+                        finishedTasks.add(e.getKey());
+                    } else {
+
+                        //TODO
+                        //update ping time
+
+                    }
+                }
+
+                for (Long finishedTaskId : finishedTasks) {
+                    currentTasksFuture.remove(finishedTaskId);
+                }
+            }
+
         }).start();
         log.info("Scheduler started.");
     }

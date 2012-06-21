@@ -43,7 +43,6 @@ public class TaskResult {
     }
 
     public static TaskResult bad(final Throwable throwable) {
-        //TODO
         return bad(throwable.getMessage());
     }
 }

@@ -8,7 +8,7 @@ package ru.goodsreview.scheduler;
 public enum SchedulingType {
     MINUTE(60000L),
     HOUR(3600000L),
-    DAY(86400000);
+    DAY(86400000L);
 
     private final long factor;
 
@@ -20,14 +20,16 @@ public enum SchedulingType {
         return factor * interval;
     }
 
-    public SchedulingType getByName(String name) {
+    public static SchedulingType getByName(String name) {
         for (SchedulingType type: values()) {
             if (type.toString().equals(name)) {
                 return type;
             }
         }
-        throw new IllegalArgumentException("Invalid name: " + name);
+        throw new IllegalArgumentException("Invalid scheduling type with name: " + name);
     }
 
-
+    public static long getAbsoluteInterval(final String typeName, final long interval) {
+        return getByName(typeName).getAbsoluteInterval(interval);
+    }
 }
