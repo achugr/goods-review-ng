@@ -48,6 +48,7 @@
         <option value="$PROJECT_DIR$/goods-review-core/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/goods-review-scheduler/pom.xml" />
+        <option value="$PROJECT_DIR$/goods-review-magic/pom.xml" />
       </list>
     </option>
   </component>
