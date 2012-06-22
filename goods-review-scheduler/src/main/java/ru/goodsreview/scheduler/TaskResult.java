@@ -1,12 +1,15 @@
 package ru.goodsreview.scheduler;
 
+import org.apache.log4j.Logger;
+
 /**
  * User: daddy-bear
  * Date: 17.06.12
  * Time: 23:09
  */
 public class TaskResult {
-
+    private final static Logger log = Logger.getLogger(TaskResult.class);
+    
     private enum Status {
         OK,
         BAD
@@ -43,6 +46,7 @@ public class TaskResult {
     }
 
     public static TaskResult bad(final Throwable throwable) {
+        log.error("error while task executing", throwable);
         return bad(throwable.getMessage());
     }
 }
