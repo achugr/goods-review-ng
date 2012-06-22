@@ -1,6 +1,7 @@
 package ru.goodsreview.core.util;
 
 import junit.framework.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static ru.goodsreview.core.util.Md5Helper.hash;
@@ -9,6 +10,7 @@ import static ru.goodsreview.core.util.Md5Helper.hash;
  * Date: 18.06.12
  * Time: 18:24
  */
+@Ignore
 public class Md5HelperTest {
 
     @Test

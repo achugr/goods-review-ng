@@ -22,9 +22,7 @@ public class Md5Helper {
     }
 
     public static String hash(byte[] data) {
-        DIGEST.reset();
-        DIGEST.update(data);
-        BigInteger hash = new BigInteger(1, DIGEST.digest());
+        final BigInteger hash = new BigInteger(1, DIGEST.digest(data));
         return hash.toString(16);
     }
 

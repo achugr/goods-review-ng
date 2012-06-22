@@ -1,14 +1,17 @@
 package ru.goodsreview.core.db.entity;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import org.apache.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import ru.goodsreview.core.util.Batch;
+import ru.goodsreview.core.util.IterativeBatchPreparedStatementSetter;
 import ru.goodsreview.core.util.Md5Helper;
 import ru.goodsreview.core.util.Visitor;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -20,6 +23,7 @@ import java.util.List;
  * Time: 21:21
  */
 public class EntityService {
+    private final static Logger log = Logger.getLogger(EntityService.class);
 
     private final static String TYPE_ID_ATTR = "typeId";
     private final static String ID_ATTR = "id";
@@ -32,7 +36,7 @@ public class EntityService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void writeEntities(final Collection<JsonObject> entities) {
+    public void writeEntities(final Collection<JSONObject> entities) {
 
         final Batch<StorageEntity> batchForWrite = new Batch<StorageEntity>() {
             @Override
@@ -50,31 +54,63 @@ public class EntityService {
             }
         };
 
-        for (final JsonObject entity : entities) {
-            final String hash = Md5Helper.hash(entity.toString());
-            final long typeId = entity.get(TYPE_ID_ATTR).getAsLong();
-            final long id = entity.get(ID_ATTR).getAsLong();
+        for (final JSONObject entity : entities) {
 
-            String oldHash = jdbcTemplate.queryForObject("SELECT hash FROM entity WHERE entity_type_id = ? AND entity_id = ?", String.class);
-            if (oldHash == null) {
-                batchForWrite.submit(new StorageEntity(entity, hash, id, typeId));
-            } else if (!oldHash.equals(hash)) {
-                batchForUpdate.submit(new StorageEntity(entity, hash, id, typeId));
+            try {
+                final String hash = Md5Helper.hash(entity.toString());
+                final long typeId = Long.parseLong(entity.getString(TYPE_ID_ATTR));
+                final long id = Long.parseLong(entity.getString(ID_ATTR));
+
+                final String oldHash = jdbcTemplate.queryForObject("SELECT hash FROM entity WHERE entity_type_id = ? AND entity_id = ?", String.class);
+                if (oldHash == null) {
+                    batchForWrite.submit(new StorageEntity(entity, hash, id, typeId));
+                } else if (!oldHash.equals(hash)) {
+                    batchForUpdate.submit(new StorageEntity(entity, hash, id, typeId));
+                }
+
+            } catch (JSONException e) {
+                log.error("Wrong entity", e);
+                throw new RuntimeException(e);
             }
+
         }
 
         batchForUpdate.flush();
         batchForWrite.flush();
     }
 
-    public void visitEntities(final long entityTypeId, final Visitor<JsonObject> visitor) {
+    public void updateEntities(final Collection<JSONObject> entities) {
+        jdbcTemplate.update("UPDATE entity SET entity_attrs = ? WHERE entity_type_id = ? AND entity_id = ?",
+                new IterativeBatchPreparedStatementSetter<JSONObject>(entities) {
+                    @Override
+                    protected void setValues(PreparedStatement ps, JSONObject element) throws SQLException {
+                        try {
+                            ps.setString(1, element.toString());
+                            ps.setLong(2, Long.parseLong(element.getString(TYPE_ID_ATTR)));
+                            ps.setLong(3, Long.parseLong(element.getString(ID_ATTR)));
+                        } catch (JSONException e) {
+                            log.error("Wrong entity", e);
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+    }
 
-        final Gson gson = new Gson();
+    public void visitEntitiesWithCondition(Condition condition, final Visitor<JSONObject> visitor) {
+        //TODO
+    }
+
+    public void visitEntities(final long entityTypeId, final Visitor<JSONObject> visitor) {
 
         jdbcTemplate.query("SELECT entity_attrs FROM entity WHERE entity_type_id = ?", new RowCallbackHandler() {
             @Override
             public void processRow(ResultSet rs) throws SQLException {
-                visitor.visit(gson.toJsonTree(rs.getString("entity_attrs")).getAsJsonObject());
+                try {
+                    visitor.visit(new JSONObject(rs.getString("entity_attrs")));
+                } catch (JSONException e) {
+                    log.error("Critical - smth wrong with entities in db");
+                    //throw new RuntimeException(e);
+                }
             }
         }, entityTypeId);
     }
