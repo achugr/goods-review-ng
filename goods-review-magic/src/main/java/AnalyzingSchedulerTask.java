@@ -30,7 +30,7 @@ public abstract class AnalyzingSchedulerTask implements SchedulerTask {
     }
 
     @Override
-    public TaskResult run(Context context) {
+    public TaskResult run(final Context context) {
 
         final Batch<JSONObject> batchUpdater = new Batch<JSONObject>() {
             @Override
@@ -49,5 +49,5 @@ public abstract class AnalyzingSchedulerTask implements SchedulerTask {
         return TaskResult.ok();
     }
 
-    protected abstract JSONObject process(JSONObject object);
+    protected abstract JSONObject process(final JSONObject object);
 }
