@@ -8,6 +8,6 @@ import java.util.Collection;
  */
 public interface EntityUpdater {
     
-    void update(Collection<JSONObject> entities);
+    void update(final Collection<JSONObject> entities);
     
 }
