@@ -13,7 +13,7 @@ import java.util.List;
 public abstract class Batch<T> {
     private final static Logger log = Logger.getLogger(Batch.class);
 
-    private final static int BATCH_SIZE = 1024;
+    private final static int BATCH_SIZE = 512;
 
     private final int batchSize;
     private List<T> batchList;
