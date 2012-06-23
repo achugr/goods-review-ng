@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.core.RowMapper;
 import ru.goodsreview.core.util.Batch;
 import ru.goodsreview.core.util.IterativeBatchPreparedStatementSetter;
 import ru.goodsreview.core.util.Md5Helper;
@@ -41,7 +42,7 @@ public class EntityService {
         final Batch<StorageEntity> batchForWrite = new Batch<StorageEntity>() {
             @Override
             public void handle(final List<StorageEntity> storageEntities) {
-                jdbcTemplate.batchUpdate("INSERT INTO entity (entity_attrs, entity_hash, entity_type_id, entity_id) VALUES (?, ?, ?, ?)",
+                jdbcTemplate.batchUpdate("INSERT INTO entity (entity_attrs, entity_hash, entity_type_id, entity_id, watch_date) VALUES (?, ?, ?, ?, ?)",
                         EntityBatchPreparedStatementSetter.of(storageEntities));
             }
         };
@@ -62,13 +63,21 @@ public class EntityService {
                 final long typeId = Long.parseLong(entity.getString(TYPE_ID_ATTR));
                 final long id = Long.parseLong(entity.getString(ID_ATTR));
 
-                final String oldHash = jdbcTemplate.queryForObject("SELECT hash FROM entity WHERE entity_type_id = ? AND entity_id = ?", String.class);
-                if (oldHash == null) {
+                final List<String> oldHash = jdbcTemplate.query("SELECT entity_hash FROM entity WHERE entity_type_id = ? AND entity_id = ?", new RowMapper<String>() {
+                    @Override
+                    public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        return rs.getString("entity_hash");
+                    }
+                }, typeId, id);
+                if (oldHash.size() == 0) {
                     batchForWrite.submit(new StorageEntity(entity, hash, id, typeId));
-                } else if (!oldHash.equals(hash)) {
-                    batchForUpdate.submit(new StorageEntity(entity, hash, id, typeId));
+                } else if (oldHash.size() == 1) {
+                    if (!oldHash.get(1).equals(hash)) {
+                        batchForUpdate.submit(new StorageEntity(entity, hash, id, typeId));
+                    }
+                } else {
+                    throw new RuntimeException("something wrong in db size = " + oldHash.size());
                 }
-
             } catch (JSONException e) {
                 log.error("Wrong entity", e);
                 throw new RuntimeException(e);

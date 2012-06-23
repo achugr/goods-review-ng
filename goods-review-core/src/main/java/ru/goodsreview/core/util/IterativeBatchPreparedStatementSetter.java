@@ -15,22 +15,19 @@ public abstract class IterativeBatchPreparedStatementSetter<T> implements Interr
 
     private final Iterator<T> iterator;
 
-    private boolean exhausted;
 
     public IterativeBatchPreparedStatementSetter(final Iterable<T> iterable) {
         this.iterator = iterable.iterator();
-        this.exhausted = !iterator.hasNext();
     }
 
     @Override
     public boolean isBatchExhausted(int i) {
-        return iterator.hasNext();
+        return !iterator.hasNext();
     }
 
     @Override
     public void setValues(PreparedStatement ps, int i) throws SQLException {
         setValues(ps, iterator.next());
-        this.exhausted = !iterator.hasNext();
     }
 
     protected abstract void setValues(PreparedStatement ps, T element) throws SQLException;
