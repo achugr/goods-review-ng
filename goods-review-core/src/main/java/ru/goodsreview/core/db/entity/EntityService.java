@@ -42,6 +42,7 @@ public class EntityService {
         final Batch<StorageEntity> batchForWrite = new Batch<StorageEntity>() {
             @Override
             public void handle(final List<StorageEntity> storageEntities) {
+                log.debug("batch for write flushed");
                 jdbcTemplate.batchUpdate("INSERT INTO entity (entity_attrs, entity_hash, entity_type_id, entity_id, watch_date) VALUES (?, ?, ?, ?, ?)",
                         EntityBatchPreparedStatementSetter.of(storageEntities));
             }
@@ -50,6 +51,7 @@ public class EntityService {
         final Batch<StorageEntity> batchForUpdate = new Batch<StorageEntity>() {
             @Override
             public void handle(final List<StorageEntity> storageEntities) {
+                log.debug("batch for update flushed");
                 jdbcTemplate.batchUpdate("UPDATE entity SET entity_attrs = ?, entity_hash = ?, watch_date = ? WHERE entity_type_id = ? AND entity_id = ?",
                         EntityBatchPreparedStatementSetter.of(storageEntities));
             }
