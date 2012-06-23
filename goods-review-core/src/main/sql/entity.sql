@@ -1,8 +1,8 @@
 use goodsreview;
 
-drop table if exists ENTITY
+drop table if exists ENTITY;
 create table ENTITY(
-	ID primary key not null auto_increment,
+	ID int primary key not null auto_increment,
 	ENTITY_TYPE_ID int not null,
 	ENTITY_ID int not null,
 	ENTITY_ATTRS longtext not null,
@@ -12,6 +12,7 @@ create table ENTITY(
 
 drop table if exists ENTITY_TYPE
 create table ENTITY_TYPE(
-    TYPE_ID primary key not null auto_increment,
-    TYPE_NAME text not null
+    TYPE_ID int not null,
+    TYPE_NAME text not null,
+    primary key(TYPE_ID)
 );
