@@ -54,6 +54,7 @@ public class EntityService {
             }
         };
 
+        //TODO this in batch
         for (final JSONObject entity : entities) {
 
             try {
