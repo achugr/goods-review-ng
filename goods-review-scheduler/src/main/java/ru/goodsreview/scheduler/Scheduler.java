@@ -26,6 +26,10 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
     private TaskDbController taskDbController;
     private TaskResultDbController taskResultDbController;
 
+
+    //TODO наврядли нужны эти два класса, весь код можно написать внутри класса Scheduler
+    //когда была практика у Коли, основной смысл создавать отдельные классы, чтобы потом
+    //все было легко заменимо например на монгу, в данном случае эо не нужно
     @Required
     public void setTaskDbController(TaskDbController taskDbController) {
         this.taskDbController = taskDbController;
@@ -101,11 +105,13 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
                             taskResultDbController.addTaskResult(e.getValue().get());
                         } catch (InterruptedException e1) {
                             e1.printStackTrace();
+                            //TODO никакх принтСтекТрейсов!!! все пишется логгером
                         } catch (ExecutionException e1) {
                             e1.printStackTrace();
                         }
                         finishedTasks.add(e.getKey());
                     } else {
+                        //TODO. ..ну
                           DbControllerFactory.instance().taskDbController().updateLastPingTime(e.getKey());
                     }
                 }

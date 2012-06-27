@@ -18,6 +18,7 @@ public class TaskResult {
     private final String message;
     private final Status status;
 
+    //TODO ну не паблик они я говорил максимум пэкэдж доступ
     public String getMessage() {
         return message;
     }
