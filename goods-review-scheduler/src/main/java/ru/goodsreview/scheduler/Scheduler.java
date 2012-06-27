@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.jdbc.core.JdbcTemplate;
+import ru.goodsreview.scheduler.database.controllers.TaskDbController;
+import ru.goodsreview.scheduler.database.controllers.TaskResultDbController;
 
 import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * User: daddy-bear
@@ -24,6 +23,17 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
     private JdbcTemplate jdbcTemplate;
     private int threadsCount;
     private ApplicationContext applicationContext;
+    private TaskDbController taskDbController;
+    private TaskResultDbController taskResultDbController;
+
+    @Required
+    public void setTaskDbController(TaskDbController taskDbController) {
+        this.taskDbController = taskDbController;
+    }
+
+    public void setTaskResultDbController(TaskResultDbController taskResultDbController){
+        this.taskResultDbController = taskResultDbController;
+    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
@@ -60,6 +70,7 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
                         //try find new tasks
                         //dont execute task if it already running !!!
 
+
                         Thread.sleep(10000); // 10 seconds
                         log.info("heartbeat");
                     }
@@ -86,14 +97,16 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
                 final List<Long> finishedTasks = new LinkedList<Long>();
                 for (Map.Entry<Long, Future<TaskResult>> e : currentTasksFuture.entrySet()) {
                     if (e.getValue().isDone()) {
-                        //TODO
-                        // write result in table
+                        try {
+                            taskResultDbController.addTaskResult(e.getValue().get());
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        } catch (ExecutionException e1) {
+                            e1.printStackTrace();
+                        }
                         finishedTasks.add(e.getKey());
                     } else {
-
-                        //TODO
-                        //update ping time
-
+                          DbControllerFactory.instance().taskDbController().updateLastPingTime(e.getKey());
                     }
                 }
 

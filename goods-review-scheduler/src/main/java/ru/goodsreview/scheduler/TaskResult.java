@@ -18,11 +18,11 @@ public class TaskResult {
     private final String message;
     private final Status status;
 
-    protected String getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    protected Status getStatus() {
+    public Status getStatus() {
         return status;
     }
 
