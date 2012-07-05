@@ -69,6 +69,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/goods-review-scheduler/pom.xml" />
         <option value="$PROJECT_DIR$/goods-review-magic/pom.xml" />
+        <option value="$PROJECT_DIR$/goods-review-miner/pom.xml" />
       </list>
     </option>
   </component>
@@ -200,6 +201,7 @@
       <module fileurl="file://$PROJECT_DIR$/goods-review-core/goods-review-core.iml" filepath="$PROJECT_DIR$/goods-review-core/goods-review-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-indexer/goods-review-indexer.iml" filepath="$PROJECT_DIR$/goods-review-indexer/goods-review-indexer.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-magic/goods-review-magic.iml" filepath="$PROJECT_DIR$/goods-review-magic/goods-review-magic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/goods-review-miner/goods-review-miner.iml" filepath="$PROJECT_DIR$/goods-review-miner/goods-review-miner.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-parent.iml" filepath="$PROJECT_DIR$/goods-review-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-scheduler/goods-review-scheduler.iml" filepath="$PROJECT_DIR$/goods-review-scheduler/goods-review-scheduler.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-server/goods-review-server.iml" filepath="$PROJECT_DIR$/goods-review-server/goods-review-server.iml" />
@@ -212,7 +214,6 @@
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
@@ -239,6 +240,17 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/1.7.1/gson-1.7.1-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: commons-codec:commons-codec:1.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.2/commons-codec-1.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.2/commons-codec-1.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.2/commons-codec-1.2-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: commons-dbcp:commons-dbcp:1.4">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/commons-dbcp/commons-dbcp/1.4/commons-dbcp-1.4.jar!/" />
@@ -248,6 +260,28 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/commons-dbcp/commons-dbcp/1.4/commons-dbcp-1.4-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: commons-httpclient:commons-httpclient:3.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: commons-logging:commons-logging:1.0.4">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: commons-logging:commons-logging:1.1.1">
