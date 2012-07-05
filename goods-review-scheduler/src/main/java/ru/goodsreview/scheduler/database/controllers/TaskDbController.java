@@ -11,6 +11,7 @@ import java.util.List;
  * User: achugr
  * Date: 26.06.12
  * Email: achugr@yandex-team.ru
+ *  * //TODO зачем в сеттере и в конструкторе передавать jdbcTemplate?
  */
 public class TaskDbController {
     private JdbcTemplate jdbcTemplate;
@@ -31,10 +32,10 @@ public class TaskDbController {
     public void updateLastPingTime(long id){
         jdbcTemplate.update("update task set last_ping = ? ", id);
     }
-
+           //TODO возвращать просто List ой как плохо
     public List urgentTasks(){
-        long currentTime = System.currentTimeMillis();
+        long currentTime = System.currentTimeMillis();                                                              //TODO не надо закутывать в обжект
         return jdbcTemplate.query("select id, bean_name, params from task where (? - last_run < scheduling_time) ", new Object[]{currentTime}, new TaskMapper());
-    }
+    }                                                                                                                                          //TODO надо сделать константу, а не каждый раз новый делать
 
 }

@@ -12,6 +12,11 @@ import java.sql.SQLException;
  * User: achugr
  * Date: 27.06.12
  * Email: achugr@yandex-team.ru
+ *
+ *
+ *
+ * //TODO надо использовать параметризированный row mapper
+ * //TODO ловить эксепшены тут да и еще которые не кидаются тут непонятно
  */
 public class TaskMapper implements RowMapper {
 

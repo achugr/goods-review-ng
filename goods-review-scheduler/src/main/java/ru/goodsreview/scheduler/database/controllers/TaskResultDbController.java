@@ -8,6 +8,9 @@ import ru.goodsreview.scheduler.TaskResult;
  * User: achugr
  * Date: 27.06.12
  * Email: achugr@yandex-team.ru
+ *
+ *
+ * //TODO зачем в сеттере и в конструкторе передавать jdbcTemplate?
  */
 public class TaskResultDbController {
     private JdbcTemplate jdbcTemplate;

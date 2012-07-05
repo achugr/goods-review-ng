@@ -11,6 +11,7 @@ create table task(
     last_ping long
 );
 
+//TODO мы должны хрнаить еще здесь номер таска (task.id)
 drop table if exists task_result;
 create table task_result(
   	id int primary key not null auto_increment,
