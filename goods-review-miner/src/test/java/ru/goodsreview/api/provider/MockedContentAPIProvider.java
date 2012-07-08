@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import ru.goodsreview.api.request.builder.CategoryRequestBuilder;
 import ru.goodsreview.api.request.builder.ModelRequestBuilder;
+import ru.goodsreview.api.request.builder.UrlRequest;
 
 import java.util.HashMap;
 import java.util.Map;

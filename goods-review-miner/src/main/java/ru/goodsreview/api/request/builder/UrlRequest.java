@@ -1,4 +1,6 @@
-package ru.goodsreview.api.provider;
+package ru.goodsreview.api.request.builder;
+
+import ru.goodsreview.api.provider.ResourceType;
 
 /**
  * Artemij Chugreev
@@ -11,17 +13,16 @@ public class UrlRequest {
     private final String url;
     private final ResourceType resourceType;
 
-    //TODO final
-    public UrlRequest(String url, ResourceType resourceType){
+    public UrlRequest(final String url, final ResourceType resourceType) {
         this.url = url;
         this.resourceType = resourceType;
     }
 
-    public String getUrl(){
+    public String getUrl() {
         return url;
     }
 
-    public ResourceType getResourceType(){
+    public ResourceType getResourceType() {
         return resourceType;
     }
 

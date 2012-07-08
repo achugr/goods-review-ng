@@ -8,10 +8,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.goodsreview.api.request.builder.CategoryRequestBuilder;
 import ru.goodsreview.api.request.builder.ModelRequestBuilder;
+import ru.goodsreview.api.request.builder.UrlRequest;
 
 import java.util.HashMap;
-
-import static org.mockito.Mockito.*;
 
 /**
  * achugr, achugr@yandex-team.ru

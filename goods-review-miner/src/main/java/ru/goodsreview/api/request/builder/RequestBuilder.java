@@ -1,10 +1,10 @@
 package ru.goodsreview.api.request.builder;
 
-import ru.goodsreview.api.provider.APIProperties;
+import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.api.provider.ResourceType;
-import ru.goodsreview.api.provider.UrlRequest;
 
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Artemij Chugreev
@@ -14,34 +14,35 @@ import java.util.Map;
  * skype: achugr
  */
 public class RequestBuilder {
+    private static final String API_VERSION = "v1";
+    private static final String RESPONSE_FORMAT = ".json";
+    private static final String GEO_ID_PARAM = "geo_id";
+    private static final String MAIN_API_URL = "https://api.content.market.yandex.ru/";
+    private Properties properties;
 
-    //TODO final
-    public UrlRequest build(String[] resources, Map<String, String> parameters, ResourceType resourceType) {
-        StringBuilder stringBuilder = new StringBuilder();
-        //TODO final
-        stringBuilder.append(APIProperties.MAIN_API_URL);
+    @Required
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+
+    public UrlRequest build(final String[] resources, final Map<String, String> parameters, final ResourceType resourceType) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(MAIN_API_URL);
         for (String resource : resources) {
             stringBuilder.append("/").append(resource);
         }
-        stringBuilder.append(APIProperties.RESPONSE_FORMAT);
+        stringBuilder.append(properties.get("response_format"));
         stringBuilder.append("?");
 
-        appendDefaultParameters(stringBuilder);
+        stringBuilder.append(GEO_ID_PARAM).append("=").append(properties.get("geo_id_value"));
 
         for (Map.Entry<String, String> entry : parameters.entrySet()) {
             stringBuilder.append(entry.getKey()).append("=").append(entry.getValue());
             stringBuilder.append("&");
         }
 //        delete last "&" symbol
-        stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         return new UrlRequest(stringBuilder.toString(), resourceType);
     }
 
-    //TODO final
-    private static void appendDefaultParameters(StringBuilder stringBuilder) {
-        for (Map.Entry<String, String> entry : APIProperties.DEFAULT_PARAMETERS.entrySet()) {
-            stringBuilder.append(entry.getKey()).append("=").append(entry.getValue());
-            stringBuilder.append("&");
-        }
-    }
 }

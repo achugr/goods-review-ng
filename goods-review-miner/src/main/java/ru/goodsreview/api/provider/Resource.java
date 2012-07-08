@@ -22,12 +22,11 @@ public enum Resource {
 
     private final String resourceName;
 
-    //TODO final
-    Resource(String resourceName){
+    Resource(final String resourceName) {
         this.resourceName = resourceName;
     }
 
-    public String getName(){
+    public String getName() {
         return resourceName;
     }
 

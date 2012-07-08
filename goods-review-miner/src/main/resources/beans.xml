@@ -4,12 +4,14 @@
 
 <beans>
 
-    <bean id="properties" class="ru.goodsreview.api.provider.APIProperties">
+    <bean id="properties" class="ru.goodsreview.api.request.builder.RequestBuilder">
         <property name="properties">
             <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
                 <property name="location" value="classpath:api.properties"/>
             </bean>
         </property>
+    </bean>
+    <bean id="secureProperties" class="ru.goodsreview.api.provider.ContentAPIProvider">
         <property name="secureProperties">
             <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
                 <property name="location" value="classpath:secure_api.properties"/>
