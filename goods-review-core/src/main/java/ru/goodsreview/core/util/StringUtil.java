@@ -1,4 +1,4 @@
-package ru.goodsreview.util;
+package ru.goodsreview.core.util;
 
 import org.apache.log4j.Logger;
 
@@ -15,24 +15,20 @@ import java.io.InputStreamReader;
  * skype: achugr
  */
 public final class StringUtil {
-
     private final static Logger log = Logger.getLogger(StringUtil.class);
 
-    private StringUtil(){}
+    private StringUtil() {
+    }
 
-    public static String inputStreamToString(InputStream inputStream){
+    public static String inputStreamToString(final InputStream inputStream) {
 
-//    	read it with BufferedReader
-    	BufferedReader br
-        	= new BufferedReader(
-        		new InputStreamReader(inputStream));
+        final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
-    	StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
 
-    	String line;
         try {
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
+            while (br.ready()) {
+                sb.append(br.readLine());
             }
         } catch (IOException e) {
             log.error("can't read line from buffered reader", e);
@@ -45,6 +41,5 @@ public final class StringUtil {
         }
         return sb.toString();
     }
-
 
 }

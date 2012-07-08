@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 /**
  * class for testing ContentAPIProvider
  */
-public class ContentAPIProviderTest extends Assert {
+public class ContentAPIProviderTest {
     private final static Logger log = Logger.getLogger(ContentAPIProviderTest.class);
 
     private final MockedContentAPIProvider mockedContentAPIProvider = new MockedContentAPIProvider();
