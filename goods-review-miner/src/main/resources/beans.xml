@@ -17,8 +17,4 @@
         </property>
     </bean>
 
-    <bean id="beanFactoryConstructor" class="org.springframework.context.support.FileSystemXmlApplicationContext">
-        <constructor-arg value="goods-review-miner/src/main/resources/beans.xml"/>
-    </bean>
-
 </beans>
