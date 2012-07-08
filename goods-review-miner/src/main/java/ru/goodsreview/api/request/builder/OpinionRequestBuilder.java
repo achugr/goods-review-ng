@@ -15,16 +15,20 @@ import java.util.Map;
  */
 public class OpinionRequestBuilder extends RequestBuilder{
 
+
+    //TODO final
     public UrlRequest requestForOpinionOnShopById(long id, Map<String, String> parameters){
         return build(new String[]{ResourceType.SHOP.getName(), String.valueOf(id), Resource.SHOP_OPINION.getName()},
                 parameters);
     }
 
+    //TODO final
     public UrlRequest requestForOpinionOnModelById(long id, Map<String, String> parameters){
         return build(new String[]{ResourceType.MODEL.getName(), String.valueOf(id), Resource.MODEL_OPINION.getName()},
                 parameters);
     }
 
+    //TODO final
     private UrlRequest build(String [] resources,  Map<String, String> parameters){
         return super.build(resources, parameters, ResourceType.OPINION);
     }

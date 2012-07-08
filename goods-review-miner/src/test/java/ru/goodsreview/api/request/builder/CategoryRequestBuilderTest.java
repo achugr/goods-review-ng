@@ -10,6 +10,8 @@ import java.util.Map;
 /**
  * achugr, achugr@yandex-team.ru
  * 06.07.12
+ *
+ *TODO где final? в остальных местах такой же вопрос
  */
 public class CategoryRequestBuilderTest {
 

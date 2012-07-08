@@ -11,6 +11,7 @@ public class UrlRequest {
     private final String url;
     private final ResourceType resourceType;
 
+    //TODO final
     public UrlRequest(String url, ResourceType resourceType){
         this.url = url;
         this.resourceType = resourceType;

@@ -17,10 +17,6 @@ import static org.mockito.Mockito.when;
  * 08.07.12
  */
 
-// TODO Зачем в тестах ловить эксепшены совсем непонятно, есть в спринге тесты
-/* @see EntityServiceTest
-*
- */
 
 public class MockedContentAPIProvider {
     private final static Logger log = Logger.getLogger(MockedContentAPIProvider.class);

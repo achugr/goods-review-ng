@@ -55,6 +55,7 @@ public class ContentAPIProvider {
             jsonObject = new JSONObject(json);
             jsonObject.put("contentType", urlRequest.getResourceType().getName());
 
+            //TODO нахрена ловить столько эксепшенов? достаточно словиьт отлько два в данном случа, все равно от комментария пользы ноль
         } catch (URIException e) {
             log.error("some problems with URI", e);
         } catch (HttpException e) {
@@ -77,11 +78,14 @@ public class ContentAPIProvider {
 //            get JSONArray by specified key and cast it to List<JSONObject>
             return castJSONArrayToList(mainObject.getJSONArray(key));
         } catch (JSONException e) {
+            //TODO логирование
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        //TODO вот такое возвращать совсем нельзя, надо либо пустой список, либо выкидывать эксепшен
         return null;
     }
 
+    //TODO надо оформить в виде отдельного класса в core и с адекватным названием метода
     private static List<JSONObject> castJSONArrayToList(JSONArray jsonArray) {
         List<JSONObject> jsonObjects = new ArrayList<JSONObject>();
         for (int i = 0; i < jsonArray.length(); i++) {

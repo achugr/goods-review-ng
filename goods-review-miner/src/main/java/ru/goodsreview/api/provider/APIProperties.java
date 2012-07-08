@@ -21,6 +21,7 @@ import java.util.Scanner;
  *
  *
  * //TODO Это еще хуже, чем было
+ * перенести все переменные в сеттеры отдельных классов, а все константы можно оставить
  */
 @Deprecated
 public final class APIProperties {
@@ -38,10 +39,12 @@ public final class APIProperties {
 //        }
 //    }
     @Required
+    //TODO final
     public void setName(String name){
         this.name = name;
     }
 
+    //TODO final
     public static void main(String[] args) {
         APIProperties apiProperties = new APIProperties();
 //        apiProperties.properties.getProperty("name");
@@ -62,6 +65,7 @@ public final class APIProperties {
         try {
             API_KEY = new Scanner(new File(API_KEY_PATH)).nextLine();
         } catch (FileNotFoundException e) {
+            //TODO логирование
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         DEFAULT_PARAMETERS.put(GEO_ID_PARAM, GEO_ID_VALUE);

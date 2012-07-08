@@ -21,6 +21,12 @@ import static org.mockito.Mockito.*;
 /**
  * class for testing ContentAPIProvider
  */
+
+
+// TODO Зачем в тестах ловить эксепшены совсем непонятно, есть в спринге тесты
+/* @see EntityServiceTest
+*
+ */
 public class ContentAPIProviderTest {
     private final static Logger log = Logger.getLogger(ContentAPIProviderTest.class);
 
