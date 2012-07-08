@@ -18,7 +18,11 @@ import java.util.Scanner;
  * Time: 1:20
  * email: achugr@yandex-team.ru
  * skype: achugr
+ *
+ *
+ * //TODO Это еще хуже, чем было
  */
+@Deprecated
 public final class APIProperties {
      private String name;
 

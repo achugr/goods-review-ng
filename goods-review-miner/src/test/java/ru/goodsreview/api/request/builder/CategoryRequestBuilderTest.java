@@ -11,7 +11,7 @@ import java.util.Map;
  * achugr, achugr@yandex-team.ru
  * 06.07.12
  */
-public class CategoryRequestBuilderTest extends Assert {
+public class CategoryRequestBuilderTest {
 
     @Test
     public void requestForListOfCategoriesTest(){
