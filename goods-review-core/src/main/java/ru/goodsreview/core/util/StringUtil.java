@@ -1,4 +1,4 @@
-package ru.goodsreview.util;
+package ru.goodsreview.core.util;
 
 import org.apache.log4j.Logger;
 
