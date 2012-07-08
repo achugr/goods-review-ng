@@ -3,20 +3,22 @@
         "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:api.properties</value>
-            </list>
+
+    <bean id="properties" class="ru.goodsreview.api.provider.APIProperties">
+        <property name="properties">
+            <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+                <property name="location" value="classpath:api.properties"/>
+            </bean>
+        </property>
+        <property name="secureProperties">
+            <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+                <property name="location" value="classpath:secure_api.properties"/>
+            </bean>
         </property>
     </bean>
 
-    <bean id="properties" class="ru.goodsreview.api.provider.APIProperties" lazy-init="false">
-        <property name="name" value="${name}"/>
-    </bean>
-
-    <bean id="name" class="ru.goodsreview.api.provider.SpringTest" lazy-init="false">
-        <property name="name" value="asad"/>
+    <bean id="beanFactoryConstructor" class="org.springframework.context.support.FileSystemXmlApplicationContext">
+        <constructor-arg value="goods-review-miner/src/main/resources/beans.xml"/>
     </bean>
 
 </beans>

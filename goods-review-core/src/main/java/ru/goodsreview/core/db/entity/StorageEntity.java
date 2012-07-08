@@ -8,7 +8,7 @@ import org.json.JSONObject;
  * Date: 17.06.12
  * Time: 22:30
  */
-class StorageEntity {
+class  StorageEntity {
     private final JSONObject entity;
     private final String hash;
     private final long id;
