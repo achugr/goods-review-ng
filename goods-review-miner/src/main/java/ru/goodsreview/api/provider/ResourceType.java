@@ -19,9 +19,12 @@ public enum ResourceType {
     SEARCH("search", 125),
     FILTER("filter", 170);
 
+    //TODO final
     private String resourceType;
     private int maxTimeout;
 
+
+    //TODO final
     ResourceType(String resourceType, int timeout){
         this.resourceType = resourceType;
         this.maxTimeout = timeout;

@@ -22,6 +22,7 @@ public enum Resource {
 
     private final String resourceName;
 
+    //TODO final
     Resource(String resourceName){
         this.resourceName = resourceName;
     }

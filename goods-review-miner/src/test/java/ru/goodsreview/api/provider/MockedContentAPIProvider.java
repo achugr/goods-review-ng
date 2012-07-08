@@ -17,7 +17,6 @@ import static org.mockito.Mockito.when;
  * 08.07.12
  */
 
-// TODO Димон, убей меня :)
 
 public class MockedContentAPIProvider {
     private final static Logger log = Logger.getLogger(MockedContentAPIProvider.class);

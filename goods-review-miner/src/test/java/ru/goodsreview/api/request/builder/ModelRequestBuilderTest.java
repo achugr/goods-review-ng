@@ -10,6 +10,7 @@ import java.util.HashMap;
  * achugr, achugr@yandex-team.ru
  * 06.07.12
  */
+//TODO нах наследование?
 public class ModelRequestBuilderTest extends Assert {
 
     @Test

@@ -15,8 +15,10 @@ import java.util.Map;
  */
 public class RequestBuilder {
 
+    //TODO final
     public UrlRequest build(String[] resources, Map<String, String> parameters, ResourceType resourceType) {
         StringBuilder stringBuilder = new StringBuilder();
+        //TODO final
         stringBuilder.append(APIProperties.MAIN_API_URL);
         for (String resource : resources) {
             stringBuilder.append("/").append(resource);
@@ -35,6 +37,7 @@ public class RequestBuilder {
         return new UrlRequest(stringBuilder.toString(), resourceType);
     }
 
+    //TODO final
     private static void appendDefaultParameters(StringBuilder stringBuilder) {
         for (Map.Entry<String, String> entry : APIProperties.DEFAULT_PARAMETERS.entrySet()) {
             stringBuilder.append(entry.getKey()).append("=").append(entry.getValue());
