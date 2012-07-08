@@ -1,5 +1,7 @@
 package ru.goodsreview.util;
 
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,13 +14,15 @@ import java.io.InputStreamReader;
  * email: achugr@yandex-team.ru
  * skype: achugr
  */
-public abstract class StringUtil {
+public final class StringUtil {
+
+    private final static Logger log = Logger.getLogger(StringUtil.class);
 
     private StringUtil(){}
 
     public static String inputStreamToString(InputStream inputStream){
 
-    	//read it with BufferedReader
+//    	read it with BufferedReader
     	BufferedReader br
         	= new BufferedReader(
         		new InputStreamReader(inputStream));
@@ -31,12 +35,12 @@ public abstract class StringUtil {
                 sb.append(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            log.error("can't read line from buffered reader", e);
         } finally {
             try {
                 br.close();
             } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                log.error("can't close buffered reader", e);
             }
         }
         return sb.toString();

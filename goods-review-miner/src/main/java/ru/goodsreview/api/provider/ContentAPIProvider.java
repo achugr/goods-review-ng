@@ -5,6 +5,7 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.URI;
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +13,6 @@ import ru.goodsreview.util.StringUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,6 +23,8 @@ import java.util.List;
  * skype: achugr
  */
 public class ContentAPIProvider {
+    private final static Logger log = Logger.getLogger(ContentAPIProvider.class);
+
     private final HttpClient httpClient;
     private final GetMethod getMethod;
     private long lastQueryTime = 0;
@@ -30,12 +32,12 @@ public class ContentAPIProvider {
     public ContentAPIProvider() {
         this.httpClient = new HttpClient();
         this.getMethod = new GetMethod();
-        this.getMethod.addRequestHeader("Authorization", APISettings.API_KEY);
+        this.getMethod.addRequestHeader("Authorization", APIProperties.API_KEY);
     }
 
     public JSONObject provide(UrlRequest urlRequest) {
 //       timeout
-        if (System.currentTimeMillis() - lastQueryTime < APISettings.TIMEOUT) {
+        if (System.currentTimeMillis() - lastQueryTime < APIProperties.TIMEOUT) {
             try {
                 Thread.sleep(urlRequest.getResourceType().getMaxTimeout());
             } catch (InterruptedException e) {
@@ -54,13 +56,13 @@ public class ContentAPIProvider {
             jsonObject.put("contentType", urlRequest.getResourceType().getName());
 
         } catch (URIException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            log.error("some problems with URI", e);
         } catch (HttpException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            log.error("some problems with http", e);
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            log.error("probably, can't execute http get method", e);
         } catch (JSONException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            log.error("some problems with json", e);
         }
         return jsonObject;
     }
@@ -68,9 +70,11 @@ public class ContentAPIProvider {
     public List<JSONObject> provideAsArray(UrlRequest urlRequest, String[] parents, String key) {
         JSONObject mainObject = provide(urlRequest);
         try {
+//            go down by json to needed key
             for(String parent : parents){
                 mainObject = mainObject.getJSONObject(parent);
             }
+//            get JSONArray by specified key and cast it to List<JSONObject>
             return castJSONArrayToList(mainObject.getJSONArray(key));
         } catch (JSONException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.

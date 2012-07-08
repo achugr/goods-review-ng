@@ -1,6 +1,6 @@
-package ru.goodsreview.api.url.generator;
+package ru.goodsreview.api.request.builder;
 
-import ru.goodsreview.api.provider.APISettings;
+import ru.goodsreview.api.provider.APIProperties;
 import ru.goodsreview.api.provider.ResourceType;
 import ru.goodsreview.api.provider.UrlRequest;
 
@@ -17,11 +17,11 @@ public class RequestBuilder {
 
     public UrlRequest build(String[] resources, Map<String, String> parameters, ResourceType resourceType) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(APISettings.MAIN_API_URL);
+        stringBuilder.append(APIProperties.MAIN_API_URL);
         for (String resource : resources) {
             stringBuilder.append("/").append(resource);
         }
-        stringBuilder.append(APISettings.RESPONSE_FORMAT);
+        stringBuilder.append(APIProperties.RESPONSE_FORMAT);
         stringBuilder.append("?");
 
         appendDefaultParameters(stringBuilder);
@@ -30,11 +30,13 @@ public class RequestBuilder {
             stringBuilder.append(entry.getKey()).append("=").append(entry.getValue());
             stringBuilder.append("&");
         }
+//        delete last "&" symbol
+        stringBuilder.deleteCharAt(stringBuilder.length()-1);
         return new UrlRequest(stringBuilder.toString(), resourceType);
     }
 
     private static void appendDefaultParameters(StringBuilder stringBuilder) {
-        for (Map.Entry<String, String> entry : APISettings.DEFAULT_PARAMETERS.entrySet()) {
+        for (Map.Entry<String, String> entry : APIProperties.DEFAULT_PARAMETERS.entrySet()) {
             stringBuilder.append(entry.getKey()).append("=").append(entry.getValue());
             stringBuilder.append("&");
         }

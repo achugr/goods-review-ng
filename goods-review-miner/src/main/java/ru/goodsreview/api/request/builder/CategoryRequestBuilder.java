@@ -1,9 +1,10 @@
-package ru.goodsreview.api.url.generator;
+package ru.goodsreview.api.request.builder;
 
 import ru.goodsreview.api.provider.Resource;
 import ru.goodsreview.api.provider.ResourceType;
 import ru.goodsreview.api.provider.UrlRequest;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -20,9 +21,9 @@ public class CategoryRequestBuilder extends RequestBuilder {
                 parameters);
     }
 
-    public UrlRequest requestForInfoAboutCategoryById(long id, Map<String, String> parameters) {
+    public UrlRequest requestForInfoAboutCategoryById(long id) {
         return build(new String[]{ResourceType.CATEGORY.getName(), String.valueOf(id)},
-                parameters);
+                new HashMap<String, String>());
     }
 
     public UrlRequest requestForListOfChildrenCategoriesById(long id, Map<String, String> parameters) {

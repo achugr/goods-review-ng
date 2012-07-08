@@ -1,13 +1,12 @@
 package ru.goodsreview.api.provider;
 
 import org.json.JSONObject;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
-import ru.goodsreview.api.url.generator.ModelRequestBuilder;
-import ru.goodsreview.api.url.generator.OpinionRequestBuilder;
+import ru.goodsreview.api.request.builder.CategoryRequestBuilder;
+import ru.goodsreview.api.request.builder.ModelRequestBuilder;
+import ru.goodsreview.api.request.builder.OpinionRequestBuilder;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Artemij Chugreev
@@ -20,14 +19,17 @@ public class Main {
 
     public static void main(String[] args) {
 //        provideMethodUsageExample();
-         provideAsArrayUsageMethodExample();
-
+//         provideAsArrayUsageMethodExample();
+        CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
+        UrlRequest urlRequest = categoryRequestBuilder.requestForListOfCategories(new HashMap<String, String>());
+        ContentAPIProvider contentAPIProvider = new ContentAPIProvider();
+        System.out.println(contentAPIProvider.provide(urlRequest).toString());
     }
 
     private static void provideAsArrayUsageMethodExample(){
         ContentAPIProvider contentAPIProvider = new ContentAPIProvider();
         OpinionRequestBuilder opinionRequestBuilder = new OpinionRequestBuilder();
-        UrlRequest urlRequest = opinionRequestBuilder.requestForOpinionOnModelById(7846162, new HashMap<String, String>());
+        UrlRequest urlRequest = opinionRequestBuilder.requestForOpinionOnModelById(7823691, new HashMap<String, String>());
         List<JSONObject> objectList = contentAPIProvider.provideAsArray(urlRequest, new String[]{"modelOpinions"}, "opinion");
         for(JSONObject object : objectList){
             System.out.println(object.toString());

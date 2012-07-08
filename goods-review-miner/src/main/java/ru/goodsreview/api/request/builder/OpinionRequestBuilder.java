@@ -1,4 +1,4 @@
-package ru.goodsreview.api.url.generator;
+package ru.goodsreview.api.request.builder;
 
 import ru.goodsreview.api.provider.Resource;
 import ru.goodsreview.api.provider.ResourceType;
