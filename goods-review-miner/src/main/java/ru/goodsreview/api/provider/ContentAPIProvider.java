@@ -1,7 +1,6 @@
 package ru.goodsreview.api.provider;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.URI;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
@@ -42,13 +41,13 @@ public class ContentAPIProvider {
         this.getMethod.addRequestHeader("Authorization", secureProperties.get("api_key").toString());
     }
 
-    public JSONObject provide(UrlRequest urlRequest) {
+    public JSONObject provide(final UrlRequest urlRequest) {
 //       timeout
         if (System.currentTimeMillis() - lastQueryTime < urlRequest.getResourceType().getMaxTimeout()) {
             try {
                 Thread.sleep(urlRequest.getResourceType().getMaxTimeout());
             } catch (InterruptedException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                log.error("some error with threads", e);
             }
             lastQueryTime = System.currentTimeMillis();
         }
@@ -69,7 +68,7 @@ public class ContentAPIProvider {
         return jsonObject;
     }
 
-    public List<JSONObject> provideAsArray(UrlRequest urlRequest, String[] parents, String key) {
+    public List<JSONObject> provideAsArray(final UrlRequest urlRequest, final String[] parents, final String key) {
         JSONObject mainObject = provide(urlRequest);
         try {
 //            go down by json to needed key
