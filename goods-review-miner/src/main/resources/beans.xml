@@ -4,14 +4,11 @@
 
 <beans>
 
-    <bean id="properties" class="ru.goodsreview.api.request.builder.RequestBuilder">
-        <property name="properties">
-            <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-                <property name="location" value="classpath:api.properties"/>
-            </bean>
-        </property>
+    <bean id="properties" class="ru.goodsreview.api.request.builder.RequestBuilder" abstract="true">
+        <property name="geoIdValue" value="0"/>
     </bean>
-    <bean id="secureProperties" class="ru.goodsreview.api.provider.ContentAPIProvider">
+
+    <bean id="secureProperties" class="ru.goodsreview.api.provider.ContentAPIProvider" lazy-init="true">
         <property name="secureProperties">
             <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
                 <property name="location" value="classpath:secure_api.properties"/>

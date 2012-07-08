@@ -18,11 +18,11 @@ public abstract class RequestBuilder {
     private static final String RESPONSE_FORMAT = ".json";
     private static final String GEO_ID_PARAM = "geo_id";
     private static final String MAIN_API_URL = "https://api.content.market.yandex.ru/";
-    private Properties properties;
+    private String geoIdValue;
 
     @Required
-    public void setProperties(Properties properties) {
-        this.properties = properties;
+    public void setGeoIdValue(String geoIdValue) {
+        this.geoIdValue = geoIdValue;
     }
 
     public UrlRequest build(final String[] resources, final Map<String, String> parameters, final ResourceType resourceType) {
@@ -34,7 +34,7 @@ public abstract class RequestBuilder {
         stringBuilder.append(RESPONSE_FORMAT);
         stringBuilder.append("?");
 
-        stringBuilder.append(GEO_ID_PARAM).append("=").append(properties.get("geo_id_value"));
+        stringBuilder.append(GEO_ID_PARAM).append("=").append(geoIdValue);
 
         for (Map.Entry<String, String> entry : parameters.entrySet()) {
             stringBuilder.append(entry.getKey()).append("=").append(entry.getValue());

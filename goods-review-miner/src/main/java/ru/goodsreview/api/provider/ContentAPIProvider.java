@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.springframework.test.context.ContextConfiguration;
 import ru.goodsreview.api.request.builder.UrlRequest;
 import ru.goodsreview.core.util.JSONUtil;
 import ru.goodsreview.core.util.StringUtil;
@@ -23,6 +24,7 @@ import ru.goodsreview.core.util.StringUtil;
  * email: achugr@yandex-team.ru
  * skype: achugr
  */
+
 public class ContentAPIProvider {
     private Properties secureProperties;
     private final static Logger log = Logger.getLogger(ContentAPIProvider.class);
