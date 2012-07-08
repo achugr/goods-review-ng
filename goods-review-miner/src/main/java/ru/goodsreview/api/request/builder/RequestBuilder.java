@@ -13,7 +13,7 @@ import java.util.Properties;
  * email: achugr@yandex-team.ru
  * skype: achugr
  */
-public class RequestBuilder {
+public abstract class RequestBuilder {
     private static final String API_VERSION = "v1";
     private static final String RESPONSE_FORMAT = ".json";
     private static final String GEO_ID_PARAM = "geo_id";
@@ -31,7 +31,7 @@ public class RequestBuilder {
         for (String resource : resources) {
             stringBuilder.append("/").append(resource);
         }
-        stringBuilder.append(properties.get("response_format"));
+        stringBuilder.append(RESPONSE_FORMAT);
         stringBuilder.append("?");
 
         stringBuilder.append(GEO_ID_PARAM).append("=").append(properties.get("geo_id_value"));
