@@ -7,9 +7,9 @@ package analyzer.wordAnalyzer;
  *      artemij.chugreev@gmail.com
  */
 
-import org.apache.log4j.Logger;
-import ru.goodsReview.analyzer.util.sentence.PartOfSpeech;
-import ru.goodsReview.core.utils.OSValidator;
+//import org.apache.log4j.Logger;
+import analyzer.util.OSValidator;
+import analyzer.util.sentence.PartOfSpeech;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -21,7 +21,7 @@ import java.util.Scanner;
  */
 public class MystemAnalyzer implements WordAnalyzer{
 
-    private static final Logger log = Logger.getLogger(MystemAnalyzer.class);
+   // private static final Logger log = Logger.getLogger(MystemAnalyzer.class);
 
     private static final String CHARSET = "UTF8";
 
@@ -37,7 +37,7 @@ public class MystemAnalyzer implements WordAnalyzer{
             }
             analyzer = Runtime.getRuntime().exec(command + "mystem -nig -e " + CHARSET);
         } catch (IOException e) {
-            log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
+         //   log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
 //            throw new IOException();
         }
 

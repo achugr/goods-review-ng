@@ -8,8 +8,6 @@ package analyzer;
  */
 
 import analyzer.algorithmTesting.Phrase;
-import analyzer.algorithmTesting.Product;
-import analyzer.algorithmTesting.Review;
 import analyzer.util.ThesisPattern;
 import analyzer.util.dictionary.MapDictionary;
 import analyzer.util.sentence.PartOfSpeech;
@@ -17,16 +15,13 @@ import analyzer.util.sentence.ReviewTokens;
 import analyzer.util.sentence.Token;
 import analyzer.wordAnalyzer.MystemAnalyzer;
 
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.TimerTask;
-import java.util.logging.Logger;
 
-public class ExtractThesis extends AnalyzingSchedulerTask{
+public class ExtractThesis {
  //   private static final Logger log = org.apache.log4j.Logger.getLogger(AnalyzeThesis.class);
 //    private static ControllerFactory controllerFactory;
 //    private static ProductController productController;
@@ -49,30 +44,7 @@ public class ExtractThesis extends AnalyzingSchedulerTask{
 //    }
 
 
-    /**
-     * Extract theses from review.
-     * @param review Review with theses had to be extracted.
-     * @return List of theses.
-     */
-//    public static List<Thesis> doExtraction(Review review, MystemAnalyzer mystemAnalyzer) throws IOException, InterruptedException {
-//        List<Thesis> extractedThesisList = new ArrayList<Thesis>();
-//        String content = review.getContent();
-//
-//        ArrayList<Phrase> listThesis = doExtraction(content, mystemAnalyzer);
-//
-//        for (Phrase phrase:listThesis){
-//            String token1 =  phrase.getFeature();
-//            String token2 =  phrase.getOpinion();
-//            String normToken = mystemAnalyzer.normalizer(phrase.getOpinion());
-//            Double positivity = 0.0;
-//            if(opinionDictionary.getDictionary().containsKey(normToken)){
-//                positivity = opinionDictionary.getDictionary().get(normToken);
-//            }
-//            extractedThesisList.add(new Thesis(review.getId(), 1, token1 + " " + token2, 0, positivity, 0.0));
-//        }
-//
-//        return extractedThesisList;
-//    }
+
 
     public static ArrayList<Phrase> doExtraction(String content, MystemAnalyzer mystemAnalyzer) throws IOException, InterruptedException {
         ArrayList<Phrase> extractedThesisList = new ArrayList<Phrase>();
@@ -257,7 +229,7 @@ public class ExtractThesis extends AnalyzingSchedulerTask{
 //        }
 //    }
     
-    @Override
+//    @Override
 //    public void run() {
 //
 //        try {
