@@ -18,7 +18,7 @@ import java.util.Collections;
  */
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("entity-service-test-config.xml")
+@ContextConfiguration("classpath:entity-service-test-config.xml")
 public class EntityServiceTest {
 
     @Autowired
