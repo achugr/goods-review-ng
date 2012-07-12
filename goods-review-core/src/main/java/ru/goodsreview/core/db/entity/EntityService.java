@@ -111,7 +111,7 @@ public class EntityService {
         batchForWatch.flush();
     }
 
-    public void updateEntities(final Collection<JSONObject> entities) {
+    public void improveEntities(final Collection<JSONObject> entities) {
         jdbcTemplate.update("UPDATE ENTITY SET ENTITY_ATTRS = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
                 new IterativeBatchPreparedStatementSetter<JSONObject>(entities) {
                     @Override
