@@ -4,6 +4,7 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Required;
 
@@ -16,17 +17,16 @@ import java.util.Properties;
  * Date: 22.01.12
  * Time: 21:35
  */
-public class SSHTunnelDataSource extends BasicDataSource implements InitializingBean {
+public class SSHTunnelDataSource extends BasicDataSource implements InitializingBean, DisposableBean {
     private static final Logger log = Logger.getLogger(SSHTunnelDataSource.class);
-    protected JSch jsch;
-    protected Session session;
-    protected String host;
-    protected String sshPassword;
-    protected String sshUsername;
-    protected int port;
-    protected int tunnelLocalPort;
-    protected String tunnelRemoteHost;
-    protected int tunnelRemotePort;
+    private Session session;
+    private String host;
+    private String sshPassword;
+    private String sshUsername;
+    private int port;
+    private int tunnelLocalPort;
+    private String tunnelRemoteHost;
+    private int tunnelRemotePort;
 
     @Required
     public void setHost(final String host) {
@@ -77,7 +77,7 @@ public class SSHTunnelDataSource extends BasicDataSource implements Initializing
 
     @Override
     public void afterPropertiesSet() {
-        jsch = new JSch();
+        final JSch jsch = new JSch();
         try {
             session = jsch.getSession(sshUsername, host, port);
             session.setPassword(sshPassword);
@@ -94,5 +94,10 @@ public class SSHTunnelDataSource extends BasicDataSource implements Initializing
             // It's critical error
             System.exit(1);
         }
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        session.disconnect();
     }
 }
