@@ -60,7 +60,7 @@ public class EntityService {
 
         final Batch<StorageEntity> batchForWatch = new Batch<StorageEntity>() {
             @Override
-            public void handle(List<StorageEntity> storageEntities) {
+            public void handle(final List<StorageEntity> storageEntities) {
                 log.debug("batch for watch flushed");
                 jdbcTemplate.batchUpdate("UPDATE ENTITY SET WATCH_DATE = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
                         new IterativeBatchPreparedStatementSetter<StorageEntity>(storageEntities) {
@@ -85,7 +85,7 @@ public class EntityService {
                 final List<String> oldHash = jdbcTemplate.query("SELECT ENTITY_HASH FROM ENTITY WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?", new RowMapper<String>() {
                     @Override
                     public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        return rs.getString("entity_hash");
+                        return rs.getString("ENTITY_HASH");
                     }
                 }, typeId, id);
                 if (oldHash.size() == 0) {
@@ -138,7 +138,7 @@ public class EntityService {
             @Override
             public void processRow(ResultSet rs) throws SQLException {
                 try {
-                    visitor.visit(new JSONObject(rs.getString("entity_attrs")));
+                    visitor.visit(new JSONObject(rs.getString("ENTITY_ATTRS")));
                 } catch (JSONException e) {
                     log.error("Critical - smth wrong with entities in db");
                     //throw new RuntimeException(e);
