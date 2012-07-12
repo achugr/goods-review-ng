@@ -53,7 +53,7 @@ public class ReviewTokens {
 
             token = new Token(currToken);
 
-            if (isRussianWord(currToken)) {
+            if (MystemAnalyzer.isRussianWord(currToken)) {
                 PartOfSpeech partOfSpeech = mystemAnalyzer.partOfSpeech(currToken);
                 if (partOfSpeech.equals(PartOfSpeech.ADJECTIVE)) {
 //                    if(normDictionary.contains(currToken)){
@@ -91,23 +91,7 @@ public class ReviewTokens {
 
     }
 
-    private static boolean isRussianLetter(char letter) {
-        if ((letter >= 0x0410) && (letter <= 0x044F)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
-    public static boolean isRussianWord(String word) {
-        char[] wordChars = word.toCharArray();
-        for (int i = 0, j = wordChars.length; i < j; i++) {
-            if (!isRussianLetter(wordChars[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     public ArrayList<Token> getTokensList() {
         return tokensList;

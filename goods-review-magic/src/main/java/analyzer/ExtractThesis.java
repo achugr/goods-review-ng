@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class ExtractThesis {
+public class ExtractThesis{
  //   private static final Logger log = org.apache.log4j.Logger.getLogger(AnalyzeThesis.class);
 //    private static ControllerFactory controllerFactory;
 //    private static ProductController productController;
@@ -170,8 +170,8 @@ public class ExtractThesis {
         boolean con2 = check(num1, num2);   // Число
         boolean con3 = check(case1, case2); // Падеж
 
-       // boolean sep = con1 && con2 && con3;
-        boolean sep = con1 && con2;
+        boolean sep = con1 && con2 && con3;
+       // boolean sep = con1 && con2;
         //boolean sep = (con1 && con2) || (con1 && con3);
         return sep;
     }
