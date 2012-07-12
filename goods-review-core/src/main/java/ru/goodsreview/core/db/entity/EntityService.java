@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.RowMapper;
 import ru.goodsreview.core.util.Batch;
 import ru.goodsreview.core.util.IterativeBatchPreparedStatementSetter;
 import ru.goodsreview.core.util.Md5Helper;
-import ru.goodsreview.core.util.Visitor;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

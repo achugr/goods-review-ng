@@ -1,4 +1,4 @@
-package ru.goodsreview.core.util;
+package ru.goodsreview.core.util.db;
 
 /**
  * @author daddy-bear
