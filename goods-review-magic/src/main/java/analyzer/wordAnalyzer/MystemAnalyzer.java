@@ -7,9 +7,10 @@ package analyzer.wordAnalyzer;
  *      artemij.chugreev@gmail.com
  */
 
-import org.apache.log4j.Logger;
-import ru.goodsReview.analyzer.util.sentence.PartOfSpeech;
-import ru.goodsReview.core.utils.OSValidator;
+//import org.apache.log4j.Logger;
+
+import analyzer.util.OSValidator;
+import analyzer.util.sentence.PartOfSpeech;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -20,8 +21,9 @@ import java.util.Scanner;
  * Class for the analysis of words, using mystem program http://company.yandex.ru/technologies/mystem/
  */
 public class MystemAnalyzer implements WordAnalyzer{
+    private static MystemAnalyzer instance;
 
-    private static final Logger log = Logger.getLogger(MystemAnalyzer.class);
+   // private static final Logger log = Logger.getLogger(MystemAnalyzer.class);
 
     private static final String CHARSET = "UTF8";
 
@@ -29,7 +31,7 @@ public class MystemAnalyzer implements WordAnalyzer{
     private Scanner sc;
     private PrintStream ps;
 
-    public MystemAnalyzer() {
+    private MystemAnalyzer() {
         try {
             String command="";
             if(OSValidator.isUnix() || OSValidator.isMac()){
@@ -37,11 +39,22 @@ public class MystemAnalyzer implements WordAnalyzer{
             }
             analyzer = Runtime.getRuntime().exec(command + "mystem -nig -e " + CHARSET);
         } catch (IOException e) {
-            log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
+
+         //   log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
 //            throw new IOException();
         }
 
     }
+
+
+
+    public static MystemAnalyzer getInstance() {
+        if (instance == null) {
+            instance = new MystemAnalyzer();
+        }
+        return instance;
+    }
+
 
     public void close() {
         analyzer.destroy();
@@ -52,12 +65,22 @@ public class MystemAnalyzer implements WordAnalyzer{
      * @param letter The letter itself.
      * @return True if letter is russian, false — otherwise.
      */
-    private static boolean isRussianLetter (char letter) {
+    private static boolean isRussianLetter(char letter) {
         if ((letter >= 0x0410) && (letter <= 0x044F)) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public static boolean isRussianWord(String word) {
+        char[] wordChars = word.toCharArray();
+        for (int i = 0, j = wordChars.length; i < j; i++) {
+            if (!isRussianLetter(wordChars[i])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -67,13 +90,7 @@ public class MystemAnalyzer implements WordAnalyzer{
      * @throws java.io.UnsupportedEncodingException
      */
     public String wordCharacteristic(String word) throws UnsupportedEncodingException {
-        int wl = word.length(); boolean b = true;
-        for (int i = 0; i < wl; ++i) {
-            if (!isRussianLetter(word.charAt(i))) {
-                b = false;
-                break;
-            }
-        }
+        boolean b = isRussianWord(word);
 
 //        TODO fix this (split by !, but отличный! - returns ""
         if (!b) {
@@ -101,13 +118,7 @@ public class MystemAnalyzer implements WordAnalyzer{
     }
 
     public String[] wordCharacteristic1(String word) throws UnsupportedEncodingException {
-        int wl = word.length(); boolean b = true;
-        for (int i = 0; i < wl; ++i) {
-            if (!isRussianLetter(word.charAt(i))) {
-                b = false;
-                break;
-            }
-        }
+        boolean b = isRussianWord(word);
         String [] a = {"unk","unk","unk"};
 //        TODO fix this (split by !, but отличный! - returns ""
         if (!b) {
@@ -182,13 +193,7 @@ public class MystemAnalyzer implements WordAnalyzer{
     }
 
     public String normalizer(String word) throws UnsupportedEncodingException {
-        int wl = word.length(); boolean b = true;
-        for (int i = 0; i < wl; ++i) {
-            if (!isRussianLetter(word.charAt(i))) {
-                b = false;
-                break;
-            }
-        }
+        boolean b = isRussianWord(word);
 
 //        TODO fix this (split by !, but отличный! - returns ""
         if (!b) {
@@ -199,9 +204,10 @@ public class MystemAnalyzer implements WordAnalyzer{
         ps = new PrintStream(analyzer.getOutputStream(),true,CHARSET);
 
         ps.println(word);
+
         String wordCharacteristic = sc.nextLine();
         String norm = wordCharacteristic.substring(wordCharacteristic.indexOf("{")+1,wordCharacteristic.indexOf("="));
-        //System.out.println(word + " --> " + norm);
+     //   System.out.println(word + " --> " + norm);
         return norm;
     }
 

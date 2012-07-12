@@ -11,7 +11,6 @@ package analyzer.util.sentence;
 import analyzer.util.dictionary.Dictionary;
 import analyzer.util.dictionary.MapDictionary;
 import analyzer.wordAnalyzer.MystemAnalyzer;
-import analyzer.wordAnalyzer.PyMorphyAnalyzer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class ReviewTokens {
 
     private static Dictionary featureDictionary = new Dictionary("feat_dic.txt", "windows-1251");
 
-    // private static PyMorphyDictionary normDictionary = new PyMorphyDictionary("norm_dictionary.txt");
+
 
     /**
      * create new ReviewTokens from review
@@ -54,7 +53,7 @@ public class ReviewTokens {
 
             token = new Token(currToken);
 
-            if (PyMorphyAnalyzer.isRussianWord(currToken)) {
+            if (MystemAnalyzer.isRussianWord(currToken)) {
                 PartOfSpeech partOfSpeech = mystemAnalyzer.partOfSpeech(currToken);
                 if (partOfSpeech.equals(PartOfSpeech.ADJECTIVE)) {
 //                    if(normDictionary.contains(currToken)){
@@ -91,6 +90,8 @@ public class ReviewTokens {
         }
 
     }
+
+
 
     public ArrayList<Token> getTokensList() {
         return tokensList;

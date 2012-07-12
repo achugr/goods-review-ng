@@ -8,8 +8,6 @@ package analyzer.util;
  */
 
 import analyzer.util.sentence.PartOfSpeech;
-import ru.goodsReview.analyzer.util.sentence.PartOfSpeech;
-import ru.goodsReview.analyzer.wordAnalyzer.MystemAnalyzer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,25 +64,7 @@ public class ThesisPattern {
     public PartOfSpeech get(int i){
         return pattern.get(i);
     }
-    /**
-     * matches with this pattern
-     * @param sourceThesis possibly this is thesis
-     * @return true if sourceThesis matches with pattern, false - otherwise
-     * @throws java.io.IOException
-     */
-   /* public boolean match(List<String> sourceThesis) throws IOException {
-        if(sourceThesis.size() != pattern.size()){
-            return false;
-        }
-        int i=0;
-        for(String sourceThesisToken : sourceThesis){
-            if(!mystemAnalyzer.partOfSpeech(sourceThesisToken).equals(pattern.get(i))){
-                return false;
-            }
-            i++;
-        }
-        return true;
-    }  */
+
     
     public static void main(String [] args){
        /* ThesisPattern thesisPattern = null;
