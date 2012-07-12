@@ -8,7 +8,7 @@
         <property name="location" value="classpath:db.properties"/>
     </bean>
 
-    <bean id="dataSource" class="ru.goodsreview.core.util.db.SSHTunnelDataSource">
+    <bean id="sshDataSource" class="ru.goodsreview.core.util.db.SSHTunnelDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="${url}"/>
         <property name="username" value="${username}"/>
@@ -23,5 +23,8 @@
         <property name="validationQuery" value="select 1"/>
     </bean>
 
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"/>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="sshDataSource"/>
+    </bean>
+
 </beans>
