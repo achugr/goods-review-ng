@@ -13,4 +13,10 @@
         <level value="DEBUG"/>
         <appender-ref ref="console"/>
     </logger>
+
+    <logger name="org.springframework.jdbc.core" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="console"/>
+    </logger>
+
 </log4j:configuration>

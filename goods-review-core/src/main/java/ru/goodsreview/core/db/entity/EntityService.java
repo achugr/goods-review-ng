@@ -42,7 +42,7 @@ public class EntityService {
             @Override
             public void handle(final List<StorageEntity> storageEntities) {
                 log.debug("batch for write flushed");
-                jdbcTemplate.batchUpdate("INSERT INTO entity (entity_attrs, entity_hash, entity_type_id, entity_id, watch_date) VALUES (?, ?, ?, ?, ?)",
+                jdbcTemplate.batchUpdate("INSERT INTO ENTITY (ENTITY_ATTRS, ENTITY_HASH, ENTITY_TYPE_ID, ENTITY_ID, WATCH_DATE) VALUES (?, ?, ?, ?, ?)",
                         EntityBatchPreparedStatementSetter.of(storageEntities));
             }
         };
@@ -51,7 +51,7 @@ public class EntityService {
             @Override
             public void handle(final List<StorageEntity> storageEntities) {
                 log.debug("batch for update flushed");
-                jdbcTemplate.batchUpdate("UPDATE entity SET entity_attrs = ?, entity_hash = ?, watch_date = ? WHERE entity_type_id = ? AND entity_id = ?",
+                jdbcTemplate.batchUpdate("UPDATE ENTITY SET ENTITY_ATTRS = ?, ENTITY_HASH = ?, WATCH_DATE = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
                         EntityBatchPreparedStatementSetter.of(storageEntities));
             }
         };
@@ -64,7 +64,7 @@ public class EntityService {
                 final long typeId = Long.parseLong(entity.getString(TYPE_ID_ATTR));
                 final long id = Long.parseLong(entity.getString(ID_ATTR));
 
-                final List<String> oldHash = jdbcTemplate.query("SELECT entity_hash FROM entity WHERE entity_type_id = ? AND entity_id = ?", new RowMapper<String>() {
+                final List<String> oldHash = jdbcTemplate.query("SELECT ENTITY_HASH FROM ENTITY WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?", new RowMapper<String>() {
                     @Override
                     public String mapRow(ResultSet rs, int rowNum) throws SQLException {
                         return rs.getString("entity_hash");
@@ -91,7 +91,7 @@ public class EntityService {
     }
 
     public void updateEntities(final Collection<JSONObject> entities) {
-        jdbcTemplate.update("UPDATE entity SET entity_attrs = ? WHERE entity_type_id = ? AND entity_id = ?",
+        jdbcTemplate.update("UPDATE ENTITY SET ENTITY_ATTRS = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
                 new IterativeBatchPreparedStatementSetter<JSONObject>(entities) {
                     @Override
                     protected void setValues(PreparedStatement ps, JSONObject element) throws SQLException {
@@ -113,7 +113,7 @@ public class EntityService {
 
     public void visitEntities(final long entityTypeId, final Visitor<JSONObject> visitor) {
 
-        jdbcTemplate.query("SELECT entity_attrs FROM entity WHERE entity_type_id = ?", new RowCallbackHandler() {
+        jdbcTemplate.query("SELECT ENTITY_ATTRS FROM ENTITY WHERE ENTITY_TYPE_ID = ?", new RowCallbackHandler() {
             @Override
             public void processRow(ResultSet rs) throws SQLException {
                 try {

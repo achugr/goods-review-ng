@@ -16,7 +16,6 @@ import java.util.Collections;
  * Date: 18.06.12
  * Time: 18:40
  */
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:entity-service-test-config.xml")
 public class EntityServiceTest {
