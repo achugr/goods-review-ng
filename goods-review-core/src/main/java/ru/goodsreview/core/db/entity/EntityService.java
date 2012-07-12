@@ -14,7 +14,9 @@ import ru.goodsreview.core.util.Md5Helper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,7 +44,7 @@ public class EntityService {
             @Override
             public void handle(final List<StorageEntity> storageEntities) {
                 log.debug("batch for write flushed");
-                jdbcTemplate.batchUpdate("INSERT INTO ENTITY (ENTITY_ATTRS, ENTITY_HASH, ENTITY_TYPE_ID, ENTITY_ID, WATCH_DATE) VALUES (?, ?, ?, ?, ?)",
+                jdbcTemplate.batchUpdate("INSERT INTO ENTITY (ENTITY_ATTRS, ENTITY_HASH, WATCH_DATE, ENTITY_TYPE_ID, ENTITY_ID) VALUES (?, ?, ?, ?, ?)",
                         EntityBatchPreparedStatementSetter.of(storageEntities));
             }
         };
@@ -53,6 +55,22 @@ public class EntityService {
                 log.debug("batch for update flushed");
                 jdbcTemplate.batchUpdate("UPDATE ENTITY SET ENTITY_ATTRS = ?, ENTITY_HASH = ?, WATCH_DATE = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
                         EntityBatchPreparedStatementSetter.of(storageEntities));
+            }
+        };
+
+        final Batch<StorageEntity> batchForWatch = new Batch<StorageEntity>() {
+            @Override
+            public void handle(List<StorageEntity> storageEntities) {
+                log.debug("batch for watch flushed");
+                jdbcTemplate.batchUpdate("UPDATE ENTITY SET WATCH_DATE = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
+                        new IterativeBatchPreparedStatementSetter<StorageEntity>(storageEntities) {
+                            @Override
+                            protected void setValues(final PreparedStatement ps, final StorageEntity element) throws SQLException {
+                                ps.setTimestamp(1, new Timestamp(new Date().getTime()));
+                                ps.setLong(2, element.getTypeId());
+                                ps.setLong(3, element.getId());
+                            }
+                        });
             }
         };
 
@@ -73,8 +91,10 @@ public class EntityService {
                 if (oldHash.size() == 0) {
                     batchForWrite.submit(new StorageEntity(entity, hash, id, typeId));
                 } else if (oldHash.size() == 1) {
-                    if (!oldHash.get(1).equals(hash)) {
+                    if (!oldHash.get(0).equals(hash)) {
                         batchForUpdate.submit(new StorageEntity(entity, hash, id, typeId));
+                    } else {
+                        batchForWatch.submit(new StorageEntity(entity, hash, id, typeId));
                     }
                 } else {
                     throw new RuntimeException("something wrong in db size = " + oldHash.size());
@@ -88,6 +108,7 @@ public class EntityService {
 
         batchForUpdate.flush();
         batchForWrite.flush();
+        batchForWatch.flush();
     }
 
     public void updateEntities(final Collection<JSONObject> entities) {
@@ -107,7 +128,7 @@ public class EntityService {
                 });
     }
 
-    public void visitEntitiesWithCondition(Condition condition, final Visitor<JSONObject> visitor) {
+    public void visitEntitiesWithCondition(final Condition condition, final Visitor<JSONObject> visitor) {
         //TODO
     }
 

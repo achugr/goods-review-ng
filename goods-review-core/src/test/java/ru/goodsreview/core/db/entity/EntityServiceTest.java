@@ -25,7 +25,7 @@ public class EntityServiceTest {
 
     @Test
     public void testIt() throws Exception {
-        JSONObject object = new JSONObject("{\"id\":\"1\",\"typeId\":\"2\",\"key\":\"value\"}");
+        JSONObject object = new JSONObject("{\"id\":\"3\",\"typeId\":\"4\",\"key\":\"va1lue\"}");
         entityService.writeEntities(Collections.singletonList(object));
 
         entityService.visitEntities(2, new Visitor<JSONObject>() {
