@@ -1,7 +1,6 @@
 package ru.goodsreview.scheduler.database.mappers;
 
 import org.springframework.jdbc.core.RowMapper;
-import ru.goodsreview.scheduler.SchedulerException;
 import ru.goodsreview.scheduler.TaskParameters;
 import ru.goodsreview.scheduler.context.JsonContext;
 

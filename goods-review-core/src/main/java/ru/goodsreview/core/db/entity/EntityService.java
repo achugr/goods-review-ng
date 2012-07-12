@@ -44,7 +44,7 @@ public class EntityService {
             @Override
             public void handle(final List<StorageEntity> storageEntities) {
                 log.debug("batch for write flushed");
-                jdbcTemplate.batchUpdate("INSERT INTO ENTITY (ENTITY_ATTRS, ENTITY_HASH, WATCH_DATE, ENTITY_TYPE_ID, ENTITY_ID) VALUES (?, ?, ?, ?, ?)",
+                jdbcTemplate.batchUpdate("INSERT INTO ENTITY (ENTITY_ATTRS, ENTITY_HASH, WATCH_DATE, ENTITY_TYPE_ID, ENTITY_ID) VALUES (?, ?, CURRENT_TIMESTAMP, ?, ?)",
                         EntityBatchPreparedStatementSetter.of(storageEntities));
             }
         };
@@ -53,7 +53,7 @@ public class EntityService {
             @Override
             public void handle(final List<StorageEntity> storageEntities) {
                 log.debug("batch for update flushed");
-                jdbcTemplate.batchUpdate("UPDATE ENTITY SET ENTITY_ATTRS = ?, ENTITY_HASH = ?, WATCH_DATE = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
+                jdbcTemplate.batchUpdate("UPDATE ENTITY SET ENTITY_ATTRS = ?, ENTITY_HASH = ?, WATCH_DATE = CURRENT_TIMESTAMP WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
                         EntityBatchPreparedStatementSetter.of(storageEntities));
             }
         };
@@ -62,13 +62,12 @@ public class EntityService {
             @Override
             public void handle(final List<StorageEntity> storageEntities) {
                 log.debug("batch for watch flushed");
-                jdbcTemplate.batchUpdate("UPDATE ENTITY SET WATCH_DATE = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
+                jdbcTemplate.batchUpdate("UPDATE ENTITY SET WATCH_DATE = CURRENT_TIMESTAMP WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
                         new IterativeBatchPreparedStatementSetter<StorageEntity>(storageEntities) {
                             @Override
                             protected void setValues(final PreparedStatement ps, final StorageEntity element) throws SQLException {
-                                ps.setTimestamp(1, new Timestamp(new Date().getTime()));
-                                ps.setLong(2, element.getTypeId());
-                                ps.setLong(3, element.getId());
+                                ps.setLong(1, element.getTypeId());
+                                ps.setLong(2, element.getId());
                             }
                         });
             }

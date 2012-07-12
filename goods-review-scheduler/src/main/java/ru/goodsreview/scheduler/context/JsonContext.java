@@ -1,10 +1,10 @@
 package ru.goodsreview.scheduler.context;
 
-import com.google.gson.Gson;
+import com.sun.istack.internal.Nullable;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import ru.goodsreview.scheduler.SchedulerException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.List;
  * Time: 23:03
  */
 public class JsonContext extends AbstractContext {
+    private final static Logger log = Logger.getLogger(JsonContext.class);
 
     private final JSONObject jsonObject;
 
@@ -22,11 +23,13 @@ public class JsonContext extends AbstractContext {
         this.jsonObject = jsonObject;
     }
 
-    public static JsonContext from(final String jsonString) throws SchedulerException {
+    @Nullable
+    public static JsonContext from(final String jsonString) {
         try {
             return new JsonContext(new JSONObject(jsonString));
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            log.error(e.getMessage(), e);
+            return null;
         }
     }
 

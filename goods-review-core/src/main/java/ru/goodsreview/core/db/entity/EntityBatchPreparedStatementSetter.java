@@ -22,9 +22,8 @@ public class EntityBatchPreparedStatementSetter extends IterativeBatchPreparedSt
     protected void setValues(final PreparedStatement ps, final StorageEntity element) throws SQLException {
         ps.setString(1, element.getEntity().toString());
         ps.setString(2, element.getHash());
-        ps.setTimestamp(3, new Timestamp(new Date().getTime()));
-        ps.setLong(4, element.getTypeId());
-        ps.setLong(5, element.getId());
+        ps.setLong(3, element.getTypeId());
+        ps.setLong(4, element.getId());
     }
 
     public static EntityBatchPreparedStatementSetter of(final Iterable<StorageEntity> storageEntities) {
