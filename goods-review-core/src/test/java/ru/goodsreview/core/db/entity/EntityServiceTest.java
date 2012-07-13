@@ -2,13 +2,12 @@ package ru.goodsreview.core.db.entity;
 
 
 import org.json.JSONObject;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.goodsreview.core.util.Visitor;
 
 import java.util.Collections;
 
@@ -18,7 +17,7 @@ import java.util.Collections;
  * Time: 18:40
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("entity-service-test-config.xml")
+@ContextConfiguration("classpath:entity-service-test-config.xml")
 public class EntityServiceTest {
 
     @Autowired
@@ -26,7 +25,7 @@ public class EntityServiceTest {
 
     @Test
     public void testIt() throws Exception {
-        JSONObject object = new JSONObject("{\"id\":\"1\",\"typeId\":\"2\",\"key\":\"value\"}");
+        JSONObject object = new JSONObject("{\"id\":\"3\",\"typeId\":\"4\",\"key\":\"va1lue\"}");
         entityService.writeEntities(Collections.singletonList(object));
 
         entityService.visitEntities(2, new Visitor<JSONObject>() {

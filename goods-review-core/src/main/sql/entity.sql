@@ -10,7 +10,7 @@ create table ENTITY(
     WATCH_DATE timestamp not null
 );
 
-drop table if exists ENTITY_TYPE
+drop table if exists ENTITY_TYPE;
 create table ENTITY_TYPE(
     TYPE_ID int not null,
     TYPE_NAME text not null,

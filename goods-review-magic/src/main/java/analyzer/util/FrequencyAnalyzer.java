@@ -39,7 +39,7 @@ public class FrequencyAnalyzer {
         List<String> reviewContentList = new ArrayList<String>();
 
         for (Review review : this.reviewList) {
-            reviewContentList.add(review.getContent());
+            reviewContentList.add(review.getReview());
         }
 
         for (Iterator<String> it = reviewContentList.iterator(); it.hasNext(); ) {

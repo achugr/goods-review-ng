@@ -1,6 +1,5 @@
 package ru.goodsreview.core.db.entity;
 
-import com.google.gson.JsonObject;
 import org.json.JSONObject;
 
 /**
@@ -14,7 +13,7 @@ class  StorageEntity {
     private final long id;
     private final long typeId;
 
-    public StorageEntity(JSONObject entity, String hash, long id, long typeId) {
+    public StorageEntity(final JSONObject entity, final String hash, final long id, final long typeId) {
         this.entity = entity;
         this.hash = hash;
         this.id = id;

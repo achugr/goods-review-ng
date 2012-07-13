@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.jdbc.core.JdbcTemplate;
-import ru.goodsreview.scheduler.database.controllers.TaskDbController;
-import ru.goodsreview.scheduler.database.controllers.TaskResultDbController;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -23,21 +21,6 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
     private JdbcTemplate jdbcTemplate;
     private int threadsCount;
     private ApplicationContext applicationContext;
-    private TaskDbController taskDbController;
-    private TaskResultDbController taskResultDbController;
-
-
-    //TODO наврядли нужны эти два класса, весь код можно написать внутри класса Scheduler
-    //когда была практика у Коли, основной смысл создавать отдельные классы, чтобы потом
-    //все было легко заменимо например на монгу, в данном случае эо не нужно
-    @Required
-    public void setTaskDbController(TaskDbController taskDbController) {
-        this.taskDbController = taskDbController;
-    }
-
-    public void setTaskResultDbController(TaskResultDbController taskResultDbController){
-        this.taskResultDbController = taskResultDbController;
-    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
@@ -103,12 +86,12 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
                     if (e.getValue().isDone()) {
                         try {
                             taskResultDbController.addTaskResult(e.getValue().get());
-                        } catch (InterruptedException e1) {
-                            e1.printStackTrace();
-                            //TODO никакх принтСтекТрейсов!!! все пишется логгером
-                        } catch (ExecutionException e1) {
-                            e1.printStackTrace();
+                        } catch (InterruptedException ex) {
+                            log.error(ex.getMessage(), ex);
+                        } catch (ExecutionException ex) {
+                            log.error(ex.getMessage(), ex);
                         }
+
                         finishedTasks.add(e.getKey());
                     } else {
                         //TODO. ..ну
@@ -122,7 +105,7 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
             }
 
         }).start();
-        log.info("Scheduler started.");
+        log.info("Scheduler started...");
     }
 }
 

@@ -1,20 +1,26 @@
-use goodsreview;
+USE GOODSREVIEW;
 
-drop table if exists task;
-create table task(
-	id int primary key not null auto_increment,
-	bean_name tinytext not null,
-	params text,
-	scheduling_type tinytext not null,
-    scheduling_time int not null,
-    last_run long,
-    last_ping long
+DROP TABLE IF EXISTS TASK;
+CREATE TABLE TASK(
+	ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	BEAN_NAME TINYTEXT NOT NULL,
+	PARAMS TEXT,
+	SCHEDULING_TYPE TINYTEXT NOT NULL,
+    SCHEDULING_TIME INT NOT NULL,
+    LAST_RUN LONG,
+    LAST_PING LONG
 );
 
-//TODO мы должны хрнаить еще здесь номер таска (task.id)
-drop table if exists task_result;
-create table task_result(
-  	id int primary key not null auto_increment,
-  	status tinytext not null,
-    message text not null
+DROP TABLE IF EXISTS TASK_RESULT;
+CREATE TABLE TASK_RESULT(
+  	ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  	TASK_ID INT  NOT NULL
+  	STATUS TINYTEXT NOT NULL,
+    MESSAGE TEXT NOT NULL,
+    TIME TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE TASK_RESULT ADD CONSTRAINT FK_TASK_ID
+FOREIGN KEY (TASK_ID)
+REFERENCES TASK(ID)
+ON UPDATE CASCADE ON DELETE RESTRICT;

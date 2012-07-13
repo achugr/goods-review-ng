@@ -1,4 +1,4 @@
-package ru.goodsreview.core.util;
+package ru.goodsreview.core.db.entity;
 
 /**
  * User: daddy-bear

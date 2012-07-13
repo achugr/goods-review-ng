@@ -11,7 +11,6 @@ package analyzer.util.sentence;
 import analyzer.util.dictionary.Dictionary;
 import analyzer.util.dictionary.MapDictionary;
 import analyzer.wordAnalyzer.MystemAnalyzer;
-import analyzer.wordAnalyzer.PyMorphyAnalyzer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,26 +19,21 @@ import java.util.StringTokenizer;
 public class ReviewTokens {
     //    list of tokens
     private ArrayList<Token> tokensList;
-    //    position of current token
-    private int currentPosition = -1;
-    //    "pointer" for traverse next/previous by currentPosition
-    private int traversePosition = currentPosition;
-
-
 
     private static Dictionary featureDictionary = new Dictionary("feat_dic.txt", "windows-1251");
+    private static MapDictionary opinionDictionary = new MapDictionary("adjective_opinion_words.txt", "utf-8");
 
-    // private static PyMorphyDictionary normDictionary = new PyMorphyDictionary("norm_dictionary.txt");
 
     /**
      * create new ReviewTokens from review
      *
      * @param review source String
      */
-    public ReviewTokens(String review, MystemAnalyzer mystemAnalyzer, MapDictionary opinionDictionary) throws IOException, InterruptedException {
-        Token token;
+    public ReviewTokens(String review) throws IOException, InterruptedException {
+        MystemAnalyzer mystemAnalyzer = MystemAnalyzer.getInstance();
+
         tokensList = new ArrayList<Token>();
-        // StringTokenizer stringTokenizer = new StringTokenizer(review, " .,-—:;!()+\'\"\\«»");
+
         StringTokenizer stringTokenizer = new StringTokenizer(review, " ");
         while (stringTokenizer.hasMoreElements()) {
             String currToken = stringTokenizer.nextToken();
@@ -52,45 +46,50 @@ public class ReviewTokens {
                 continue;
             }
 
-            token = new Token(currToken);
 
-            if (PyMorphyAnalyzer.isRussianWord(currToken)) {
-                PartOfSpeech partOfSpeech = mystemAnalyzer.partOfSpeech(currToken);
-                if (partOfSpeech.equals(PartOfSpeech.ADJECTIVE)) {
-//                    if(normDictionary.contains(currToken)){
-                    //  String normToken = (String)normDictionary.getDictionary().get(currToken);
-                    //   System.out.println(currToken+" "+mystemAnalyzer.normalizer(currToken));
-                    String normToken = mystemAnalyzer.normalizer(currToken);
+            PartOfSpeech partOfSpeach = PartOfSpeech.UNKNOWN;
+            String normForm = "unk";
+            String gender = "unk";
+            String number = "unk";
+            String caseOf = "unk";
 
+            if (MystemAnalyzer.isRussianWord(currToken)) {
+                String  mystemReport = mystemAnalyzer.report(currToken);
+
+                PartOfSpeech mystemPartOfSpeech = mystemAnalyzer.partOfSpeech(mystemReport);
+
+                String normToken = mystemAnalyzer.normalizer(mystemReport);
+                normForm = normToken;
+
+                if (mystemPartOfSpeech.equals(PartOfSpeech.ADJECTIVE)) {
                     if (opinionDictionary.contains(normToken)) {
-                        token.setMystemPartOfSpeech(PartOfSpeech.ADJECTIVE);
-                    } else {
-                        token.setMystemPartOfSpeech(PartOfSpeech.UNKNOWN);
+                        partOfSpeach = PartOfSpeech.ADJECTIVE;
                     }
-//                    }else{
-//                        token.setMystemPartOfSpeech(PartOfSpeech.UNKNOWN);
-//                    }
                 } else {
-                    if (partOfSpeech.equals(PartOfSpeech.NOUN)) {
-                        String normToken = mystemAnalyzer.normalizer(currToken);
-                        if(featureDictionary.contains(normToken)) {
-                        // System.out.println(normToken);
-                        token.setMystemPartOfSpeech(PartOfSpeech.NOUN);
-                       }else{
-                            token.setMystemPartOfSpeech(PartOfSpeech.UNKNOWN);
+                    if (mystemPartOfSpeech.equals(PartOfSpeech.NOUN)) {
+                        if (featureDictionary.contains(normToken)) {
+                            partOfSpeach = PartOfSpeech.NOUN;
                         }
                     } else {
-                        token.setMystemPartOfSpeech(partOfSpeech);
+                        partOfSpeach = mystemPartOfSpeech;
                     }
                 }
-            } else {
-                token.setMystemPartOfSpeech(PartOfSpeech.UNKNOWN);
-            }
+
+
+            String[] a = mystemAnalyzer.wordCharacteristic(mystemReport);
+            gender = a[0];
+            number = a[1];
+            caseOf = a[2];
+        }
+
+            Token token = new Token(currToken, normForm, partOfSpeach, gender, number, caseOf);
 
             tokensList.add(token);
         }
 
     }
+
+
 
     public ArrayList<Token> getTokensList() {
         return tokensList;
@@ -100,8 +99,8 @@ public class ReviewTokens {
 //        return opinionDictionary;
 //    }
 
-    public Dictionary getFeatureDic() {
-        return featureDictionary;
-    }
+//    public Dictionary getFeatureDic() {
+//        return featureDictionary;
+//    }
 
 }

@@ -240,6 +240,17 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/1.7.1/gson-1.7.1-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: com.jcraft:jsch:0.1.48">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/jcraft/jsch/0.1.48/jsch-0.1.48.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/jcraft/jsch/0.1.48/jsch-0.1.48-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/jcraft/jsch/0.1.48/jsch-0.1.48-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: commons-codec:commons-codec:1.2">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.2/commons-codec-1.2.jar!/" />
