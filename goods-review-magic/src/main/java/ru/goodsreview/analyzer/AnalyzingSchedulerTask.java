@@ -1,3 +1,4 @@
+package ru.goodsreview.analyzer;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Required;

@@ -1,4 +1,4 @@
-package analyzer.util.sentence;
+package ru.goodsreview.analyzer.analyzer.util.sentence;
 
 public enum PartOfSpeech {
     ADJECTIVE,
