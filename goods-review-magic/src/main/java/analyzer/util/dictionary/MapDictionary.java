@@ -13,14 +13,6 @@ import java.util.HashMap;
 public class MapDictionary {
     private HashMap<String,Double> words;
 
-//    public MapDictionary(HashMap<String,Double> words) {
-//        this.words = words;
-//    }
-
-    public HashMap<String,Double> getDictionary() {
-        return this.words;
-    }
-
     public MapDictionary(String dictionaryFileName, String encoding) {
         this.words = new HashMap<String,Double>();
 
@@ -51,6 +43,11 @@ public class MapDictionary {
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+    }
+
+
+    public HashMap<String,Double> getDictionary() {
+        return this.words;
     }
 
     public void print() {

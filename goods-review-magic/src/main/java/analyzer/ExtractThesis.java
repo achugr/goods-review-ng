@@ -12,6 +12,7 @@ import analyzer.util.ThesisPattern;
 import analyzer.util.sentence.PartOfSpeech;
 import analyzer.util.sentence.ReviewTokens;
 import analyzer.util.sentence.Token;
+import analyzer.wordAnalyzer.MystemAnalyzer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -20,27 +21,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class ExtractThesis{
- //   private static final Logger log = org.apache.log4j.Logger.getLogger(AnalyzeThesis.class);
-//    private static ControllerFactory controllerFactory;
-//    private static ProductController productController;
-//    private static ThesisController thesisController;
-//    private static ReviewController reviewController;
-
-    static String[] dict = {"более", "достаточно", "очень", "не", "слишком", "довольно"};
-  //
-
-//    @Required
-//    public void setControllerFactory(ControllerFactory controllerFactory1){
-//        this.controllerFactory = controllerFactory1;
-//        setControllers();
-//    }
-//
-//    public static void setControllers(){
-//        productController = controllerFactory.getProductController();
-//        reviewController = controllerFactory.getReviewController();
-//        thesisController = controllerFactory.getThesisController();
-//    }
-
 
     public static ArrayList<Phrase> doExtraction(String content) throws IOException, InterruptedException {
         ArrayList<Phrase> extractedThesisList = new ArrayList<Phrase>();
@@ -164,18 +144,22 @@ public class ExtractThesis{
         boolean con2 = check(num1, num2);   // Число
         boolean con3 = check(case1, case2); // Падеж
 
-       boolean sep = con1 && con2 && con3;
+      boolean sep = con1 && con2 && con3;
        // boolean sep = con1 && con2;
         //boolean sep = (con1 && con2) || (con1 && con3);
+
         return sep;
     }
 
     static boolean check(String s1, String s2) {
-        if (!s1.equals("unk") && !s2.equals("unk")) {
+        String unk = MystemAnalyzer.getUnkValue();
+        if (!s1.equals(unk) && !s2.equals(unk)) {
             return s1.equals(s2);
         }
         return false;
     }
+
+    static String[] dict = {"более", "достаточно", "очень", "не", "слишком", "довольно"};
 
     static boolean dictContains(String s) {
         for (String str:dict){
@@ -186,55 +170,7 @@ public class ExtractThesis{
         return false;
     }
 
-    /**
-     * Extract thesis on all products from database
-     * @throws java.io.IOException
-     */
-//    public static void extractThesisOnAllProducts() throws IOException, InterruptedException {
-//        List<Product> list = productController.getAllProducts();
-//        MystemAnalyzer mystemAnalyzer = new MystemAnalyzer();
-//
-//        for(Product product : list){
-//            log.info("progress..");
-//            extractThesisOnProduct(product.getId(), mystemAnalyzer);
-//        }
-//        mystemAnalyzer.close();
-//    }
-    /**
-     * Extract thesis from all reviews on this product. (Run method doExtraction for all reviews on product).
-     * @param productId
-     * @throws java.io.IOException
-     */
-//    public static void extractThesisOnProduct(long productId, MystemAnalyzer mystemAnalyzer) throws IOException, InterruptedException {
-//        List<Review> reviews = reviewController.getReviewsByProductId(productId);
-//        log.info("extracting thesis on " + productId);
-//        for(Review review : reviews){
-//            try {
-//                System.out.println("<review id = \"" + review.getId() + "\">");
-//                List<Thesis> thesises = doExtraction(review, mystemAnalyzer);
-//                for(Thesis thesis : thesises){
-//                    log.info("thesis ========================= " + thesis.getContent());
-//                }
-//                thesisController.addThesisList(thesises);
-////                thesisController.addThesisList(doExtraction(review));
-//            } catch (StorageException e) {
-//                log.error("something wrong with this thesis (probably it's already exist in db)", e);
-//            }
-//        }
-//    }
-    
-//    @Override
-//    public void run() {
-//
-//        try {
-//            extractThesisOnAllProducts();
-//        } catch (IOException e) {
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
-////        showAllReviews();
-//        log.info("extraction is complete");
-//    }
+
 
 
 }

@@ -20,11 +20,6 @@ public class Phrase {
         this.feature = feature;
     }
 
-    public Phrase(String feature) {
-        this.opinion = null;
-        this.feature = feature;
-    }
-
     public String getFeature(){
         return feature;
     }
