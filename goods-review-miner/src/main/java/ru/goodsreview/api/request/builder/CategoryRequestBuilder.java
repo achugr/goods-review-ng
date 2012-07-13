@@ -16,32 +16,27 @@ import java.util.Map;
 public class CategoryRequestBuilder extends RequestBuilder {
 
     public UrlRequest requestForListOfCategories(final Map<String, String> parameters) {
-        return build(new String[]{ResourceType.CATEGORY.getName()},
-                parameters);
+        return build(parameters, ResourceType.CATEGORY.getResourceType());
     }
 
     public UrlRequest requestForInfoAboutCategoryById(final long id) {
-        return build(new String[]{ResourceType.CATEGORY.getName(), String.valueOf(id)},
-                new HashMap<String, String>());
+        return build(new HashMap<String, String>(), ResourceType.CATEGORY.getResourceType(), String.valueOf(id));
     }
 
     public UrlRequest requestForListOfChildrenCategoriesById(final long id, final Map<String, String> parameters) {
-        return build(new String[]{ResourceType.CATEGORY.getName(), String.valueOf(id), Resource.CATEGORY_CHILDREN.getName()},
-                parameters);
+        return build(parameters, ResourceType.CATEGORY.getResourceType(), String.valueOf(id), Resource.CATEGORY_CHILDREN.getName());
     }
 
     public UrlRequest requestForListOfModelsOfCategoryById(final long id, final Map<String, String> parameters) {
-        return build(new String[]{ResourceType.CATEGORY.getName(), String.valueOf(id), Resource.MODELS.getName()},
-                parameters);
+        return build(parameters, ResourceType.CATEGORY.getResourceType(), String.valueOf(id), Resource.MODELS.getName());
     }
 
     public UrlRequest requestForListOfFiltersOfCategoryById(final long id, final Map<String, String> parameters) {
-        return build(new String[]{ResourceType.CATEGORY.getName(), String.valueOf(id), Resource.FILTERS.getName()},
-                parameters);
+        return build(parameters, ResourceType.CATEGORY.getResourceType(), String.valueOf(id), Resource.FILTERS.getName());
     }
 
-    private UrlRequest build(final String[] resources, final Map<String, String> parameters) {
-        return super.build(resources, parameters, ResourceType.CATEGORY);
+    private UrlRequest build(final Map<String, String> parameters, final String... resources) {
+        return super.build(parameters, ResourceType.CATEGORY, resources);
     }
 
 }

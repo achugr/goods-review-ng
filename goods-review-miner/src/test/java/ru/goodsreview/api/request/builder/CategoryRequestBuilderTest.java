@@ -17,6 +17,7 @@ public class CategoryRequestBuilderTest {
     public void requestForListOfCategoriesTest() {
         final CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
         final UrlRequest urlRequest = categoryRequestBuilder.requestForListOfCategories(new HashMap<String, String>());
+        System.out.println(urlRequest.getUrl());
         Assert.assertEquals(urlRequest.getUrl(),
                 "https://api.content.market.yandex.ru/v1/category.json?geo_id=0");
     }

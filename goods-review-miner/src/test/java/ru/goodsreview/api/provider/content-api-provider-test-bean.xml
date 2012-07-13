@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
-       default-autowire="byType">
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
 
-    <bean id="contentApiProvider" class="ru.goodsreview.api.provider.ContentAPIProvider" lazy-init="true"/>
+<beans>
 
-    <import resource="classpath:beans.xml"/>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:secure-api.properties"/>
+    </bean>
+
+    <bean id="secureProperties" class="ru.goodsreview.api.provider.ContentAPIProvider" lazy-init="false">
+        <property name="apiKey" value="${api_key}"/>
+    </bean>
+
 </beans>

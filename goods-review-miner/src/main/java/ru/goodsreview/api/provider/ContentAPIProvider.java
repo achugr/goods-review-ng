@@ -1,5 +1,6 @@
 package ru.goodsreview.api.provider;
 
+import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.URI;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -12,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import ru.goodsreview.api.request.builder.UrlRequest;
 import ru.goodsreview.core.util.JSONUtil;
@@ -26,48 +31,54 @@ import ru.goodsreview.core.util.StringUtil;
  */
 
 public class ContentAPIProvider {
-    private Properties secureProperties;
     private final static Logger log = Logger.getLogger(ContentAPIProvider.class);
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+
+    public String apiKey;
 
     private final HttpClient httpClient;
-    private final GetMethod getMethod;
     private long lastQueryTime = 0;
-
-    public void setSecureProperties(Properties secureProperties) {
-        this.secureProperties = secureProperties;
-    }
 
     public ContentAPIProvider() {
         this.httpClient = new HttpClient();
-        this.getMethod = new GetMethod();
-        this.getMethod.addRequestHeader("Authorization", secureProperties.get("api_key").toString());
+    }
+
+    @Required
+    public void setApiKey(final String apiKey) {
+        this.apiKey = apiKey;
     }
 
     public JSONObject provide(final UrlRequest urlRequest) {
+        final GetMethod getMethod = new GetMethod(urlRequest.getUrl());
+        getMethod.addRequestHeader(AUTHORIZATION_HEADER, apiKey);
+
 //       timeout
         if (System.currentTimeMillis() - lastQueryTime < urlRequest.getResourceType().getMaxTimeout()) {
             try {
                 Thread.sleep(urlRequest.getResourceType().getMaxTimeout());
             } catch (InterruptedException e) {
-                log.error("some error with threads", e);
+                log.error(e.getMessage(), e);
             }
             lastQueryTime = System.currentTimeMillis();
         }
 
-        JSONObject jsonObject = new JSONObject();
         try {
-            getMethod.setURI(new URI(urlRequest.getUrl()));
             httpClient.executeMethod(getMethod);
-            String json = StringUtil.inputStreamToString(getMethod.getResponseBodyAsStream());
-            System.out.println("json string: " + json);
-            jsonObject = new JSONObject(json);
-            jsonObject.put("contentType", urlRequest.getResourceType().getName());
+
+            final JSONObject jsonObject = new JSONObject(getMethod.getResponseBodyAsString());
+            jsonObject.put("typeId", urlRequest.getResourceType().getTypeId());
+            return jsonObject;
         } catch (IOException e) {
             log.error("probably, can't execute http get method", e);
+            return new JSONObject();
         } catch (JSONException e) {
-            log.error("some problems with json", e);
+            try {
+                log.error("some problems with json, response: " + getMethod.getResponseBodyAsString(), e);
+            } catch (IOException e1) {
+                log.error(e.getMessage(), e);
+            }
+            throw new RuntimeException(e);
         }
-        return jsonObject;
     }
 
     public List<JSONObject> provideAsArray(final UrlRequest urlRequest, final String[] parents, final String key) {
@@ -81,8 +92,10 @@ public class ContentAPIProvider {
             return JSONUtil.convertJSONArrayToListOfJSONObjects(mainObject.getJSONArray(key));
         } catch (JSONException e) {
             log.error("some problems with json", e);
+            throw new RuntimeException(
+
+            );
         }
-        return new ArrayList<JSONObject>();
     }
 
 }
