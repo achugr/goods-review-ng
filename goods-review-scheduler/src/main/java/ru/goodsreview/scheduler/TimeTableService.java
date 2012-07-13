@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 import ru.goodsreview.core.util.IterativeBatchPreparedStatementSetter;
 import ru.goodsreview.core.util.db.DbUtil;
 import ru.goodsreview.scheduler.context.JsonContext;
-import ru.goodsreview.scheduler.util.MappersHolder;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

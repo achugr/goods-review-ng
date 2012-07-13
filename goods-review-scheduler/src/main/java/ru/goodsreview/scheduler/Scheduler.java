@@ -18,7 +18,6 @@ import java.util.concurrent.*;
 public class Scheduler implements InitializingBean, ApplicationContextAware {
     private final static Logger log = Logger.getLogger(Scheduler.class);
 
-    private JdbcTemplate jdbcTemplate;
     private int threadsCount;
     private ApplicationContext applicationContext;
     private String schedulerName;
@@ -42,11 +41,6 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
     @Required
     public void setThreadsCount(final int threadsCount) {
         this.threadsCount = threadsCount;
-    }
-
-    @Required
-    public void setJdbcTemplate(final JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
