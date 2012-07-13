@@ -27,4 +27,15 @@
         <property name="dataSource" ref="sshDataSource"/>
     </bean>
 
+    <bean id="timeTableService" class="ru.goodsreview.scheduler.TimeTableService">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="scheduler" class="ru.goodsreview.scheduler.Scheduler">
+        <property name="schedulerName" value="testing-scheduler"/>
+        <property name="threadsCount" value="10"/>
+        <property name="timeTableService" ref="timeTableService"/>
+    </bean>
+
+    <bean id="simpleSchedulerTask" class="ru.goodsreview.scheduler.SimpleSchedulerTask"/>
 </beans>

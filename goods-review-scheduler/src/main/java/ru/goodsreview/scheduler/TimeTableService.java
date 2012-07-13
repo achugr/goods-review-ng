@@ -32,6 +32,9 @@ public class TimeTableService {
     }
 
     private void updateTime(final List<Long> ids, final String rowName) {
+        if (ids.size() == 0) {
+            return;
+        }
         jdbcTemplate.batchUpdate("UPDATE TASK SET " + rowName + " = CURRENT_TIMESTAMP WHERE ID = ?",
                 new IterativeBatchPreparedStatementSetter<Long>(ids) {
                     @Override
@@ -74,7 +77,7 @@ public class TimeTableService {
                     log.error("could not resolve task parameters", e);
                 }
             }
-        }, schedulerName, alreadyRunningTasks);
+        }, schedulerName, alreadyRunningTasks.toArray());
 
         return newTasks;
     }
@@ -88,6 +91,9 @@ public class TimeTableService {
     private final static String NEW_TASK_MESSAGE = "new task started";
 
     public void addNewRunningTask(List<Long> taskIds) {
+        if (taskIds.size() == 0) {
+            return;
+        }
         jdbcTemplate.batchUpdate("INSERT INTO TASK_JOURNAL (TASK_ID, STATUS, MESSAGE) VALUES (?, ?, ?)", new IterativeBatchPreparedStatementSetter<Long>(taskIds) {
             @Override
             protected void setValues(final PreparedStatement ps, final Long element) throws SQLException {
