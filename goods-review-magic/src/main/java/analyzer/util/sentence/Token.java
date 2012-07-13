@@ -9,26 +9,50 @@ package analyzer.util.sentence;
 
 public class Token {
     private String content;
-    private PartOfSpeech mystemPartOfSpeech;
-//  private LemmatizerPartOfSpeech lemmatizerPartOfSpeech;
+    private PartOfSpeech partOfSpeech;
+    private String normForm;
+    private String gender;
+    private String number;
+    private String caseOf;
 
-    public Token(String token) {
-        this.content = token;
+    public Token(String content, String normForm, PartOfSpeech partOfSpeech, String gender, String number,String caseOf) {
+        this.content = content;
+        this.normForm = normForm;
+        this.partOfSpeech = partOfSpeech;
+        this.gender = gender;
+        this.number = number;
+        this.caseOf = caseOf;
     }
 
     public String getContent() {
         return content;
     }
 
+    public String getNormForm() {
+        return normForm;
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
 
-    public PartOfSpeech getMystemPartOfSpeech() {
-        return mystemPartOfSpeech;
+    public String getGender() {
+        return gender;
     }
 
-    public void setMystemPartOfSpeech(PartOfSpeech mystemPartOfSpeech) {
-        this.mystemPartOfSpeech = mystemPartOfSpeech;
+    public String getNumber() {
+        return number;
+    }
+
+    public String getCaseOf() {
+        return caseOf;
+    }
+
+    public PartOfSpeech getPartOfSpeech() {
+        return partOfSpeech;
+    }
+
+    public void setPartOfSpeech(PartOfSpeech partOfSpeech) {
+        this.partOfSpeech = partOfSpeech;
     }
 }
