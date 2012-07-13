@@ -8,7 +8,8 @@ package ru.goodsreview.scheduler;
 public enum SchedulingType {
     MINUTE(60000L),
     HOUR(3600000L),
-    DAY(86400000L);
+    DAY(86400000L),
+    ONCE(-1L);
 
     private final long factor;
 

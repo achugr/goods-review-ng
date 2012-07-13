@@ -21,6 +21,18 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
     private JdbcTemplate jdbcTemplate;
     private int threadsCount;
     private ApplicationContext applicationContext;
+    private String schedulerName;
+    private TimeTableService timeTableService;
+
+    @Required
+    public void setTimeTableService(TimeTableService timeTableService) {
+        this.timeTableService = timeTableService;
+    }
+
+    @Required
+    public void setSchedulerName(String schedulerName) {
+        this.schedulerName = schedulerName;
+    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
@@ -53,9 +65,13 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
 
                         checkTasks();
 
-                        //TODO
-                        //try find new tasks
-                        //dont execute task if it already running !!!
+                        final List<Long> newTaskIds = new ArrayList<Long>();
+                        for (TaskParameters taskParameters : timeTableService.fetchNewTasks(schedulerName, currentTasksFuture.keySet())) {
+                            executeTask(taskParameters);
+                            newTaskIds.add(taskParameters.getId());
+                        }
+
+                        timeTableService.addNewRunningTask(newTaskIds);
 
 
                         Thread.sleep(10000); // 10 seconds
@@ -81,27 +97,28 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
             }
 
             private void checkTasks() {
+                log.info("check new tasks");
                 final List<Long> finishedTasks = new LinkedList<Long>();
+                final List<Long> notFinishedTasks = new LinkedList<Long>();
                 for (Map.Entry<Long, Future<TaskResult>> e : currentTasksFuture.entrySet()) {
                     if (e.getValue().isDone()) {
-                        try {
-                            taskResultDbController.addTaskResult(e.getValue().get());
-                        } catch (InterruptedException ex) {
-                            log.error(ex.getMessage(), ex);
-                        } catch (ExecutionException ex) {
-                            log.error(ex.getMessage(), ex);
-                        }
-
                         finishedTasks.add(e.getKey());
+                        try {
+                            timeTableService.addTaskResult(e.getValue().get(), e.getKey());
+                        } catch (InterruptedException exception) {
+                            log.error(exception.getMessage(), exception);
+                        } catch (ExecutionException exception) {
+                            log.error(exception.getMessage(), exception);
+                        }
                     } else {
-                        //TODO. ..ну
-                          DbControllerFactory.instance().taskDbController().updateLastPingTime(e.getKey());
+                        notFinishedTasks.add(e.getKey());
                     }
                 }
-
                 for (Long finishedTaskId : finishedTasks) {
                     currentTasksFuture.remove(finishedTaskId);
                 }
+
+                timeTableService.updateLastPingTime(notFinishedTasks);
             }
 
         }).start();

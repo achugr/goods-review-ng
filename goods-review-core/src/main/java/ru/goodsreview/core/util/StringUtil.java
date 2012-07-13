@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Collection;
 
 /**
  * Artemij Chugreev
@@ -19,6 +20,20 @@ public final class StringUtil {
     private final static Logger log = Logger.getLogger(StringUtil.class);
 
     private StringUtil() {
+    }
+
+    public static String merge(final Collection<String> strings, final String separator) {
+        final StringBuilder sb = new StringBuilder();
+        String localSeparator = "";
+        for (final String s: strings) {
+            sb.append(localSeparator).append(s);
+            localSeparator = separator;
+        }
+        return sb.toString();
+    }
+
+    public static String merge(final Collection<String> strings) {
+        return merge(strings, "");
     }
 
     public static String inputStreamToString(final InputStream inputStream) {
