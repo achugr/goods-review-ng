@@ -27,4 +27,7 @@
         <property name="dataSource" ref="sshDataSource"/>
     </bean>
 
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg index="0" ref="sshDataSource"/>
+    </bean>
 </beans>

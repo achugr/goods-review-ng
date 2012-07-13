@@ -4,7 +4,11 @@
 
 <beans>
 
-    <bean id="dbPropertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <bean id="requiredAnnotationBeanPostProcessor"
+          class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
+
+    <bean id="dbPropertyPlaceholderConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:db.properties"/>
     </bean>
 
@@ -27,8 +31,13 @@
         <property name="dataSource" ref="sshDataSource"/>
     </bean>
 
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg index="0" ref="sshDataSource"/>
+    </bean>
+
     <bean id="timeTableService" class="ru.goodsreview.scheduler.TimeTableService">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="namedParameterJdbcTemplate" ref="namedParameterJdbcTemplate"/>
     </bean>
 
     <bean id="scheduler" class="ru.goodsreview.scheduler.Scheduler">

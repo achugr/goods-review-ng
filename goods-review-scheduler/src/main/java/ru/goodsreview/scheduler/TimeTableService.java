@@ -5,6 +5,8 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import ru.goodsreview.core.util.IterativeBatchPreparedStatementSetter;
 import ru.goodsreview.core.util.db.DbUtil;
 import ru.goodsreview.scheduler.context.JsonContext;
@@ -26,9 +28,16 @@ public class TimeTableService {
 
     private JdbcTemplate jdbcTemplate;
 
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     @Required
     public void setJdbcTemplate(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Required
+    public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     private void updateTime(final List<Long> ids, final String rowName) {
@@ -52,10 +61,22 @@ public class TimeTableService {
         updateTime(ids, "LAST_PING_TIME");
     }
 
+
+    private final static String BASE_SQL = "SELECT * FROM TASK WHERE SCHEDULER_NAME = :SCH_NAME ";
+
     public List<TaskParameters> fetchNewTasks(final String schedulerName, final Collection<Long> alreadyRunningTasks) {
         final List<TaskParameters> newTasks = new ArrayList<TaskParameters>();
         final long currentMillis = System.currentTimeMillis();
-        jdbcTemplate.query("SELECT * FROM TASK WHERE SCHEDULER_NAME = ? AND ID NOT IN " + DbUtil.createInSection(alreadyRunningTasks.size()), new RowCallbackHandler() {
+
+        String sql = BASE_SQL;
+        final MapSqlParameterSource ps = new MapSqlParameterSource();
+        ps.addValue("SCH_NAME", schedulerName);
+
+        if (!alreadyRunningTasks.isEmpty()) {
+            ps.addValue("ID", alreadyRunningTasks);
+            sql += "AND ID NOT IN :ID";
+        }
+        namedParameterJdbcTemplate.query(sql, ps, new RowCallbackHandler() {
             @Override
             public void processRow(final ResultSet rs) throws SQLException {
 
@@ -77,7 +98,7 @@ public class TimeTableService {
                     log.error("could not resolve task parameters", e);
                 }
             }
-        }, schedulerName, alreadyRunningTasks.toArray());
+        });
 
         return newTasks;
     }
