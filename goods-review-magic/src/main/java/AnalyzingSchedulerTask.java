@@ -47,6 +47,8 @@ public abstract class AnalyzingSchedulerTask implements SchedulerTask {
             }
         });
 
+        batchUpdater.flush();
+
         return TaskResult.ok();
     }
 

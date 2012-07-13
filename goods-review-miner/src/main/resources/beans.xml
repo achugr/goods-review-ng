@@ -13,7 +13,7 @@
     </bean>
 
     <bean id="secureProperties" class="ru.goodsreview.api.provider.ContentAPIProvider" lazy-init="false">
-        <property name="apiKey" value="${secure-api.api_key}"/>
+        <property name="apiKey" value="${api-key}"/>
     </bean>
 
 </beans>

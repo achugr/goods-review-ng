@@ -7,5 +7,5 @@ public enum PartOfSpeech {
     VERB,
     PARTICLE,
     PREPOSITION,
-    UNKNOWN;
+    UNKNOWN
 }
