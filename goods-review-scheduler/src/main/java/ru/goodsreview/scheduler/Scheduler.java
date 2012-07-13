@@ -21,11 +21,6 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
     private JdbcTemplate jdbcTemplate;
     private int threadsCount;
     private ApplicationContext applicationContext;
-    private TaskResultDbController taskResultDbController;
-
-    public void setTaskResultDbController(TaskResultDbController taskResultDbController){
-        this.taskResultDbController = taskResultDbController;
-    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
