@@ -43,7 +43,7 @@ public class TimeTableService {
     //TODO возвращать просто List ой как плохо
     public List urgentTasks() {
         long currentTime = System.currentTimeMillis();                                                              //TODO не надо закутывать в обжект
-        return jdbcTemplate.query("select id, bean_name, params from task where (? - last_run < scheduling_time) ", new Object[]{currentTime}, new MappersHolder());
+        return jdbcTemplate.query("select id, bean_name, params from task where (? - last_run < scheduling_time) ", new Object[]{currentTime}, MappersHolder.TASK_PARAMETERS_MAPPER);
     }
 
     public void addTaskResult(final TaskResult taskResult, final long taskId) {

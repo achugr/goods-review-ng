@@ -21,20 +21,15 @@ public final class StringUtil {
     private StringUtil() {
     }
 
-    public static String inputStreamToString(InputStream inputStream) {
+    public static String inputStreamToString(final InputStream inputStream) {
 
-//    	read it with BufferedReader
-        BufferedReader br
-                = new BufferedReader(
-                new InputStreamReader(inputStream));
+        final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        final StringBuilder sb = new StringBuilder();
 
-        StringBuilder sb = new StringBuilder();
-
-        String line;
         try {
-            do {
-                line = br.readLine();
-            } while (line != null);
+            while (br.ready()) {
+                sb.append(br.readLine());
+            }
         } catch (IOException e) {
             log.error("can't read line from buffered reader", e);
         } finally {
@@ -44,6 +39,7 @@ public final class StringUtil {
                 log.error("can't close buffered reader", e);
             }
         }
+
         return sb.toString();
     }
 
