@@ -54,11 +54,11 @@ public class TimeTableService {
     }
 
     public void updateLastRunTime(final List<Long> ids) {
-        updateTime(ids, "LAST_RUN_TIME");
+        updateTime(ids, "LAST_RUN");
     }
 
     public void updateLastPingTime(final List<Long> ids) {
-        updateTime(ids, "LAST_PING_TIME");
+        updateTime(ids, "LAST_PING");
     }
 
 
@@ -80,7 +80,7 @@ public class TimeTableService {
             @Override
             public void processRow(final ResultSet rs) throws SQLException {
 
-                final long lastRunTime = rs.getLong("LAST_RUN_TIME");
+                final long lastRunTime = rs.getLong("LAST_RUN");
                 final SchedulingType schedulingType = SchedulingType.getByName(rs.getString("SCHEDULING_TYPE"));
                 if (SchedulingType.ONCE.equals(schedulingType)) {
                     if (lastRunTime != 0) {
@@ -93,7 +93,7 @@ public class TimeTableService {
                 }
 
                 try {
-                    newTasks.add(new TaskParameters(rs.getLong("ID"), rs.getString("BEAN_NAME"), JsonContext.from(rs.getString("PARAM"))));
+                    newTasks.add(new TaskParameters(rs.getLong("ID"), rs.getString("BEAN_NAME"), JsonContext.from(rs.getString("PARAMS"))));
                 } catch (JSONException e) {
                     log.error("could not resolve task parameters", e);
                 }
@@ -104,7 +104,7 @@ public class TimeTableService {
     }
 
     public void addTaskResult(final TaskResult taskResult, final long taskId) {
-        jdbcTemplate.update("INSERT INTO TASK_JOURNAL (TASK_ID, STATUS, MESSAGE) VALUES (?, ?, ?)", taskId, taskResult.getStatus(), taskResult.getMessage());
+        jdbcTemplate.update("INSERT INTO TASK_JOURNAL (TASK_ID, STATUS, MESSAGE) VALUES (?, ?, ?)", taskId, taskResult.getStatus().toString(), taskResult.getMessage());
     }
 
 

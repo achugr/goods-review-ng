@@ -25,6 +25,9 @@ public class JsonContext extends AbstractContext {
 
     @Nullable
     public static JsonContext from(final String jsonString) throws JSONException {
+        if (jsonString.isEmpty()) {
+            return new JsonContext(new JSONObject());
+        }
         return new JsonContext(new JSONObject(jsonString));
     }
 
