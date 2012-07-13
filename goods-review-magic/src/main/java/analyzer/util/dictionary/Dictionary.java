@@ -13,21 +13,13 @@ import java.util.HashSet;
 public class Dictionary {
     private HashSet<String> words;
 
-    public Dictionary(HashSet<String> words) {
-        this.words = words;
-    }
-
-    public HashSet<String> getDictionary() {
-        return this.words;
-    }
-
     public Dictionary(String dictionaryFileName, String encoding) {
         this.words = new HashSet<String>();
 
         try {
-            FileInputStream fis1 = new FileInputStream(dictionaryFileName);
-            InputStreamReader isr1 = new InputStreamReader(fis1, encoding);
-            BufferedReader in = new BufferedReader(isr1);
+            FileInputStream fis = new FileInputStream(dictionaryFileName);
+            InputStreamReader isr = new InputStreamReader(fis, encoding);
+            BufferedReader in = new BufferedReader(isr);
 
             String s = in.readLine();
             while (s != null) {
@@ -53,6 +45,11 @@ public class Dictionary {
         }
     }
 
+
+    public HashSet<String> getDictionary() {
+        return this.words;
+    }
+
     public void print() {
         for (String word : words) {
             System.out.println(word);
@@ -66,12 +63,6 @@ public class Dictionary {
      * @return true if word is here. false — otherwise
      */
     public boolean contains(String word) {
-        /* for(String s: words){
-       if(s.contains(word)){
-           return true;
-       }
-   }
-       return false;*/
         return words.contains(word);
     }
 

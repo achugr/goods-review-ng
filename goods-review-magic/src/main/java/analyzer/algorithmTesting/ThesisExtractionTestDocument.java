@@ -11,7 +11,6 @@ package analyzer.algorithmTesting;
 import analyzer.ExtractThesis;
 import analyzer.wordAnalyzer.MystemAnalyzer;
 
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -214,12 +213,6 @@ public class ThesisExtractionTestDocument {
                                 String token1 = phrase.getFeature();
                                 String token2 = phrase.getOpinion();
 
-                                //  System.out.println(review);
-                                //System.out.println(token1);
-                                // if(token2.contains(" ")){
-                                //      System.out.println(token2);
-                                //  }
-
                                 thesisList.add(new Phrase(token1, token2));
 
                             }
@@ -253,42 +246,13 @@ public class ThesisExtractionTestDocument {
                 Product algoProduct = algoProThesis.get(j);
 
                 if (algoProduct.getId().equals(humProduct.getId())) {
-                    /*
-                    System.out.println("--------new product  "+algoProduct.getName());
-                    for(Review review : algoProduct.getReviews()){
-                        System.out.println("review_alg"+review.getReview());
-                        for(String thesis : review.getFeature()){
-                            System.out.println(thesis);
-                        }
-                    }
-                    System.out.println("--------------------");
-                    for(Review review : humProduct.getReviews()){
-                        System.out.println("review_hum"+review.getReview());
-                        for(String thesis : review.getFeature()){
-                            System.out.println(thesis);
-                        }
-                    }   */
+
                     comparator(algoProduct, humProduct, out);
                     break;
                 }
             }
 
         }
-        /*
-        if(humProThesis.size()!=algoProThesis.size()){
-            System.out.println("файлы содержат разное число продуктов");
-        }else{
-            for (int i = 0; i < humProThesis.size(); i++) {
-                Product humProduct = humProThesis.get(i);
-                Product algoProduct = algoProThesis.get(i);
-                if(editDist(algoProduct.getName(), humProduct.getName())<2){
-                    comparator(algoProduct, humProduct, out);
-                }else{
-                    System.out.print("сравнение продуктов с разными именами: ");
-                    System.out.println(algoProduct.getName()+" и "+humProduct.getName());
-                }
-            }
-        }*/
 
 
         out.flush();
@@ -396,8 +360,12 @@ public class ThesisExtractionTestDocument {
 
     static boolean contains(String sentence, String s) {
         sentence = sentence.toLowerCase();
-        s = s.toLowerCase();
-        return sentence.contains(s);
+        if(!s.equals(MystemAnalyzer.getUnkValue())){
+            s = s.toLowerCase();
+            return sentence.contains(s);
+        }else{
+            return false;
+        }
     }
 
     static void add(HashMap<String, int[]> map, String s, boolean t) {

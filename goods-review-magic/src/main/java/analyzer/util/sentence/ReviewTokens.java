@@ -31,6 +31,7 @@ public class ReviewTokens {
      */
     public ReviewTokens(String review) throws IOException, InterruptedException {
         MystemAnalyzer mystemAnalyzer = MystemAnalyzer.getInstance();
+        String unk = MystemAnalyzer.getUnkValue();
 
         tokensList = new ArrayList<Token>();
 
@@ -40,53 +41,47 @@ public class ReviewTokens {
             currToken = currToken.trim();
             currToken = currToken.toLowerCase();
 
-//            TODO it's strange, but here we can get empty string
-            if (currToken.equals("")) {
-                System.out.println("fail");
-                continue;
-            }
+            if (!currToken.equals("")) {
+                PartOfSpeech partOfSpeach = PartOfSpeech.UNKNOWN;
+                String normForm = unk;
+                String gender = unk;
+                String number = unk;
+                String caseOf = unk;
 
+                String mystemReport = mystemAnalyzer.report(currToken);
 
-            PartOfSpeech partOfSpeach = PartOfSpeech.UNKNOWN;
-            String normForm = "unk";
-            String gender = "unk";
-            String number = "unk";
-            String caseOf = "unk";
+                if (!mystemReport.equals(MystemAnalyzer.getEmptyReportValue())) {
+                    PartOfSpeech mystemPartOfSpeech = mystemAnalyzer.partOfSpeech(mystemReport);
 
-            if (MystemAnalyzer.isRussianWord(currToken)) {
-                String  mystemReport = mystemAnalyzer.report(currToken);
+                    String normToken = mystemAnalyzer.normalizer(mystemReport);
+                    normForm = normToken;
 
-                PartOfSpeech mystemPartOfSpeech = mystemAnalyzer.partOfSpeech(mystemReport);
-
-                String normToken = mystemAnalyzer.normalizer(mystemReport);
-                normForm = normToken;
-
-                if (mystemPartOfSpeech.equals(PartOfSpeech.ADJECTIVE)) {
-                    if (opinionDictionary.contains(normToken)) {
-                        partOfSpeach = PartOfSpeech.ADJECTIVE;
-                    }
-                } else {
-                    if (mystemPartOfSpeech.equals(PartOfSpeech.NOUN)) {
-                        if (featureDictionary.contains(normToken)) {
-                            partOfSpeach = PartOfSpeech.NOUN;
+                    if (mystemPartOfSpeech.equals(PartOfSpeech.ADJECTIVE)) {
+                        if (opinionDictionary.contains(normToken)) {
+                            partOfSpeach = PartOfSpeech.ADJECTIVE;
                         }
                     } else {
-                        partOfSpeach = mystemPartOfSpeech;
+                        if (mystemPartOfSpeech.equals(PartOfSpeech.NOUN)) {
+                            if (featureDictionary.contains(normToken)) {
+                                partOfSpeach = PartOfSpeech.NOUN;
+                            }
+                        } else {
+                            partOfSpeach = mystemPartOfSpeech;
+                        }
                     }
+
+
+                    String[] a = mystemAnalyzer.wordCharacteristic(mystemReport);
+                    gender = a[0];
+                    number = a[1];
+                    caseOf = a[2];
                 }
 
+                Token token = new Token(currToken, normForm, partOfSpeach, gender, number, caseOf);
 
-            String[] a = mystemAnalyzer.wordCharacteristic(mystemReport);
-            gender = a[0];
-            number = a[1];
-            caseOf = a[2];
-        }
-
-            Token token = new Token(currToken, normForm, partOfSpeach, gender, number, caseOf);
-
-            tokensList.add(token);
-        }
-
+                tokensList.add(token);
+            }
+    }
     }
 
 
@@ -94,13 +89,5 @@ public class ReviewTokens {
     public ArrayList<Token> getTokensList() {
         return tokensList;
     }
-
-//    public MapDictionary getDic() {
-//        return opinionDictionary;
-//    }
-
-//    public Dictionary getFeatureDic() {
-//        return featureDictionary;
-//    }
 
 }
