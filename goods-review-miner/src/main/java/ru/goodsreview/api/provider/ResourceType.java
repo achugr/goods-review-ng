@@ -9,29 +9,35 @@ package ru.goodsreview.api.provider;
  */
 public enum ResourceType {
 
-    CATEGORY("category", 150),
-    MODEL("model", 170),
-    OFFER("offer", 125),
-    OPINION("opinion", 170),
-    SHOP("shop", 150),
-    GEOREGION("georegion", 125),
-    VENDOR("vendor", 125),
-    SEARCH("search", 125),
-    FILTER("filter", 170);
+    CATEGORY(1, "category", 150),
+    MODEL(2, "model", 170),
+    OFFER(3, "offer", 125),
+    OPINION(4, "opinion", 170),
+    SHOP(5, "shop", 150),
+    GEOREGION(6, "georegion", 125),
+    VENDOR(7, "vendor", 125),
+    SEARCH(8, "search", 125),
+    FILTER(9, "filter", 170);
 
+    private final int typeId;
     private final String resourceType;
     private final int maxTimeout;
 
-    ResourceType(final String resourceType, final int timeout) {
+    ResourceType(final int typeId, final String resourceType, final int timeout) {
+        this.typeId = typeId;
         this.resourceType = resourceType;
         this.maxTimeout = timeout;
     }
 
-    public String getName() {
+    public String getResourceType() {
         return this.resourceType;
     }
 
     public int getMaxTimeout() {
         return maxTimeout;
+    }
+
+    public int getTypeId() {
+        return typeId;
     }
 }
