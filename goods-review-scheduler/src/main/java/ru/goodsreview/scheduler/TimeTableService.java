@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,16 +45,17 @@ public class TimeTableService {
         if (ids.size() == 0) {
             return;
         }
-        jdbcTemplate.batchUpdate("UPDATE TASK SET " + rowName + " = CURRENT_TIMESTAMP WHERE ID = ?",
+        jdbcTemplate.batchUpdate("UPDATE TASK SET " + rowName + " = ? WHERE ID = ?",
                 new IterativeBatchPreparedStatementSetter<Long>(ids) {
                     @Override
                     protected void setValues(final PreparedStatement ps, final Long element) throws SQLException {
-                        ps.setLong(1, element);
+                        ps.setLong(1, new Date().getTime());
+                        ps.setLong(2, element);
                     }
                 });
     }
 
-    public void updateLastRunTime(final List<Long> ids) {
+    private void updateLastRunTime(final List<Long> ids) {
         updateTime(ids, "LAST_RUN");
     }
 
@@ -123,5 +125,7 @@ public class TimeTableService {
                 ps.setString(3, NEW_TASK_MESSAGE);
             }
         });
+
+        this.updateLastRunTime(taskIds);
     }
 }

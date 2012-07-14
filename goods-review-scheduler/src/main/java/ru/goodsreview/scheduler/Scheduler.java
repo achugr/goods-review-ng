@@ -94,7 +94,7 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
             private void checkTasks() {
                 log.info("check new tasks");
                 final List<Long> finishedTasks = new LinkedList<Long>();
-                final List<Long> notFinishedTasks = new LinkedList<Long>();
+                final List<Long> forUpdatePingTime = new LinkedList<Long>();
                 for (Map.Entry<Long, Future<TaskResult>> e : currentTasksFuture.entrySet()) {
                     if (e.getValue().isDone()) {
                         finishedTasks.add(e.getKey());
@@ -105,15 +105,15 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
                         } catch (ExecutionException exception) {
                             log.error(exception.getMessage(), exception);
                         }
-                    } else {
-                        notFinishedTasks.add(e.getKey());
                     }
+                    forUpdatePingTime.add(e.getKey());
                 }
+
+                timeTableService.updateLastPingTime(forUpdatePingTime);
                 for (Long finishedTaskId : finishedTasks) {
                     currentTasksFuture.remove(finishedTaskId);
                 }
 
-                timeTableService.updateLastPingTime(notFinishedTasks);
             }
 
         }, "Scheduler").start();
