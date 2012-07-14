@@ -14,16 +14,10 @@ import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
  * Date: 14.07.12
  * Time: 14:39
  */
-public class ReviewOverJson implements Review {
-
-    private final JSONObject jsonObject;
+public class ReviewOverJson extends OverJsonImpl implements Review {
 
     public ReviewOverJson(final JSONObject jsonObject) {
-        if (EntityType.REVIEW.equals(EntityType.recognizeEntity(jsonObject))) {
-            this.jsonObject = jsonObject;
-        } else {
-            throw new IllegalArgumentException("illegal inner json object");
-        }
+        super(jsonObject, EntityType.REVIEW);
     }
 
     @Override
