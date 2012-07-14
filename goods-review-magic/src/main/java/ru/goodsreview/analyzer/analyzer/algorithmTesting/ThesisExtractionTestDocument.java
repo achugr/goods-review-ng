@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer.analyzer.algorithmTesting;
+package analyzer.algorithmTesting;
 
 /**
  * Date: 05.02.12
@@ -8,8 +8,9 @@ package ru.goodsreview.analyzer.analyzer.algorithmTesting;
  * ilya.makeev@gmail.com
  */
 
-import ru.goodsreview.analyzer.analyzer.ExtractThesis;
-import ru.goodsreview.analyzer.analyzer.wordAnalyzer.MystemAnalyzer;
+import analyzer.ExtractThesis;
+import analyzer.wordAnalyzer.MystemAnalyzer;
+import analyzer.wordAnalyzer.ReportAnalyzer;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -298,12 +299,12 @@ public class ThesisExtractionTestDocument {
                         String opinion = algoThesis.get(j).getOpinion();
                         // System.out.println(alThesis+" "+opinion);
 
-                        if (contains(humFeature, mystemAnalyzer.normalizer(mystemAnalyzer.report(algoFeature)))) {
+                        if (contains(humFeature, ReportAnalyzer.normalizer(mystemAnalyzer.report(algoFeature)))) {
                             if (contains(sentence, algoFeature) && contains(sentence, opinion)) {
                                 out.println("      <OK>" + humFeature + " " + opinion + "</OK>");
                                 // System.out.println(alThesis+" "+opinion+" ## "+sentence);
                                 successExtract++;
-                                add(dictionaryScores, mystemAnalyzer.normalizer(mystemAnalyzer.report(opinion)), true);
+                                add(dictionaryScores, ReportAnalyzer.normalizer(mystemAnalyzer.report(opinion)), true);
                                 break;
                             }
                         }
@@ -318,7 +319,7 @@ public class ThesisExtractionTestDocument {
                     for (int j = 0; j < humThesis.size(); j++) {
                         String humFeature = humThesis.get(j).getFeature();
                         String sentence = humThesis.get(j).getOpinion();
-                        if (contains(humFeature, mystemAnalyzer.normalizer(mystemAnalyzer.report(algoFeature)))) {
+                        if (contains(humFeature, ReportAnalyzer.normalizer(mystemAnalyzer.report(algoFeature)))) {
                             if (contains(sentence, algoFeature) && contains(sentence, opinion)) {
                                 t = true;
                                 break;
@@ -327,7 +328,7 @@ public class ThesisExtractionTestDocument {
                     }
                     if (t == false) {
                         out.println("      <algo>" + algoFeature + " " + opinion + "</algo>");
-                        add(dictionaryScores, mystemAnalyzer.normalizer(mystemAnalyzer.report(opinion)), false);
+                        add(dictionaryScores, ReportAnalyzer.normalizer(mystemAnalyzer.report(opinion)), false);
                         //System.out.println("      "+algoFeature + " "+opinion);
                     }
                 }
@@ -341,7 +342,7 @@ public class ThesisExtractionTestDocument {
                         String algoFeature = algoThesis.get(j).getFeature();
                         String opinion = algoThesis.get(j).getOpinion();
 
-                        if (contains(humFeature, mystemAnalyzer.normalizer(mystemAnalyzer.report(algoFeature)))) {
+                        if (contains(humFeature, ReportAnalyzer.normalizer(mystemAnalyzer.report(algoFeature)))) {
                             if (contains(sentence, algoFeature) && contains(sentence, opinion)) {
                                 t = true;
                                 break;
@@ -360,7 +361,7 @@ public class ThesisExtractionTestDocument {
 
     static boolean contains(String sentence, String s) {
         sentence = sentence.toLowerCase();
-        if(!s.equals(MystemAnalyzer.getUnkValue())){
+        if(!s.equals(ReportAnalyzer.getUnkValue())){
             s = s.toLowerCase();
             return sentence.contains(s);
         }else{

@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer.analyzer.wordAnalyzer;
+package analyzer.wordAnalyzer;
 /*
  *  Date: 12.02.12
  *   Time: 20:51
@@ -9,8 +9,7 @@ package ru.goodsreview.analyzer.analyzer.wordAnalyzer;
 
 //import org.apache.log4j.Logger;
 
-import ru.goodsreview.analyzer.analyzer.util.OSValidator;
-import ru.goodsreview.analyzer.analyzer.util.sentence.PartOfSpeech;
+import analyzer.util.OSValidator;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -27,7 +26,6 @@ public class MystemAnalyzer implements WordAnalyzer{
 
     private static final String CHARSET = "UTF8";
     private static final String emptyReport = "";
-    private static final String UNKNOUN = "unk";
 
     private Process analyzer;
     private Scanner sc;
@@ -62,9 +60,7 @@ public class MystemAnalyzer implements WordAnalyzer{
         analyzer.destroy();
     }
 
-    public static String getUnkValue() {
-        return UNKNOUN;
-    }
+
 
     public static String getEmptyReportValue() {
         return emptyReport;
@@ -107,130 +103,6 @@ public class MystemAnalyzer implements WordAnalyzer{
         } else {
             return emptyReport;
         }
-    }
-
-    public String[] wordCharacteristic(String report) {
-        String[] a = {UNKNOUN, UNKNOUN, UNKNOUN};
-
-        if (!report.equals(emptyReport)) {
-            if (!((report.contains("жен") && report.contains("муж")) ||
-                    (report.contains("жен") && report.contains("сред")) ||
-                    (report.contains("муж") && report.contains("сред")))) {
-
-                if (report.contains("жен")) {
-                    a[0] = "жен";
-                }
-                if (report.contains("муж")) {
-                    a[0] = "муж";
-                }
-                if (report.contains("сред")) {
-                    a[0] = "сред";
-                }
-            } else {
-                // System.out.println(report);
-            }
-
-            if (!((report.contains("ед") && report.contains("мн")))) {
-                if (report.contains("ед")) {
-                    a[1] = "ед";
-                }
-                if (report.contains("мн")) {
-                    a[1] = "мн";
-                }
-            } else {
-                //  System.out.println(report);
-            }
-
-            String[] cases = {"им",
-                    "род",
-                    "дат",
-                    "вин",
-                    "твор",
-                    "пр",
-                    "парт",
-                    "местн",
-                    "зват"
-            };
-
-            boolean t1 = false;
-            for (int i = 0; i < cases.length; i++) {
-                for (int j = 0; j < i; j++) {
-                    if (report.contains(cases[i]) && report.contains(cases[j])) {
-                        if (i != 3 && j != 0) {
-                            t1 = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (!t1) {
-                for (int i = 0; i < cases.length; i++) {
-                    if (report.contains(cases[i])) {
-                        a[2] = cases[i];
-                        break;
-                    }
-                }
-            } else {
-                // System.out.println(report);
-            }
-
-        }
-
-        return a;
-    }
-
-    public String normalizer(String report) throws UnsupportedEncodingException {
-        String norm = UNKNOUN;
-        if (!report.equals(emptyReport)) {
-            int n = report.indexOf("=");
-            if (n != -1) {
-                norm = report.substring(report.indexOf("{") + 1, n);
-            } else {
-                n = report.indexOf("?");
-                if (n != -1) {
-                    norm = report.substring(report.indexOf("{") + 1, n);
-                }
-            }
-
-            //   System.out.println(word + " --> " + norm);
-        }
-        return norm;
-    }
-
-
-    public PartOfSpeech partOfSpeech(String report) throws UnsupportedEncodingException {
-        if (!report.equals(emptyReport)) {
-            int pos1 = report.indexOf('=') + 1;
-            int pos2 = pos1;
-            while (Character.isUpperCase(report.charAt(pos2))) {
-                pos2++;
-            }
-            String partOfSpeech = report.substring(pos1, pos2);
-
-            if (partOfSpeech.equals("A")) {
-                return PartOfSpeech.ADJECTIVE;
-            }
-            if (partOfSpeech.equals("S")) {
-                return PartOfSpeech.NOUN;
-            }
-            if (partOfSpeech.equals("ADV")) {
-                return PartOfSpeech.ADVERB;
-            }
-            if (partOfSpeech.equals("V")) {
-                return PartOfSpeech.VERB;
-            }
-            if (partOfSpeech.equals("PR")) {
-                return PartOfSpeech.PREPOSITION;
-            }
-            if (partOfSpeech.equals("PART")) {
-                return PartOfSpeech.PARTICLE;
-            }
-            if (partOfSpeech.equals("")) {
-                return PartOfSpeech.UNKNOWN;
-            }
-        }
-        return PartOfSpeech.UNKNOWN;
     }
 
     public static void main(String [] args){

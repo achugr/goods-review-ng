@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer.analyzer;
+package analyzer;
 /*
  *  Date: 18.02.12
  *   Time: 16:04
@@ -7,12 +7,12 @@ package ru.goodsreview.analyzer.analyzer;
  *      artemij.chugreev@gmail.com
  */
 
-import ru.goodsreview.analyzer.analyzer.algorithmTesting.Phrase;
-import ru.goodsreview.analyzer.analyzer.util.ThesisPattern;
-import ru.goodsreview.analyzer.analyzer.util.sentence.PartOfSpeech;
-import ru.goodsreview.analyzer.analyzer.util.sentence.ReviewTokens;
-import ru.goodsreview.analyzer.analyzer.util.sentence.Token;
-import ru.goodsreview.analyzer.analyzer.wordAnalyzer.MystemAnalyzer;
+import analyzer.algorithmTesting.Phrase;
+import analyzer.util.ThesisPattern;
+import analyzer.util.sentence.PartOfSpeech;
+import analyzer.util.sentence.ReviewTokens;
+import analyzer.util.sentence.Token;
+import analyzer.wordAnalyzer.MystemAnalyzer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

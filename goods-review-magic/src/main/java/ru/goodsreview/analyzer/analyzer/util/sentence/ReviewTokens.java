@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer.analyzer.util.sentence;
+package analyzer.util.sentence;
 /*
  *  Date: 11.02.12
  *   Time: 17:22
@@ -8,9 +8,10 @@ package ru.goodsreview.analyzer.analyzer.util.sentence;
  */
 
 
-import ru.goodsreview.analyzer.analyzer.util.dictionary.Dictionary;
-import ru.goodsreview.analyzer.analyzer.util.dictionary.MapDictionary;
-import ru.goodsreview.analyzer.analyzer.wordAnalyzer.MystemAnalyzer;
+import analyzer.util.dictionary.Dictionary;
+import analyzer.util.dictionary.MapDictionary;
+import analyzer.wordAnalyzer.MystemAnalyzer;
+import analyzer.wordAnalyzer.ReportAnalyzer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.StringTokenizer;
 
 public class ReviewTokens {
     //    list of tokens
-    private ArrayList<Token> tokensList;
+    private ArrayList<ArrayList<Token>> tokensList;
 
     private static Dictionary featureDictionary = new Dictionary("feat_dic.txt", "windows-1251");
     private static MapDictionary opinionDictionary = new MapDictionary("adjective_opinion_words.txt", "utf-8");
@@ -31,9 +32,9 @@ public class ReviewTokens {
      */
     public ReviewTokens(String review) throws IOException, InterruptedException {
         MystemAnalyzer mystemAnalyzer = MystemAnalyzer.getInstance();
-        String unk = MystemAnalyzer.getUnkValue();
+        String unk = ReportAnalyzer.getUnkValue();
 
-        tokensList = new ArrayList<Token>();
+        tokensList = new ArrayList<ArrayList<Token>>();
 
         StringTokenizer stringTokenizer = new StringTokenizer(review, " ");
         while (stringTokenizer.hasMoreElements()) {
@@ -42,27 +43,29 @@ public class ReviewTokens {
             currToken = currToken.toLowerCase();
 
             if (!currToken.equals("")) {
+                ArrayList<Token> newTokensList = new ArrayList<Token>();
                 PartOfSpeech partOfSpeach = PartOfSpeech.UNKNOWN;
                 String normForm = unk;
-                String gender = unk;
-                String number = unk;
-                String caseOf = unk;
 
                 String mystemReport = mystemAnalyzer.report(currToken);
 
                 if (!mystemReport.equals(MystemAnalyzer.getEmptyReportValue())) {
-                    PartOfSpeech mystemPartOfSpeech = mystemAnalyzer.partOfSpeech(mystemReport);
 
-                    String normToken = mystemAnalyzer.normalizer(mystemReport);
+                    PartOfSpeech mystemPartOfSpeech = ReportAnalyzer.partOfSpeech(mystemReport);
+
+                    String normToken = ReportAnalyzer.normalizer(mystemReport);
                     normForm = normToken;
 
                     if (mystemPartOfSpeech.equals(PartOfSpeech.ADJECTIVE)) {
                         if (opinionDictionary.contains(normToken)) {
+                           // ReportAnalyzer.wordCharacteristic1(mystemReport);
+                           // ReportAnalyzer.buildReportList(mystemReport);
                             partOfSpeach = PartOfSpeech.ADJECTIVE;
                         }
                     } else {
                         if (mystemPartOfSpeech.equals(PartOfSpeech.NOUN)) {
                             if (featureDictionary.contains(normToken)) {
+                              //  ReportAnalyzer.wordCharacteristic1(mystemReport);
                                 partOfSpeach = PartOfSpeech.NOUN;
                             }
                         } else {
@@ -70,23 +73,37 @@ public class ReviewTokens {
                         }
                     }
 
+                    ArrayList<String> reportList;
+                    if (partOfSpeach.equals(PartOfSpeech.NOUN) || partOfSpeach.equals(PartOfSpeech.ADJECTIVE)) {
+                        reportList = ReportAnalyzer.buildReportList(mystemReport);
+                    } else {
+                        reportList = new ArrayList<String>();
+                        reportList.add(mystemReport);
+                    }
+                    
+                    for (String rep:reportList){
+                        String[] a = ReportAnalyzer.wordCharacteristic(rep);
+                        String gender = a[0];
+                        String number = a[1];
+                        String caseOf = a[2];
+                        Token newToken = new Token(currToken, normForm, partOfSpeach, gender, number, caseOf);
+                        newTokensList.add(newToken);
+                    }
 
-                    String[] a = mystemAnalyzer.wordCharacteristic(mystemReport);
-                    gender = a[0];
-                    number = a[1];
-                    caseOf = a[2];
+
+                }else{
+                    newTokensList.add(new Token(currToken, unk, PartOfSpeech.UNKNOWN, unk, unk, unk));
                 }
 
-                Token token = new Token(currToken, normForm, partOfSpeach, gender, number, caseOf);
 
-                tokensList.add(token);
+                tokensList.add(newTokensList);
             }
     }
     }
 
 
 
-    public ArrayList<Token> getTokensList() {
+    public ArrayList<ArrayList<Token>> getTokensList() {
         return tokensList;
     }
 
