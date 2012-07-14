@@ -1,7 +1,5 @@
 package ru.goodsreview.core.model;
 
-import java.util.Date;
-
 /**
  * User: daddy-bear
  * Date: 14.07.12
