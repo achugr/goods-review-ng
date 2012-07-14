@@ -12,7 +12,7 @@ import analyzer.util.ThesisPattern;
 import analyzer.util.sentence.PartOfSpeech;
 import analyzer.util.sentence.ReviewTokens;
 import analyzer.util.sentence.Token;
-import analyzer.wordAnalyzer.MystemAnalyzer;
+import analyzer.wordAnalyzer.ReportAnalyzer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -35,7 +35,7 @@ public class ExtractThesis{
             String str = stringTokenizer.nextToken();
 
             ReviewTokens reviewTokens = new ReviewTokens(str);
-            ArrayList<Token> tokensList = reviewTokens.getTokensList();
+            ArrayList<ArrayList<Token>> tokensList = reviewTokens.getTokensList();
 
             for (ThesisPattern thesisPattern : thesisPatternList) {
                 ThesisPattern pattern = thesisPattern;
@@ -58,7 +58,7 @@ public class ExtractThesis{
     }
 
 
-    static void nounAtFirstPositionExtraction(ArrayList<Phrase> extractedThesisList, ArrayList<Token> tokensList, ThesisPattern pattern) throws UnsupportedEncodingException {
+    static void nounAtFirstPositionExtraction(ArrayList<Phrase> extractedThesisList, ArrayList<ArrayList<Token>> tokensList, ThesisPattern pattern) throws UnsupportedEncodingException {
         String token1 = null;
         PartOfSpeech noun = pattern.getPattern().get(0);
         PartOfSpeech part2 = pattern.getPattern().get(1);
@@ -66,7 +66,7 @@ public class ExtractThesis{
         int n2 = 0;
 
         for (int i = 0; i < tokensList.size(); i++) {
-            Token currToken = tokensList.get(i);
+            Token currToken = tokensList.get(i).get(0);
 
             if (currToken.getPartOfSpeech().equals(noun)) {
                 token1 = currToken.getContent();
@@ -75,12 +75,13 @@ public class ExtractThesis{
                 if (token1 != null && currToken.getPartOfSpeech().equals(part2)) {
                      n2 = i;
                     
-                    boolean patternCondition = (Math.abs(n1-n2)==1)&&(dictContains(tokensList.get(n1+1).getContent()));
-                    if(Math.abs(n1-n2)<=2||patternCondition){
+                   // boolean patternCondition = (Math.abs(n1-n2)==1)&&(dictContains(tokensList.get(n1+1).get(0).getContent()));
+                    boolean patternCondition = false;
+                    if(Math.abs(n1-n2)==1||patternCondition){
 
                         String token2 = currToken.getContent();
 
-                        if(checkWordsCorrespondence(tokensList.get(n1), tokensList.get(n2))) {
+                        if(checkTokenListCorrespondence(tokensList.get(n1), tokensList.get(n2))) {
 
                             //   System.out.println(token1+" "+tokensList.get(n1+1).getContent()+" "+token2);
                             //   token2= tokensList.get(n1+1).getContent()+" "+token2;
@@ -95,14 +96,14 @@ public class ExtractThesis{
         }
     }
 
-    static void nounAtSecondPositionExtraction(ArrayList<Phrase> extractedThesisList, ArrayList<Token> tokensList, ThesisPattern pattern) throws UnsupportedEncodingException {
+    static void nounAtSecondPositionExtraction(ArrayList<Phrase> extractedThesisList, ArrayList<ArrayList<Token>> tokensList, ThesisPattern pattern) throws UnsupportedEncodingException {
         String token1 = null;
         PartOfSpeech part2 = pattern.getPattern().get(0);
         PartOfSpeech noun = pattern.getPattern().get(1);
         int n1 = 0;
         int n2 = 0;
         for (int i = tokensList.size()-1; i >= 0 ; i--) {
-            Token currToken = tokensList.get(i);
+            Token currToken = tokensList.get(i).get(0);
 
             if (currToken.getPartOfSpeech().equals(noun)) {
                 token1 = currToken.getContent();
@@ -115,11 +116,11 @@ public class ExtractThesis{
 //                        patternCondition = (Math.abs(n1-n2)==1)&&(dictContains(tokensList.get(n2-1).getContent()));
 //                    }
 
-                    if(Math.abs(n1-n2)<=2||patternCondition){
+                    if(Math.abs(n1-n2)==1||patternCondition){
 
                         String token2 = currToken.getContent();
 
-                        if(checkWordsCorrespondence(tokensList.get(n1),tokensList.get(n2))) {
+                        if(checkTokenListCorrespondence(tokensList.get(n1),tokensList.get(n2))) {
                            // if(patternCondition){
                               //  System.out.println(tokensList.get(n2-1).getContent()+" "+token2+" "+token1);
                               //  token2 = tokensList.get(n2-1).getContent()+" "+token2;
@@ -146,13 +147,25 @@ public class ExtractThesis{
 
       boolean sep = con1 && con2 && con3;
        // boolean sep = con1 && con2;
-        //boolean sep = (con1 && con2) || (con1 && con3);
+       // boolean sep = (con1 && con2) || (con1 && con3);
 
         return sep;
     }
 
+    static boolean checkTokenListCorrespondence(ArrayList<Token> tokenList1, ArrayList<Token> tokenList2) throws UnsupportedEncodingException {
+        for (int i = 0; i < tokenList1.size(); i++) {
+            for (int j = 0; j < tokenList2.size(); j++) {
+                 if(checkWordsCorrespondence(tokenList1.get(i),tokenList2.get(j))){
+                     return true;
+                 }
+            }
+        }
+
+        return false;
+    }
+
     static boolean check(String s1, String s2) {
-        String unk = MystemAnalyzer.getUnkValue();
+        String unk = ReportAnalyzer.getUnkValue();
         if (!s1.equals(unk) && !s2.equals(unk)) {
             return s1.equals(s2);
         }

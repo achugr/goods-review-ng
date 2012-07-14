@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer;
+
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Required;
@@ -12,9 +12,9 @@ import ru.goodsreview.scheduler.context.Context;
 import java.util.List;
 
 /**
- * @author daddy-bear
- *         Date: 22.06.12
- */
+* @author daddy-bear
+*         Date: 22.06.12
+*/
 public abstract class AnalyzingSchedulerTask implements SchedulerTask {
 
     private EntityService entityService;
@@ -40,7 +40,7 @@ public abstract class AnalyzingSchedulerTask implements SchedulerTask {
                 entityUpdater.update(jsonObjects);
             }
         };
-        
+
         entityService.visitEntities(context.getParamAsLong("ENTITY_TYPE_ID"), new Visitor<JSONObject>() {
             @Override
             public void visit(final JSONObject object) {
