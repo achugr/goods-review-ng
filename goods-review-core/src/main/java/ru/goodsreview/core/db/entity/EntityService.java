@@ -27,7 +27,6 @@ import java.util.List;
 public class EntityService {
     private final static Logger log = Logger.getLogger(EntityService.class);
 
-    private final static String TYPE_ID_ATTR = "typeId";
     private final static String ID_ATTR = "id";
 
     private JdbcTemplate jdbcTemplate;
@@ -77,7 +76,7 @@ public class EntityService {
 
             try {
                 final String hash = Md5Helper.hash(entity);
-                final long typeId = Long.parseLong(entity.getString(TYPE_ID_ATTR));
+                final long typeId = Long.parseLong(entity.getString(EntityType.TYPE_ID_ATTR));
                 final long id = Long.parseLong(entity.getString(ID_ATTR));
 
                 final List<String> oldHash = jdbcTemplate.query("SELECT ENTITY_HASH FROM ENTITY WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?", new RowMapper<String>() {
@@ -116,7 +115,7 @@ public class EntityService {
                     protected void setValues(PreparedStatement ps, JSONObject element) throws SQLException {
                         try {
                             ps.setString(1, element.toString());
-                            ps.setLong(2, Long.parseLong(element.getString(TYPE_ID_ATTR)));
+                            ps.setLong(2, Long.parseLong(element.getString(EntityType.TYPE_ID_ATTR)));
                             ps.setLong(3, Long.parseLong(element.getString(ID_ATTR)));
                         } catch (JSONException e) {
                             log.error("Wrong entity", e);
