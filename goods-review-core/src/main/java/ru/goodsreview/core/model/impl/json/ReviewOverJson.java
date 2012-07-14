@@ -21,6 +21,7 @@ import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
  */
 public class ReviewOverJson implements Review {
 
+    private static final String THESISES_ATTR = "thesises";
     private final JSONObject jsonObject;
 
     public ReviewOverJson(final JSONObject jsonObject) {
@@ -76,9 +77,9 @@ public class ReviewOverJson implements Review {
     public List<Thesis> getThesises() {
         final List<Thesis> thesises = new ArrayList<Thesis>();
 
-        if (jsonObject.has("thesises")) {
+        if (jsonObject.has(THESISES_ATTR)) {
             try {
-                JSONArray thesisArray = jsonObject.getJSONArray("thesises");
+                final JSONArray thesisArray = jsonObject.getJSONArray(THESISES_ATTR);
                 for (int i = 0; i < thesisArray.length(); i++) {
                     thesises.add(new ThesisOverJson(thesisArray.getJSONObject(i)));
                 }
@@ -88,5 +89,23 @@ public class ReviewOverJson implements Review {
         }
 
         return thesises;
+    }
+
+    @Override
+    public void addThesises(final List<Thesis> thesises) {
+
+        try {
+            if (!jsonObject.has(THESISES_ATTR)) {
+                jsonObject.put(THESISES_ATTR, new JSONArray());
+            }
+
+            final JSONArray thesisArray = jsonObject.getJSONArray(THESISES_ATTR);
+            for (Thesis thesis : thesises) {
+                thesisArray.put(ThesisOverJson.toJsonObject(thesis));
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

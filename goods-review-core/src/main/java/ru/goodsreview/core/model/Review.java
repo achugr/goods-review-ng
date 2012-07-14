@@ -30,4 +30,6 @@ public interface Review {
 
     List<Thesis> getThesises();
 
+    void addThesises(final List<Thesis> thesises);
+
 }
