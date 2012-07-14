@@ -27,4 +27,6 @@ public interface Review {
 
     long getModelId();
 
+    //TODO extracted facts
+
 }
