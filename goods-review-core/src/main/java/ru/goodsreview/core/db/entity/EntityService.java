@@ -32,6 +32,38 @@ public class EntityService {
 
     private JdbcTemplate jdbcTemplate;
 
+    private final Batch<StorageEntity> batchForWrite = new Batch<StorageEntity>() {
+        @Override
+        public void handle(final List<StorageEntity> storageEntities) {
+            log.debug("batch for write flushed");
+            jdbcTemplate.batchUpdate("INSERT INTO ENTITY (ENTITY_ATTRS, ENTITY_HASH, WATCH_DATE, ENTITY_TYPE_ID, ENTITY_ID) VALUES (?, ?, CURRENT_TIMESTAMP, ?, ?)",
+                    EntityBatchPreparedStatementSetter.of(storageEntities));
+        }
+    };
+
+    private final Batch<StorageEntity> batchForUpdate = new Batch<StorageEntity>() {
+        @Override
+        public void handle(final List<StorageEntity> storageEntities) {
+            log.debug("batch for update flushed");
+            jdbcTemplate.batchUpdate("UPDATE ENTITY SET ENTITY_ATTRS = ?, ENTITY_HASH = ?, WATCH_DATE = CURRENT_TIMESTAMP WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
+                    EntityBatchPreparedStatementSetter.of(storageEntities));
+        }
+    };
+
+    private final Batch<StorageEntity> batchForWatch = new Batch<StorageEntity>() {
+        @Override
+        public void handle(final List<StorageEntity> storageEntities) {
+            log.debug("batch for watch flushed");
+            jdbcTemplate.batchUpdate("UPDATE ENTITY SET WATCH_DATE = CURRENT_TIMESTAMP WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
+                    new IterativeBatchPreparedStatementSetter<StorageEntity>(storageEntities) {
+                        @Override
+                        protected void setValues(final PreparedStatement ps, final StorageEntity element) throws SQLException {
+                            ps.setLong(1, element.getTypeId());
+                            ps.setLong(2, element.getId());
+                        }
+                    });
+        }
+    };
 
     @Required
     public void setJdbcTemplate(final JdbcTemplate jdbcTemplate) {
@@ -40,44 +72,11 @@ public class EntityService {
 
     public void writeEntities(final Collection<JSONObject> entities) {
 
-        final Batch<StorageEntity> batchForWrite = new Batch<StorageEntity>() {
-            @Override
-            public void handle(final List<StorageEntity> storageEntities) {
-                log.debug("batch for write flushed");
-                jdbcTemplate.batchUpdate("INSERT INTO ENTITY (ENTITY_ATTRS, ENTITY_HASH, WATCH_DATE, ENTITY_TYPE_ID, ENTITY_ID) VALUES (?, ?, CURRENT_TIMESTAMP, ?, ?)",
-                        EntityBatchPreparedStatementSetter.of(storageEntities));
-            }
-        };
-
-        final Batch<StorageEntity> batchForUpdate = new Batch<StorageEntity>() {
-            @Override
-            public void handle(final List<StorageEntity> storageEntities) {
-                log.debug("batch for update flushed");
-                jdbcTemplate.batchUpdate("UPDATE ENTITY SET ENTITY_ATTRS = ?, ENTITY_HASH = ?, WATCH_DATE = CURRENT_TIMESTAMP WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
-                        EntityBatchPreparedStatementSetter.of(storageEntities));
-            }
-        };
-
-        final Batch<StorageEntity> batchForWatch = new Batch<StorageEntity>() {
-            @Override
-            public void handle(final List<StorageEntity> storageEntities) {
-                log.debug("batch for watch flushed");
-                jdbcTemplate.batchUpdate("UPDATE ENTITY SET WATCH_DATE = CURRENT_TIMESTAMP WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
-                        new IterativeBatchPreparedStatementSetter<StorageEntity>(storageEntities) {
-                            @Override
-                            protected void setValues(final PreparedStatement ps, final StorageEntity element) throws SQLException {
-                                ps.setLong(1, element.getTypeId());
-                                ps.setLong(2, element.getId());
-                            }
-                        });
-            }
-        };
-
         //TODO this in batch
         for (final JSONObject entity : entities) {
 
             try {
-                final String hash = Md5Helper.hash(entity.toString());
+                final String hash = Md5Helper.hash(entity);
                 final long typeId = Long.parseLong(entity.getString(TYPE_ID_ATTR));
                 final long id = Long.parseLong(entity.getString(ID_ATTR));
 

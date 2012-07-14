@@ -24,13 +24,11 @@ public class JsonContext extends AbstractContext {
     }
 
     @Nullable
-    public static JsonContext from(final String jsonString) {
-        try {
-            return new JsonContext(new JSONObject(jsonString));
-        } catch (JSONException e) {
-            log.error(e.getMessage(), e);
-            return null;
+    public static JsonContext from(final String jsonString) throws JSONException {
+        if (jsonString.isEmpty()) {
+            return new JsonContext(new JSONObject());
         }
+        return new JsonContext(new JSONObject(jsonString));
     }
 
     @Override
@@ -45,12 +43,12 @@ public class JsonContext extends AbstractContext {
     @Override
     public List<String> getMultiParam(String paramName) {
         try {
-        final JSONArray jsonArray = jsonObject.getJSONArray(paramName);
-        final List<String> result = new ArrayList<String>();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            result.add(jsonArray.getString(i));
-        }
-        return result;
+            final JSONArray jsonArray = jsonObject.getJSONArray(paramName);
+            final List<String> result = new ArrayList<String>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                result.add(jsonArray.getString(i));
+            }
+            return result;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

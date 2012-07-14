@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Collection;
 
 /**
  * Artemij Chugreev
@@ -21,20 +22,29 @@ public final class StringUtil {
     private StringUtil() {
     }
 
-    public static String inputStreamToString(InputStream inputStream) {
+    public static String merge(final Collection<String> strings, final String separator) {
+        final StringBuilder sb = new StringBuilder();
+        String localSeparator = "";
+        for (final String s: strings) {
+            sb.append(localSeparator).append(s);
+            localSeparator = separator;
+        }
+        return sb.toString();
+    }
 
-//    	read it with BufferedReader
-        BufferedReader br
-                = new BufferedReader(
-                new InputStreamReader(inputStream));
+    public static String merge(final Collection<String> strings) {
+        return merge(strings, "");
+    }
 
-        StringBuilder sb = new StringBuilder();
+    public static String inputStreamToString(final InputStream inputStream) {
 
-        String line;
+        final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        final StringBuilder sb = new StringBuilder();
+
         try {
-            do {
-                line = br.readLine();
-            } while (line != null);
+            while (br.ready()) {
+                sb.append(br.readLine());
+            }
         } catch (IOException e) {
             log.error("can't read line from buffered reader", e);
         } finally {
@@ -44,6 +54,7 @@ public final class StringUtil {
                 log.error("can't close buffered reader", e);
             }
         }
+
         return sb.toString();
     }
 

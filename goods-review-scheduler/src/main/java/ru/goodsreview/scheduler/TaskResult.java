@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 public class TaskResult {
     private final static Logger log = Logger.getLogger(TaskResult.class);
     
-    private enum Status {
+    protected enum Status {
         OK,
         BAD
     }
