@@ -15,7 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.goodsreview.api.request.builder.CategoryRequestBuilder;
 import ru.goodsreview.api.request.builder.ModelRequestBuilder;
 import ru.goodsreview.api.request.builder.UrlRequest;
-import ru.goodsreview.core.db.entity.EntityServiceTest;
 
 import java.util.HashMap;
 
@@ -30,7 +29,7 @@ import java.util.HashMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("content-api-provider-test-bean.xml")
-public class ContentAPIProviderTest extends EntityServiceTest {
+public class ContentAPIProviderTest {
     private final static Logger log = Logger.getLogger(ContentAPIProviderTest.class);
 
     @Autowired
@@ -41,6 +40,16 @@ public class ContentAPIProviderTest extends EntityServiceTest {
         ModelRequestBuilder modelRequestBuilder = new ModelRequestBuilder();
         UrlRequest urlRequest = modelRequestBuilder.requestForModelById(7722505, new HashMap<String, String>());
         JSONObject result = contentAPIProvider.provide(urlRequest);
+//        provide method returns full jsonObject, empty jsonObject or throws RuntimeException
+        Assert.assertNotSame(result.toString(), "");
+    }
+
+    @Test
+    public void isValidAnswerTestOnCategoryRequest(){
+        CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
+        UrlRequest urlRequest = categoryRequestBuilder.requestForListOfCategories(new HashMap<String, String>());
+        JSONObject result = contentAPIProvider.provide(urlRequest);
+        System.out.println(result.toString());
 //        provide method returns full jsonObject, empty jsonObject or throws RuntimeException
         Assert.assertNotSame(result.toString(), "");
     }

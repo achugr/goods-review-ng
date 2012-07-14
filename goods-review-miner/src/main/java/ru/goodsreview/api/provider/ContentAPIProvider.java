@@ -81,7 +81,7 @@ public class ContentAPIProvider {
         }
     }
 
-    public List<JSONObject> provideAsArray(final UrlRequest urlRequest, final String[] parents, final String key) {
+    public List<JSONObject> provideAsList(final UrlRequest urlRequest, final String key, final String... parents) {
         JSONObject mainObject = provide(urlRequest);
         try {
 //            go down by json to needed key
