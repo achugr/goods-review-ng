@@ -75,7 +75,7 @@ public class TimeTableService {
 
         if (!alreadyRunningTasks.isEmpty()) {
             ps.addValue("ID", alreadyRunningTasks);
-            sql += "AND ID NOT IN :ID";
+            sql += "AND ID NOT IN (:ID)";
         }
         namedParameterJdbcTemplate.query(sql, ps, new RowCallbackHandler() {
             @Override

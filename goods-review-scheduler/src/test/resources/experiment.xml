@@ -47,4 +47,8 @@
     </bean>
 
     <bean id="simpleSchedulerTask" class="ru.goodsreview.scheduler.SimpleSchedulerTask"/>
+
+    <bean id="yetAnotherSimpleSchedulerTask" class="ru.goodsreview.scheduler.YetAnotherSimpleSchedulerTask"/>
+
+    <bean id="simpleSchedulerTaskWithParams" class="ru.goodsreview.scheduler.SimpleSchedulerTaskWithParams"/>
 </beans>

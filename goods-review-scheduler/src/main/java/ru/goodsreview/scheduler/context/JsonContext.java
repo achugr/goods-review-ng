@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import ru.goodsreview.core.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class JsonContext extends AbstractContext {
         try {
             return jsonObject.getString(paramName);
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            return StringUtil.EMPTY;
         }
     }
 

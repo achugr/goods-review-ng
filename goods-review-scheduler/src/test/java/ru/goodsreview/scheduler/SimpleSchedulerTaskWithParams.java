@@ -5,16 +5,17 @@ import ru.goodsreview.scheduler.context.Context;
 
 /**
  * User: daddy-bear
- * Date: 21.06.12
- * Time: 20:37
+ * Date: 14.07.12
+ * Time: 14:09
  */
-public class SimpleSchedulerTask implements SchedulerTask {
+public class SimpleSchedulerTaskWithParams implements SchedulerTask {
     private final static Logger log = Logger.getLogger(SimpleSchedulerTask.class);
 
     @Override
     public TaskResult run(final Context context) {
 
-        log.info("tik-tak");
+
+        log.info(context.getParam("key"));
 
         return TaskResult.ok("rrrroar");
     }

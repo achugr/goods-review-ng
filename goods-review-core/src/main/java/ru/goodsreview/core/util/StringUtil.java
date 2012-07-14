@@ -22,6 +22,8 @@ public final class StringUtil {
     private StringUtil() {
     }
 
+    public final static String EMPTY = "";
+
     public static String merge(final Collection<String> strings, final String separator) {
         final StringBuilder sb = new StringBuilder();
         String localSeparator = "";
