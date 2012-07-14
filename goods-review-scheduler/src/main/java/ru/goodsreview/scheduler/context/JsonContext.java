@@ -15,11 +15,9 @@ import java.util.List;
  * Time: 23:03
  */
 public class JsonContext extends AbstractContext {
-    private final static Logger log = Logger.getLogger(JsonContext.class);
-
     private final JSONObject jsonObject;
 
-    private JsonContext(JSONObject jsonObject) {
+    private JsonContext(final JSONObject jsonObject) {
         this.jsonObject = jsonObject;
     }
 
@@ -32,7 +30,7 @@ public class JsonContext extends AbstractContext {
     }
 
     @Override
-    public String getParam(String paramName) {
+    public String getParam(final String paramName) {
         try {
             return jsonObject.getString(paramName);
         } catch (JSONException e) {
@@ -41,7 +39,7 @@ public class JsonContext extends AbstractContext {
     }
 
     @Override
-    public List<String> getMultiParam(String paramName) {
+    public List<String> getMultiParam(final String paramName) {
         try {
             final JSONArray jsonArray = jsonObject.getJSONArray(paramName);
             final List<String> result = new ArrayList<String>();

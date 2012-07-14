@@ -36,7 +36,7 @@ public class TimeTableService {
     }
 
     @Required
-    public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public void setNamedParameterJdbcTemplate(final NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
@@ -112,7 +112,7 @@ public class TimeTableService {
     private final static String NEW_TASK_STATUS = "STARTED";
     private final static String NEW_TASK_MESSAGE = "new task started";
 
-    public void addNewRunningTask(List<Long> taskIds) {
+    public void addNewRunningTask(final List<Long> taskIds) {
         if (taskIds.size() == 0) {
             return;
         }
