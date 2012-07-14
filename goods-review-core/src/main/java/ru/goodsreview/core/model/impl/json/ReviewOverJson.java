@@ -3,7 +3,6 @@ package ru.goodsreview.core.model.impl.json;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import ru.goodsreview.core.db.entity.EntityType;
 import ru.goodsreview.core.model.Review;
 import ru.goodsreview.core.model.Thesis;
 import ru.goodsreview.core.util.DateUtil;

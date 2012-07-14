@@ -1,7 +1,6 @@
 package ru.goodsreview.core.model.impl.json;
 
 import org.json.JSONObject;
-import ru.goodsreview.core.db.entity.EntityType;
 import ru.goodsreview.core.model.Category;
 
 import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
