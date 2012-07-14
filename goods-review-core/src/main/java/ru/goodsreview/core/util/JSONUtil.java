@@ -28,4 +28,12 @@ public class JSONUtil {
             return StringUtil.EMPTY;
         }
     }
+
+    public static JSONObject unsafeGetJsonObject(final JSONObject jsonObject, final String parameterName) {
+        try {
+            return jsonObject.getJSONObject(parameterName);
+        } catch (JSONException e) {
+            return new JSONObject();
+        }
+    }
 }

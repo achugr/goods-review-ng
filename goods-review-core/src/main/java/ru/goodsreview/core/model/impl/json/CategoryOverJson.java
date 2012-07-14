@@ -1,4 +1,4 @@
-package ru.goodsreview.core.model.impl;
+package ru.goodsreview.core.model.impl.json;
 
 import org.json.JSONObject;
 import ru.goodsreview.core.db.entity.EntityType;
@@ -11,10 +11,12 @@ import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
  * Date: 14.07.12
  * Time: 17:11
  */
-public class CategoryOverJson extends OverJsonImpl implements Category {
+public class CategoryOverJson  implements Category {
+
+    private final JSONObject jsonObject;
 
     public CategoryOverJson(final JSONObject jsonObject) {
-        super(jsonObject, EntityType.MODEL);
+        this.jsonObject = jsonObject;
     }
 
     @Override

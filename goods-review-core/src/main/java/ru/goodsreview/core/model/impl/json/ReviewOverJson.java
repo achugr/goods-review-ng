@@ -1,11 +1,16 @@
-package ru.goodsreview.core.model.impl;
+package ru.goodsreview.core.model.impl.json;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import ru.goodsreview.core.db.entity.EntityType;
 import ru.goodsreview.core.model.Review;
+import ru.goodsreview.core.model.Thesis;
 import ru.goodsreview.core.util.DateUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
 
@@ -14,10 +19,12 @@ import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
  * Date: 14.07.12
  * Time: 14:39
  */
-public class ReviewOverJson extends OverJsonImpl implements Review {
+public class ReviewOverJson implements Review {
+
+    private final JSONObject jsonObject;
 
     public ReviewOverJson(final JSONObject jsonObject) {
-        super(jsonObject, EntityType.REVIEW);
+        this.jsonObject = jsonObject;
     }
 
     @Override
@@ -63,5 +70,23 @@ public class ReviewOverJson extends OverJsonImpl implements Review {
     @Override
     public long getModelId() {
         return Long.parseLong(unsafeGetString(jsonObject, "modelId"));
+    }
+
+    @Override
+    public List<Thesis> getThesises() {
+        final List<Thesis> thesises = new ArrayList<Thesis>();
+
+        if (jsonObject.has("thesises")) {
+            try {
+                JSONArray thesisArray = jsonObject.getJSONArray("thesises");
+                for (int i = 0; i < thesisArray.length(); i++) {
+                    thesises.add(new ThesisOverJson(thesisArray.getJSONObject(i)));
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return thesises;
     }
 }

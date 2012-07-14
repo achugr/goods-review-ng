@@ -1,4 +1,4 @@
-package ru.goodsreview.core.model.impl;
+package ru.goodsreview.core.model.impl.json;
 
 import org.json.JSONObject;
 import ru.goodsreview.core.db.entity.EntityType;

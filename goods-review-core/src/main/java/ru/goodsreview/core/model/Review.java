@@ -1,6 +1,7 @@
 package ru.goodsreview.core.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * User: daddy-bear
@@ -27,6 +28,6 @@ public interface Review {
 
     long getModelId();
 
-    //TODO extracted facts
+    List<Thesis> getThesises();
 
 }
