@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import ru.goodsreview.core.util.IterativeBatchPreparedStatementSetter;
-import ru.goodsreview.core.util.db.DbUtil;
 import ru.goodsreview.scheduler.context.JsonContext;
 
 import java.sql.PreparedStatement;
@@ -66,8 +65,8 @@ public class TimeTableService {
 
     private final static String BASE_SQL = "SELECT * FROM TASK WHERE SCHEDULER_NAME = :SCH_NAME ";
 
-    public List<TaskParameters> fetchNewTasks(final String schedulerName, final Collection<Long> alreadyRunningTasks) {
-        final List<TaskParameters> newTasks = new ArrayList<TaskParameters>();
+    public List<TaskInfo> fetchNewTasks(final String schedulerName, final Collection<Long> alreadyRunningTasks) {
+        final List<TaskInfo> newTasks = new ArrayList<TaskInfo>();
         final long currentMillis = System.currentTimeMillis();
 
         String sql = BASE_SQL;
@@ -95,7 +94,7 @@ public class TimeTableService {
                 }
 
                 try {
-                    newTasks.add(new TaskParameters(rs.getLong("ID"), rs.getString("BEAN_NAME"), JsonContext.from(rs.getString("PARAMS"))));
+                    newTasks.add(new TaskInfo(rs.getLong("ID"), rs.getString("BEAN_NAME"), JsonContext.from(rs.getString("PARAMS"))));
                 } catch (JSONException e) {
                     log.error("could not resolve task parameters", e);
                 }

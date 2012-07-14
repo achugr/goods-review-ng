@@ -59,9 +59,9 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
                         checkTasks();
 
                         final List<Long> newTaskIds = new ArrayList<Long>();
-                        for (TaskParameters taskParameters : timeTableService.fetchNewTasks(schedulerName, currentTasksFuture.keySet())) {
-                            executeTask(taskParameters);
-                            newTaskIds.add(taskParameters.getId());
+                        for (TaskInfo taskInfo : timeTableService.fetchNewTasks(schedulerName, currentTasksFuture.keySet())) {
+                            executeTask(taskInfo);
+                            newTaskIds.add(taskInfo.getId());
                         }
 
                         timeTableService.addNewRunningTask(newTaskIds);
@@ -76,19 +76,19 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
 
             }
 
-            private void executeTask(final TaskParameters parameters) {
-                final SchedulerTask task = (SchedulerTask) Scheduler.this.applicationContext.getBean(parameters.getBeanName());
+            private void executeTask(final TaskInfo info) {
+                final SchedulerTask task = (SchedulerTask) Scheduler.this.applicationContext.getBean(info.getBeanName());
 
                 final Future<TaskResult> futureResult = executorService.submit(new Callable<TaskResult>() {
 
                     @Override
                     public TaskResult call() throws Exception {
-                        Thread.currentThread().setName("SchedulerTask-" + parameters.getId());
-                        return new ThrowableCatchingSchedulerTask(task).run(parameters.getContext());
+                        Thread.currentThread().setName("SchedulerTask-" + info.getId());
+                        return new ThrowableCatchingSchedulerTask(task).run(info.getContext());
                     }
                 });
 
-                currentTasksFuture.put(parameters.getId(), futureResult);
+                currentTasksFuture.put(info.getId(), futureResult);
             }
 
             private void checkTasks() {

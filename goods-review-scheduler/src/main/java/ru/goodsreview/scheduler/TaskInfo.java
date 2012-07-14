@@ -7,13 +7,13 @@ import ru.goodsreview.scheduler.context.Context;
  * Date: 21.06.12
  * Time: 20:52
  */
-public class TaskParameters {
+public class TaskInfo {
 
     private final long id;
     private final String beanName;
     private final Context context;
 
-    public TaskParameters(final long id, final String beanName, final Context context) {
+    public TaskInfo(final long id, final String beanName, final Context context) {
         this.id = id;
         this.beanName = beanName;
         this.context = context;
