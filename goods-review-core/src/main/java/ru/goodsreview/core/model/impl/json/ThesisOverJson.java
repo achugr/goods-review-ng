@@ -13,6 +13,10 @@ import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
  */
 public class ThesisOverJson implements Thesis {
 
+    protected static final String VALUE_ATTR = "value";
+    protected static final String IMPORTANCE_ATTR = "value";
+    protected static final String SENTIMENT_ATTR = "value";
+
     protected final JSONObject jsonObject;
 
     public ThesisOverJson(final JSONObject jsonObject) {
@@ -21,16 +25,16 @@ public class ThesisOverJson implements Thesis {
 
     @Override
     public String getValue() {
-        return unsafeGetString(jsonObject, "value");
+        return unsafeGetString(jsonObject, VALUE_ATTR);
     }
 
     @Override
     public double getImportance() {
-        return Double.parseDouble(unsafeGetString(jsonObject, "importance"));
+        return Double.parseDouble(unsafeGetString(jsonObject, IMPORTANCE_ATTR));
     }
 
     @Override
     public double getSentiment() {
-        return Double.parseDouble(unsafeGetString(jsonObject, "sentiment"));
+        return Double.parseDouble(unsafeGetString(jsonObject, SENTIMENT_ATTR));
     }
 }

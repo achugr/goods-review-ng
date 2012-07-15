@@ -12,7 +12,9 @@ import ru.goodsreview.core.model.Thesis;
  * Date: 15.07.12
  * Time: 9:10
  */
-public class TransformerUtil {
+public final class TransformerUtil {
+
+    private TransformerUtil() {}
 
     public static JSONObject fromModel(final Model model) {
         return ((ModelOverJson) model).jsonObject;
@@ -28,9 +30,9 @@ public class TransformerUtil {
         }
         try {
             final JSONObject rawThesis = new JSONObject();
-            rawThesis.put("value", thesis.getValue());
-            rawThesis.put("importance", thesis.getImportance());
-            rawThesis.put("sentiment", thesis.getSentiment());
+            rawThesis.put(ThesisOverJson.VALUE_ATTR, thesis.getValue());
+            rawThesis.put(ThesisOverJson.IMPORTANCE_ATTR, thesis.getImportance());
+            rawThesis.put(ThesisOverJson.SENTIMENT_ATTR, thesis.getSentiment());
 
             return rawThesis;
         } catch (JSONException e) {
