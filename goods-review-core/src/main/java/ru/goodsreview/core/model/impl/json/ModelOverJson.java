@@ -5,7 +5,7 @@ import ru.goodsreview.core.model.Model;
 
 import java.util.List;
 
-import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
+import static ru.goodsreview.core.util.JSONUtil.*;
 
 /**
  * User: daddy-bear
@@ -32,7 +32,8 @@ public class ModelOverJson implements Model {
 
     @Override
     public List<String> getPhotos() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return unsafeJsonArrayToStringList(unsafeGetJsonArray(unsafeGetJsonObject(jsonObject, "photos"), "photo"));
+
     }
 
     @Override

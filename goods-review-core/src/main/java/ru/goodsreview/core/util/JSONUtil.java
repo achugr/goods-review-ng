@@ -36,4 +36,30 @@ public class JSONUtil {
             return new JSONObject();
         }
     }
+
+    public static JSONArray unsafeGetJsonArray(final JSONObject jsonObject, final String parameterName) {
+        try {
+            return jsonObject.getJSONArray(parameterName);
+        } catch (JSONException e) {
+            return new JSONArray();
+        }
+    }
+
+    public static List<String> jsonArrayToStringList(final JSONArray jsonArray) throws JSONException {
+        final List<String> result = new ArrayList<String>(jsonArray.length());
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            result.add(jsonArray.getString(i));
+        }
+
+        return result;
+    }
+
+    public static List<String> unsafeJsonArrayToStringList(final JSONArray jsonArray) {
+        try {
+            return jsonArrayToStringList(jsonArray);
+        } catch (JSONException e) {
+            return new ArrayList<String>();
+        }
+    }
 }
