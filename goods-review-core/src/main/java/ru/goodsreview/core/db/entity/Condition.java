@@ -7,6 +7,8 @@ package ru.goodsreview.core.db.entity;
  */
 public class Condition {
 
+    //TODO if we really need this
+
     private Condition() {}
 
     public static class Builder {
