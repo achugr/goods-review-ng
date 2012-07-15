@@ -12,7 +12,7 @@ import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
  */
 public class CategoryOverJson  implements Category {
 
-    private final JSONObject jsonObject;
+    protected final JSONObject jsonObject;
 
     public CategoryOverJson(final JSONObject jsonObject) {
         this.jsonObject = jsonObject;

@@ -13,7 +13,7 @@ import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
  */
 public class ThesisOverJson implements Thesis {
 
-    private final JSONObject jsonObject;
+    protected final JSONObject jsonObject;
 
     public ThesisOverJson(final JSONObject jsonObject) {
         this.jsonObject = jsonObject;
@@ -32,21 +32,5 @@ public class ThesisOverJson implements Thesis {
     @Override
     public double getSentiment() {
         return Double.parseDouble(unsafeGetString(jsonObject, "sentiment"));
-    }
-
-    protected static JSONObject toJsonObject(final Thesis thesis) {
-        if (thesis instanceof ThesisOverJson) {
-            return ((ThesisOverJson) thesis).jsonObject;
-        }
-        try {
-            final JSONObject rawThesis = new JSONObject();
-            rawThesis.put("value", thesis.getValue());
-            rawThesis.put("importance", thesis.getImportance());
-            rawThesis.put("sentiment", thesis.getSentiment());
-
-            return rawThesis;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

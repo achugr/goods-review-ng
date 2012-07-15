@@ -14,7 +14,7 @@ import static ru.goodsreview.core.util.JSONUtil.*;
  */
 public class ModelOverJson implements Model {
 
-    private final JSONObject jsonObject;
+    protected final JSONObject jsonObject;
 
     public ModelOverJson(final JSONObject jsonObject) {
         this.jsonObject = jsonObject;

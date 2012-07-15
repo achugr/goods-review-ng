@@ -21,7 +21,7 @@ import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
 public class ReviewOverJson implements Review {
 
     private static final String THESISES_ATTR = "thesises";
-    private final JSONObject jsonObject;
+    protected final JSONObject jsonObject;
 
     public ReviewOverJson(final JSONObject jsonObject) {
         this.jsonObject = jsonObject;
@@ -100,7 +100,7 @@ public class ReviewOverJson implements Review {
 
             final JSONArray thesisArray = jsonObject.getJSONArray(THESISES_ATTR);
             for (Thesis thesis : thesises) {
-                thesisArray.put(ThesisOverJson.toJsonObject(thesis));
+                thesisArray.put(TransformerUtil.fromThesis(thesis));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
