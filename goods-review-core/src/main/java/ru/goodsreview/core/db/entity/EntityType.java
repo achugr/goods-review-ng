@@ -11,7 +11,8 @@ import org.json.JSONObject;
 public enum EntityType {
 
     MODEL(1L),
-    REVIEW(2L);
+    REVIEW(2L),
+    CATEGORY(3L);
 
     public final static String TYPE_ID_ATTR = "typeId";
 
