@@ -9,17 +9,17 @@ public class Pair<A, B> {
     public A first;
     public B second;
 
-    public Pair(A first, B second) {
+    public Pair(final A first, final B second) {
         this.first = first;
         this.second = second;
     }
 
-    public static <A, B> Pair<A, B> of(A first, B second) {
+    public static <A, B> Pair<A, B> of(final A first, final B second) {
         return new Pair<A, B>(first, second);
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (o == this) {
             return true;
         }
