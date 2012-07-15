@@ -1,38 +1,38 @@
-package ru.goodsreview.analyzer.analyzer.util.dictionary;
+package analyzer.util.dictionary;
+/*
+ *  Date: 08.02.12
+ *   Time: 18:02
+ *   Author: 
+ *      Artemij Chugreev 
+ *      artemij.chugreev@gmail.com
+ */
 
 import java.io.*;
-import java.util.HashMap;
+import java.util.HashSet;
 
-/**
- * Date: 14.05.12
- * Time: 00:10
- * Author:
- * Ilya Makeev
- * ilya.makeev@gmail.com
- */
-public class MapDictionary {
-    private HashMap<String,Double> words;
+public class Dictionary {
+    private HashSet<String> words;
 
-    public MapDictionary(String dictionaryFileName, String encoding) {
-        this.words = new HashMap<String,Double>();
+    public Dictionary(String dictionaryFileName, String encoding) {
+        this.words = new HashSet<String>();
 
         try {
-            FileInputStream fis1 = new FileInputStream(dictionaryFileName);
-            InputStreamReader isr1 = new InputStreamReader(fis1, encoding);
-            BufferedReader in = new BufferedReader(isr1);
+            FileInputStream fis = new FileInputStream(dictionaryFileName);
+            InputStreamReader isr = new InputStreamReader(fis, encoding);
+            BufferedReader in = new BufferedReader(isr);
 
             String s = in.readLine();
             while (s != null) {
                 s = s.trim();
                 if (s.length() != 0) {
-
+                    /*if(s.charAt(0)=='﻿') {
+                        s = s.substring(1);
+                    }*/
                     if (s.indexOf(" ") != -1) {
-                        int n = s.indexOf(" ");
-                        String word = s.substring(0, n);
-                        Double positivity = Double.parseDouble(s.substring(n+1));
-                        words.put(word,positivity);
+                        words.add(s.substring(0, s.indexOf(" ")));
+                    } else {
+                        words.add(s);
                     }
-
                 }
                 s = in.readLine();
             }
@@ -46,13 +46,13 @@ public class MapDictionary {
     }
 
 
-    public HashMap<String,Double> getDictionary() {
+    public HashSet<String> getDictionary() {
         return this.words;
     }
 
     public void print() {
-        for (String word : words.keySet()) {
-            System.out.println(word+" "+words.get(word));
+        for (String word : words) {
+            System.out.println(word);
         }
     }
 
@@ -63,11 +63,11 @@ public class MapDictionary {
      * @return true if word is here. false — otherwise
      */
     public boolean contains(String word) {
-        return words.containsKey(word);
+        return words.contains(word);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        MapDictionary dictionary = new MapDictionary("adjective_opinion_words.txt", "utf-8");
+        Dictionary dictionary = new Dictionary("feat_dic.txt", "windows-1251");
         dictionary.print();
     }
 }

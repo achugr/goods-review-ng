@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer.analyzer.algorithmTesting;
+package analyzer.algorithmTesting;
 
 /**
  * Date: 05.02.12

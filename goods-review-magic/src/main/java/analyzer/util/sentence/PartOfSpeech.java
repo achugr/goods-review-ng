@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer.analyzer.util.sentence;
+package analyzer.util.sentence;
 
 public enum PartOfSpeech {
     ADJECTIVE,
@@ -7,5 +7,5 @@ public enum PartOfSpeech {
     VERB,
     PARTICLE,
     PREPOSITION,
-    UNKNOWN
+    UNKNOWN;
 }

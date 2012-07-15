@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer.analyzer.util;
+package analyzer.util;
 
 /**
  * Artemij Chugreev
