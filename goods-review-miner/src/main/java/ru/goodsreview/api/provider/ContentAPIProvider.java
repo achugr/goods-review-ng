@@ -1,26 +1,17 @@
 package ru.goodsreview.api.provider;
 
-import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.URI;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.context.ContextConfiguration;
 import ru.goodsreview.api.request.builder.UrlRequest;
 import ru.goodsreview.core.util.JSONUtil;
-import ru.goodsreview.core.util.StringUtil;
 
 /**
  * Artemij Chugreev
@@ -30,16 +21,18 @@ import ru.goodsreview.core.util.StringUtil;
  * skype: achugr
  */
 
-public class ContentAPIProvider {
-    private final static Logger log = Logger.getLogger(ContentAPIProvider.class);
-    public static final String AUTHORIZATION_HEADER = "Authorization";
+public class ContentApiProvider {
+    private final static Logger log = Logger.getLogger(ContentApiProvider.class);
+    private static final String AUTHORIZATION_HEADER = "Authorization";
+    private static final int HTTP_OK = 200;
+    private static final String TYPE_ID = "typeId";
 
-    public String apiKey;
+    private String apiKey;
 
     private final HttpClient httpClient;
     private long lastQueryTime = 0;
 
-    public ContentAPIProvider() {
+    public ContentApiProvider() {
         this.httpClient = new HttpClient();
     }
 
@@ -51,7 +44,6 @@ public class ContentAPIProvider {
     public JSONObject provide(final UrlRequest urlRequest) {
         final GetMethod getMethod = new GetMethod(urlRequest.getUrl());
         getMethod.addRequestHeader(AUTHORIZATION_HEADER, apiKey);
-
 //       timeout
         if (System.currentTimeMillis() - lastQueryTime < urlRequest.getResourceType().getMaxTimeout()) {
             try {
@@ -64,9 +56,14 @@ public class ContentAPIProvider {
 
         try {
             httpClient.executeMethod(getMethod);
-
             final JSONObject jsonObject = new JSONObject(getMethod.getResponseBodyAsString());
-            jsonObject.put("typeId", urlRequest.getResourceType().getTypeId());
+//            if http status code isn't 202 => something wrong
+            if(getMethod.getStatusCode() != HTTP_OK){
+                log.error(jsonObject.toString());
+                return new JSONObject();
+            }
+
+            jsonObject.put(TYPE_ID, urlRequest.getResourceType().getTypeId());
             return jsonObject;
         } catch (IOException e) {
             log.error("probably, can't execute http get method", e);

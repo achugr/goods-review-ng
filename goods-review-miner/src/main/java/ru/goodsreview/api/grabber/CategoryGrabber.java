@@ -1,7 +1,7 @@
 package ru.goodsreview.api.grabber;
 
 import org.json.JSONObject;
-import ru.goodsreview.api.provider.ContentAPIProvider;
+import ru.goodsreview.api.provider.ContentApiProvider;
 import ru.goodsreview.api.request.builder.CategoryRequestBuilder;
 import ru.goodsreview.api.request.builder.UrlRequest;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * 13.07.12
  */
 public class CategoryGrabber {
-    private final ContentAPIProvider contentAPIProvider;
+    private final ContentApiProvider contentApiProvider;
 
     private enum JSONKeys {
 
@@ -31,14 +31,14 @@ public class CategoryGrabber {
         }
     }
 
-    public CategoryGrabber(ContentAPIProvider contentAPIProvider){
-        this.contentAPIProvider = contentAPIProvider;
+    public CategoryGrabber(ContentApiProvider contentApiProvider){
+        this.contentApiProvider = contentApiProvider;
     }
 
     public List<JSONObject> grabMainCategoriesList(){
         CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
         UrlRequest urlRequest = categoryRequestBuilder.requestForListOfCategories(new HashMap<String, String>());
-        return contentAPIProvider.provideAsList(urlRequest, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey());
+        return contentApiProvider.provideAsList(urlRequest, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey());
     }
 
 //    public List<JSONObject> grabChildCategoriesList(){

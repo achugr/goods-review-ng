@@ -2,14 +2,11 @@ package ru.goodsreview.api.provider;
 
 
 import org.apache.log4j.Logger;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.goodsreview.api.request.builder.CategoryRequestBuilder;
@@ -24,22 +21,22 @@ import java.util.HashMap;
  */
 
 /**
- * class for testing ContentAPIProvider
+ * class for testing ContentApiProvider
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("content-api-provider-test-bean.xml")
-public class ContentAPIProviderTest {
-    private final static Logger log = Logger.getLogger(ContentAPIProviderTest.class);
+public class ContentApiProviderTest {
+    private final static Logger log = Logger.getLogger(ContentApiProviderTest.class);
 
     @Autowired
-    private ContentAPIProvider contentAPIProvider;
+    private ContentApiProvider contentApiProvider;
 
     @Test
     public void isValidAnswerTest() {
         ModelRequestBuilder modelRequestBuilder = new ModelRequestBuilder();
         UrlRequest urlRequest = modelRequestBuilder.requestForModelById(7722505, new HashMap<String, String>());
-        JSONObject result = contentAPIProvider.provide(urlRequest);
+        JSONObject result = contentApiProvider.provide(urlRequest);
 //        provide method returns full jsonObject, empty jsonObject or throws RuntimeException
         Assert.assertNotSame(result.toString(), "");
     }
@@ -48,7 +45,7 @@ public class ContentAPIProviderTest {
     public void isValidAnswerTestOnCategoryRequest(){
         CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
         UrlRequest urlRequest = categoryRequestBuilder.requestForListOfCategories(new HashMap<String, String>());
-        JSONObject result = contentAPIProvider.provide(urlRequest);
+        JSONObject result = contentApiProvider.provide(urlRequest);
         System.out.println(result.toString());
 //        provide method returns full jsonObject, empty jsonObject or throws RuntimeException
         Assert.assertNotSame(result.toString(), "");

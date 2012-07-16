@@ -14,7 +14,7 @@
         <property name="location" value="classpath:secure-api.properties"/>
     </bean>
 
-    <bean id="secureProperties" class="ru.goodsreview.api.provider.ContentAPIProvider" lazy-init="false">
+    <bean id="secureProperties" class="ru.goodsreview.api.provider.ContentApiProvider" lazy-init="false">
         <property name="apiKey" value="${api-key}"/>
     </bean>
 
