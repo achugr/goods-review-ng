@@ -114,8 +114,8 @@ public class ThesisExtractionTestDocument {
         if (!t.equals("")) {
             if (t.contains(",")) {
                 String[] arr = t.split(",");
-                for (int i = 0; i < arr.length; i++) {
-                    String s1 = arr[i];
+                for (String anArr : arr) {
+                    String s1 = anArr;
                     s1 = s1.trim();
                     if (s1.contains("[") && !s1.contains("|u")) {
                         s1 = splitBracket(s1);
@@ -200,9 +200,9 @@ public class ThesisExtractionTestDocument {
                 }
 
 
-                if (reviewOpen == true) {
+                if (reviewOpen) {
                     StringBuffer sb = new StringBuffer();
-                    while (reviewOpen == true && s != null) {
+                    while (reviewOpen && s != null) {
                         s = in.readLine();
                         if (s.contains("</review>")) {
                             reviewOpen = false;
@@ -240,14 +240,9 @@ public class ThesisExtractionTestDocument {
     static void compare(ArrayList<Product> algoProThesis, ArrayList<Product> humProThesis, String filePath) throws IOException {
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filePath)));
 
-        for (int i = 0; i < humProThesis.size(); i++) {
-            Product humProduct = humProThesis.get(i);
-
-            for (int j = 0; j < algoProThesis.size(); j++) {
-                Product algoProduct = algoProThesis.get(j);
-
+        for (Product humProduct : humProThesis) {
+            for (Product algoProduct : algoProThesis) {
                 if (algoProduct.getId().equals(humProduct.getId())) {
-
                     comparator(algoProduct, humProduct, out);
                     break;
                 }
@@ -290,13 +285,13 @@ public class ThesisExtractionTestDocument {
                 numAlgo += algoThesis.size();
                 numHum += humThesis.size();
 
-                for (int i = 0; i < humThesis.size(); i++) {
-                    String humFeature = humThesis.get(i).getFeature();
-                    String sentence = humThesis.get(i).getOpinion();
+                for (Phrase hThesis : humThesis) {
+                    String humFeature = hThesis.getFeature();
+                    String sentence = hThesis.getOpinion();
                     // System.out.println("   "+hThesis+" "+sentence);
-                    for (int j = 0; j < algoThesis.size(); j++) {
-                        String algoFeature = algoThesis.get(j).getFeature();
-                        String opinion = algoThesis.get(j).getOpinion();
+                    for (Phrase aThesis : algoThesis) {
+                        String algoFeature = aThesis.getFeature();
+                        String opinion = aThesis.getOpinion();
                         // System.out.println(alThesis+" "+opinion);
 
                         if (contains(humFeature, ReportAnalyzer.normalizer(mystemAnalyzer.report(algoFeature)))) {
@@ -312,13 +307,13 @@ public class ThesisExtractionTestDocument {
                 }
 
 
-                for (int i = 0; i < algoThesis.size(); i++) {
+                for (Phrase aThesis : algoThesis) {
                     boolean t = false;
-                    String algoFeature = algoThesis.get(i).getFeature();
-                    String opinion = algoThesis.get(i).getOpinion();
-                    for (int j = 0; j < humThesis.size(); j++) {
-                        String humFeature = humThesis.get(j).getFeature();
-                        String sentence = humThesis.get(j).getOpinion();
+                    String algoFeature = aThesis.getFeature();
+                    String opinion = aThesis.getOpinion();
+                    for (Phrase hThesis : humThesis) {
+                        String humFeature = hThesis.getFeature();
+                        String sentence = hThesis.getOpinion();
                         if (contains(humFeature, ReportAnalyzer.normalizer(mystemAnalyzer.report(algoFeature)))) {
                             if (contains(sentence, algoFeature) && contains(sentence, opinion)) {
                                 t = true;
@@ -326,21 +321,21 @@ public class ThesisExtractionTestDocument {
                             }
                         }
                     }
-                    if (t == false) {
+                    if (!t) {
                         out.println("      <algo>" + algoFeature + " " + opinion + "</algo>");
                         add(dictionaryScores, ReportAnalyzer.normalizer(mystemAnalyzer.report(opinion)), false);
                         //System.out.println("      "+algoFeature + " "+opinion);
                     }
                 }
 
-                for (int i = 0; i < humThesis.size(); i++) {
+                for (Phrase hThesis : humThesis) {
                     boolean t = false;
-                    String humFeature = humThesis.get(i).getFeature();
-                    String sentence = humThesis.get(i).getOpinion();
+                    String humFeature = hThesis.getFeature();
+                    String sentence = hThesis.getOpinion();
 
-                    for (int j = 0; j < algoThesis.size(); j++) {
-                        String algoFeature = algoThesis.get(j).getFeature();
-                        String opinion = algoThesis.get(j).getOpinion();
+                    for (Phrase aThesis : algoThesis) {
+                        String algoFeature = aThesis.getFeature();
+                        String opinion = aThesis.getOpinion();
 
                         if (contains(humFeature, ReportAnalyzer.normalizer(mystemAnalyzer.report(algoFeature)))) {
                             if (contains(sentence, algoFeature) && contains(sentence, opinion)) {
@@ -349,7 +344,7 @@ public class ThesisExtractionTestDocument {
                             }
                         }
                     }
-                    if (t == false) {
+                    if (!t) {
                         out.println("      <hum>" + humFeature + "</hum>");
                     }
                 }

@@ -28,7 +28,7 @@ public class Dictionary {
                     /*if(s.charAt(0)=='﻿') {
                         s = s.substring(1);
                     }*/
-                    if (s.indexOf(" ") != -1) {
+                    if (s.contains(" ")) {
                         words.add(s.substring(0, s.indexOf(" ")));
                     } else {
                         words.add(s);

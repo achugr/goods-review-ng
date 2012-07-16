@@ -1,5 +1,6 @@
 package analyzer.wordAnalyzer;
 
+import analyzer.util.sentence.GrammarCase;
 import analyzer.util.sentence.PartOfSpeech;
 
 import java.io.UnsupportedEncodingException;
@@ -64,21 +65,12 @@ public class ReportAnalyzer {
                 //  System.out.println(report);
             }
 
-            String[] cases = {"им",
-                    "род",
-                    "дат",
-                    "вин",
-                    "твор",
-                    "пр",
-                    "парт",
-                    "местн",
-                    "зват"
-            };
+            GrammarCase[] cases = GrammarCase.values();
 
             boolean t1 = false;
             for (int i = 0; i < cases.length; i++) {
                 for (int j = 0; j < i; j++) {
-                    if (report.contains(cases[i]) && report.contains(cases[j])) {
+                    if (report.contains(cases[i].toString()) && report.contains(cases[j].toString())) {
                         if (i != 3 && j != 0) {
                             t1 = true;
                             break;
@@ -88,9 +80,9 @@ public class ReportAnalyzer {
             }
 
             if (!t1) {
-                for (int i = 0; i < cases.length; i++) {
-                    if (report.contains(cases[i])) {
-                        a[2] = cases[i];
+                for (GrammarCase aCase : cases) {
+                    if (report.contains(aCase.toString())) {
+                        a[2] = aCase.toString();
                         break;
                     }
                 }
@@ -102,78 +94,6 @@ public class ReportAnalyzer {
 
         return a;
     }
-
-
-//    public static String[] wordCharacteristic1(String report) {
-//        String[] a = {UNKNOUN, UNKNOUN, UNKNOUN};
-//
-//        if (!report.equals(MystemAnalyzer.getEmptyReportValue())) {
-//            if (!((report.contains("жен") && report.contains("муж")) ||
-//                    (report.contains("жен") && report.contains("сред")) ||
-//                    (report.contains("муж") && report.contains("сред")))) {
-//
-//                if (report.contains("жен")) {
-//                    a[0] = "жен";
-//                }
-//                if (report.contains("муж")) {
-//                    a[0] = "муж";
-//                }
-//                if (report.contains("сред")) {
-//                    a[0] = "сред";
-//                }
-//            } else {
-//                System.out.println(report);
-//            }
-//
-//            if (!((report.contains("ед") && report.contains("мн")))) {
-//                if (report.contains("ед")) {
-//                    a[1] = "ед";
-//                }
-//                if (report.contains("мн")) {
-//                    a[1] = "мн";
-//                }
-//            } else {
-//                System.out.println(report);
-//            }
-//
-//            String[] cases = {"им",
-//                    "род",
-//                    "дат",
-//                    "вин",
-//                    "твор",
-//                    "пр",
-//                    "парт",
-//                    "местн",
-//                    "зват"
-//            };
-//
-//            boolean t1 = false;
-//            for (int i = 0; i < cases.length; i++) {
-//                for (int j = 0; j < i; j++) {
-//                    if (report.contains(cases[i]) && report.contains(cases[j])) {
-//                        if (i != 3 && j != 0) {
-//                            t1 = true;
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//
-//            if (!t1) {
-//                for (int i = 0; i < cases.length; i++) {
-//                    if (report.contains(cases[i])) {
-//                        a[2] = cases[i];
-//                        break;
-//                    }
-//                }
-//            } else {
-//                System.out.println(report);
-//            }
-//
-//        }
-//
-//        return a;
-//    }
 
 
     public static PartOfSpeech partOfSpeech(String report) throws UnsupportedEncodingException {
@@ -274,7 +194,8 @@ public class ReportAnalyzer {
        String s1 = "модели{модель=S,жен,неод=(им,мн|род,ед|дат,ед|вин,мн|пр,ед)|модель=S,жен,од=(им,мн|род,ед|дат,ед|вин,мн|пр,ед)}";
        String s2 = "телефоном{телефон=S,муж,неод=твор,ед}";
        String s3 = "достаточно{достаточный=A=ед,кр,сред|достаточно=ADV=|достаточно=ADV,прдк=}";
-       buildReportList(s3);
+     //  buildReportList(s3);
+        System.out.println(GrammarCase.values()[0]);
 
 
     }
