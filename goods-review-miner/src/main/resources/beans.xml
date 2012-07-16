@@ -8,12 +8,22 @@
         <!--<property name="geoIdValue" value="0"/>-->
     <!--</bean>-->
 
+    <import resource="goods-review-db.xml"/>
+
     <bean id="propertyFile" class="org.springframework.beans.factory.config.PropertiesFactoryBean" lazy-init="false">
         <property name="location" value="classpath:secure-api.properties"/>
     </bean>
 
     <bean id="secureProperties" class="ru.goodsreview.api.provider.ContentAPIProvider" lazy-init="false">
         <property name="apiKey" value="${api-key}"/>
+    </bean>
+
+    <bean id="entityService" class="ru.goodsreview.core.db.entity.EntityService">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="grabberBatch" class="ru.goodsreview.api.grabber.batch.GrabberBatch">
+        <property name="entityService" ref="entityService"/>
     </bean>
 
 </beans>
