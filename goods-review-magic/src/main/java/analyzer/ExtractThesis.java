@@ -165,7 +165,7 @@ public class ExtractThesis{
     }
 
     static boolean check(String s1, String s2) {
-        String unk = ReportAnalyzer.getUnkValue();
+        String unk = ReportAnalyzer.UNKNOUN;
         if (!s1.equals(unk) && !s2.equals(unk)) {
             return s1.equals(s2);
         }

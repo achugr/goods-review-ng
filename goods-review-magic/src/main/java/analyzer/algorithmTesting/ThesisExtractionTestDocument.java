@@ -356,7 +356,7 @@ public class ThesisExtractionTestDocument {
 
     static boolean contains(String sentence, String s) {
         sentence = sentence.toLowerCase();
-        if(!s.equals(ReportAnalyzer.getUnkValue())){
+        if(!s.equals(ReportAnalyzer.UNKNOUN)){
             s = s.toLowerCase();
             return sentence.contains(s);
         }else{

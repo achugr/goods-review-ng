@@ -15,11 +15,9 @@ import java.util.StringTokenizer;
  * ilya.makeev@gmail.com
  */
 public class ReportAnalyzer {
-    private static final String UNKNOUN = "unk";
+    public static final String UNKNOUN = "unk";
 
-    public static String getUnkValue() {
-        return UNKNOUN;
-    }
+
 
     static boolean isCorrect (String report){
         boolean t1  = report.contains("жен")||report.contains("муж")||report.contains("сред");
@@ -194,9 +192,7 @@ public class ReportAnalyzer {
        String s1 = "модели{модель=S,жен,неод=(им,мн|род,ед|дат,ед|вин,мн|пр,ед)|модель=S,жен,од=(им,мн|род,ед|дат,ед|вин,мн|пр,ед)}";
        String s2 = "телефоном{телефон=S,муж,неод=твор,ед}";
        String s3 = "достаточно{достаточный=A=ед,кр,сред|достаточно=ADV=|достаточно=ADV,прдк=}";
-     //  buildReportList(s3);
-        System.out.println(GrammarCase.values()[0]);
-
+       buildReportList(s);
 
     }
 }

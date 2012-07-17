@@ -32,7 +32,7 @@ public class ReviewTokens {
      */
     public ReviewTokens(String review) throws IOException, InterruptedException {
         MystemAnalyzer mystemAnalyzer = MystemAnalyzer.getInstance();
-        String unk = ReportAnalyzer.getUnkValue();
+        String unk = ReportAnalyzer.UNKNOUN;
 
         tokensList = new ArrayList<ArrayList<Token>>();
 
