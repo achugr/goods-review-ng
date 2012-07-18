@@ -21,8 +21,8 @@ public class ReviewTokens {
     //    list of tokens
     private ArrayList<ArrayList<Token>> tokensList;
 
-    private static Dictionary featureDictionary = new Dictionary("feat_dic.txt", "windows-1251");
-    private static MapDictionary opinionDictionary = new MapDictionary("adjective_opinion_words.txt", "utf-8");
+    private static Dictionary featureDictionary = new Dictionary("src/main/resources/feat_dic.txt", "windows-1251");
+    private static MapDictionary opinionDictionary = new MapDictionary("src/main/resources/adjective_opinion_words.txt", "utf-8");
 
 
     /**
@@ -101,7 +101,13 @@ public class ReviewTokens {
     }
     }
 
+    public static Dictionary getFeatureDictionary(){
+        return featureDictionary;
+    }
 
+    public static MapDictionary getMapDictionary(){
+        return opinionDictionary;
+    }
 
     public ArrayList<ArrayList<Token>> getTokensList() {
         return tokensList;

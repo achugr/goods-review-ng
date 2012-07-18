@@ -17,8 +17,6 @@ import java.util.StringTokenizer;
 public class ReportAnalyzer {
     public static final String UNKNOUN = "unk";
 
-
-
     static boolean isCorrect (String report){
         boolean t1  = report.contains("жен")||report.contains("муж")||report.contains("сред");
         boolean t2  = report.contains("ед")||report.contains("мн");
@@ -28,8 +26,6 @@ public class ReportAnalyzer {
 
         return t1 && t2 && t3;
     }
-
-
 
     public static String[] wordCharacteristic(String report) {
         String[] a = {UNKNOUN, UNKNOUN, UNKNOUN};

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * Class for the analysis of words, using mystem program http://company.yandex.ru/technologies/mystem/
@@ -22,7 +23,7 @@ import java.util.Scanner;
 public class MystemAnalyzer implements WordAnalyzer{
     private static MystemAnalyzer instance;
 
-   // private static final Logger log = Logger.getLogger(MystemAnalyzer.class);
+    private static final Logger log = Logger.getLogger(MystemAnalyzer.class.getName());
 
     private static final String CHARSET = "UTF8";
     private static final String emptyReport = "";
@@ -38,9 +39,10 @@ public class MystemAnalyzer implements WordAnalyzer{
                 command = "./";
             }
             analyzer = Runtime.getRuntime().exec(command + "mystem -nig -e " + CHARSET);
+
         } catch (IOException e) {
 
-            //   log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
+  //            log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
 //            throw new IOException();
         }
 

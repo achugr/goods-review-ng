@@ -67,7 +67,7 @@ public class MapDictionary {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        MapDictionary dictionary = new MapDictionary("adjective_opinion_words.txt", "utf-8");
+        MapDictionary dictionary = new MapDictionary("src/main/resources/adjective_opinion_words.txt", "utf-8");
         dictionary.print();
     }
 }
