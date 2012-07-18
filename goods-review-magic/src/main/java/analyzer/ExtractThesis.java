@@ -38,13 +38,12 @@ public class ExtractThesis{
             ArrayList<ArrayList<Token>> tokensList = reviewTokens.getTokensList();
 
             for (ThesisPattern thesisPattern : thesisPatternList) {
-                ThesisPattern pattern = thesisPattern;
 
-                if (pattern.getPattern().get(0).equals(PartOfSpeech.NOUN)) {
-                    nounAtFirstPositionExtraction(extractedThesisList, tokensList, pattern);
+                if (thesisPattern.getPattern().get(0).equals(PartOfSpeech.NOUN)) {
+                    nounAtFirstPositionExtraction(extractedThesisList, tokensList, thesisPattern);
                 } else {
-                    if (pattern.getPattern().get(1).equals(PartOfSpeech.NOUN)) {
-                        nounAtSecondPositionExtraction(extractedThesisList, tokensList, pattern);
+                    if (thesisPattern.getPattern().get(1).equals(PartOfSpeech.NOUN)) {
+                        nounAtSecondPositionExtraction(extractedThesisList, tokensList, thesisPattern);
                     } else {
                         System.out.println("incorrect pattern");
                     }
@@ -63,7 +62,7 @@ public class ExtractThesis{
         PartOfSpeech noun = pattern.getPattern().get(0);
         PartOfSpeech part2 = pattern.getPattern().get(1);
         int n1 = 0;
-        int n2 = 0;
+        int n2;
 
         for (int i = 0; i < tokensList.size(); i++) {
             Token currToken = tokensList.get(i).get(0);
@@ -101,7 +100,7 @@ public class ExtractThesis{
         PartOfSpeech part2 = pattern.getPattern().get(0);
         PartOfSpeech noun = pattern.getPattern().get(1);
         int n1 = 0;
-        int n2 = 0;
+        int n2;
         for (int i = tokensList.size()-1; i >= 0 ; i--) {
             Token currToken = tokensList.get(i).get(0);
 
@@ -153,11 +152,11 @@ public class ExtractThesis{
     }
 
     static boolean checkTokenListCorrespondence(ArrayList<Token> tokenList1, ArrayList<Token> tokenList2) throws UnsupportedEncodingException {
-        for (int i = 0; i < tokenList1.size(); i++) {
-            for (int j = 0; j < tokenList2.size(); j++) {
-                 if(checkWordsCorrespondence(tokenList1.get(i),tokenList2.get(j))){
-                     return true;
-                 }
+        for (Token aTokenList1 : tokenList1) {
+            for (Token aTokenList2 : tokenList2) {
+                if (checkWordsCorrespondence(aTokenList1, aTokenList2)) {
+                    return true;
+                }
             }
         }
 
@@ -166,24 +165,7 @@ public class ExtractThesis{
 
     static boolean check(String s1, String s2) {
         String unk = ReportAnalyzer.UNKNOUN;
-        if (!s1.equals(unk) && !s2.equals(unk)) {
-            return s1.equals(s2);
-        }
-        return false;
+        return !s1.equals(unk) && !s2.equals(unk) && s1.equals(s2);
     }
-
-    static String[] dict = {"более", "достаточно", "очень", "не", "слишком", "довольно"};
-
-    static boolean dictContains(String s) {
-        for (String str:dict){
-            if(s.equals(str)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-
 
 }

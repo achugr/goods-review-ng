@@ -13,13 +13,6 @@ import junit.textui.TestRunner;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-/**
- * Date: 08.07.12
- * Time: 01:17
- * Author:
- * Ilya Makeev
- * ilya.makeev@gmail.com
- */
 public class TestClass extends TestCase {
 
     public TestClass(String testName) {
