@@ -8,6 +8,7 @@ package ru.goodsreview.testing;
  * ilya.makeev@gmail.com
  */
 
+import org.junit.Test;
 import ru.goodsreview.analyzer.ExtractThesis;
 import ru.goodsreview.analyzer.util.Phrase;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class ThesisExtractionTestDocument {
+public class ThesisExtractionTest {
     private static double successExtract = 0;
     private static double numAlgo = 0;
     private static double numHum = 0;
@@ -388,9 +389,9 @@ public class ThesisExtractionTestDocument {
         }
     }
 
-
-    public static void main(String[] args) throws IOException, InterruptedException {
-        ArrayList<Product> algoProThesis = buildAlgoProductList("src/main/resources/Notebooks.txt", "utf8");
+    @Test
+    public void extractThesisTest() throws IOException, InterruptedException {
+        ArrayList<Product> algoProThesis = buildAlgoProductList("goods-review-magic/src/main/resources/Notebooks.txt", "utf8");
 
         /*
         for (Product p:algoProThesis){
@@ -406,7 +407,7 @@ public class ThesisExtractionTestDocument {
 
         }*/
 
-        ArrayList<Product> humProThesis = buildHumanProductList("src/main/resources/Notebooks_marked_ds.txt", "utf8");
+        ArrayList<Product> humProThesis = buildHumanProductList("goods-review-magic/src/main/resources/Notebooks_marked_ds.txt", "utf8");
 
         /*
         for (Product p:humProThesis){
@@ -420,7 +421,7 @@ public class ThesisExtractionTestDocument {
                 }
             }
         }*/
-        compare(algoProThesis, humProThesis, "result.txt");
+        compare(algoProThesis, humProThesis, "goods-review-magic/src/main/resources/result.txt");
 
 
         System.out.println("successExtract = " + successExtract);

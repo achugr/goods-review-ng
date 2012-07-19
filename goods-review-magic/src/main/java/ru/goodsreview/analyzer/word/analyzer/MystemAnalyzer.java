@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class MystemAnalyzer implements WordAnalyzer{
     private static MystemAnalyzer instance;
-    private static final String MYSTEM_PATH = "src/main/resources/ru/goodsreview/analyzer/tools/";
+    private static final String MYSTEM_PATH = "goods-review-magic/src/main/resources/ru/goodsreview/analyzer/tools/";
     private static final Logger log = Logger.getLogger(MystemAnalyzer.class.getName());
 
     private static final String CHARSET = "UTF8";
