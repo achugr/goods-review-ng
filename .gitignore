@@ -1,1 +1,1 @@
-*.properties
+src/main/resources/secure-api.properties
