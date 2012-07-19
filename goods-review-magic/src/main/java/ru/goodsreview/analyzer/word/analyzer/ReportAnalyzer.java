@@ -1,7 +1,7 @@
-package analyzer.wordAnalyzer;
+package ru.goodsreview.analyzer.word.analyzer;
 
-import analyzer.util.sentence.GrammarCase;
-import analyzer.util.sentence.PartOfSpeech;
+import ru.goodsreview.analyzer.util.sentence.GrammarCase;
+import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -183,6 +183,7 @@ public class ReportAnalyzer {
         }
     }
 
+//    TODO Илья, в проекте один мейн-метод, такие примеры использования лучше делать в юнит-тестах
     public static void main(String[] args) throws UnsupportedEncodingException {
        String s = "сборки{сборка=S,жен,неод=(им,мн|род,ед|вин,мн)}";
        String s1 = "модели{модель=S,жен,неод=(им,мн|род,ед|дат,ед|вин,мн|пр,ед)|модель=S,жен,од=(им,мн|род,ед|дат,ед|вин,мн|пр,ед)}";

@@ -1,4 +1,4 @@
-package analyzer.util.dictionary;
+package ru.goodsreview.analyzer.util.dictionary;
 
 import java.util.HashSet;
 

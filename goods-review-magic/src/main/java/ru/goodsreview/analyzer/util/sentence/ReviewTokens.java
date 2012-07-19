@@ -1,4 +1,4 @@
-package analyzer.util.sentence;
+package ru.goodsreview.analyzer.util.sentence;
 /*
  *  Date: 11.02.12
  *   Time: 17:22
@@ -8,10 +8,10 @@ package analyzer.util.sentence;
  */
 
 
-import analyzer.util.dictionary.Dictionary;
-import analyzer.util.dictionary.MapDictionary;
-import analyzer.wordAnalyzer.MystemAnalyzer;
-import analyzer.wordAnalyzer.ReportAnalyzer;
+import ru.goodsreview.analyzer.util.dictionary.Dictionary;
+import ru.goodsreview.analyzer.util.dictionary.MapDictionary;
+import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
+import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,8 +21,8 @@ public class ReviewTokens {
     //    list of tokens
     private ArrayList<ArrayList<Token>> tokensList;
 
-    private static Dictionary featureDictionary = new Dictionary("src/main/resources/feat_dic.txt", "windows-1251");
-    private static MapDictionary opinionDictionary = new MapDictionary("src/main/resources/adjective_opinion_words.txt", "utf-8");
+    private static Dictionary featureDictionary = new Dictionary("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt", "windows-1251");
+    private static MapDictionary opinionDictionary = new MapDictionary("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt", "utf-8");
 
 
     /**

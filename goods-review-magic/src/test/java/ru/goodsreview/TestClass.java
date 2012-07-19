@@ -6,9 +6,9 @@ package ru.goodsreview;
  * Ilya Makeev
  * ilya.makeev@gmail.com
  */
-import analyzer.util.sentence.ReviewTokens;
-import analyzer.wordAnalyzer.MystemAnalyzer;
-import analyzer.wordAnalyzer.ReportAnalyzer;
+import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
+import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
+import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;

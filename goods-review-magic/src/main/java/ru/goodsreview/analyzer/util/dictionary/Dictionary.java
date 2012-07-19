@@ -1,4 +1,4 @@
-package analyzer.util.dictionary;
+package ru.goodsreview.analyzer.util.dictionary;
 /*
  *  Date: 08.02.12
  *   Time: 18:02
@@ -66,8 +66,4 @@ public class Dictionary {
         return words.contains(word);
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        Dictionary dictionary = new Dictionary("feat_dic.txt", "windows-1251");
-        dictionary.print();
-    }
 }
