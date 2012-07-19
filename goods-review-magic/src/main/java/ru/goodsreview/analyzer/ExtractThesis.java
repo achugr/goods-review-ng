@@ -7,7 +7,7 @@ package ru.goodsreview.analyzer;
  *      artemij.chugreev@gmail.com
  */
 
-import ru.goodsreview.analyzer.algorithm.testing.Phrase;
+import ru.goodsreview.analyzer.util.Phrase;
 import ru.goodsreview.analyzer.util.ThesisPattern;
 import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
 import ru.goodsreview.analyzer.util.sentence.ReviewTokens;

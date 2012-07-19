@@ -1,15 +1,14 @@
 package ru.goodsreview.analyzer.util.dictionary;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
 import org.apache.log4j.Logger;
-import org.springframework.remoting.support.UrlBasedRemoteAccessor;
-import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
-import ru.goodsreview.core.util.StringUtil;
 
-import java.io.*;
-import java.net.URL;
-import java.net.URLClassLoader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
+
+//import ru.goodsreview.core.util.StringUtil;
 
 /**
  * Date: 14.05.12
