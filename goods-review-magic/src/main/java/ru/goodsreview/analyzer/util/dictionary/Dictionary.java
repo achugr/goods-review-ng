@@ -7,21 +7,25 @@ package ru.goodsreview.analyzer.util.dictionary;
  *      artemij.chugreev@gmail.com
  */
 
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.util.HashSet;
 
 public class Dictionary {
+    private final static Logger log = Logger.getLogger(Dictionary.class);
+
     private HashSet<String> words;
 
     public Dictionary(String dictionaryFileName, String encoding) {
         this.words = new HashSet<String>();
 
+        InputStream inputStream = null;
         try {
-            FileInputStream fis = new FileInputStream(dictionaryFileName);
-            InputStreamReader isr = new InputStreamReader(fis, encoding);
-            BufferedReader in = new BufferedReader(isr);
+            inputStream = Dictionary.class.getResourceAsStream(dictionaryFileName);
+            final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, encoding));
 
-            String s = in.readLine();
+            String s = bufferedReader.readLine();
             while (s != null) {
                 s = s.trim();
                 if (s.length() != 0) {
@@ -34,14 +38,19 @@ public class Dictionary {
                         words.add(s);
                     }
                 }
-                s = in.readLine();
+                s = bufferedReader.readLine();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        } finally {
+            if(inputStream != null){
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    log.error(e.getMessage(), e);
+                }
+            }
         }
     }
 

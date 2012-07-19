@@ -28,7 +28,7 @@ public class MapDictionary {
         InputStream inputStream = null;
         try {
             inputStream = MapDictionary.class.getResourceAsStream(dictionaryFileName);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, encoding));
+            final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, encoding));
             String s = bufferedReader.readLine();
             while (s != null) {
                 s = s.trim();
@@ -46,6 +46,7 @@ public class MapDictionary {
             }
         } catch (IOException e) {
             log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
         } finally {
             if(inputStream != null){
                 try {
