@@ -1,4 +1,4 @@
-
+package ru.goodsreview.analyzer;
 
 import org.json.JSONObject;
 
