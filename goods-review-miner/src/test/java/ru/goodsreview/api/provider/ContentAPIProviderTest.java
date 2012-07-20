@@ -21,7 +21,7 @@ import java.util.HashMap;
  */
 
 /**
- * class for testing ContentApiProvider
+ * class for analyzer ContentApiProvider
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)

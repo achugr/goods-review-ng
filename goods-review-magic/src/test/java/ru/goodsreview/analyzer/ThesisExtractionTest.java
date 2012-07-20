@@ -1,4 +1,4 @@
-package ru.goodsreview.testing;
+package ru.goodsreview.analyzer;
 
 /**
  * Date: 05.02.12
@@ -9,7 +9,7 @@ package ru.goodsreview.testing;
  */
 
 import org.junit.Test;
-import ru.goodsreview.analyzer.ExtractThesis;
+import org.springframework.remoting.support.UrlBasedRemoteAccessor;
 import ru.goodsreview.analyzer.util.Phrase;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
@@ -27,12 +27,14 @@ public class ThesisExtractionTest {
     static MystemAnalyzer mystemAnalyzer = MystemAnalyzer.getInstance();
 
     //   build list of Products for human markup file
-    static ArrayList<Product> buildHumanProductList(String filePath, String encoding) throws IOException {
-        ArrayList<Product> ProductList = new ArrayList<Product>();
+    static ArrayList<Product> buildHumanProductList(final String filePath, final String encoding) throws IOException {
+        final ArrayList<Product> ProductList = new ArrayList<Product>();
 
-        FileInputStream fis = new FileInputStream(filePath);
-        InputStreamReader isr = new InputStreamReader(fis, encoding);
-        BufferedReader in = new BufferedReader(isr);
+//        FileInputStream fis = new FileInputStream(filePath);
+//        InputStreamReader isr = new InputStreamReader(fis, encoding);
+//        BufferedReader in = new BufferedReader(isr);
+        final InputStream inputStream = ThesisExtractionTest.class.getResourceAsStream(filePath);
+        final BufferedReader in = new BufferedReader(new InputStreamReader(inputStream, encoding));
 
         ArrayList<Review> reviewsList = new ArrayList<Review>();
         ArrayList<Phrase> thesisList = new ArrayList<Phrase>();
@@ -41,7 +43,7 @@ public class ThesisExtractionTest {
         String s = in.readLine();
 
         boolean reviewOpen = false;
-        StringBuffer sentenceBuff = new StringBuffer();
+        StringBuilder sentenceBuff = new StringBuilder();
 
         while (s != null) {
             s = s.trim();
@@ -109,9 +111,9 @@ public class ThesisExtractionTest {
         return ProductList;
     }
 
-    static void addToThesisList(String s, ArrayList<Phrase> thesisList) {
+    static void addToThesisList(final String s, final ArrayList<Phrase> thesisList) {
         String t = s.substring(0, s.indexOf("##")).trim();
-        String sentence = s.substring(s.indexOf("##") + 2).trim();
+        final String sentence = s.substring(s.indexOf("##") + 2).trim();
 
         if (!t.equals("")) {
             if (t.contains(",")) {
@@ -157,12 +159,15 @@ public class ThesisExtractionTest {
 
 
     //   build list of Products for algo markup file
-    static ArrayList<Product> buildAlgoProductList(String filePath, String encoding) throws IOException, InterruptedException {
+    static ArrayList<Product> buildAlgoProductList(final String filePath, final String encoding) throws IOException, InterruptedException {
         ArrayList<Product> ProductList = new ArrayList<Product>();
 
-        FileInputStream fis = new FileInputStream(filePath);
-        InputStreamReader isr = new InputStreamReader(fis, encoding);
-        BufferedReader in = new BufferedReader(isr);
+//        FileInputStream fis = new FileInputStream(filePath);
+//        InputStreamReader isr = new InputStreamReader(fis, encoding);
+//        BufferedReader in = new BufferedReader(isr);
+
+        final InputStream inputStream = ThesisExtractionTest.class.getResourceAsStream(filePath);
+        final BufferedReader in = new BufferedReader(new InputStreamReader(inputStream, encoding));
 
         ArrayList<Review> reviewsList = new ArrayList<Review>();
         ArrayList<Phrase> thesisList = new ArrayList<Phrase>();
@@ -203,8 +208,8 @@ public class ThesisExtractionTest {
 
 
                 if (reviewOpen) {
-                    StringBuffer sb = new StringBuffer();
-                    while (reviewOpen && s != null) {
+                    StringBuilder sb = new StringBuilder();
+                    while (reviewOpen) {
                         s = in.readLine();
                         if (s.contains("</review>")) {
                             reviewOpen = false;
@@ -220,7 +225,7 @@ public class ThesisExtractionTest {
 
                             }
                         } else {
-                            sb.append(" " + s);
+                            sb.append(" ").append(s);
                         }
 
                     }
@@ -239,8 +244,9 @@ public class ThesisExtractionTest {
 
 
     // comparison of thesis for two products lists
-    static void compare(ArrayList<Product> algoProThesis, ArrayList<Product> humProThesis, String filePath) throws IOException {
-        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filePath)));
+    static void compare(final ArrayList<Product> algoProThesis, final ArrayList<Product> humProThesis, final String filePath) throws IOException {
+        String path = ThesisExtractionTest.class.getResource(filePath).getPath();
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path)));
 
         for (Product humProduct : humProThesis) {
             for (Product algoProduct : algoProThesis) {
@@ -257,7 +263,7 @@ public class ThesisExtractionTest {
     }
 
     // comparison of thesis for two products
-    static void comparator(Product algoProduct, Product humProduct, PrintWriter out) throws UnsupportedEncodingException {
+    static void comparator(final Product algoProduct, final Product humProduct, final PrintWriter out) throws UnsupportedEncodingException {
         out.println("<product id=\"" + algoProduct.getId() + "\">");
         if (algoProduct.getReviews().size() > 0 && !algoProduct.getReviews().get(0).getReview().equals("-1")) {
             if (algoProduct.getReviews().size() != humProduct.getReviews().size()) {
@@ -273,7 +279,7 @@ public class ThesisExtractionTest {
     }
 
     // comparison of thesis for two Review lists
-    static void compareThesisLists(ArrayList<Review> algoReview, ArrayList<Review> humReview, PrintWriter out) throws UnsupportedEncodingException {
+    static void compareThesisLists(final ArrayList<Review> algoReview, final ArrayList<Review> humReview, final PrintWriter out) throws UnsupportedEncodingException {
 
         for (int k = 0; k < algoReview.size(); k++) {
             String reviewID = algoReview.get(k).getReview();
@@ -366,7 +372,7 @@ public class ThesisExtractionTest {
         }
     }
 
-    static void add(HashMap<String, int[]> map, String s, boolean t) {
+    static void add(final HashMap<String, int[]> map, final String s, final boolean t) {
         if (map.containsKey(s)) {
             if (t) {
                 map.get(s)[0]++;
@@ -391,7 +397,7 @@ public class ThesisExtractionTest {
 
     @Test
     public void extractThesisTest() throws IOException, InterruptedException {
-        ArrayList<Product> algoProThesis = buildAlgoProductList("goods-review-magic/src/main/resources/Notebooks.txt", "utf8");
+        final ArrayList<Product> algoProThesis = buildAlgoProductList("/ru/goodsreview/analyzer/test/data/Notebooks.txt", "utf8");
 
         /*
         for (Product p:algoProThesis){
@@ -407,7 +413,7 @@ public class ThesisExtractionTest {
 
         }*/
 
-        ArrayList<Product> humProThesis = buildHumanProductList("goods-review-magic/src/main/resources/Notebooks_marked_ds.txt", "utf8");
+        final ArrayList<Product> humProThesis = buildHumanProductList("/ru/goodsreview/analyzer/test/data/Notebooks_marked_ds.txt", "utf8");
 
         /*
         for (Product p:humProThesis){
@@ -421,7 +427,7 @@ public class ThesisExtractionTest {
                 }
             }
         }*/
-        compare(algoProThesis, humProThesis, "goods-review-magic/src/main/resources/result.txt");
+        compare(algoProThesis, humProThesis, "/ru/goodsreview/analyzer/test/data/result.txt");
 
 
         System.out.println("successExtract = " + successExtract);

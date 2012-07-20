@@ -7,23 +7,22 @@ package ru.goodsreview.analyzer.word.analyzer;
  *      artemij.chugreev@gmail.com
  */
 
-//import org.apache.log4j.Logger;
 
+import org.apache.log4j.Logger;
 import ru.goodsreview.analyzer.util.OSValidator;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 /**
  * Class for the analysis of words, using mystem program http://company.yandex.ru/technologies/mystem/
  */
-public class MystemAnalyzer implements WordAnalyzer{
+public class MystemAnalyzer implements WordAnalyzer {
     private static MystemAnalyzer instance;
-    private static final String MYSTEM_PATH = "goods-review-magic/src/main/resources/ru/goodsreview/analyzer/tools/";
-    private static final Logger log = Logger.getLogger(MystemAnalyzer.class.getName());
+    private static final String MYSTEM_PATH = "goods-review-magic/target/classes/ru/goodsreview/analyzer/tools/";
+    private final static Logger log = Logger.getLogger(MystemAnalyzer.class);
 
     private static final String CHARSET = "UTF8";
     private static final String emptyReport = "";
@@ -41,13 +40,11 @@ public class MystemAnalyzer implements WordAnalyzer{
             analyzer = Runtime.getRuntime().exec(command + MYSTEM_PATH + "mystem -nig -e " + CHARSET);
 
         } catch (IOException e) {
-
-  //            log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
-//            throw new IOException();
+            log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
+            throw new RuntimeException(e);
         }
 
     }
-
 
 
     public static MystemAnalyzer getInstance() {
@@ -63,13 +60,13 @@ public class MystemAnalyzer implements WordAnalyzer{
     }
 
 
-
     public static String getEmptyReportValue() {
         return emptyReport;
     }
 
     /**
      * Checks if letter belongs to russian alphabet.
+     *
      * @param letter The letter itself.
      * @return True if letter is russian, false — otherwise.
      */
@@ -107,7 +104,7 @@ public class MystemAnalyzer implements WordAnalyzer{
         }
     }
 
-    public static void main(String [] args){
+    public static void main(String[] args) {
         try {
             MystemAnalyzer mystemAnalyzer = new MystemAnalyzer();
             System.out.println(mystemAnalyzer.report("телефоном"));

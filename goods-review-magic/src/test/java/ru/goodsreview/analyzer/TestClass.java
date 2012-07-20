@@ -1,4 +1,4 @@
-package ru.goodsreview;
+package ru.goodsreview.analyzer;
 /**
  * Date: 18.07.12
  * Time: 03:20

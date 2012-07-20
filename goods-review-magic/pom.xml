@@ -54,6 +54,8 @@
                     <configuration>
                         <excludes>
                             <exclude>**/ThesisExtractionTest.java</exclude>
+                            <exclude>Product.java</exclude>
+                            <exclude>Review.java</exclude>
                         </excludes>
                     </configuration>
                 </plugin>
