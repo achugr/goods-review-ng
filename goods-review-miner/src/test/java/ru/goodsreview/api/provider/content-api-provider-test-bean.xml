@@ -9,7 +9,7 @@
     </bean>
 
     <bean id="secureProperties" class="ru.goodsreview.api.provider.ContentApiProvider" lazy-init="false">
-        <property name="apiKey" value="${api_key}"/>
+        <property name="apiKey" value="${api-key}"/>
     </bean>
 
 </beans>
