@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Map;
 
 //import ru.goodsreview.core.util.StringUtil;
 
@@ -17,13 +18,17 @@ import java.util.HashMap;
  * Ilya Makeev
  * ilya.makeev@gmail.com
  */
-public class MapDictionary {
+public class MapDictionary implements DictionaryInterface {
     private final static Logger log = Logger.getLogger(MapDictionary.class);
 
-    private HashMap<String, Double> words;
+    private final HashMap<String, Double> dictionary;
 
-    public MapDictionary(String dictionaryFileName, String encoding) {
-        this.words = new HashMap<String, Double>();
+    public MapDictionary(final String dictionaryFileName, final String encoding) {
+        this.dictionary = new HashMap<String, Double>();
+        readDictionaryFromFile(dictionaryFileName, encoding);
+    }
+
+    private void readDictionaryFromFile(final String dictionaryFileName, final String encoding) {
         InputStream inputStream = null;
         try {
             inputStream = MapDictionary.class.getResourceAsStream(dictionaryFileName);
@@ -37,7 +42,7 @@ public class MapDictionary {
                         int n = s.indexOf(" ");
                         String word = s.substring(0, n);
                         Double positivity = Double.parseDouble(s.substring(n + 1));
-                        words.put(word, positivity);
+                        dictionary.put(word, positivity);
                     }
 
                 }
@@ -47,7 +52,7 @@ public class MapDictionary {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e);
         } finally {
-            if(inputStream != null){
+            if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
@@ -57,24 +62,27 @@ public class MapDictionary {
         }
     }
 
-
-    public HashMap<String, Double> getDictionary() {
-        return this.words;
+    public Map<String, Double> getDictionary() {
+        return this.dictionary;
     }
 
     public void print() {
-        for (String word : words.keySet()) {
-            System.out.println(word + " " + words.get(word));
+        for (String word : dictionary.keySet()) {
+            System.out.println(word + " " + dictionary.get(word));
         }
     }
 
     /**
      * Checking if word is in dictionary
      *
-     * @param word
+     * @param key
      * @return true if word is here. false — otherwise
      */
-    public boolean contains(String word) {
-        return words.containsKey(word);
+    public boolean contains(Object key) {
+        if (key instanceof String) {
+            return dictionary.containsKey(key);
+        } else {
+            throw new IllegalArgumentException("key must be String");
+        }
     }
 }
