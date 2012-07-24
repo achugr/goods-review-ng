@@ -26,11 +26,11 @@ import java.util.HashMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("content-api-provider-test-bean.xml")
-public class ContentApiProviderTest {
-    private final static Logger log = Logger.getLogger(ContentApiProviderTest.class);
+public class ContentAPIProviderTest {
+    private final static Logger log = Logger.getLogger(ContentAPIProviderTest.class);
 
     @Autowired
-    private ContentApiProvider contentApiProvider;
+    private ContentAPIProvider contentApiProvider;
 
     @Test
     public void isValidAnswerTest() {

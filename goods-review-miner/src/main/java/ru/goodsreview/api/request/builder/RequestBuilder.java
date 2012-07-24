@@ -1,10 +1,8 @@
 package ru.goodsreview.api.request.builder;
 
-import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.api.provider.ResourceType;
 
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * Artemij Chugreev
@@ -37,7 +35,7 @@ public abstract class RequestBuilder {
         stringBuilder.append(GEO_ID_PARAM).append("=").append(geoIdValue);
 
         for (final Map.Entry<String, String> entry : parameters.entrySet()) {
-            stringBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+            stringBuilder.append("&").append(entry.getKey()).append("=").append(entry.getValue());
         }
 //        delete last "&" symbol
 //        stringBuilder.deleteCharAt(stringBuilder.length() - 1);

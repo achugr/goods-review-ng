@@ -5,13 +5,12 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.api.request.builder.UrlRequest;
 import ru.goodsreview.core.util.JSONUtil;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Artemij Chugreev
@@ -21,8 +20,8 @@ import ru.goodsreview.core.util.JSONUtil;
  * skype: achugr
  */
 
-public class ContentApiProvider {
-    private final static Logger log = Logger.getLogger(ContentApiProvider.class);
+public class ContentAPIProvider {
+    private final static Logger log = Logger.getLogger(ContentAPIProvider.class);
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final int HTTP_OK = 200;
     private static final String TYPE_ID = "typeId";
@@ -32,7 +31,7 @@ public class ContentApiProvider {
     private final HttpClient httpClient;
     private long lastQueryTime = 0;
 
-    public ContentApiProvider() {
+    public ContentAPIProvider() {
         this.httpClient = new HttpClient();
     }
 
