@@ -14,7 +14,6 @@ import java.util.Map;
 public abstract class RequestBuilder {
     private static final String API_VERSION = "v1";
     private static final String RESPONSE_FORMAT = ".json";
-    private static final String GEO_ID_PARAM = "geo_id";
     private static final String MAIN_API_URL = "https://api.content.market.yandex.ru/" + API_VERSION;
     private String geoIdValue = "0";
 
@@ -32,7 +31,7 @@ public abstract class RequestBuilder {
         stringBuilder.append(RESPONSE_FORMAT);
         stringBuilder.append("?");
 
-        stringBuilder.append(GEO_ID_PARAM).append("=").append(geoIdValue);
+        stringBuilder.append(RequestParams.GEO_ID.getKey()).append("=").append(geoIdValue);
 
         for (final Map.Entry<String, String> entry : parameters.entrySet()) {
             stringBuilder.append("&").append(entry.getKey()).append("=").append(entry.getValue());
