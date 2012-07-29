@@ -18,7 +18,7 @@ import java.util.Map;
  * Ilya Makeev
  * ilya.makeev@gmail.com
  */
-public class MapDictionary implements DictionaryInterface {
+public class MapDictionary implements Dictionary {
     private final static Logger log = Logger.getLogger(MapDictionary.class);
 
     private final HashMap<String, Double> dictionary;

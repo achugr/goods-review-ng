@@ -10,6 +10,7 @@ package ru.goodsreview.analyzer.util.sentence;
 
 import ru.goodsreview.analyzer.util.dictionary.Dictionary;
 import ru.goodsreview.analyzer.util.dictionary.MapDictionary;
+import ru.goodsreview.analyzer.util.dictionary.SetDictionary;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 
@@ -21,7 +22,7 @@ public class ReviewTokens {
     //    list of tokens
     private ArrayList<ArrayList<Token>> tokensList;
 
-    private static Dictionary featureDictionary = new Dictionary("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt", "windows-1251");
+    private static Dictionary featureDictionary = new SetDictionary("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt", "windows-1251");
     private static MapDictionary opinionDictionary = new MapDictionary("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt", "utf-8");
 
 

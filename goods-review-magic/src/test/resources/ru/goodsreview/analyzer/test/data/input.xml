@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<productList>
+    <product name="SAMSUNG NP-NS310-A01">
+        <reviewList>
+            <review score="+2">
+                <content>Ноут крутой, дизайн зверский, из пары сотен этих ноутов можно сложить неплохую кирпичную стенку)) </content>
+                <phraseList>
+                    <phrase>
+                        <feature>Ноут</feature>
+                        <opinion>крутой</opinion>
+                        <value>+1</value>
+                    </phrase>
+                    <phrase>
+                        <feature>дизайн</feature>
+                        <opinion>зверский</opinion>
+                        <value>+1</value>
+                    </phrase>
+                </phraseList>
+            </review>
+            <review score="+3">
+                <content>Корпус собран добротно, как уже писали ниже.</content>
+                <phraseList>
+                    <phrase>
+                        <feature>Корпус</feature>
+                        <opinion>добротный</opinion>
+                        <value>+1</value>
+                    </phrase>
+                </phraseList>
+            </review>
+        </reviewList>
+    </product>
+    <product name="SAMSUNG NP300E5A-S05">
+        <reviewList>
+            <review score="+2">
+                <content>На удивление нормальный софт от Самсунга предустановлен.</content>
+                <phraseList>
+                    <phrase>
+                        <feature>софт</feature>
+                        <opinion>нормальный</opinion>
+                        <value>+1</value>
+                    </phrase>                    
+                </phraseList>
+            </review>            
+        </reviewList>
+    </product>
+</productList>

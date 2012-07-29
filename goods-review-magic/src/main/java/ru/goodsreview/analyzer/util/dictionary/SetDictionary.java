@@ -13,7 +13,7 @@ import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class SetDictionary implements DictionaryInterface {
+public class SetDictionary implements Dictionary {
     private final static Logger log = Logger.getLogger(SetDictionary.class);
 
     private final HashSet<String> dictionary;
