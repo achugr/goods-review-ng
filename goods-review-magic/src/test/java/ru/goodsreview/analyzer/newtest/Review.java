@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.*;
 @XmlType(propOrder = { "content", "phraseList"})
 public class Review {
     private String content;
-    private String score;
+    private String quality;
 
 
     @XmlElementWrapper(name = "phraseList")
@@ -38,12 +38,12 @@ public class Review {
     }
 
     @XmlAttribute
-    public void setScore(String content) {
-        this.score = content;
+    public void setQuality(String content) {
+        this.quality = content;
     }
 
-    public String getScore() {
-        return score;
+    public String getQuality() {
+        return quality;
     }
 
 }

@@ -19,7 +19,7 @@ import java.util.Scanner;
 /**
  * Class for the analysis of words, using mystem program http://company.yandex.ru/technologies/mystem/
  */
-public class MystemAnalyzer implements WordAnalyzer {
+public class MystemAnalyzer  {
     private static MystemAnalyzer instance;
     private static final String MYSTEM_PATH = "goods-review-magic/target/classes/ru/goodsreview/analyzer/tools/";
     private final static Logger log = Logger.getLogger(MystemAnalyzer.class);

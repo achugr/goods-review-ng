@@ -2,7 +2,7 @@
 <productList>
     <product name="SAMSUNG NP-NS310-A01">
         <reviewList>
-            <review score="+2">
+            <review quality="+">
                 <content>Ноут крутой, дизайн зверский, из пары сотен этих ноутов можно сложить неплохую кирпичную стенку)) </content>
                 <phraseList>
                     <phrase>
@@ -17,7 +17,7 @@
                     </phrase>
                 </phraseList>
             </review>
-            <review score="+3">
+            <review quality="+">
                 <content>Корпус собран добротно, как уже писали ниже.</content>
                 <phraseList>
                     <phrase>
@@ -31,7 +31,7 @@
     </product>
     <product name="SAMSUNG NP300E5A-S05">
         <reviewList>
-            <review score="+2">
+            <review quality="+">
                 <content>На удивление нормальный софт от Самсунга предустановлен.</content>
                 <phraseList>
                     <phrase>
@@ -40,7 +40,48 @@
                         <value>+1</value>
                     </phrase>                    
                 </phraseList>
-            </review>            
+            </review>
+            <review quality="+">
+                <content>ну наверно только разве что крышка глянцевая,уж больно боюсь её покарябать :)решается
+                    покупкй виниловой пленки что и собираюсь в будущем сделать.</content>
+                <phraseList>
+                    <phrase>
+                        <feature>крышка</feature>
+                        <opinion>глянцевая</opinion>
+                        <value>-1</value>
+                    </phrase>
+                </phraseList>
+            </review>
+            <review quality="+">
+                <content>Красивый дизайн и приятный на ощупь</content>
+                <phraseList>
+                    <phrase>
+                        <feature>дизайн</feature>
+                        <opinion>Красивый</opinion>
+                        <value>+1</value>
+                    </phrase>
+                </phraseList>
+            </review>
+            <review quality="+">
+                <content>В целом ноутбук хороший, не жалко таких денег.</content>
+                <phraseList>
+                    <phrase>
+                        <feature>ноутбук</feature>
+                        <opinion>хороший</opinion>
+                        <value>+1</value>
+                    </phrase>
+                </phraseList>
+            </review>
+            <review quality="+">
+                <content>Мощный по меркам ноутов процессор на новой архитектуре.</content>
+                <phraseList>
+                    <phrase>
+                        <feature>Мощный</feature>
+                        <opinion>процессор</opinion>
+                        <value>+1</value>
+                    </phrase>
+                </phraseList>
+            </review>
         </reviewList>
     </product>
 </productList>

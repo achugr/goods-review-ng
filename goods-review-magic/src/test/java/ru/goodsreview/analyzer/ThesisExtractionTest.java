@@ -246,6 +246,7 @@ public class ThesisExtractionTest {
     // comparison of thesis for two products lists
     static void compare(final ArrayList<Product> algoProThesis, final ArrayList<Product> humProThesis, final String filePath) throws IOException {
         String path = ThesisExtractionTest.class.getResource(filePath).getPath();
+
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path)));
 
         for (Product humProduct : humProThesis) {
