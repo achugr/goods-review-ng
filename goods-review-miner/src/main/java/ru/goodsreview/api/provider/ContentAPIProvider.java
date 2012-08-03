@@ -25,6 +25,7 @@ public class ContentAPIProvider {
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final int HTTP_OK = 200;
     private static final String TYPE_ID = "typeId";
+    private static final int TIME_OUT = 500;
 
     private String apiKey;
 
@@ -44,14 +45,19 @@ public class ContentAPIProvider {
         final GetMethod getMethod = new GetMethod(urlRequest.getUrl());
         getMethod.addRequestHeader(AUTHORIZATION_HEADER, apiKey);
 //       timeout
-        if (System.currentTimeMillis() - lastQueryTime < urlRequest.getResourceType().getMaxTimeout()) {
+        try {
+            Thread.sleep(TIME_OUT);
+        } catch (InterruptedException e) {
+            log.error(e.getMessage(), e);
+        }
+        /*if (System.currentTimeMillis() - lastQueryTime < urlRequest.getResourceType().getMaxTimeout()) {
             try {
                 Thread.sleep(urlRequest.getResourceType().getMaxTimeout());
             } catch (InterruptedException e) {
                 log.error(e.getMessage(), e);
             }
             lastQueryTime = System.currentTimeMillis();
-        }
+        }*/
 
         try {
             httpClient.executeMethod(getMethod);

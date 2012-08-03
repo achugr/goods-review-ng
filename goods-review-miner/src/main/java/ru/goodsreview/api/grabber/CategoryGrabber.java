@@ -22,24 +22,6 @@ public class CategoryGrabber {
     private final ContentAPIProvider contentApiProvider;
     private static final Integer COUNT_MAX_VALUE = 30;
 
-    private enum JSONKeys {
-
-        CATEGORIES("categories"),
-        ID("id"),
-        ITEMS("items"),
-        CHILDREN_COUNT("childrenCount");
-
-        private final String key;
-
-        JSONKeys(String key){
-            this.key = key;
-        }
-
-        public String getKey(){
-            return this.key;
-        }
-    }
-
     public CategoryGrabber(ContentAPIProvider contentApiProvider){
         this.contentApiProvider = contentApiProvider;
     }
@@ -57,21 +39,33 @@ public class CategoryGrabber {
             for(JSONObject category : parentCategoriesList){
                 int childrenCount = category.getInt(JSONKeys.CHILDREN_COUNT.getKey());
                 if(childrenCount != 0){
-                    // Using category's id to construct request for it's child categories
-                    long currId = category.getLong(JSONKeys.ID.getKey());
-                    CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
-                    UrlRequest urlRequest = categoryRequestBuilder.requestForListOfChildrenCategoriesById(currId, new HashMap<String, String>());
 
-                    // Get child categories of the current category and add them to all child categories list
-                    List<JSONObject> childCategoriesList = contentApiProvider.provideAsList(urlRequest,JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey());
-                    allChildCategoriesList.addAll(childCategoriesList);
+                    int pageCount = (childrenCount / COUNT_MAX_VALUE) + 1;
 
-                    // Going on grabbing child categories of the next level
-                    grabChildCategoriesList(childCategoriesList, allChildCategoriesList);
+                    for(Integer pageNum = 1; pageNum <= pageCount; pageNum++){
+
+                        // Using category's id to construct request for it's child categories
+                        long currId = category.getLong(JSONKeys.ID.getKey());
+
+                        CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
+
+                        Map<String,String> parameters = new HashMap<String, String>();
+                        parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
+                        parameters.put(RequestParams.PAGE.getKey(), pageNum.toString());
+
+                        UrlRequest urlRequest = categoryRequestBuilder.requestForListOfChildrenCategoriesById(currId, parameters);
+
+                        // Get child categories of the current category and add them to all child categories list
+                        List<JSONObject> childCategoriesList = contentApiProvider.provideAsList(urlRequest,JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey());
+                        allChildCategoriesList.addAll(childCategoriesList);
+
+                        // Going on grabbing child categories of the next level
+                        grabChildCategoriesList(childCategoriesList, allChildCategoriesList);
+                    }
                 }
             }
         } catch (JSONException e) {
-            //log.error("some problems with json", e);
+            log.error("some problems with json", e);
             throw new RuntimeException();
         }
     }
