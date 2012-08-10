@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +15,21 @@ import java.util.List;
 public class JSONUtil {
 
     public static List<JSONObject> convertJSONArrayToListOfJSONObjects(final JSONArray jsonArray) {
-        final List<JSONObject> jsonObjects = new ArrayList<JSONObject>();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            jsonObjects.add(jsonArray.optJSONObject(i));
-        }
-        return jsonObjects;
+        return new AbstractList<JSONObject>() {
+            @Override
+            public JSONObject get(final int i) {
+                try {
+                    return jsonArray.getJSONObject(i);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public int size() {
+                return jsonArray.length();
+            }
+        };
     }
 
     public static String unsafeGetString(final JSONObject jsonObject, final String parameterName) {
