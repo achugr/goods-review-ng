@@ -14,6 +14,7 @@ import ru.goodsreview.analyzer.util.OSValidator;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -38,6 +39,8 @@ public class MystemAnalyzer  {
                 command = "./";
             }
             analyzer = Runtime.getRuntime().exec(command + MYSTEM_PATH + "mystem -nig -e " + CHARSET);
+            sc = new Scanner(analyzer.getInputStream(), CHARSET);
+            ps = new PrintStream(analyzer.getOutputStream(), true, CHARSET);
 
         } catch (IOException e) {
             log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
@@ -64,6 +67,16 @@ public class MystemAnalyzer  {
         return emptyReport;
     }
 
+    public String report(String word) throws UnsupportedEncodingException {
+        if (isRussianWord(word)) {
+            ps.println(word);
+            String report = sc.nextLine();
+            return report;
+        } else {
+            return emptyReport;
+        }
+    }
+
     /**
      * Checks if letter belongs to russian alphabet.
      *
@@ -88,29 +101,4 @@ public class MystemAnalyzer  {
         return true;
     }
 
-    public String report(String word) throws UnsupportedEncodingException {
-        if (isRussianWord(word)) {
-            sc = new Scanner(analyzer.getInputStream(), CHARSET);
-            ps = new PrintStream(analyzer.getOutputStream(), true, CHARSET);
-
-            ps.println(word);
-            String report = sc.nextLine();
-
-            // System.out.println(report);
-
-            return report;
-        } else {
-            return emptyReport;
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            MystemAnalyzer mystemAnalyzer = new MystemAnalyzer();
-            System.out.println(mystemAnalyzer.report("телефоном"));
-            mystemAnalyzer.close();
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-    }
 }
