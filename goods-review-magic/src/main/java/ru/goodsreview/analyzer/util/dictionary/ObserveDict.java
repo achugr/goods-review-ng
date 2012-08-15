@@ -9,7 +9,11 @@ import java.util.HashSet;
  * Ilya Makeev
  * ilya.makeev@gmail.com
  */
+
+//TODO утилитные классы всегда имеют приватный конструктор и являются абстрактными или файнал
 public class ObserveDict {
+    //TODO java6 style
+    //TODO final
     private static HashSet<String> dictionary = new HashSet();
 
     static {
@@ -22,6 +26,7 @@ public class ObserveDict {
     }
 
 
+    //TODO обязательно ли человеку, который будет это использовать знать, что это именно HashSet, а не просто Set?
     public static HashSet<String> getDictionary() {
         return dictionary;
     }

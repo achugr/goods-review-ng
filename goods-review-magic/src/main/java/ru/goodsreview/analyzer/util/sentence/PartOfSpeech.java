@@ -7,5 +7,6 @@ public enum PartOfSpeech {
     VERB,
     PARTICLE,
     PREPOSITION,
+    //TODO точка с запятой тут лишняя
     UNKNOWN;
 }

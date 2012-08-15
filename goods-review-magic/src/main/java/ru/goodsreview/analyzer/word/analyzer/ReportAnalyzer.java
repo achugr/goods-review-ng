@@ -18,6 +18,7 @@ public class ReportAnalyzer {
     public static final String UNKNOUN = "unk";
 
     static boolean isCorrect (String report){
+        //TODO тоже переделать надо, завести Set<String> для всего этого
         boolean t1  = report.contains("жен")||report.contains("муж")||report.contains("сред");
         boolean t2  = report.contains("ед")||report.contains("мн");
         boolean t3  = report.contains("им")||report.contains("род")||report.contains("дат")||
@@ -27,6 +28,7 @@ public class ReportAnalyzer {
         return t1 && t2 && t3;
     }
 
+    //TODO то что возвращает метод ужасно, можно сделать один доп класс или чтолибо еще
     public static String[] wordCharacteristic(String report) {
         String[] a = {UNKNOUN, UNKNOUN, UNKNOUN};
 
@@ -99,6 +101,8 @@ public class ReportAnalyzer {
             }
             String partOfSpeech = report.substring(pos1, pos2);
 
+            //TODO это трэш надо сделать статик метод в самом енаме типа getByName()
+            //TODO "A".equals(partOfSpeech) -- работает быстрее
             if (partOfSpeech.equals("A")) {
                 return PartOfSpeech.ADJECTIVE;
             }
@@ -142,6 +146,7 @@ public class ReportAnalyzer {
         return norm;
     }
 
+    //TODO List<String>
     public static ArrayList<String> buildReportList(String report) throws UnsupportedEncodingException {
         ArrayList<String> reportList = new ArrayList<String>();
         if (!report.equals(MystemAnalyzer.getEmptyReportValue())) {
@@ -173,6 +178,7 @@ public class ReportAnalyzer {
         return reportList;
     }
 
+    //TODO почему пакадж уровень доступа?
     static void buildNormList(ArrayList<String> list, String report, String norm) {
         int n1 = report.indexOf("|" + norm);
         if (n1 == -1) {

@@ -10,6 +10,7 @@ package ru.goodsreview.analyzer.util;
  * ilya.makeev@gmail.com
  */
 
+//TODO мутабл модельные классы -- зло полное
 public class Phrase {
     private String feature;
     private String opinion;

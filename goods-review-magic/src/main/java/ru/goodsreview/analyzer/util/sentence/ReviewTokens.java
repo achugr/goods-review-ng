@@ -22,6 +22,8 @@ public class ReviewTokens {
     //    list of tokens
     private ArrayList<ArrayList<Token>> tokensList;
 
+    //TODO удалить, переделать
+    //TODO про кодировки даж говорить не буду
     private static Dictionary featureDictionary = new SetDictionary("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt", "windows-1251");
     private static MapDictionary opinionDictionary = new MapDictionary("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt", "utf-8");
 
@@ -32,6 +34,7 @@ public class ReviewTokens {
      * @param review source String
      */
     public ReviewTokens(String review) throws IOException, InterruptedException {
+        //TODO читать невозможно
         MystemAnalyzer mystemAnalyzer = MystemAnalyzer.getInstance();
         String unk = ReportAnalyzer.UNKNOUN;
 
@@ -57,6 +60,7 @@ public class ReviewTokens {
                     String normToken = ReportAnalyzer.normalizer(mystemReport);
                     normForm = normToken;
 
+                    //TODO есть switch
                     if (mystemPartOfSpeech.equals(PartOfSpeech.ADJECTIVE)) {
                         if (opinionDictionary.contains(normToken)) {
                            // ReportAnalyzer.wordCharacteristic1(mystemReport);

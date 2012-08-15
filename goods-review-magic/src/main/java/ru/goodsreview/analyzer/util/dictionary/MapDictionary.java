@@ -21,6 +21,7 @@ import java.util.Map;
 public class MapDictionary implements Dictionary {
     private final static Logger log = Logger.getLogger(MapDictionary.class);
 
+    //TODO оно не HashMap а просто Map
     private final HashMap<String, Double> dictionary;
 
     public MapDictionary(final String dictionaryFileName, final String encoding) {
@@ -28,16 +29,19 @@ public class MapDictionary implements Dictionary {
         readDictionaryFromFile(dictionaryFileName, encoding);
     }
 
+    //TODO копипаста одна везде и всюду
     private void readDictionaryFromFile(final String dictionaryFileName, final String encoding) {
         InputStream inputStream = null;
         try {
             inputStream = MapDictionary.class.getResourceAsStream(dictionaryFileName);
             final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, encoding));
             String s = bufferedReader.readLine();
+            //TODO y BufferedReader есть метод ready()
             while (s != null) {
                 s = s.trim();
                 if (s.length() != 0) {
 
+                    //TODO трим все и так делает
                     if (s.contains(" ")) {
                         int n = s.indexOf(" ");
                         String word = s.substring(0, n);
@@ -62,10 +66,12 @@ public class MapDictionary implements Dictionary {
         }
     }
 
+    //TODO нахера этот метод? говнодизайн
     public Map<String, Double> getDictionary() {
         return this.dictionary;
     }
 
+    //TODO wtf?
     public void print() {
         for (String word : dictionary.keySet()) {
             System.out.println(word + " " + dictionary.get(word));
@@ -79,6 +85,7 @@ public class MapDictionary implements Dictionary {
      * @return true if word is here. false — otherwise
      */
     public boolean contains(Object key) {
+        //TODO реализация не лучше сигнатуры метода
         if (key instanceof String) {
             return dictionary.containsKey(key);
         } else {

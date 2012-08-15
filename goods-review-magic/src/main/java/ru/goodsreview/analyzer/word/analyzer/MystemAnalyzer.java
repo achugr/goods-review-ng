@@ -9,12 +9,10 @@ package ru.goodsreview.analyzer.word.analyzer;
 
 
 import org.apache.log4j.Logger;
-import ru.goodsreview.analyzer.util.OSValidator;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -34,10 +32,11 @@ public class MystemAnalyzer  {
 
     private MystemAnalyzer() {
         try {
+            //TODO не юникс систем не существует
             String command = "";
             if (OSValidator.isUnix() || OSValidator.isMac()) {
                 command = "./";
-            }
+            }                                              //TODO последние три слагаемых в сумме константы, в одну никак не объеденить?
             analyzer = Runtime.getRuntime().exec(command + MYSTEM_PATH + "mystem -nig -e " + CHARSET);
             sc = new Scanner(analyzer.getInputStream(), CHARSET);
             ps = new PrintStream(analyzer.getOutputStream(), true, CHARSET);
@@ -50,6 +49,7 @@ public class MystemAnalyzer  {
     }
 
 
+    //TODO есть спринг (Spring) где есть IOC (внедрение зависимостей) и синглтоны не надо городить
     public static MystemAnalyzer getInstance() {
         if (instance == null) {
             instance = new MystemAnalyzer();
@@ -69,6 +69,7 @@ public class MystemAnalyzer  {
 
     public String report(String word) throws UnsupportedEncodingException {
         if (isRussianWord(word)) {
+            //TODO а если процесс не ответит, ну подвиснет на секунду?
             ps.println(word);
             String report = sc.nextLine();
             return report;
@@ -83,6 +84,7 @@ public class MystemAnalyzer  {
      * @param letter The letter itself.
      * @return True if letter is russian, false — otherwise.
      */
+    //TODO упростить
     private static boolean isRussianLetter(char letter) {
         if ((letter >= 0x0410) && (letter <= 0x044F)) {
             return true;
@@ -92,6 +94,7 @@ public class MystemAnalyzer  {
     }
 
     public static boolean isRussianWord(String word) {
+        //TODO foreach есть
         char[] wordChars = word.toCharArray();
         for (int i = 0, j = wordChars.length; i < j; i++) {
             if (!isRussianLetter(wordChars[i])) {

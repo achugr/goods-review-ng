@@ -7,6 +7,7 @@ package ru.goodsreview.analyzer.util.sentence;
  *      artemij.chugreev@gmail.com
  */
 
+//TODO мутабл модельные классы -- зло полное
 public class Token {
     private String content;
     private PartOfSpeech partOfSpeech;

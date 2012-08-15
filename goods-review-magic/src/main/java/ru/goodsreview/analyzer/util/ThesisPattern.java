@@ -36,6 +36,7 @@ public class ThesisPattern {
         pattern.add(p2);
     }
 
+    //TODO а если я попрошу get(2)?
     public PartOfSpeech get(int i){
         return pattern.get(i);
     }

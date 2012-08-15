@@ -16,13 +16,16 @@ import java.util.Set;
 public class SetDictionary implements Dictionary {
     private final static Logger log = Logger.getLogger(SetDictionary.class);
 
+    //TODO Set<String>
     private final HashSet<String> dictionary;
 
+    //TODO мне кажется кодировка тут излишняя в сигнатуре, все ваша кроссплатформенность которая тут не в тему
     public SetDictionary(final String dictionaryFileName, final String encoding) {
         this.dictionary = new HashSet<String>();
         readDictionaryFromFile(dictionaryFileName, encoding);
     }
 
+    //TODO копипаста
     private void readDictionaryFromFile(final String dictionaryFileName, final String encoding) {
         InputStream inputStream = null;
         try {
@@ -59,6 +62,7 @@ public class SetDictionary implements Dictionary {
     }
 
 
+    //TODO аналогично предыдущему? зачем открывать реализацию интерфейса?
     public Set<String> getDictionary() {
         return this.dictionary;
     }
