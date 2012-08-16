@@ -9,7 +9,10 @@ package ru.goodsreview.analyzer.newtest;
  */
 
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.goodsreview.analyzer.ExtractThesis;
+import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 
@@ -74,10 +77,15 @@ public class NewExtractionTest {
             System.out.println("recall = " + successExtract / numHum);
         }
 
-        MystemAnalyzer.getInstance().close();
+        ReviewTokens.getMystemAnalyzer().close();
+
     }
 
+
     static boolean match(String s1, String s2) throws UnsupportedEncodingException {
-        return ReportAnalyzer.normalizer(MystemAnalyzer.getInstance().report(s1)).equals(ReportAnalyzer.normalizer(MystemAnalyzer.getInstance().report(s2)));
+        String report1 = ReportAnalyzer.normalizer(ReviewTokens.getMystemAnalyzer().report(s1));
+        String report2 = ReportAnalyzer.normalizer(ReviewTokens.getMystemAnalyzer().report(s2));
+        return report1.equals(report2);
+
     }
 }

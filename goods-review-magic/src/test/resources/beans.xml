@@ -1,0 +1,12 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+
+    <bean id="myStem" class="ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer">
+        <property name="analyzer" value="goods-review-magic/target/classes/ru/goodsreview/analyzer/tools/" />
+    </bean>
+
+</beans>

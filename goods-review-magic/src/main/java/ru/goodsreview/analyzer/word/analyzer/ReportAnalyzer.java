@@ -32,7 +32,7 @@ public class ReportAnalyzer {
     public static String[] wordCharacteristic(String report) {
         String[] a = {UNKNOUN, UNKNOUN, UNKNOUN};
 
-        if (!report.equals(MystemAnalyzer.getEmptyReportValue())&&isCorrect(report)) {
+        if (!report.equals(MystemAnalyzer.EMPTY_REPORT)&&isCorrect(report)) {
             if (!((report.contains("жен") && report.contains("муж")) ||
                     (report.contains("жен") && report.contains("сред")) ||
                     (report.contains("муж") && report.contains("сред")))) {
@@ -93,7 +93,7 @@ public class ReportAnalyzer {
 
 
     public static PartOfSpeech partOfSpeech(String report) throws UnsupportedEncodingException {
-        if (!report.equals(MystemAnalyzer.getEmptyReportValue())) {
+        if (!report.equals(MystemAnalyzer.EMPTY_REPORT)) {
             int pos1 = report.indexOf('=') + 1;
             int pos2 = pos1;
             while (Character.isUpperCase(report.charAt(pos2))) {
@@ -130,7 +130,7 @@ public class ReportAnalyzer {
 
     public static String normalizer(String report) throws UnsupportedEncodingException {
         String norm = UNKNOUN;
-        if (!report.equals(MystemAnalyzer.getEmptyReportValue())) {
+        if (!report.equals(MystemAnalyzer.EMPTY_REPORT)) {
             int n = report.indexOf("=");
             if (n != -1) {
                 norm = report.substring(report.indexOf("{") + 1, n);
@@ -149,7 +149,7 @@ public class ReportAnalyzer {
     //TODO List<String>
     public static ArrayList<String> buildReportList(String report) throws UnsupportedEncodingException {
         ArrayList<String> reportList = new ArrayList<String>();
-        if (!report.equals(MystemAnalyzer.getEmptyReportValue())) {
+        if (!report.equals(MystemAnalyzer.EMPTY_REPORT)) {
             String norm = normalizer(report);
             ArrayList<String> normList = new ArrayList<String>();
             buildNormList(normList, report, norm);

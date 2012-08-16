@@ -1,16 +1,17 @@
 package ru.goodsreview.analyzer;
 
 /**
- * Date: 05.02.12
- * Time: 21:18
- * Author:
- * Ilya Makeev
- * ilya.makeev@gmail.com
- */
+* Date: 05.02.12
+* Time: 21:18
+* Author:
+* Ilya Makeev
+* ilya.makeev@gmail.com
+*/
 
 import org.junit.Test;
 import org.springframework.remoting.support.UrlBasedRemoteAccessor;
 import ru.goodsreview.analyzer.util.Phrase;
+import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 
@@ -24,7 +25,7 @@ public class ThesisExtractionTest {
     private static double numAlgo = 0;
     private static double numHum = 0;
     private static HashMap<String, int[]> dictionaryScores = new HashMap<String, int[]>();
-    static MystemAnalyzer mystemAnalyzer = MystemAnalyzer.getInstance();
+    static MystemAnalyzer mystemAnalyzer = ReviewTokens.getMystemAnalyzer();
 
     //   build list of Products for human markup file
     static ArrayList<Product> buildHumanProductList(final String filePath, final String encoding) throws IOException {
@@ -443,7 +444,7 @@ public class ThesisExtractionTest {
         }
 
         //printDictionary();
-        MystemAnalyzer.getInstance().close();
+        ReviewTokens.getMystemAnalyzer().close();
     }
 }
 

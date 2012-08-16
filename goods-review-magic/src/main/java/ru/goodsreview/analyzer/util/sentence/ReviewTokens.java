@@ -8,6 +8,7 @@ package ru.goodsreview.analyzer.util.sentence;
  */
 
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.goodsreview.analyzer.util.dictionary.Dictionary;
 import ru.goodsreview.analyzer.util.dictionary.MapDictionary;
 import ru.goodsreview.analyzer.util.dictionary.SetDictionary;
@@ -27,6 +28,7 @@ public class ReviewTokens {
     private static Dictionary featureDictionary = new SetDictionary("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt", "windows-1251");
     private static MapDictionary opinionDictionary = new MapDictionary("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt", "utf-8");
 
+    private static MystemAnalyzer mystemAnalyzer = (MystemAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("myStem");
 
     /**
      * create new ReviewTokens from review
@@ -34,8 +36,7 @@ public class ReviewTokens {
      * @param review source String
      */
     public ReviewTokens(String review) throws IOException, InterruptedException {
-        //TODO читать невозможно
-        MystemAnalyzer mystemAnalyzer = MystemAnalyzer.getInstance();
+
         String unk = ReportAnalyzer.UNKNOUN;
 
         tokensList = new ArrayList<ArrayList<Token>>();
@@ -53,7 +54,7 @@ public class ReviewTokens {
 
                 String mystemReport = mystemAnalyzer.report(currToken);
 
-                if (!mystemReport.equals(MystemAnalyzer.getEmptyReportValue())) {
+                if (!mystemReport.equals(MystemAnalyzer.EMPTY_REPORT)) {
 
                     PartOfSpeech mystemPartOfSpeech = ReportAnalyzer.partOfSpeech(mystemReport);
 
@@ -104,6 +105,10 @@ public class ReviewTokens {
                 tokensList.add(newTokensList);
             }
     }
+    }
+
+    public static MystemAnalyzer getMystemAnalyzer(){
+        return mystemAnalyzer;
     }
 
     public static Dictionary getFeatureDictionary(){

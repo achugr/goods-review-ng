@@ -8,64 +8,50 @@ package ru.goodsreview.analyzer.word.analyzer;
  */
 
 
-import org.apache.log4j.Logger;
-
+import ru.goodsreview.analyzer.util.OSValidator;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * Class for the analysis of words, using mystem program http://company.yandex.ru/technologies/mystem/
  */
 public class MystemAnalyzer  {
-    private static MystemAnalyzer instance;
-    private static final String MYSTEM_PATH = "goods-review-magic/target/classes/ru/goodsreview/analyzer/tools/";
-    private final static Logger log = Logger.getLogger(MystemAnalyzer.class);
+    private  Process analyzer;
+    private  Scanner sc;
+    private  PrintStream ps;
 
-    private static final String CHARSET = "UTF8";
-    private static final String emptyReport = "";
+    public static final String EMPTY_REPORT = "";
 
-    private Process analyzer;
-    private Scanner sc;
-    private PrintStream ps;
+   //private final static Logger log = Logger.getLogger(MystemAnalyzer.class);
 
-    private MystemAnalyzer() {
+
+   public void setAnalyzer(String path) {
         try {
-            //TODO не юникс систем не существует
+            String CHARSET = "UTF8";
             String command = "";
+
             if (OSValidator.isUnix() || OSValidator.isMac()) {
                 command = "./";
-            }                                              //TODO последние три слагаемых в сумме константы, в одну никак не объеденить?
-            analyzer = Runtime.getRuntime().exec(command + MYSTEM_PATH + "mystem -nig -e " + CHARSET);
+           }
+            analyzer = Runtime.getRuntime().exec(command + path + "mystem -nig -e " + "UTF8");
             sc = new Scanner(analyzer.getInputStream(), CHARSET);
             ps = new PrintStream(analyzer.getOutputStream(), true, CHARSET);
 
         } catch (IOException e) {
-            log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
+           // log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
             throw new RuntimeException(e);
         }
-
     }
 
-
-    //TODO есть спринг (Spring) где есть IOC (внедрение зависимостей) и синглтоны не надо городить
-    public static MystemAnalyzer getInstance() {
-        if (instance == null) {
-            instance = new MystemAnalyzer();
-        }
-        return instance;
-    }
 
 
     public void close() {
         analyzer.destroy();
     }
 
-
-    public static String getEmptyReportValue() {
-        return emptyReport;
-    }
 
     public String report(String word) throws UnsupportedEncodingException {
         if (isRussianWord(word)) {
@@ -74,7 +60,7 @@ public class MystemAnalyzer  {
             String report = sc.nextLine();
             return report;
         } else {
-            return emptyReport;
+            return EMPTY_REPORT;
         }
     }
 
@@ -84,13 +70,8 @@ public class MystemAnalyzer  {
      * @param letter The letter itself.
      * @return True if letter is russian, false — otherwise.
      */
-    //TODO упростить
     private static boolean isRussianLetter(char letter) {
-        if ((letter >= 0x0410) && (letter <= 0x044F)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (letter >= 0x0410) && (letter <= 0x044F);
     }
 
     public static boolean isRussianWord(String word) {

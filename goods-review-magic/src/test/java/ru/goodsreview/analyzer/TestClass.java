@@ -1,11 +1,11 @@
 package ru.goodsreview.analyzer;
 /**
- * Date: 18.07.12
- * Time: 03:20
- * Author:
- * Ilya Makeev
- * ilya.makeev@gmail.com
- */
+* Date: 18.07.12
+* Time: 03:20
+* Author:
+* Ilya Makeev
+* ilya.makeev@gmail.com
+*/
 import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
@@ -24,10 +24,10 @@ public class TestClass extends TestCase {
 
     public void testMystemAnalyzer() throws UnsupportedEncodingException {
         String s = "телефоном{телефон=S,муж,неод=твор,ед}";
-        String report = MystemAnalyzer.getInstance().report("телефоном");
+        String report = ReviewTokens.getMystemAnalyzer().report("телефоном");
         assertTrue(report.equals(s));
     }
-    
+//
     public void testReportList() throws UnsupportedEncodingException {
         String s = "сборки{сборка=S,жен,неод=(им,мн|род,ед|вин,мн)}";
         ArrayList<String> reportList = ReportAnalyzer.buildReportList(s);
