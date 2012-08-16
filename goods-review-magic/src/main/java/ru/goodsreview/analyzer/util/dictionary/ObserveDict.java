@@ -1,6 +1,7 @@
 package ru.goodsreview.analyzer.util.dictionary;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Date: 18.07.12
@@ -13,8 +14,7 @@ import java.util.HashSet;
 //TODO утилитные классы всегда имеют приватный конструктор и являются абстрактными или файнал
 public class ObserveDict {
     //TODO java6 style
-    //TODO final
-    private static HashSet<String> dictionary = new HashSet();
+    private final static HashSet<String> dictionary = new HashSet();
 
     static {
         dictionary.add("не");
@@ -26,8 +26,7 @@ public class ObserveDict {
     }
 
 
-    //TODO обязательно ли человеку, который будет это использовать знать, что это именно HashSet, а не просто Set?
-    public static HashSet<String> getDictionary() {
+    public static Set<String> getDictionary() {
         return dictionary;
     }
 

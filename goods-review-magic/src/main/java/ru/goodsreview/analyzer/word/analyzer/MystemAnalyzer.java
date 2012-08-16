@@ -36,6 +36,7 @@ public class MystemAnalyzer  {
             if (OSValidator.isUnix() || OSValidator.isMac()) {
                 command = "./";
            }
+
             analyzer = Runtime.getRuntime().exec(command + path + "mystem -nig -e " + "UTF8");
             sc = new Scanner(analyzer.getInputStream(), CHARSET);
             ps = new PrintStream(analyzer.getOutputStream(), true, CHARSET);
@@ -75,10 +76,8 @@ public class MystemAnalyzer  {
     }
 
     public static boolean isRussianWord(String word) {
-        //TODO foreach есть
-        char[] wordChars = word.toCharArray();
-        for (int i = 0, j = wordChars.length; i < j; i++) {
-            if (!isRussianLetter(wordChars[i])) {
+        for (char c : word.toCharArray()) {
+            if (!isRussianLetter(c)) {
                 return false;
             }
         }

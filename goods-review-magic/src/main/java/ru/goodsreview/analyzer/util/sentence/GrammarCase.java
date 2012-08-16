@@ -8,7 +8,6 @@ package ru.goodsreview.analyzer.util.sentence;
  * ilya.makeev@gmail.com
  */
 
-//так все-таки поменьше кода получается
 public enum GrammarCase {
     IM("им"),
     ROD("род"),
@@ -30,50 +29,4 @@ public enum GrammarCase {
         return this.value;
     }
 }
-//    IM {
-//        public String toString() {
-//            return "им";
-//        }
-//    },
-//    ROD {
-//        public String toString() {
-//            return "род";
-//        }
-//    },
-//    DAT {
-//        public String toString() {
-//            return "дат";
-//        }
-//    },
-//    VIN {
-//        public String toString() {
-//            return "вин";
-//        }
-//    },
-//    TVOR {
-//        public String toString() {
-//            return "твор";
-//        }
-//    },
-//    PRED {
-//        public String toString() {
-//            return "пр";
-//        }
-//    },
-//    PART {
-//        public String toString() {
-//            return "парт";
-//        }
-//    },
-//    MESTN {
-//        public String toString() {
-//            return "местн";
-//        }
-//    },
-//    ZVAT {
-//        public String toString() {
-//            return "зват";
-//        }
-//    }
-//}
 

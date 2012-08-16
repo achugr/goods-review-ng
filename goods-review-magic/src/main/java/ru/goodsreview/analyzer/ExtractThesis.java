@@ -32,102 +32,49 @@ public class ExtractThesis{
         StringTokenizer stringTokenizer = new StringTokenizer(content, ".,-—:;!()+\'\"\\«»");
 
         while (stringTokenizer.hasMoreElements()) {
-            String str = stringTokenizer.nextToken();
+            String sentence = stringTokenizer.nextToken();
 
-            ReviewTokens reviewTokens = new ReviewTokens(str);
+            ReviewTokens reviewTokens = new ReviewTokens(sentence);
             ArrayList<ArrayList<Token>> tokensList = reviewTokens.getTokensList();
 
+//            for (int i = 0; i < tokensList.size(); i++) {
+//                System.out.print(tokensList.get(i).get(0).getContent()+"("+tokensList.get(i).get(0).getPartOfSpeech().name()+")"+" ");
+//            } System.out.println();
+
             for (ThesisPattern thesisPattern : thesisPatternList) {
-
-                if (thesisPattern.getPattern().get(0).equals(PartOfSpeech.NOUN)) {
-                    nounAtFirstPositionExtraction(extractedThesisList, tokensList, thesisPattern);
-                } else {
-                    if (thesisPattern.getPattern().get(1).equals(PartOfSpeech.NOUN)) {
-                        nounAtSecondPositionExtraction(extractedThesisList, tokensList, thesisPattern);
-                    } else {
-                        System.out.println("incorrect pattern");
-                    }
-                }
-
+                extractPattern(extractedThesisList, tokensList, thesisPattern);
             }
         }
-
 
         return extractedThesisList;
     }
 
 
-    static void nounAtFirstPositionExtraction(ArrayList<Phrase> extractedThesisList, ArrayList<ArrayList<Token>> tokensList, ThesisPattern pattern) throws UnsupportedEncodingException {
-        String token1 = null;
-        PartOfSpeech noun = pattern.getPattern().get(0);
+    static void extractPattern(ArrayList<Phrase> extractedThesisList, ArrayList<ArrayList<Token>> tokensList, ThesisPattern pattern) throws UnsupportedEncodingException {
+        PartOfSpeech part1 = pattern.getPattern().get(0);
         PartOfSpeech part2 = pattern.getPattern().get(1);
-        int n1 = 0;
-        int n2;
 
         for (int i = 0; i < tokensList.size(); i++) {
-            Token currToken = tokensList.get(i).get(0);
+            Token rightToken = tokensList.get(i).get(0);
 
-            if (currToken.getPartOfSpeech().equals(noun)) {
-                token1 = currToken.getContent();
-                 n1 = i;
-            } else {
-                if (token1 != null && currToken.getPartOfSpeech().equals(part2)) {
-                     n2 = i;
-                    
-                   // boolean patternCondition = (Math.abs(n1-n2)==1)&&(dictContains(tokensList.get(n1+1).get(0).getContent()));
-                    boolean patternCondition = false;
-                    if(Math.abs(n1-n2)==1||patternCondition){
-
-                        String token2 = currToken.getContent();
-
-                        if(checkTokenListCorrespondence(tokensList.get(n1), tokensList.get(n2))) {
-
-                            //   System.out.println(token1+" "+tokensList.get(n1+1).getContent()+" "+token2);
-                            //   token2= tokensList.get(n1+1).getContent()+" "+token2;
-                         // }
-                            extractedThesisList.add(new Phrase(token1,token2));
-                        }
+            if (rightToken.getPartOfSpeech().equals(part2)) {
+                int k = -1;
+                for (int j = i - 1; j >= 0; j--) {
+                    Token leftToken = tokensList.get(j).get(0);
+                    if (leftToken.getPartOfSpeech().equals(part1)) {
+                        k = j;
+                        break;
                     }
-
-                    token1 = null;
                 }
-            }
-        }
-    }
-
-    static void nounAtSecondPositionExtraction(ArrayList<Phrase> extractedThesisList, ArrayList<ArrayList<Token>> tokensList, ThesisPattern pattern) throws UnsupportedEncodingException {
-        String token1 = null;
-        PartOfSpeech part2 = pattern.getPattern().get(0);
-        PartOfSpeech noun = pattern.getPattern().get(1);
-        int n1 = 0;
-        int n2;
-        for (int i = tokensList.size()-1; i >= 0 ; i--) {
-            Token currToken = tokensList.get(i).get(0);
-
-            if (currToken.getPartOfSpeech().equals(noun)) {
-                token1 = currToken.getContent();
-                n1 = i;
-            } else {
-                if (token1 != null && currToken.getPartOfSpeech().equals(part2)) {
-                    n2 = i;
-                    boolean patternCondition = false;
-//                    if(n2!=0){
-//                        patternCondition = (Math.abs(n1-n2)==1)&&(dictContains(tokensList.get(n2-1).getContent()));
-//                    }
-
-                    if(Math.abs(n1-n2)==1||patternCondition){
-
-                        String token2 = currToken.getContent();
-
-                        if(checkTokenListCorrespondence(tokensList.get(n1),tokensList.get(n2))) {
-                           // if(patternCondition){
-                              //  System.out.println(tokensList.get(n2-1).getContent()+" "+token2+" "+token1);
-                              //  token2 = tokensList.get(n2-1).getContent()+" "+token2;
-                           // }
-                            extractedThesisList.add(new Phrase(token1,token2));
+                if (k != -1) {
+                    if (Math.abs(i - k) == 1) {
+                        Token token1 = tokensList.get(k).get(0);
+                        Token token2 = tokensList.get(i).get(0);
+                        // System.out.println("#"+token1.getContent()+" "+token2.getContent());
+                        if (checkTokenListCorrespondence(tokensList.get(k), tokensList.get(i))) {
+                            extractedThesisList.add(new Phrase(token1.getContent(), token2.getContent()));
                         }
                     }
-                    token1 = null;
                 }
             }
         }
