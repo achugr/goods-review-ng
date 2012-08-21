@@ -85,8 +85,8 @@ public class ExtractThesis{
         String p2 = token2.getGender();
         String num1 = token1.getNumber();
         String num2 = token2.getNumber();
-        String case1 = token1.getCaseOf();
-        String case2 = token2.getCaseOf();
+        String case1 = token1.getCase();
+        String case2 = token2.getCase();
         boolean con1 = check(p1, p2);       // Род
         boolean con2 = check(num1, num2);   // Число
         boolean con3 = check(case1, case2); // Падеж

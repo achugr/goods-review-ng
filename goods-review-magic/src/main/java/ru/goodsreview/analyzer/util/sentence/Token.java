@@ -45,7 +45,7 @@ public class Token {
         return number;
     }
 
-    public String getCaseOf() {
+    public String getCase() {
         return caseOf;
     }
 

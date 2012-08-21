@@ -8,6 +8,7 @@ package ru.goodsreview.analyzer.word.analyzer;
  */
 
 
+import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.analyzer.util.OSValidator;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -27,7 +28,7 @@ public class MystemAnalyzer  {
 
    //private final static Logger log = Logger.getLogger(MystemAnalyzer.class);
 
-
+  @Required
    public void setAnalyzer(String path) {
         try {
             String CHARSET = "UTF8";

@@ -17,6 +17,7 @@ import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class ReviewTokens {
@@ -29,6 +30,11 @@ public class ReviewTokens {
     private static MapDictionary opinionDictionary = new MapDictionary("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt", "utf-8");
 
     private static MystemAnalyzer mystemAnalyzer = (MystemAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("myStem");
+
+//    @Required
+//    public void setMystemAnalyzer(MystemAnalyzer mystemAnalyzer) {
+//        this.mystemAnalyzer = mystemAnalyzer;
+//    }
 
     /**
      * create new ReviewTokens from review
@@ -79,7 +85,7 @@ public class ReviewTokens {
                         }
                     }
 
-                    ArrayList<String> reportList;
+                    List<String> reportList;
                     if (partOfSpeach.equals(PartOfSpeech.NOUN) || partOfSpeach.equals(PartOfSpeech.ADJECTIVE)) {
                         reportList = ReportAnalyzer.buildReportList(mystemReport);
                     } else {
@@ -88,10 +94,10 @@ public class ReviewTokens {
                     }
                     
                     for (String rep:reportList){
-                        String[] a = ReportAnalyzer.wordCharacteristic(rep);
-                        String gender = a[0];
-                        String number = a[1];
-                        String caseOf = a[2];
+                        WordProperty property = ReportAnalyzer.wordProperty(rep);
+                        String gender = property.getGender().toString();
+                        String number = property.getNumber().toString();
+                        String caseOf = property.getCase().toString();
                         Token newToken = new Token(currToken, normForm, partOfSpeach, gender, number, caseOf);
                         newTokensList.add(newToken);
                     }

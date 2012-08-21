@@ -1,10 +1,10 @@
 package ru.goodsreview.analyzer.word.analyzer;
 
-import ru.goodsreview.analyzer.util.sentence.GrammarCase;
-import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
+import ru.goodsreview.analyzer.util.sentence.*;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -28,35 +28,33 @@ public class ReportAnalyzer {
         return t1 && t2 && t3;
     }
 
-    //TODO то что возвращает метод ужасно, можно сделать один доп класс или чтолибо еще
-    public static String[] wordCharacteristic(String report) {
-        String[] a = {UNKNOUN, UNKNOUN, UNKNOUN};
+    public static WordProperty wordProperty(String report) {
+        WordProperty property = new WordProperty(GrammarGender.UNKNOWN,GrammarNumber.UNKNOWN,GrammarCase.UNKNOWN);
 
         if (!report.equals(MystemAnalyzer.EMPTY_REPORT)&&isCorrect(report)) {
-            if (!((report.contains("жен") && report.contains("муж")) ||
-                    (report.contains("жен") && report.contains("сред")) ||
-                    (report.contains("муж") && report.contains("сред")))) {
+            GrammarGender[] genderCases = GrammarGender.values();
+            if (!isDualConclusion(report,genderCases)) {
 
-                if (report.contains("жен")) {
-                    a[0] = "жен";
+                for (GrammarGender gender:genderCases){
+                    if(report.contains(gender.toString())){
+                        property.setGender(gender);
+                        break;
+                    }
                 }
-                if (report.contains("муж")) {
-                    a[0] = "муж";
-                }
-                if (report.contains("сред")) {
-                    a[0] = "сред";
-                }
+
             } else {
                 //  System.out.println(report);
             }
 
-            if (!((report.contains("ед") && report.contains("мн")))) {
-                if (report.contains("ед")) {
-                    a[1] = "ед";
+            GrammarNumber[] numCases = GrammarNumber.values();
+            if (!isDualConclusion(report, numCases)) {
+                for (GrammarNumber number:numCases){
+                    if(report.contains(number.toString())){
+                        property.setNumber(number);
+                        break;
+                    }
                 }
-                if (report.contains("мн")) {
-                    a[1] = "мн";
-                }
+
             } else {
                 //  System.out.println(report);
             }
@@ -78,7 +76,7 @@ public class ReportAnalyzer {
             if (!t1) {
                 for (GrammarCase aCase : cases) {
                     if (report.contains(aCase.toString())) {
-                        a[2] = aCase.toString();
+                        property.setCase(aCase);
                         break;
                     }
                 }
@@ -88,7 +86,18 @@ public class ReportAnalyzer {
 
         }
 
-        return a;
+        return property;
+    }
+
+    static boolean isDualConclusion(String report, Object[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (report.contains(arr[i].toString()) && report.contains(arr[j].toString())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 
@@ -146,8 +155,8 @@ public class ReportAnalyzer {
         return norm;
     }
 
-    //TODO List<String>
-    public static ArrayList<String> buildReportList(String report) throws UnsupportedEncodingException {
+
+    public static List<String> buildReportList(String report) throws UnsupportedEncodingException {
         ArrayList<String> reportList = new ArrayList<String>();
         if (!report.equals(MystemAnalyzer.EMPTY_REPORT)) {
             String norm = normalizer(report);
@@ -178,8 +187,8 @@ public class ReportAnalyzer {
         return reportList;
     }
 
-    //TODO почему пакадж уровень доступа?
-    static void buildNormList(ArrayList<String> list, String report, String norm) {
+
+    public static void buildNormList(ArrayList<String> list, String report, String norm) {
         int n1 = report.indexOf("|" + norm);
         if (n1 == -1) {
             list.add(report);

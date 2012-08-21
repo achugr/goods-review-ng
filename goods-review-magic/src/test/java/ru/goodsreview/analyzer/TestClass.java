@@ -15,6 +15,7 @@ import junit.textui.TestRunner;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TestClass extends TestCase {
 
@@ -30,7 +31,7 @@ public class TestClass extends TestCase {
 //
     public void testReportList() throws UnsupportedEncodingException {
         String s = "сборки{сборка=S,жен,неод=(им,мн|род,ед|вин,мн)}";
-        ArrayList<String> reportList = ReportAnalyzer.buildReportList(s);
+        List<String> reportList = ReportAnalyzer.buildReportList(s);
         assertTrue(reportList.size()==3);
     }
 
