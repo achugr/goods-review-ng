@@ -12,9 +12,8 @@ import java.util.Set;
  */
 
 //TODO утилитные классы всегда имеют приватный конструктор и являются абстрактными или файнал
-public class ObserveDict {
-    //TODO java6 style
-    private final static HashSet<String> dictionary = new HashSet();
+public final class ObserveDict implements Dictionary<String>{
+    private final static Set<String> dictionary = new HashSet<String>();
 
     static {
         dictionary.add("не");
@@ -25,9 +24,9 @@ public class ObserveDict {
         dictionary.add("довольно");
     }
 
-
-    public static Set<String> getDictionary() {
-        return dictionary;
+    @Override
+    public boolean contains(final String key){
+        return dictionary.contains(key);
     }
 
 }
