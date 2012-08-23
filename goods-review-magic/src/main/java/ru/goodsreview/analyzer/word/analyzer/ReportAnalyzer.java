@@ -17,17 +17,6 @@ import java.util.StringTokenizer;
 public class ReportAnalyzer {
     public static final String UNKNOUN = "unk";
 
-    static boolean isCorrect (String report){
-        //TODO тоже переделать надо, завести Set<String> для всего этого
-        boolean t1  = report.contains("жен")||report.contains("муж")||report.contains("сред");
-        boolean t2  = report.contains("ед")||report.contains("мн");
-        boolean t3  = report.contains("им")||report.contains("род")||report.contains("дат")||
-                report.contains("вин")||report.contains("твор")||report.contains("пр")||
-                report.contains("парт")||report.contains("местн")||report.contains("зват");
-
-        return t1 && t2 && t3;
-    }
-
     public static WordProperty wordProperty(String report) {
         WordProperty property = new WordProperty(GrammarGender.UNKNOWN,GrammarNumber.UNKNOWN,GrammarCase.UNKNOWN);
 
@@ -100,6 +89,21 @@ public class ReportAnalyzer {
         return false;
     }
 
+    static boolean isCorrect(String report) {
+        return containsProperty(report, GrammarGender.values()) &&
+                containsProperty(report, GrammarNumber.values()) &&
+                containsProperty(report, GrammarCase.values());
+    }
+
+    static boolean containsProperty(String report, Object[] arr) {
+        for (Object elem : arr) {
+            if (report.contains(elem.toString())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public static PartOfSpeech partOfSpeech(String report) throws UnsupportedEncodingException {
         if (!report.equals(MystemAnalyzer.EMPTY_REPORT)) {
@@ -110,29 +114,7 @@ public class ReportAnalyzer {
             }
             String partOfSpeech = report.substring(pos1, pos2);
 
-            //TODO это трэш надо сделать статик метод в самом енаме типа getByName()
-            //TODO "A".equals(partOfSpeech) -- работает быстрее
-            if (partOfSpeech.equals("A")) {
-                return PartOfSpeech.ADJECTIVE;
-            }
-            if (partOfSpeech.equals("S")) {
-                return PartOfSpeech.NOUN;
-            }
-            if (partOfSpeech.equals("ADV")) {
-                return PartOfSpeech.ADVERB;
-            }
-            if (partOfSpeech.equals("V")) {
-                return PartOfSpeech.VERB;
-            }
-            if (partOfSpeech.equals("PR")) {
-                return PartOfSpeech.PREPOSITION;
-            }
-            if (partOfSpeech.equals("PART")) {
-                return PartOfSpeech.PARTICLE;
-            }
-            if (partOfSpeech.equals("")) {
-                return PartOfSpeech.UNKNOWN;
-            }
+          return PartOfSpeech.getByName(partOfSpeech);
         }
         return PartOfSpeech.UNKNOWN;
     }

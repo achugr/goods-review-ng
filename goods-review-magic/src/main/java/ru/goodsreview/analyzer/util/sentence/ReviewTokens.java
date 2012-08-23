@@ -56,7 +56,7 @@ public class ReviewTokens {
             if (!currToken.equals("")) {
                 ArrayList<Token> newTokensList = new ArrayList<Token>();
                 PartOfSpeech partOfSpeach = PartOfSpeech.UNKNOWN;
-                String normForm = unk;
+                String normForm;
 
                 String mystemReport = mystemAnalyzer.report(currToken);
 
@@ -67,23 +67,23 @@ public class ReviewTokens {
                     String normToken = ReportAnalyzer.normalizer(mystemReport);
                     normForm = normToken;
 
-                    //TODO есть switch
-                    if (mystemPartOfSpeech.equals(PartOfSpeech.ADJECTIVE)) {
-                        if (opinionDictionary.contains(normToken)) {
-                           // ReportAnalyzer.wordCharacteristic1(mystemReport);
-                           // ReportAnalyzer.buildReportList(mystemReport);
-                            partOfSpeach = PartOfSpeech.ADJECTIVE;
-                        }
-                    } else {
-                        if (mystemPartOfSpeech.equals(PartOfSpeech.NOUN)) {
+
+                    switch (mystemPartOfSpeech) {
+                        case ADJECTIVE:
+                            if (opinionDictionary.contains(normToken)) {
+                                partOfSpeach = PartOfSpeech.ADJECTIVE;
+                            }
+                            break;
+                        case NOUN:
                             if (featureDictionary.contains(normToken)) {
-                              //  ReportAnalyzer.wordCharacteristic1(mystemReport);
                                 partOfSpeach = PartOfSpeech.NOUN;
                             }
-                        } else {
+                            break;
+                        default:
                             partOfSpeach = mystemPartOfSpeech;
-                        }
+                            break;
                     }
+
 
                     List<String> reportList;
                     if (partOfSpeach.equals(PartOfSpeech.NOUN) || partOfSpeach.equals(PartOfSpeech.ADJECTIVE)) {
@@ -92,8 +92,8 @@ public class ReviewTokens {
                         reportList = new ArrayList<String>();
                         reportList.add(mystemReport);
                     }
-                    
-                    for (String rep:reportList){
+
+                    for (String rep : reportList) {
                         WordProperty property = ReportAnalyzer.wordProperty(rep);
                         String gender = property.getGender().toString();
                         String number = property.getNumber().toString();
@@ -103,14 +103,14 @@ public class ReviewTokens {
                     }
 
 
-                }else{
+                } else {
                     newTokensList.add(new Token(currToken, unk, PartOfSpeech.UNKNOWN, unk, unk, unk));
                 }
 
 
                 tokensList.add(newTokensList);
             }
-    }
+        }
     }
 
     public static MystemAnalyzer getMystemAnalyzer(){
