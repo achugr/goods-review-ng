@@ -1,9 +1,7 @@
 package ru.goodsreview.api.grabber.batch;
 
-import com.google.gson.JsonObject;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.core.db.entity.EntityService;
 import ru.goodsreview.core.util.Batch;
 
@@ -20,8 +18,7 @@ public class GrabberBatch extends Batch <JSONObject>{
 
     private EntityService entityService;
 
-    @Required
-    public void setEntityService(EntityService entityService) {
+    public GrabberBatch(EntityService entityService) {
         this.entityService = entityService;
     }
 

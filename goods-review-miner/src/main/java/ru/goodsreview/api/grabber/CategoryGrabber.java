@@ -17,12 +17,14 @@ import java.util.Map;
  * achugr, achugr@yandex-team.ru
  * 13.07.12
  */
-public class CategoryGrabber {
+public class CategoryGrabber extends Grabber{
     private final static Logger log = Logger.getLogger(CategoryGrabber.class);
     private final ContentAPIProvider contentApiProvider;
+
     private static final Integer COUNT_MAX_VALUE = 30;
 
     public CategoryGrabber(ContentAPIProvider contentApiProvider){
+        super();
         this.contentApiProvider = contentApiProvider;
     }
 
@@ -31,7 +33,9 @@ public class CategoryGrabber {
         Map<String,String> parameters = new HashMap<String, String>();
         parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
         UrlRequest urlRequest = categoryRequestBuilder.requestForListOfCategories(parameters);
-        return contentApiProvider.provideAsList(urlRequest, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey());
+        List<JSONObject> mainCategoriesList = contentApiProvider.provideAsList(urlRequest, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey());
+        batchList(mainCategoriesList);
+        return mainCategoriesList;
     }
 
     private void grabChildCategoriesList(List<JSONObject> parentCategoriesList, List<JSONObject> allChildCategoriesList){
@@ -74,6 +78,7 @@ public class CategoryGrabber {
         List<JSONObject> mainCategoriesList = grabMainCategoriesList();
         List<JSONObject> allChildCategoriesList = new ArrayList<JSONObject>();
         grabChildCategoriesList(mainCategoriesList, allChildCategoriesList);
+        batchList(allChildCategoriesList);
         return allChildCategoriesList;
     }
 }

@@ -1,5 +1,6 @@
 package ru.goodsreview.core.util;
 
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +19,8 @@ import java.util.TreeSet;
  * you can use this only in unix like systems
  */
 public class Md5Helper {
+
+    private final static Logger log = Logger.getLogger(Md5Helper.class);
 
     private final static MessageDigest DIGEST;
 
@@ -82,6 +85,7 @@ public class Md5Helper {
             }
         }
 
+        //TODO добавить обработку числовых значений childNode
         private void walk(final JSONObject node) throws JSONException {
             for (final String name : new IteratorWrapper<String>(node.keys())) {
                 final Object childNode = jsonObject.get(name);
@@ -89,6 +93,8 @@ public class Md5Helper {
                     walk((JSONObject) childNode);
                 } else if (childNode instanceof String) {
                     visit(Pair.of(name, (String) childNode));
+                } else if(childNode instanceof Integer){
+                    log.info("hahahah");
                 } else {
                     throw new IllegalStateException();
                 }

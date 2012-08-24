@@ -33,6 +33,9 @@ public class CategoryGrabberTest {
     public void grabMainCategoriesListTest(){
         CategoryGrabber categoryGrabber = new CategoryGrabber(contentApiProvider);
         List<JSONObject> mainCategoriesList = categoryGrabber.grabMainCategoriesList();
+        for(JSONObject jsonObject : mainCategoriesList){
+            System.out.println(jsonObject);
+        }
 
         Assert.assertEquals(mainCategoriesList.size(), 23);
 
