@@ -19,6 +19,7 @@ public enum GrammarGender {
         this.value = value;
     }
 
+    @Override //TODO над перегруженными методами лучше ставить аннотацию -- читается лучше
     public String toString(){
         return this.value;
     }
