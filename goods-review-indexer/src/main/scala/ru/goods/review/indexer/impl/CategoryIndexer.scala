@@ -44,7 +44,7 @@ class CategoryIndexer extends Indexer {
     categoryIndexWriter.close()
 
     val indexDirectory = new SimpleFSDirectory(categoryIndexPath)
-    tmpDirectory.listAll().asScala.toList map (f => tmpDirectory.copy(indexDirectory, f, f))
+    List(tmpDirectory.listAll()) map (_ => tmpDirectory.copy(indexDirectory, _, _))
   }
 
 }
