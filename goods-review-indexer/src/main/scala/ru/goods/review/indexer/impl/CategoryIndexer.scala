@@ -5,7 +5,6 @@ import ru.goods.review.indexer.Indexer
 import ru.goodsreview.core.db.entity.{Visitor, EntityType, EntityService}
 import org.apache.lucene.index.{IndexWriterConfig, IndexWriter}
 import org.apache.lucene.analysis.ru.RussianAnalyzer
-import collection.JavaConverters._
 import reflect.BeanProperty
 import org.json.JSONObject
 import ru.goodsreview.core.model.impl.json.CategoryOverJson
@@ -26,7 +25,7 @@ class CategoryIndexer extends Indexer {
 
   override def index(context: Context) {
 
-    val tmpDirectory = new SimpleFSDirectory(categoryIndexPath + TmpIndexPrefixHolder.tmpPrefix)
+    val tmpDirectory = new SimpleFSDirectory(categoryIndexPath + PrefixHolder.tmpIndex)
 
     val categoryIndexWriter = new IndexWriter(
       tmpDirectory,
@@ -49,8 +48,8 @@ class CategoryIndexer extends Indexer {
 
 }
 
-private object TmpIndexPrefixHolder {
+private object PrefixHolder {
 
-  def tmpPrefix = "T_M_P"
+  def tmpIndex = "T_M_P"
 
 }
