@@ -29,15 +29,16 @@ public class WordProperty {
         return gCase;
     }
 
+    //TODO снова мутабл
     public void setGender(GrammarGender gender) {
-       this.gender=gender;
+        this.gender = gender;
     }
 
     public void setNumber(GrammarNumber number) {
         this.number = number;
     }
 
-    public void setCase (GrammarCase gCase) {
+    public void setCase(GrammarCase gCase) {
         this.gCase = gCase;
     }
 }
