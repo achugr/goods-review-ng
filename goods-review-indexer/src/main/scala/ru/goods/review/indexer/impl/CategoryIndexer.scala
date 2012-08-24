@@ -8,9 +8,9 @@ import org.apache.lucene.analysis.ru.RussianAnalyzer
 import reflect.BeanProperty
 import org.json.JSONObject
 import ru.goodsreview.core.model.impl.json.CategoryOverJson
-import ru.goodsreview.indexer.helpers.DocumentHelper.categoryAsDocument
 import org.apache.lucene.store.SimpleFSDirectory
 import org.apache.lucene.util.Version
+import ru.goods.review.indexer.document.Helper.asDocument
 
 /**
  * @author daddy-bear
@@ -35,7 +35,7 @@ class CategoryIndexer extends Indexer {
 
     entityService.visitEntities(EntityType.CATEGORY.getTypeId, new Visitor[JSONObject] {
       override def visit(jsonObject: JSONObject) {
-        categoryIndexWriter.addDocument(categoryAsDocument(new CategoryOverJson(jsonObject)))
+        categoryIndexWriter.addDocument(asDocument(new CategoryOverJson(jsonObject)))
       }
     })
 
