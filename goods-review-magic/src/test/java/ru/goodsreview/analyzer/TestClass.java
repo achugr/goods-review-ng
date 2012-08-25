@@ -35,22 +35,21 @@ public class TestClass extends TestCase {
         assertTrue(reportList.size()==3);
     }
 
-//    public void testFeatureDictionary() throws UnsupportedEncodingException {
-//        Object [] arr = ReviewTokens.getFeatureDictionary().getDictionary().toArray();
-//            assertTrue(MystemAnalyzer.isRussianWord(arr[0].toString()));
-//    }
+    public void testFeatureDictionary() throws UnsupportedEncodingException {
+         ReviewTokens.getFeatureDictionary().print();
+    }
 
     public void testOpinionDictionary() throws UnsupportedEncodingException {
-        Object[] arr = ReviewTokens.getMapDictionary().getDictionary().keySet().toArray();
-        assertTrue(MystemAnalyzer.isRussianWord(arr[0].toString()));
+        ReviewTokens.getMapDictionary().print();
+
     }
 
     public static void main(String[] args) {
         TestRunner runner = new TestRunner();
         TestSuite suite = new TestSuite();
-        suite.addTest(new TestClass("testReportList"));
-        suite.addTest(new TestClass("testMystemAnalyzer"));
-       // suite.addTest(new TestClass("testFeatureDictionary"));
+       // suite.addTest(new TestClass("testReportList"));
+      //  suite.addTest(new TestClass("testMystemAnalyzer"));
+      //  suite.addTest(new TestClass("testFeatureDictionary"));
         suite.addTest(new TestClass("testOpinionDictionary"));
         runner.doRun(suite);
     }

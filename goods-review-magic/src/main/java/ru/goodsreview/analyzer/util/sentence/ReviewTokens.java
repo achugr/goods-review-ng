@@ -26,8 +26,8 @@ public class ReviewTokens {
 
     //TODO удалить, переделать
     //TODO про кодировки даж говорить не буду
-    private static Dictionary featureDictionary = new SetDictionary("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt", "windows-1251");
-    private static MapDictionary opinionDictionary = new MapDictionary("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt", "utf-8");
+    private static Dictionary featureDictionary = new SetDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt");
+    private static MapDictionary opinionDictionary = new MapDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
 
     private static MystemAnalyzer mystemAnalyzer = (MystemAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("myStem");
 
