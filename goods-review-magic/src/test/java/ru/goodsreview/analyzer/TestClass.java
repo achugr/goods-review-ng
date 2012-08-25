@@ -24,9 +24,11 @@ public class TestClass extends TestCase {
     }
 
     public void testMystemAnalyzer() throws UnsupportedEncodingException {
-        String s = "телефоном{телефон=S,муж,неод=твор,ед}";
-        String report = ReviewTokens.getMystemAnalyzer().report("телефоном");
-        assertTrue(report.equals(s));
+//        String s = "телефоном{телефон=S,муж,неод=твор,ед}";
+//        String report = ReviewTokens.getMystemAnalyzer().report("телефоном");
+
+        System.out.println(ReviewTokens.getMystemAnalyzer().report("дериватив"));
+       // assertTrue(report.equals(s));
     }
 //
     public void testReportList() throws UnsupportedEncodingException {
@@ -48,9 +50,9 @@ public class TestClass extends TestCase {
         TestRunner runner = new TestRunner();
         TestSuite suite = new TestSuite();
        // suite.addTest(new TestClass("testReportList"));
-      //  suite.addTest(new TestClass("testMystemAnalyzer"));
+      suite.addTest(new TestClass("testMystemAnalyzer"));
       //  suite.addTest(new TestClass("testFeatureDictionary"));
-        suite.addTest(new TestClass("testOpinionDictionary"));
+      //  suite.addTest(new TestClass("testOpinionDictionary"));
         runner.doRun(suite);
     }
 }

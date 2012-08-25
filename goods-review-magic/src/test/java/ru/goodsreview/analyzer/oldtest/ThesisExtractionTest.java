@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer;
+package ru.goodsreview.analyzer.oldtest;
 
 /**
 * Date: 05.02.12
@@ -9,7 +9,7 @@ package ru.goodsreview.analyzer;
 */
 
 import org.junit.Test;
-import org.springframework.remoting.support.UrlBasedRemoteAccessor;
+import ru.goodsreview.analyzer.ExtractThesis;
 import ru.goodsreview.analyzer.util.Phrase;
 import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
@@ -246,8 +246,10 @@ public class ThesisExtractionTest {
 
     // comparison of thesis for two products lists
     static void compare(final ArrayList<Product> algoProThesis, final ArrayList<Product> humProThesis, final String filePath) throws IOException {
-        String path = ThesisExtractionTest.class.getResource(filePath).getPath();
-
+        System.out.println(filePath);
+        //String path = ThesisExtractionTest.class.getResource(filePath).getPath();
+       // System.out.println(path);
+        String path = filePath;
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path)));
 
         for (Product humProduct : humProThesis) {
@@ -309,7 +311,7 @@ public class ThesisExtractionTest {
                                 out.println("      <OK>" + humFeature + " " + opinion + "</OK>");
                                 // System.out.println(alThesis+" "+opinion+" ## "+sentence);
                                 successExtract++;
-                                add(dictionaryScores, ReportAnalyzer.normalizer(mystemAnalyzer.report(opinion)), true);
+                                //add(dictionaryScores, ReportAnalyzer.normalizer(mystemAnalyzer.report(opinion)), true);
                                 break;
                             }
                         }
@@ -333,7 +335,7 @@ public class ThesisExtractionTest {
                     }
                     if (!t) {
                         out.println("      <algo>" + algoFeature + " " + opinion + "</algo>");
-                        add(dictionaryScores, ReportAnalyzer.normalizer(mystemAnalyzer.report(opinion)), false);
+                        //add(dictionaryScores, ReportAnalyzer.normalizer(mystemAnalyzer.report(opinion)), false);
                         //System.out.println("      "+algoFeature + " "+opinion);
                     }
                 }
@@ -355,7 +357,7 @@ public class ThesisExtractionTest {
                         }
                     }
                     if (!t) {
-                        out.println("      <hum>" + humFeature + "</hum>");
+                        out.println("      <hum>" + humFeature + " (" + sentence+")"+"</hum>");
                     }
                 }
                 //out.println("   </review>");
@@ -374,28 +376,28 @@ public class ThesisExtractionTest {
         }
     }
 
-    static void add(final HashMap<String, int[]> map, final String s, final boolean t) {
-        if (map.containsKey(s)) {
-            if (t) {
-                map.get(s)[0]++;
-            } else {
-                map.get(s)[1]++;
-            }
-        } else {
-            if (t) {
-                map.put(s, new int[]{1, 0});
-            } else {
-                map.put(s, new int[]{0, 1});
-            }
-        }
-    }
-
-    static void printDictionary() {
-        for (String key : dictionaryScores.keySet()) {
-            System.out.println(key + " +" + dictionaryScores.get(key)[0] + " -" + dictionaryScores.get(key)[1] + " " +
-                    dictionaryScores.get(key)[1] * 1.0 / (dictionaryScores.get(key)[0] + dictionaryScores.get(key)[1]));
-        }
-    }
+//    static void add(final HashMap<String, int[]> map, final String s, final boolean t) {
+//        if (map.containsKey(s)) {
+//            if (t) {
+//                map.get(s)[0]++;
+//            } else {
+//                map.get(s)[1]++;
+//            }
+//        } else {
+//            if (t) {
+//                map.put(s, new int[]{1, 0});
+//            } else {
+//                map.put(s, new int[]{0, 1});
+//            }
+//        }
+//    }
+//
+//    static void printDictionary() {
+//        for (String key : dictionaryScores.keySet()) {
+//            System.out.println(key + " +" + dictionaryScores.get(key)[0] + " -" + dictionaryScores.get(key)[1] + " " +
+//                    dictionaryScores.get(key)[1] * 1.0 / (dictionaryScores.get(key)[0] + dictionaryScores.get(key)[1]));
+//        }
+//    }
 
     @Test
     public void extractThesisTest() throws IOException, InterruptedException {
@@ -429,7 +431,8 @@ public class ThesisExtractionTest {
                 }
             }
         }*/
-        compare(algoProThesis, humProThesis, "/ru/goodsreview/analyzer/test/data/result.txt");
+        String path = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/result.txt";
+        compare(algoProThesis, humProThesis, path);
 
 
         System.out.println("successExtract = " + successExtract);

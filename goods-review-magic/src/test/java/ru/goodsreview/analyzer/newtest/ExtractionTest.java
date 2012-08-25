@@ -25,7 +25,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 
-public class NewExtractionTest {
+public class ExtractionTest {
 
     private static final String BOOKSTORE_XML = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/input.xml";
     private static double successExtract = 0;
