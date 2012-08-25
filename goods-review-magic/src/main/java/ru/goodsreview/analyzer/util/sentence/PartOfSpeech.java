@@ -1,5 +1,6 @@
 package ru.goodsreview.analyzer.util.sentence;
 
+
 public enum PartOfSpeech {
     ADJECTIVE,
     NOUN,

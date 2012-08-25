@@ -10,7 +10,6 @@ package ru.goodsreview.analyzer.newtest;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-//@XmlRootElement
 @XmlType(propOrder = { "feature","opinion", "value"})
 public class Phrase {
     private String feature;

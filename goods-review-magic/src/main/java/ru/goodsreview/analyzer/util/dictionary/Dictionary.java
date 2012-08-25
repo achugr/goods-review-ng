@@ -11,4 +11,6 @@ public interface Dictionary<E> {
 
     public boolean contains(E key);
 
+    public void print();
+
 }

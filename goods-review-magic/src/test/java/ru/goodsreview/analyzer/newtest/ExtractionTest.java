@@ -9,11 +9,8 @@ package ru.goodsreview.analyzer.newtest;
  */
 
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.goodsreview.analyzer.ExtractThesis;
 import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
-import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 
 import java.io.*;
@@ -25,7 +22,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 
-public class NewExtractionTest {
+public class ExtractionTest {
 
     private static final String BOOKSTORE_XML = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/input.xml";
     private static double successExtract = 0;
