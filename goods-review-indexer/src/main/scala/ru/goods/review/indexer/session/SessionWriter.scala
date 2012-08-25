@@ -3,7 +3,7 @@ package ru.goods.review.indexer.session
 import org.springframework.jdbc.core.JdbcTemplate
 
 /**
- * @author Dmitry Batkovich <daddy-bear@yandex-team.ru>
+ * @author daddy-bear
  */
 class SessionWriter(val jdbcTemplate: JdbcTemplate) {
 
