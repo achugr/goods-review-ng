@@ -8,11 +8,8 @@ package ru.goodsreview.analyzer.newtest;
  * ilya.makeev@gmail.com
  */
 import java.util.ArrayList;
-
 import javax.xml.bind.annotation.*;
 
-
-//@XmlRootElement
 @XmlType(propOrder = { "content", "phraseList"})
 public class Review {
     private String content;

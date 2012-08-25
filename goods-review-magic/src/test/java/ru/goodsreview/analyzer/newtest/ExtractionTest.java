@@ -9,11 +9,8 @@ package ru.goodsreview.analyzer.newtest;
  */
 
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.goodsreview.analyzer.ExtractThesis;
 import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
-import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 
 import java.io.*;

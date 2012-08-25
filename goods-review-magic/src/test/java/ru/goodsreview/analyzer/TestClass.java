@@ -7,14 +7,11 @@ package ru.goodsreview.analyzer;
 * ilya.makeev@gmail.com
 */
 import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
-import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
-
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TestClass extends TestCase {
