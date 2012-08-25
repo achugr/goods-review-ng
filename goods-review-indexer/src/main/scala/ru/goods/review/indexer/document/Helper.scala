@@ -4,7 +4,7 @@ import ru.goodsreview.core.model.Category
 import org.apache.lucene.document.{NumericField, Field, Document}
 
 /**
- * @author Dmitry Batkovich <daddy-bear@yandex-team.ru>
+ * @author daddy-bear
  */
 object Helper {
 
