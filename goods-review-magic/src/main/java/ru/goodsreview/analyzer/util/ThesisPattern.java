@@ -11,33 +11,25 @@ import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * class to represent thesis patterns
  */
-//TODO fix this class. are mystemAnalyzer used here? why?
-public class ThesisPattern {
+public final class ThesisPattern<T> {
 //    list of part of speech - this is pattern
-   private ArrayList<PartOfSpeech> pattern;
+   private final List<T> pattern = new ArrayList<T>();
 
-    public List<PartOfSpeech> getPattern(){
-        return pattern;
+    public ThesisPattern(final T... parts){
+        Collections.addAll(pattern, parts);
     }
 
-    /**
-     * create new pattern
-     * @param p1 first token of pattern
-     * @param p2 second token of pattern
-     */
-    public ThesisPattern(PartOfSpeech p1, PartOfSpeech p2) throws IOException {
-        pattern = new ArrayList<PartOfSpeech>();
-        pattern.add(p1);
-        pattern.add(p2);
-    }
-
-    //TODO а если я попрошу get(2)?
-    public PartOfSpeech get(int i){
+    public T get(final int i){
+//       TODO i don't think it's needed
+        if(i >= pattern.size()){
+            throw new IndexOutOfBoundsException("pattern has only " + pattern.size() + " elements");
+        }
         return pattern.get(i);
     }
 

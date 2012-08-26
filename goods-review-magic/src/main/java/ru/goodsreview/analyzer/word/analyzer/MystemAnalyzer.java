@@ -8,59 +8,60 @@ package ru.goodsreview.analyzer.word.analyzer;
  */
 
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
-import ru.goodsreview.analyzer.util.OSValidator;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 /**
  * Class for the analysis of words, using mystem program http://company.yandex.ru/technologies/mystem/
  */
-public class MystemAnalyzer  {
-    private  Process analyzer;
-    private  Scanner sc;
-    private  PrintStream ps;
+public class MystemAnalyzer {
+    private Process analyzerProcess;
+    private Scanner sc;
+    private PrintStream ps;
 
     public static final String EMPTY_REPORT = "";
 
-   //private final static Logger log = Logger.getLogger(MystemAnalyzer.class);
+    private final static Logger log = Logger.getLogger(MystemAnalyzer.class);
 
-  @Required
-   public void setAnalyzer(String path) {
+    @Required
+    public void setAnalyzerProcess(String path) {
         try {
             String CHARSET = "UTF8";
-            String command = "";
+            String command = "./";
 
-            if (OSValidator.isUnix() || OSValidator.isMac()) {
-                command = "./";
-           }
-
-            analyzer = Runtime.getRuntime().exec(command + path + "mystem -nig -e " + "UTF8");
-            sc = new Scanner(analyzer.getInputStream(), CHARSET);
-            ps = new PrintStream(analyzer.getOutputStream(), true, CHARSET);
+            analyzerProcess = Runtime.getRuntime().exec(command + path + "mystem -nig -e " + "UTF8");
+            sc = new Scanner(analyzerProcess.getInputStream(), CHARSET);
+            ps = new PrintStream(analyzerProcess.getOutputStream(), true, CHARSET);
 
         } catch (IOException e) {
-           // log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
+            // log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
             throw new RuntimeException(e);
         }
     }
 
 
-
     public void close() {
-        analyzer.destroy();
+        analyzerProcess.destroy();
     }
 
 
-    public String report(String word) throws UnsupportedEncodingException {
+    public String report(final String word) {
         if (isRussianWord(word)) {
             //TODO а если процесс не ответит, ну подвиснет на секунду?
             ps.println(word);
-            String report = sc.nextLine();
-            return report;
+            while (!sc.hasNext()){
+                try {
+                    sc.wait(100);
+                } catch (InterruptedException e) {
+                    log.error(e.getMessage(), e);
+                }
+            }
+            return sc.nextLine();
         } else {
             return EMPTY_REPORT;
         }

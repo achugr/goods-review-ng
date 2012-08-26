@@ -24,7 +24,7 @@ public class MapDictionary implements KeyValueDictionary<String, Double> {
     private static final int WEIGHT_INDEX = 1;
     private final Map<String, Double> dictionary = new HashMap<String, Double>();
 
-    public MapDictionary getInstance(final String filePath) {
+    public static MapDictionary getInstance(final String filePath) {
         MapDictionary mapDictionary = new MapDictionary();
         mapDictionary.initDictionary(filePath);
         return mapDictionary;

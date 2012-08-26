@@ -12,11 +12,10 @@ package ru.goodsreview.analyzer.util;
 
 //TODO мутабл модельные классы -- зло полное
 public class Phrase {
-    private String feature;
-    private String opinion;
+    private final String feature;
+    private final String opinion;
 
-
-    public Phrase(String feature, String opinion) {
+    public Phrase(final String feature, final String opinion) {
         this.opinion = opinion;
         this.feature = feature;
     }
@@ -27,6 +26,11 @@ public class Phrase {
 
     public String getOpinion(){
         return opinion;
+    }
+
+    public static void main(String[] args) {
+        Phrase phrase = new Phrase("", "");
+        phrase = new Phrase("", "asd");
     }
 
 }

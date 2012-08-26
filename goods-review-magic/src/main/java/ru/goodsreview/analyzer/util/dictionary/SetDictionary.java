@@ -21,7 +21,7 @@ public class SetDictionary implements Dictionary<String> {
 
     private final Set<String> dictionary = new HashSet<String>();
 
-    public SetDictionary getInstance(final String filePath) {
+    public static SetDictionary getInstance(final String filePath) {
         SetDictionary setDictionary = new SetDictionary();
         setDictionary.initDictionary(filePath);
         return setDictionary;
@@ -30,7 +30,7 @@ public class SetDictionary implements Dictionary<String> {
     private void initDictionary(final String filePath) {
         List<String> fileLines = FileReader.readAsListOfLines(filePath, SetDictionary.class);
         for (String line : fileLines) {
-            dictionary.add(line.trim());
+            dictionary.add(line);
         }
     }
 

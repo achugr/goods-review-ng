@@ -62,9 +62,9 @@ public class ExtractThesis{
     }
 
 
-    static void extractPattern(ArrayList<Phrase> extractedThesisList, ArrayList<ArrayList<Token>> tokensList, ThesisPattern pattern, int pos) throws UnsupportedEncodingException {
-        PartOfSpeech part1 = pattern.getPattern().get(0);
-        PartOfSpeech part2 = pattern.getPattern().get(1);
+    static void extractPattern(ArrayList<Phrase> extractedThesisList, ArrayList<ArrayList<Token>> tokensList, ThesisPattern<PartOfSpeech> pattern, int pos) throws UnsupportedEncodingException {
+        PartOfSpeech part1 = pattern.get(0);
+        PartOfSpeech part2 = pattern.get(1);
 
         for (int i = 0; i < tokensList.size(); i++) {
             Token rightToken = tokensList.get(i).get(0);

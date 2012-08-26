@@ -1,6 +1,7 @@
 package ru.goodsreview.core.util;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,7 +20,6 @@ import java.util.TreeSet;
  * you can use this only in unix like systems
  */
 public class Md5Helper {
-
     private final static Logger log = Logger.getLogger(Md5Helper.class);
 
     private final static MessageDigest DIGEST;
@@ -46,6 +46,7 @@ public class Md5Helper {
         new JSONWalker(jsonObject) {
             @Override
             protected void visit(final Pair<String, String> nameToValue) {
+                log.debug("name = " + nameToValue.first + " value = " + nameToValue.second);
                 attrSet.add(nameToValue);
             }
         }.walk();
@@ -55,6 +56,7 @@ public class Md5Helper {
             result.append(attr.first).append("#").append(attr.second).append("#");
         }
 
+        log.debug(result);
         return hash(result.toString());
     }
 
@@ -85,19 +87,29 @@ public class Md5Helper {
             }
         }
 
-        //TODO добавить обработку числовых значений childNode
         private void walk(final JSONObject node) throws JSONException {
             for (final String name : new IteratorWrapper<String>(node.keys())) {
-                final Object childNode = jsonObject.get(name);
-                if (childNode instanceof JSONObject) {
-                    walk((JSONObject) childNode);
-                } else if (childNode instanceof String) {
-                    visit(Pair.of(name, (String) childNode));
-                } else if(childNode instanceof Integer){
-                    log.info("hahahah");
-                } else {
-                    throw new IllegalStateException();
+                processNameValue(name, node.get(name));
+            }
+        }
+
+        private void processNameValue(final String nodeName, final Object nodeValue) throws JSONException {
+            if (nodeValue instanceof JSONObject) {
+                walk((JSONObject) nodeValue);
+            } else if (nodeValue instanceof JSONArray) {
+                final JSONArray jsonArray = (JSONArray) nodeValue;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    final Object arrayNode = jsonArray.get(i);
+                    if (arrayNode instanceof JSONObject) {
+                        walk((JSONObject) arrayNode);
+                    } else if (arrayNode instanceof JSONArray) {
+                        processNameValue(nodeName, arrayNode);
+                    } else {
+                        visit(Pair.of(nodeName, arrayNode.toString()));
+                    }
                 }
+            } else {
+                visit(Pair.of(nodeName, nodeValue.toString()));
             }
         }
     }

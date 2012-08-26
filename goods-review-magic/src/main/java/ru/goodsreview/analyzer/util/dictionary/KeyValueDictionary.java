@@ -6,5 +6,5 @@ package ru.goodsreview.analyzer.util.dictionary;
  */
 public interface KeyValueDictionary<E, T> extends Dictionary<E> {
 
-    public T getValue(E key);
+    T getValue(E key);
 }
