@@ -7,15 +7,10 @@ package ru.goodsreview.analyzer.newtest;
  * ilya.makeev@gmail.com
  */
 import java.util.ArrayList;
-
 import javax.xml.bind.annotation.*;
 
-
-//@XmlRootElement
-//@XmlType(propOrder = { "name", "reviewList"})
 public class Product{
     private String name;
-
 
     @XmlElementWrapper(name = "reviewList")
     @XmlElement(name = "review")

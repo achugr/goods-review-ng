@@ -42,7 +42,19 @@ public class ExtractThesis{
 //            } System.out.println();
 
             for (ThesisPattern thesisPattern : thesisPatternList) {
-                extractPattern(extractedThesisList, tokensList, thesisPattern);
+                int pos = -1;
+                if(thesisPattern.get(0).equals(PartOfSpeech.NOUN)){
+                    pos = 1;
+                }
+                if(thesisPattern.get(1).equals(PartOfSpeech.NOUN)){
+                    pos = 2;
+                }
+                if(pos == -1){
+                    System.out.println("incorrect pattern");
+                } else{
+                    extractPattern(extractedThesisList, tokensList, thesisPattern,pos);
+                }
+
             }
         }
 
@@ -50,7 +62,7 @@ public class ExtractThesis{
     }
 
 
-    static void extractPattern(ArrayList<Phrase> extractedThesisList, ArrayList<ArrayList<Token>> tokensList, ThesisPattern pattern) throws UnsupportedEncodingException {
+    static void extractPattern(ArrayList<Phrase> extractedThesisList, ArrayList<ArrayList<Token>> tokensList, ThesisPattern pattern, int pos) throws UnsupportedEncodingException {
         PartOfSpeech part1 = pattern.getPattern().get(0);
         PartOfSpeech part2 = pattern.getPattern().get(1);
 
@@ -72,7 +84,13 @@ public class ExtractThesis{
                         Token token2 = tokensList.get(i).get(0);
                         // System.out.println("#"+token1.getContent()+" "+token2.getContent());
                         if (checkTokenListCorrespondence(tokensList.get(k), tokensList.get(i))) {
-                            extractedThesisList.add(new Phrase(token1.getContent(), token2.getContent()));
+                            Phrase newPhrase;
+                            if(pos==1){
+                                newPhrase =  new Phrase(token1.getContent(), token2.getContent());
+                            } else{
+                                newPhrase =  new Phrase(token2.getContent(), token1.getContent());
+                            }
+                            extractedThesisList.add(newPhrase);
                         }
                     }
                 }

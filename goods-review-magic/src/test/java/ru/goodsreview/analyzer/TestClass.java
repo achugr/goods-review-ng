@@ -7,14 +7,11 @@ package ru.goodsreview.analyzer;
 * ilya.makeev@gmail.com
 */
 import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
-import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
-
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TestClass extends TestCase {
@@ -24,9 +21,11 @@ public class TestClass extends TestCase {
     }
 
     public void testMystemAnalyzer() throws UnsupportedEncodingException {
-        String s = "телефоном{телефон=S,муж,неод=твор,ед}";
-        String report = ReviewTokens.getMystemAnalyzer().report("телефоном");
-        assertTrue(report.equals(s));
+//        String s = "телефоном{телефон=S,муж,неод=твор,ед}";
+//        String report = ReviewTokens.getMystemAnalyzer().report("телефоном");
+
+        System.out.println(ReviewTokens.getMystemAnalyzer().report("дериватив"));
+       // assertTrue(report.equals(s));
     }
 //
     public void testReportList() throws UnsupportedEncodingException {
@@ -48,9 +47,9 @@ public class TestClass extends TestCase {
         TestRunner runner = new TestRunner();
         TestSuite suite = new TestSuite();
        // suite.addTest(new TestClass("testReportList"));
-      //  suite.addTest(new TestClass("testMystemAnalyzer"));
+      suite.addTest(new TestClass("testMystemAnalyzer"));
       //  suite.addTest(new TestClass("testFeatureDictionary"));
-        suite.addTest(new TestClass("testOpinionDictionary"));
+      //  suite.addTest(new TestClass("testOpinionDictionary"));
         runner.doRun(suite);
     }
 }
