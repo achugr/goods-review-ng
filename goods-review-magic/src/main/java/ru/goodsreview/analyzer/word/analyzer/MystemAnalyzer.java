@@ -10,16 +10,21 @@ package ru.goodsreview.analyzer.word.analyzer;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
+import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
+import ru.goodsreview.analyzer.util.sentence.Token;
+import ru.goodsreview.analyzer.util.sentence.WordProperties;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * Class for the analysis of words, using mystem program http://company.yandex.ru/technologies/mystem/
  */
-public class MystemAnalyzer {
+public class MystemAnalyzer implements WordAnalyzer{
     private Process analyzerProcess;
     private Scanner sc;
     private PrintStream ps;
@@ -34,6 +39,8 @@ public class MystemAnalyzer {
             String CHARSET = "UTF8";
             String command = "./";
 
+           // String command = "";   //for Windows
+
             analyzerProcess = Runtime.getRuntime().exec(command + path + "mystem -nig -e " + "UTF8");
             sc = new Scanner(analyzerProcess.getInputStream(), CHARSET);
             ps = new PrintStream(analyzerProcess.getOutputStream(), true, CHARSET);
@@ -47,6 +54,37 @@ public class MystemAnalyzer {
 
     public void close() {
         analyzerProcess.destroy();
+    }
+
+    public  ArrayList<Token> getTokenList(String word) throws UnsupportedEncodingException {
+        ArrayList<Token> tokensList = new ArrayList<Token>();
+
+        String mystemReport =  report(word);
+
+        if (!mystemReport.equals(EMPTY_REPORT)) {
+            List<String> reportList = ReportAnalyzer.buildReportList(mystemReport);
+
+            for (String rep : reportList) {
+                if(!rep.equals(EMPTY_REPORT)){
+                    if(ReportAnalyzer.isCorrect(rep)){
+                        String normForm = ReportAnalyzer.normalizer(rep);
+
+                        PartOfSpeech partOfSpeech = ReportAnalyzer.partOfSpeech(rep);
+
+                        WordProperties wordProp = ReportAnalyzer.wordProperties(rep);
+                        String gender = wordProp.getGender().toString();
+                        String number = wordProp.getNumber().toString();
+                        String caseOf = wordProp.getCase().toString();
+
+                        Token newToken = new Token(word, normForm, partOfSpeech, gender, number, caseOf);
+                        tokensList.add(newToken);
+                    }
+                }
+            }
+        }
+
+
+        return tokensList;
     }
 
 

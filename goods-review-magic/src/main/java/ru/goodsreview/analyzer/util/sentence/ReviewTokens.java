@@ -43,72 +43,48 @@ public class ReviewTokens {
      */
     public ReviewTokens(String review) throws IOException, InterruptedException {
 
-        String unk = ReportAnalyzer.UNKNOUN;
-
         tokensList = new ArrayList<ArrayList<Token>>();
 
         StringTokenizer stringTokenizer = new StringTokenizer(review, " ");
         while (stringTokenizer.hasMoreElements()) {
             String currToken = stringTokenizer.nextToken();
             currToken = currToken.trim();
-            currToken = currToken.toLowerCase();
+
 
             if (!currToken.equals("")) {
+                currToken = currToken.toLowerCase();
+
+                ArrayList<Token> list = mystemAnalyzer.getTokenList(currToken);
+
+                dictionaryCheck(list);
+
                 ArrayList<Token> newTokensList = new ArrayList<Token>();
-                PartOfSpeech partOfSpeach = PartOfSpeech.UNKNOWN;
-                String normForm;
-
-                String mystemReport = mystemAnalyzer.report(currToken);
-
-                if (!mystemReport.equals(MystemAnalyzer.EMPTY_REPORT)) {
-
-                    PartOfSpeech mystemPartOfSpeech = ReportAnalyzer.partOfSpeech(mystemReport);
-
-                    String normToken = ReportAnalyzer.normalizer(mystemReport);
-                    normForm = normToken;
-
-
-                    switch (mystemPartOfSpeech) {
-                        case ADJECTIVE:
-                            if (opinionDictionary.contains(normToken)) {
-                                partOfSpeach = PartOfSpeech.ADJECTIVE;
-                            }
-                            break;
-                        case NOUN:
-                            if (featureDictionary.contains(normToken)) {
-                                partOfSpeach = PartOfSpeech.NOUN;
-                            }
-                            break;
-                        default:
-                            partOfSpeach = mystemPartOfSpeech;
-                            break;
-                    }
-
-
-                    List<String> reportList;
-                    if (partOfSpeach.equals(PartOfSpeech.NOUN) || partOfSpeach.equals(PartOfSpeech.ADJECTIVE)) {
-                        reportList = ReportAnalyzer.buildReportList(mystemReport);
-                    } else {
-                        reportList = new ArrayList<String>();
-                        reportList.add(mystemReport);
-                    }
-
-                    for (String rep : reportList) {
-                        WordProperty property = ReportAnalyzer.wordProperty(rep);
-                        String gender = property.getGender().toString();
-                        String number = property.getNumber().toString();
-                        String caseOf = property.getCase().toString();
-                        Token newToken = new Token(currToken, normForm, partOfSpeach, gender, number, caseOf);
-                        newTokensList.add(newToken);
-                    }
-
-
-                } else {
-                    newTokensList.add(new Token(currToken, unk, PartOfSpeech.UNKNOWN, unk, unk, unk));
+                for (Token token :list){
+                       if(!token.getPartOfSpeech().equals(PartOfSpeech.UNKNOWN)){
+                           newTokensList.add(token);
+                       }
                 }
 
+                if(newTokensList.size()>0){
+                    tokensList.add(newTokensList);
+                }
 
-                tokensList.add(newTokensList);
+            }
+        }
+    }
+
+    private static void dictionaryCheck(ArrayList<Token> list){
+        for (Token token : list) {
+            if (token.getPartOfSpeech().equals(PartOfSpeech.ADJECTIVE)) {
+                if (!opinionDictionary.contains(token.getNormForm())) {
+                    token.setPartOfSpeech(PartOfSpeech.UNKNOWN);
+                }
+            }
+
+            if (token.getPartOfSpeech().equals(PartOfSpeech.NOUN)) {
+                if (!featureDictionary.contains(token.getNormForm())) {
+                    token.setPartOfSpeech(PartOfSpeech.UNKNOWN);
+                }
             }
         }
     }

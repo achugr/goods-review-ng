@@ -29,7 +29,7 @@ public class ExtractThesis{
         thesisPatternList.add(new ThesisPattern(PartOfSpeech.NOUN, PartOfSpeech.ADJECTIVE));
         thesisPatternList.add(new ThesisPattern(PartOfSpeech.ADJECTIVE, PartOfSpeech.NOUN));
 
-        StringTokenizer stringTokenizer = new StringTokenizer(content, ".,-—:;!()+\'\"\\«»");
+        StringTokenizer stringTokenizer = new StringTokenizer(content, ".,-—:;!()+\'\"\\«»");  //without space:" "
 
         while (stringTokenizer.hasMoreElements()) {
             String sentence = stringTokenizer.nextToken();
