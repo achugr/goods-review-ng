@@ -13,7 +13,7 @@ import ru.goodsreview.analyzer.util.dictionary.Dictionary;
 import ru.goodsreview.analyzer.util.dictionary.MapDictionary;
 import ru.goodsreview.analyzer.util.dictionary.SetDictionary;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
-import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
+import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,18 +22,18 @@ import java.util.StringTokenizer;
 
 public class ReviewTokens {
     //    list of tokens
-    private ArrayList<ArrayList<Token>> tokensList;
+    private List<List<Token>> tokensList;
 
     //TODO удалить, переделать
     //TODO про кодировки даж говорить не буду
     private static Dictionary featureDictionary = new SetDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt");
     private static MapDictionary opinionDictionary = new MapDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
 
-    private static MystemAnalyzer mystemAnalyzer = (MystemAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("myStem");
+    private static WordAnalyzer wordAnalyzer = (MystemAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("myStem");
 
 //    @Required
-//    public void setMystemAnalyzer(MystemAnalyzer mystemAnalyzer) {
-//        this.mystemAnalyzer = mystemAnalyzer;
+//    public void setMystemAnalyzer(MystemAnalyzer wordAnalyzer) {
+//        this.wordAnalyzer = wordAnalyzer;
 //    }
 
     /**
@@ -43,7 +43,7 @@ public class ReviewTokens {
      */
     public ReviewTokens(String review) throws IOException, InterruptedException {
 
-        tokensList = new ArrayList<ArrayList<Token>>();
+        tokensList =  new ArrayList<List<Token>>();
 
         StringTokenizer stringTokenizer = new StringTokenizer(review, " ");
         while (stringTokenizer.hasMoreElements()) {
@@ -54,26 +54,26 @@ public class ReviewTokens {
             if (!currToken.equals("")) {
                 currToken = currToken.toLowerCase();
 
-                ArrayList<Token> list = mystemAnalyzer.getTokenList(currToken);
+                List<Token> list = wordAnalyzer.getTokenList(currToken);
 
                 dictionaryCheck(list);
 
-                ArrayList<Token> newTokensList = new ArrayList<Token>();
-                for (Token token :list){
-                       if(!token.getPartOfSpeech().equals(PartOfSpeech.UNKNOWN)){
-                           newTokensList.add(token);
-                       }
-                }
+//                List<Token> newTokensList = new ArrayList<Token>();
+//                for (Token token :list){
+//                       if(!token.getPartOfSpeech().equals(PartOfSpeech.UNKNOWN)){
+//                           newTokensList.add(token);
+//                       }
+//                }
 
-                if(newTokensList.size()>0){
-                    tokensList.add(newTokensList);
-                }
+
+                    tokensList.add(list);
+
 
             }
         }
     }
 
-    private static void dictionaryCheck(ArrayList<Token> list){
+    private static void dictionaryCheck(List<Token> list){
         for (Token token : list) {
             if (token.getPartOfSpeech().equals(PartOfSpeech.ADJECTIVE)) {
                 if (!opinionDictionary.contains(token.getNormForm())) {
@@ -89,8 +89,8 @@ public class ReviewTokens {
         }
     }
 
-    public static MystemAnalyzer getMystemAnalyzer(){
-        return mystemAnalyzer;
+    public static WordAnalyzer getWordAnalyzer(){
+        return wordAnalyzer;
     }
 
     public static Dictionary getFeatureDictionary(){
@@ -101,7 +101,7 @@ public class ReviewTokens {
         return opinionDictionary;
     }
 
-    public ArrayList<ArrayList<Token>> getTokensList() {
+    public List<List<Token>> getTokensList() {
         return tokensList;
     }
 

@@ -7,7 +7,7 @@ package ru.goodsreview.analyzer;
 * ilya.makeev@gmail.com
 */
 import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
-import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
+import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
@@ -22,15 +22,15 @@ public class TestClass extends TestCase {
 
     public void testMystemAnalyzer() throws UnsupportedEncodingException {
 //        String s = "телефоном{телефон=S,муж,неод=твор,ед}";
-//        String report = ReviewTokens.getMystemAnalyzer().report("телефоном");
+//        String report = ReviewTokens.getWordAnalyzer().report("телефоном");
 
-        System.out.println(ReviewTokens.getMystemAnalyzer().report("дериватив"));
+        System.out.println(ReviewTokens.getWordAnalyzer().report("дериватив"));
        // assertTrue(report.equals(s));
     }
 //
     public void testReportList() throws UnsupportedEncodingException {
         String s = "сборки{сборка=S,жен,неод=(им,мн|род,ед|вин,мн)}";
-        List<String> reportList = ReportAnalyzer.buildReportList(s);
+        List<String> reportList = MystemReportAnalyzer.buildReportList(s);
         assertTrue(reportList.size()==3);
     }
 

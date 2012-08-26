@@ -1,6 +1,6 @@
 package ru.goodsreview.analyzer.util.sentence;
 
-import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
+import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 
 /**
  * Date: 17.07.12
@@ -19,7 +19,7 @@ public enum GrammarCase {
     PART("парт"),
     MESTN("местн"),
     ZVAT("зват"),
-    UNKNOWN (ReportAnalyzer.UNKNOUN);
+    UNKNOWN (MystemReportAnalyzer.UNKNOUN);
 
     private final String value;
 

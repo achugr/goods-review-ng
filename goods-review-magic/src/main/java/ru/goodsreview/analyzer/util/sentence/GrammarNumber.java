@@ -1,6 +1,6 @@
 package ru.goodsreview.analyzer.util.sentence;
 
-import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
+import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,7 +10,7 @@ import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 public enum GrammarNumber {
     SINGULAR("ед"),
     PLURAL("мн"),
-    UNKNOWN (ReportAnalyzer.UNKNOUN);
+    UNKNOWN (MystemReportAnalyzer.UNKNOUN);
 
     private final String value;
 

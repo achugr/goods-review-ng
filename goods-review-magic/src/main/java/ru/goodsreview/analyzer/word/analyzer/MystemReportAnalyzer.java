@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
  * Ilya Makeev
  * ilya.makeev@gmail.com
  */
-public class ReportAnalyzer {
+public class MystemReportAnalyzer {
     public static final String UNKNOUN = "unk";
 
     public static WordProperties wordProperties(String report) {
