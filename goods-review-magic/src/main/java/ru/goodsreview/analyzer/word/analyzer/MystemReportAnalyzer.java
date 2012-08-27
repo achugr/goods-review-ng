@@ -14,39 +14,27 @@ import java.util.StringTokenizer;
  * Ilya Makeev
  * ilya.makeev@gmail.com
  */
-public class ReportAnalyzer {
+public class MystemReportAnalyzer {
     public static final String UNKNOUN = "unk";
 
-    public static WordProperty wordProperty(String report) {
-        WordProperty property = new WordProperty(GrammarGender.UNKNOWN,GrammarNumber.UNKNOWN,GrammarCase.UNKNOWN);
+    public static WordProperties wordProperties(String report) {
+        WordProperties property = new WordProperties(GrammarGender.UNKNOWN,GrammarNumber.UNKNOWN,GrammarCase.UNKNOWN);
 
-        if (!report.equals(MystemAnalyzer.EMPTY_REPORT)&&isCorrect(report)) {
             GrammarGender[] genderCases = GrammarGender.values();
-            if (!isDualConclusion(report,genderCases)) {
-
-                for (GrammarGender gender:genderCases){
+            for (GrammarGender gender:genderCases){
                     if(report.contains(gender.toString())){
                         property.setGender(gender);
                         break;
                     }
                 }
 
-            } else {
-                //  System.out.println(report);
-            }
-
             GrammarNumber[] numCases = GrammarNumber.values();
-            if (!isDualConclusion(report, numCases)) {
                 for (GrammarNumber number:numCases){
                     if(report.contains(number.toString())){
                         property.setNumber(number);
                         break;
                     }
                 }
-
-            } else {
-                //  System.out.println(report);
-            }
 
             GrammarCase[] cases = GrammarCase.values();
 
@@ -73,12 +61,13 @@ public class ReportAnalyzer {
                 // System.out.println(report);
             }
 
-        }
+
 
         return property;
     }
 
-    static boolean isDualConclusion(String report, Object[] arr) {
+
+    static boolean hasDualConclusion(String report, Object[] arr) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < i; j++) {
                 if (report.contains(arr[i].toString()) && report.contains(arr[j].toString())) {
@@ -89,7 +78,13 @@ public class ReportAnalyzer {
         return false;
     }
 
-    static boolean isCorrect(String report) {
+    static boolean hasAnyDualConclusion(String report) {
+        return hasDualConclusion(report, GrammarGender.values()) &&
+                hasDualConclusion(report, GrammarNumber.values()) &&
+                hasDualConclusion(report, GrammarCase.values());
+    }
+
+    static boolean isFull(String report) {
         return containsProperty(report, GrammarGender.values()) &&
                 containsProperty(report, GrammarNumber.values()) &&
                 containsProperty(report, GrammarCase.values());
@@ -104,9 +99,11 @@ public class ReportAnalyzer {
         return false;
     }
 
+    static boolean isCorrect(String report) {
+        return isFull(report) && !hasAnyDualConclusion(report);
+    }
 
     public static PartOfSpeech partOfSpeech(String report) throws UnsupportedEncodingException {
-        if (!report.equals(MystemAnalyzer.EMPTY_REPORT)) {
             int pos1 = report.indexOf('=') + 1;
             int pos2 = pos1;
             while (Character.isUpperCase(report.charAt(pos2))) {
@@ -115,13 +112,10 @@ public class ReportAnalyzer {
             String partOfSpeech = report.substring(pos1, pos2);
 
           return PartOfSpeech.getByName(partOfSpeech);
-        }
-        return PartOfSpeech.UNKNOWN;
     }
 
     public static String normalizer(String report) throws UnsupportedEncodingException {
         String norm = UNKNOUN;
-        if (!report.equals(MystemAnalyzer.EMPTY_REPORT)) {
             int n = report.indexOf("=");
             if (n != -1) {
                 norm = report.substring(report.indexOf("{") + 1, n);
@@ -131,9 +125,8 @@ public class ReportAnalyzer {
                     norm = report.substring(report.indexOf("{") + 1, n);
                 }
             }
-
             //   System.out.println(word + " --> " + norm);
-        }
+
         return norm;
     }
 

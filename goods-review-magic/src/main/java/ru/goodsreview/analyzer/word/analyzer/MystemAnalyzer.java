@@ -10,16 +10,19 @@ package ru.goodsreview.analyzer.word.analyzer;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
+import ru.goodsreview.analyzer.util.sentence.*;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * Class for the analysis of words, using mystem program http://company.yandex.ru/technologies/mystem/
  */
-public class MystemAnalyzer {
+public class MystemAnalyzer implements WordAnalyzer{
     private Process analyzerProcess;
     private Scanner sc;
     private PrintStream ps;
@@ -32,9 +35,11 @@ public class MystemAnalyzer {
     public void setAnalyzerProcess(String path) {
         try {
             String CHARSET = "UTF8";
-            String command = "./";
+           String command = "./";  //for Linux
 
-            analyzerProcess = Runtime.getRuntime().exec(command + path + "mystem -nig -e " + "UTF8");
+            //String command = "";   //for Windows
+
+            analyzerProcess = Runtime.getRuntime().exec(command + path + "mystem -nig -e " + CHARSET);
             sc = new Scanner(analyzerProcess.getInputStream(), CHARSET);
             ps = new PrintStream(analyzerProcess.getOutputStream(), true, CHARSET);
 
@@ -47,6 +52,40 @@ public class MystemAnalyzer {
 
     public void close() {
         analyzerProcess.destroy();
+    }
+
+    public  List<Token> getTokenList(String word) throws UnsupportedEncodingException {
+        ArrayList<Token> tokensList = new ArrayList<Token>();
+
+        String mystemReport =  report(word);
+
+        if (!mystemReport.equals(EMPTY_REPORT)) {
+            List<String> reportList = MystemReportAnalyzer.buildReportList(mystemReport);
+
+            for (String rep : reportList) {
+                if(!rep.equals(EMPTY_REPORT)){
+                    if(MystemReportAnalyzer.isCorrect(rep)){
+                        String normForm = MystemReportAnalyzer.normalizer(rep);
+
+                        PartOfSpeech partOfSpeech = MystemReportAnalyzer.partOfSpeech(rep);
+
+                        WordProperties wordProp = MystemReportAnalyzer.wordProperties(rep);
+                        GrammarGender gender = wordProp.getGender();
+                        GrammarNumber number = wordProp.getNumber();
+                        GrammarCase caseOf = wordProp.getCase();
+
+                        Token newToken = new Token(word, normForm, partOfSpeech, gender, number, caseOf);
+                        tokensList.add(newToken);
+                    }
+                }
+            }
+        }
+
+        if(tokensList.size()==0){
+            tokensList.add(new Token(word, MystemReportAnalyzer.UNKNOUN,PartOfSpeech.UNKNOWN, GrammarGender.UNKNOWN, GrammarNumber.UNKNOWN,GrammarCase.UNKNOWN));
+        }
+
+        return tokensList;
     }
 
 

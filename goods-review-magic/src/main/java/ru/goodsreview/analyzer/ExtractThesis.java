@@ -9,10 +9,8 @@ package ru.goodsreview.analyzer;
 
 import ru.goodsreview.analyzer.util.Phrase;
 import ru.goodsreview.analyzer.util.ThesisPattern;
-import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
-import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
-import ru.goodsreview.analyzer.util.sentence.Token;
-import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
+import ru.goodsreview.analyzer.util.sentence.*;
+import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -29,13 +27,13 @@ public class ExtractThesis{
         thesisPatternList.add(new ThesisPattern(PartOfSpeech.NOUN, PartOfSpeech.ADJECTIVE));
         thesisPatternList.add(new ThesisPattern(PartOfSpeech.ADJECTIVE, PartOfSpeech.NOUN));
 
-        StringTokenizer stringTokenizer = new StringTokenizer(content, ".,-—:;!()+\'\"\\«»");
+        StringTokenizer stringTokenizer = new StringTokenizer(content, ".,-—:;!()+\'\"\\«»");  //without space:" "
 
         while (stringTokenizer.hasMoreElements()) {
             String sentence = stringTokenizer.nextToken();
 
             ReviewTokens reviewTokens = new ReviewTokens(sentence);
-            ArrayList<ArrayList<Token>> tokensList = reviewTokens.getTokensList();
+            List<List<Token>> tokensList = reviewTokens.getTokensList();
 
 //            for (int i = 0; i < tokensList.size(); i++) {
 //                System.out.print(tokensList.get(i).get(0).getContent()+"("+tokensList.get(i).get(0).getPartOfSpeech().name()+")"+" ");
@@ -62,7 +60,7 @@ public class ExtractThesis{
     }
 
 
-    static void extractPattern(ArrayList<Phrase> extractedThesisList, ArrayList<ArrayList<Token>> tokensList, ThesisPattern<PartOfSpeech> pattern, int pos) throws UnsupportedEncodingException {
+    static void extractPattern(ArrayList<Phrase> extractedThesisList, List<List<Token>> tokensList, ThesisPattern<PartOfSpeech> pattern, int pos) throws UnsupportedEncodingException {
         PartOfSpeech part1 = pattern.get(0);
         PartOfSpeech part2 = pattern.get(1);
 
@@ -99,12 +97,12 @@ public class ExtractThesis{
     }
 
     static boolean checkWordsCorrespondence(Token token1, Token token2) throws UnsupportedEncodingException {
-        String p1 = token1.getGender();
-        String p2 = token2.getGender();
-        String num1 = token1.getNumber();
-        String num2 = token2.getNumber();
-        String case1 = token1.getCase();
-        String case2 = token2.getCase();
+        GrammarGender p1 = token1.getGender();
+        GrammarGender p2 = token2.getGender();
+        GrammarNumber num1 = token1.getNumber();
+        GrammarNumber num2 = token2.getNumber();
+        GrammarCase case1 = token1.getCase();
+        GrammarCase case2 = token2.getCase();
         boolean con1 = check(p1, p2);       // Род
         boolean con2 = check(num1, num2);   // Число
         boolean con3 = check(case1, case2); // Падеж
@@ -116,7 +114,7 @@ public class ExtractThesis{
         return sep;
     }
 
-    static boolean checkTokenListCorrespondence(ArrayList<Token> tokenList1, ArrayList<Token> tokenList2) throws UnsupportedEncodingException {
+    static boolean checkTokenListCorrespondence(List<Token> tokenList1, List<Token> tokenList2) throws UnsupportedEncodingException {
         for (Token aTokenList1 : tokenList1) {
             for (Token aTokenList2 : tokenList2) {
                 if (checkWordsCorrespondence(aTokenList1, aTokenList2)) {
@@ -128,8 +126,10 @@ public class ExtractThesis{
         return false;
     }
 
-    static boolean check(String s1, String s2) {
-        String unk = ReportAnalyzer.UNKNOUN;
+    static boolean check(Object obj1, Object obj2) {
+        String unk = MystemReportAnalyzer.UNKNOUN;
+        String s1 = obj1.toString();
+        String s2 = obj2.toString();
         return !s1.equals(unk) && !s2.equals(unk) && s1.equals(s2);
     }
 

@@ -1,6 +1,6 @@
 package ru.goodsreview.analyzer.util.sentence;
 
-import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
+import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,7 +11,7 @@ public enum GrammarGender {
     MASCULINE("муж"),
     FEMININE("жен"),
     NEUTER("сред"),
-    UNKNOWN (ReportAnalyzer.UNKNOUN);
+    UNKNOWN (MystemReportAnalyzer.UNKNOUN);
 
     private final String value;
 

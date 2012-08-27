@@ -12,11 +12,11 @@ public class Token {
     private String content;
     private PartOfSpeech partOfSpeech;
     private String normForm;
-    private String gender;
-    private String number;
-    private String caseOf;
+    private GrammarGender gender;
+    private GrammarNumber number;
+    private GrammarCase caseOf;
 
-    public Token(String content, String normForm, PartOfSpeech partOfSpeech, String gender, String number,String caseOf) {
+    public Token(String content, String normForm, PartOfSpeech partOfSpeech, GrammarGender gender, GrammarNumber number,GrammarCase caseOf) {
         this.content = content;
         this.normForm = normForm;
         this.partOfSpeech = partOfSpeech;
@@ -37,15 +37,15 @@ public class Token {
         this.content = content;
     }
 
-    public String getGender() {
+    public GrammarGender getGender() {
         return gender;
     }
 
-    public String getNumber() {
+    public GrammarNumber getNumber() {
         return number;
     }
 
-    public String getCase() {
+    public GrammarCase getCase() {
         return caseOf;
     }
 

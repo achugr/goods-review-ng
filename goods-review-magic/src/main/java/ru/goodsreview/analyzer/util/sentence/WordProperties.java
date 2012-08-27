@@ -5,13 +5,13 @@ package ru.goodsreview.analyzer.util.sentence;
  * Date: 21.08.12
  * Author: Ilya Makeev
  */
-public class WordProperty {
+public final class WordProperties {
     private GrammarGender gender;
     private GrammarNumber number;
     private GrammarCase gCase;
 
 
-    public WordProperty(GrammarGender gender, GrammarNumber number, GrammarCase gCase) {
+    public WordProperties(GrammarGender gender, GrammarNumber number, GrammarCase gCase) {
         this.gender = gender;
         this.number = number;
         this.gCase = gCase;
