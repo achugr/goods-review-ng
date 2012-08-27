@@ -34,6 +34,7 @@ public class LuceneAnalyzer implements WordAnalyzer{
         List<String> reportList = luceneMorph.getMorphInfo(word);
 
             for (String rep : reportList) {
+               // System.out.println(rep);
                 int k = rep.indexOf(" ");
                 if (k != -1 && k + 1 < rep.length()) {
                     String tRep = rep.substring(k + 1);
@@ -60,13 +61,13 @@ public class LuceneAnalyzer implements WordAnalyzer{
         return tokensList;
     }
 
-    public String report(String word){
-        List<String> reportList = luceneMorph.getMorphInfo(word);
-        if(reportList.size()!=0){
-            return reportList.get(0);
-        }
-        return "";
-    }
+//    public String report(String word){
+//        List<String> reportList = luceneMorph.getMorphInfo(word);
+//        if(reportList.size()!=0){
+//            return reportList.get(0);
+//        }
+//        return "";
+//    }
 
     public void close(){
     }

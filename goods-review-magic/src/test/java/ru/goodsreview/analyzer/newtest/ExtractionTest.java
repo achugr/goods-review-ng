@@ -79,9 +79,7 @@ public class ExtractionTest {
 
 
     static boolean match(String s1, String s2) throws UnsupportedEncodingException {
-        String report1 = MystemReportAnalyzer.normalizer(ReviewTokens.getWordAnalyzer().report(s1));
-        String report2 = MystemReportAnalyzer.normalizer(ReviewTokens.getWordAnalyzer().report(s2));
-        return report1.equals(report2);
+        return s1.equals(s2);
 
     }
 }
