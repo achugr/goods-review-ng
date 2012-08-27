@@ -14,9 +14,7 @@ import ru.goodsreview.core.util.Md5Helper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,6 +65,11 @@ public class EntityService {
     @Required
     public void setJdbcTemplate(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Required
+    public JdbcTemplate getJdbcTemplate(){
+        return jdbcTemplate;
     }
 
     public void writeEntities(final Collection<JSONObject> entities) {

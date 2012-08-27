@@ -46,7 +46,7 @@ public class ContentAPIProviderTest {
         CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
         UrlRequest urlRequest = categoryRequestBuilder.requestForListOfCategories(new HashMap<String, String>());
         JSONObject result = contentApiProvider.provide(urlRequest);
-        System.out.println(result.toString());
+//        System.out.println(result.toString());
 //        provide method returns full jsonObject, empty jsonObject or throws RuntimeException
         Assert.assertNotSame(result.toString(), "");
     }

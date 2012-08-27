@@ -26,4 +26,13 @@
         <property name="entityService" ref="entityService"/>
     </bean>
 
+    <bean id="categoryGrabber" class="ru.goodsreview.api.grabber.CategoryGrabber">
+        <property name="contentApiProvider" ref="contentApiProvider"/>
+        <property name="grabberBatch" ref="grabberBatch"/>
+    </bean>
+
+    <bean id="modelGrabber" class="ru.goodsreview.api.grabber.ModelGrabber">
+        <property name="contentApiProvider" ref="contentApiProvider"/>
+        <property name="grabberBatch" ref="grabberBatch"/>
+    </bean>
 </beans>

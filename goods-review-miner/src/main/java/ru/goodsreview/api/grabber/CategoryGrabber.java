@@ -3,10 +3,10 @@ package ru.goodsreview.api.grabber;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
-import ru.goodsreview.api.provider.ContentAPIProvider;
 import ru.goodsreview.api.request.builder.CategoryRequestBuilder;
 import ru.goodsreview.api.request.builder.RequestParams;
 import ru.goodsreview.api.request.builder.UrlRequest;
+import ru.goodsreview.core.db.entity.EntityType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,28 +17,34 @@ import java.util.Map;
  * achugr, achugr@yandex-team.ru
  * 13.07.12
  */
-public class CategoryGrabber extends Grabber{
+public class CategoryGrabber extends AbstractGrabber {
     private final static Logger log = Logger.getLogger(CategoryGrabber.class);
-    private final ContentAPIProvider contentApiProvider;
 
     private static final Integer COUNT_MAX_VALUE = 30;
 
-    public CategoryGrabber(ContentAPIProvider contentApiProvider){
-        super();
-        this.contentApiProvider = contentApiProvider;
+    public CategoryGrabber(){
+        this.entityType = EntityType.CATEGORY;
     }
 
-    public List<JSONObject> grabMainCategoriesList(){
+    public List<JSONObject> grabMainCategories() {
+        log.info("Grabbing main categories started");
         CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
         Map<String,String> parameters = new HashMap<String, String>();
         parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
         UrlRequest urlRequest = categoryRequestBuilder.requestForListOfCategories(parameters);
-        List<JSONObject> mainCategoriesList = contentApiProvider.provideAsList(urlRequest, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey());
-        batchList(mainCategoriesList);
+        log.info("Grabbing main categories ended");
+        return contentApiProvider.provideAsList(urlRequest, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey());
+    }
+
+    public List<JSONObject> grabMainCategoriesToDB(){
+        log.info("Grabbing main categories to DB started");
+        List<JSONObject> mainCategoriesList = grabMainCategories();
+        processEntityList(mainCategoriesList);
+        log.info("Grabbing main categories to DB started");
         return mainCategoriesList;
     }
 
-    private void grabChildCategoriesList(List<JSONObject> parentCategoriesList, List<JSONObject> allChildCategoriesList){
+    private void grabChildCategories(List<JSONObject> parentCategoriesList, List<JSONObject> allChildCategoriesList){
         try {
             for(JSONObject category : parentCategoriesList){
                 int childrenCount = category.getInt(JSONKeys.CHILDREN_COUNT.getKey());
@@ -60,11 +66,11 @@ public class CategoryGrabber extends Grabber{
                         UrlRequest urlRequest = categoryRequestBuilder.requestForListOfChildrenCategoriesById(currId, parameters);
 
                         // Get child categories of the current category and add them to all child categories list
-                        List<JSONObject> childCategoriesList = contentApiProvider.provideAsList(urlRequest,JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey());
+                        List<JSONObject> childCategoriesList = getContentApiProvider().provideAsList(urlRequest, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey());
                         allChildCategoriesList.addAll(childCategoriesList);
 
                         // Going on grabbing child categories of the next level
-                        grabChildCategoriesList(childCategoriesList, allChildCategoriesList);
+                        grabChildCategories(childCategoriesList, allChildCategoriesList);
                     }
                 }
             }
@@ -74,11 +80,16 @@ public class CategoryGrabber extends Grabber{
         }
     }
 
-    public List<JSONObject> grabChildCategoriesList(){
-        List<JSONObject> mainCategoriesList = grabMainCategoriesList();
+    public List<JSONObject> grabChildCategories() {
+        List<JSONObject> mainCategoriesList = grabMainCategories();
         List<JSONObject> allChildCategoriesList = new ArrayList<JSONObject>();
-        grabChildCategoriesList(mainCategoriesList, allChildCategoriesList);
-        batchList(allChildCategoriesList);
+        grabChildCategories(mainCategoriesList, allChildCategoriesList);
+        return allChildCategoriesList;
+    }
+
+    public List<JSONObject> grabChildCategoriesToDB(){
+        List<JSONObject> allChildCategoriesList = grabChildCategories();
+        processEntityList(allChildCategoriesList);
         return allChildCategoriesList;
     }
 }
