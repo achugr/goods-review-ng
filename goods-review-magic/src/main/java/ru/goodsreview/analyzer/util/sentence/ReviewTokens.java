@@ -12,6 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.goodsreview.analyzer.util.dictionary.Dictionary;
 import ru.goodsreview.analyzer.util.dictionary.MapDictionary;
 import ru.goodsreview.analyzer.util.dictionary.SetDictionary;
+import ru.goodsreview.analyzer.word.analyzer.LuceneAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
 
@@ -22,14 +23,15 @@ import java.util.StringTokenizer;
 
 public class ReviewTokens {
     //    list of tokens
-    private List<List<Token>> tokensList;
+    private List<List<Token>> listsOfToken;
 
     //TODO удалить, переделать
     //TODO про кодировки даж говорить не буду
     private static Dictionary featureDictionary = new SetDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt");
     private static MapDictionary opinionDictionary = new MapDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
 
-    private static WordAnalyzer wordAnalyzer = (MystemAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("myStem");
+    private static WordAnalyzer wordAnalyzer = (WordAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("wordAnalyzer");
+
 
 //    @Required
 //    public void setMystemAnalyzer(MystemAnalyzer wordAnalyzer) {
@@ -43,13 +45,16 @@ public class ReviewTokens {
      */
     public ReviewTokens(String review) throws IOException, InterruptedException {
 
-        tokensList =  new ArrayList<List<Token>>();
+        listsOfToken =  new ArrayList<List<Token>>();
 
         StringTokenizer stringTokenizer = new StringTokenizer(review, " ");
         while (stringTokenizer.hasMoreElements()) {
             String currToken = stringTokenizer.nextToken();
-            currToken = currToken.trim();
 
+            if(MystemAnalyzer.isRussianWord(currToken)){
+
+
+            currToken = currToken.trim();
 
             if (!currToken.equals("")) {
                 currToken = currToken.toLowerCase();
@@ -66,10 +71,10 @@ public class ReviewTokens {
 //                }
 
 
-                    tokensList.add(list);
+                    listsOfToken.add(list);
 
 
-            }
+            }}
         }
     }
 
@@ -101,8 +106,8 @@ public class ReviewTokens {
         return opinionDictionary;
     }
 
-    public List<List<Token>> getTokensList() {
-        return tokensList;
+    public List<List<Token>> getListsOfToken() {
+        return listsOfToken;
     }
 
 }
