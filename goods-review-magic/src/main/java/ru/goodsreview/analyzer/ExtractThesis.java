@@ -33,7 +33,7 @@ public class ExtractThesis{
             String sentence = stringTokenizer.nextToken();
 
             ReviewTokens reviewTokens = new ReviewTokens(sentence);
-            List<List<Token>> tokensList = reviewTokens.getTokensList();
+            List<List<Token>> tokensList = reviewTokens.getListsOfToken();
 
 //            for (int i = 0; i < tokensList.size(); i++) {
 //                System.out.print(tokensList.get(i).get(0).getContent()+"("+tokensList.get(i).get(0).getPartOfSpeech().name()+")"+" ");

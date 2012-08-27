@@ -22,7 +22,7 @@ import java.util.StringTokenizer;
 
 public class ReviewTokens {
     //    list of tokens
-    private List<List<Token>> tokensList;
+    private List<List<Token>> listsOfToken;
 
     //TODO удалить, переделать
     //TODO про кодировки даж говорить не буду
@@ -43,7 +43,7 @@ public class ReviewTokens {
      */
     public ReviewTokens(String review) throws IOException, InterruptedException {
 
-        tokensList =  new ArrayList<List<Token>>();
+        listsOfToken =  new ArrayList<List<Token>>();
 
         StringTokenizer stringTokenizer = new StringTokenizer(review, " ");
         while (stringTokenizer.hasMoreElements()) {
@@ -66,7 +66,7 @@ public class ReviewTokens {
 //                }
 
 
-                    tokensList.add(list);
+                    listsOfToken.add(list);
 
 
             }
@@ -101,8 +101,8 @@ public class ReviewTokens {
         return opinionDictionary;
     }
 
-    public List<List<Token>> getTokensList() {
-        return tokensList;
+    public List<List<Token>> getListsOfToken() {
+        return listsOfToken;
     }
 
 }
