@@ -1,15 +1,27 @@
 package ru.goodsreview.analyzer.util.sentence;
 
 
-public enum PartOfSpeech {
-    ADJECTIVE,
-    NOUN,
-    ADVERB,
-    VERB,
-    PARTICLE,
-    PREPOSITION,
-    UNKNOWN;
+import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 
+public enum PartOfSpeech {
+    ADJECTIVE("A"),
+    NOUN("S"),
+    ADVERB("ADV"),
+    VERB("V"),
+    PARTICLE("PART"),
+    PREPOSITION("PR"),
+    UNKNOWN(MystemReportAnalyzer.UNKNOUN);
+
+    private final String value;
+
+    private PartOfSpeech(String value){
+        this.value = value;
+    }
+
+    @Override
+    public String toString(){
+        return this.value;
+    }
 
     public static PartOfSpeech getByName(String name) {
         if (name.equals("A")) {

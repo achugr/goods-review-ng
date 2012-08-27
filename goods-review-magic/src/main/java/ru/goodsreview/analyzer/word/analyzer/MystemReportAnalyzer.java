@@ -104,14 +104,20 @@ public class MystemReportAnalyzer {
     }
 
     public static PartOfSpeech partOfSpeech(String report) throws UnsupportedEncodingException {
-            int pos1 = report.indexOf('=') + 1;
-            int pos2 = pos1;
-            while (Character.isUpperCase(report.charAt(pos2))) {
-                pos2++;
+//            int pos1 = report.indexOf('=') + 1;
+//            int pos2 = pos1;
+//            while (Character.isUpperCase(report.charAt(pos2))) {
+//                pos2++;
+//            }
+//            String partOfSpeech = report.substring(pos1, pos2);
+        PartOfSpeech[] parts = PartOfSpeech.values();
+        for (PartOfSpeech part:parts){
+            if(report.contains(part.toString())){
+                return part;
             }
-            String partOfSpeech = report.substring(pos1, pos2);
+        }
 
-          return PartOfSpeech.getByName(partOfSpeech);
+          return PartOfSpeech.UNKNOWN;
     }
 
     public static String normalizer(String report) throws UnsupportedEncodingException {

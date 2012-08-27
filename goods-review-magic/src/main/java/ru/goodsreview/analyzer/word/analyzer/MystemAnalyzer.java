@@ -37,7 +37,7 @@ public class MystemAnalyzer implements WordAnalyzer{
             String CHARSET = "UTF8";
            String command = "./";  //for Linux
 
-            //String command = "";   //for Windows
+           // String command = "";   //for Windows
 
             analyzerProcess = Runtime.getRuntime().exec(command + path + "mystem -nig -e " + CHARSET);
             sc = new Scanner(analyzerProcess.getInputStream(), CHARSET);
@@ -63,20 +63,27 @@ public class MystemAnalyzer implements WordAnalyzer{
             List<String> reportList = MystemReportAnalyzer.buildReportList(mystemReport);
 
             for (String rep : reportList) {
-                if(!rep.equals(EMPTY_REPORT)){
-                    if(MystemReportAnalyzer.isCorrect(rep)){
-                        String normForm = MystemReportAnalyzer.normalizer(rep);
+                if (!rep.equals(EMPTY_REPORT)) {
+                    int k = rep.indexOf("=");
+                    if (k != -1 && k + 1 < rep.length()) {
+                        String tRep = rep.substring(k + 1);
+                        if (MystemReportAnalyzer.isCorrect(tRep)) {
+                            String normForm = MystemReportAnalyzer.normalizer(rep);
 
-                        PartOfSpeech partOfSpeech = MystemReportAnalyzer.partOfSpeech(rep);
+                            PartOfSpeech partOfSpeech = MystemReportAnalyzer.partOfSpeech(rep);
 
-                        WordProperties wordProp = MystemReportAnalyzer.wordProperties(rep);
-                        GrammarGender gender = wordProp.getGender();
-                        GrammarNumber number = wordProp.getNumber();
-                        GrammarCase caseOf = wordProp.getCase();
+                            WordProperties wordProp = MystemReportAnalyzer.wordProperties(tRep);
+                            GrammarGender gender = wordProp.getGender();
+                            GrammarNumber number = wordProp.getNumber();
+                            GrammarCase caseOf = wordProp.getCase();
 
-                        Token newToken = new Token(word, normForm, partOfSpeech, gender, number, caseOf);
-                        tokensList.add(newToken);
+                            Token newToken = new Token(word, normForm, partOfSpeech, gender, number, caseOf);
+                            tokensList.add(newToken);
+                        }
+                    } else {
+                        // System.out.println(rep);
                     }
+
                 }
             }
         }
