@@ -1,4 +1,4 @@
-use goodsreview;
+use ba_db;
 
 drop table if exists ENTITY;
 create table ENTITY(

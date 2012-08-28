@@ -9,6 +9,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Required;
 
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 
 /**
@@ -99,5 +100,10 @@ public class SSHTunnelDataSource extends BasicDataSource implements Initializing
     @Override
     public void destroy() throws Exception {
         session.disconnect();
+    }
+
+    @Override
+    public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        return null;
     }
 }

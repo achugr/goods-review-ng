@@ -40,7 +40,7 @@ public class CategoryGrabber extends AbstractGrabber {
         log.info("Grabbing main categories to DB started");
         List<JSONObject> mainCategoriesList = grabMainCategories();
         processEntityList(mainCategoriesList);
-        log.info("Grabbing main categories to DB started");
+        log.info("Grabbing main categories to DB ended");
         return mainCategoriesList;
     }
 

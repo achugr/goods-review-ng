@@ -8,6 +8,7 @@
         <property name="locations">
             <list>
                 <value>classpath:secure-api.properties</value>
+                <value>classpath:local_db.properties</value>
                 <value>classpath:db.properties</value>
             </list>
         </property>
@@ -17,6 +18,15 @@
 
     <bean id="contentApiProvider" class="ru.goodsreview.api.provider.ContentAPIProvider" lazy-init="false">
         <property name="apiKey" value="${api-key}"/>
+    </bean>
+
+    <bean id="dataSourceLocal" class="org.apache.commons.dbcp.BasicDataSource" lazy-init="false">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+
+        <property name="validationQuery" value="select 1"/>
     </bean>
 
     <bean id="dataSource" class="ru.goodsreview.core.util.db.SSHTunnelDataSource">
@@ -34,8 +44,9 @@
         <property name="validationQuery" value="select 1"/>
     </bean>
 
+    <!--Specifying dataSource here -->
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="dataSource"/>
+        <property name="dataSource" ref="dataSourceLocal"/>
     </bean>
 
     <bean id="entityService" class="ru.goodsreview.core.db.entity.EntityService">
