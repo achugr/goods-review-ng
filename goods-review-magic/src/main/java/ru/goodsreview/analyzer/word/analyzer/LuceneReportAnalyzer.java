@@ -62,8 +62,14 @@ public class LuceneReportAnalyzer {
         if(report.contains("С")){
             return PartOfSpeech.NOUN;
         }
-        if(report.contains("П")){
+        if(report.contains("П")||report.contains("КР_ПРИЛ")){
             return PartOfSpeech.ADJECTIVE;
+        }
+        if(report.contains("Г")){
+            return PartOfSpeech.VERB;
+        }
+        if(report.contains("ПРЕДЛ")){
+            return PartOfSpeech.PREPOSITION;
         }
         return PartOfSpeech.UNKNOWN;
     }

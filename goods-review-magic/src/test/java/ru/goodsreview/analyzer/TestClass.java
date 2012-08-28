@@ -24,7 +24,7 @@ public class TestClass extends TestCase {
 //        String s = "телефоном{телефон=S,муж,неод=твор,ед}";
 //        String report = ReviewTokens.getWordAnalyzer().report("телефоном");
 
-        System.out.println(ReviewTokens.getWordAnalyzer().report("конь"));
+
        // assertTrue(report.equals(s));
     }
 //

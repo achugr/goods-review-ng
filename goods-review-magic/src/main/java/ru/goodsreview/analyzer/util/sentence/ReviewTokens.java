@@ -12,6 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.goodsreview.analyzer.util.dictionary.Dictionary;
 import ru.goodsreview.analyzer.util.dictionary.MapDictionary;
 import ru.goodsreview.analyzer.util.dictionary.SetDictionary;
+import ru.goodsreview.analyzer.word.analyzer.LuceneAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
 
@@ -29,7 +30,8 @@ public class ReviewTokens {
     private static Dictionary featureDictionary = new SetDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt");
     private static MapDictionary opinionDictionary = new MapDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
 
-    private static WordAnalyzer wordAnalyzer = (MystemAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("myStem");
+    private static WordAnalyzer wordAnalyzer = (WordAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("wordAnalyzer");
+
 
 //    @Required
 //    public void setMystemAnalyzer(MystemAnalyzer wordAnalyzer) {
@@ -48,8 +50,11 @@ public class ReviewTokens {
         StringTokenizer stringTokenizer = new StringTokenizer(review, " ");
         while (stringTokenizer.hasMoreElements()) {
             String currToken = stringTokenizer.nextToken();
-            currToken = currToken.trim();
 
+            if(MystemAnalyzer.isRussianWord(currToken)){
+
+
+            currToken = currToken.trim();
 
             if (!currToken.equals("")) {
                 currToken = currToken.toLowerCase();
@@ -69,7 +74,7 @@ public class ReviewTokens {
                     listsOfToken.add(list);
 
 
-            }
+            }}
         }
     }
 

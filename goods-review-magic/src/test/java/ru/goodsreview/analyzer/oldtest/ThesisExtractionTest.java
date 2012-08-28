@@ -305,7 +305,7 @@ public class ThesisExtractionTest {
                         String opinion = aThesis.getOpinion();
                         // System.out.println(alThesis+" "+opinion);
 
-                        if (contains(humFeature, MystemReportAnalyzer.normalizer(mystemAnalyzer.report(algoFeature)))) {
+                        if (contains(humFeature, algoFeature)) {
                             if (contains(sentence, algoFeature) && contains(sentence, opinion)) {
                                 out.println("      <OK>" + humFeature + " " + opinion + "</OK>");
                                 // System.out.println(alThesis+" "+opinion+" ## "+sentence);
@@ -325,7 +325,7 @@ public class ThesisExtractionTest {
                     for (Phrase hThesis : humThesis) {
                         String humFeature = hThesis.getFeature();
                         String sentence = hThesis.getOpinion();
-                        if (contains(humFeature, MystemReportAnalyzer.normalizer(mystemAnalyzer.report(algoFeature)))) {
+                        if (contains(humFeature, algoFeature)) {
                             if (contains(sentence, algoFeature) && contains(sentence, opinion)) {
                                 t = true;
                                 break;
@@ -348,7 +348,7 @@ public class ThesisExtractionTest {
                         String algoFeature = aThesis.getFeature();
                         String opinion = aThesis.getOpinion();
 
-                        if (contains(humFeature, MystemReportAnalyzer.normalizer(mystemAnalyzer.report(algoFeature)))) {
+                        if (contains(humFeature, algoFeature)) {
                             if (contains(sentence, algoFeature) && contains(sentence, opinion)) {
                                 t = true;
                                 break;
@@ -373,6 +373,12 @@ public class ThesisExtractionTest {
         }else{
             return false;
         }
+    }
+
+    static boolean equals(String s1, String s2) {
+        s1 = s1.toLowerCase();
+        s2 = s2.toLowerCase();
+        return s1.equals(s2);
     }
 
 //    static void add(final HashMap<String, int[]> map, final String s, final boolean t) {
