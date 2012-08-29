@@ -20,14 +20,8 @@ public class TestClass extends TestCase {
         super(testName);
     }
 
-    public void testMystemAnalyzer() throws UnsupportedEncodingException {
-//        String s = "телефоном{телефон=S,муж,неод=твор,ед}";
-//        String report = ReviewTokens.getWordAnalyzer().report("телефоном");
 
 
-       // assertTrue(report.equals(s));
-    }
-//
     public void testReportList() throws UnsupportedEncodingException {
         String s = "сборки{сборка=S,жен,неод=(им,мн|род,ед|вин,мн)}";
         List<String> reportList = MystemReportAnalyzer.buildReportList(s);
