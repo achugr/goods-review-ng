@@ -7,9 +7,6 @@ package ru.goodsreview.analyzer.util;
  *      artemij.chugreev@gmail.com
  */
 
-import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -10,6 +10,7 @@ package ru.goodsreview.analyzer;
 import ru.goodsreview.analyzer.util.Phrase;
 import ru.goodsreview.analyzer.util.ThesisPattern;
 import ru.goodsreview.analyzer.util.sentence.*;
+import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
 import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 
 import java.io.IOException;
@@ -97,12 +98,12 @@ public class ExtractThesis{
     }
 
     static boolean checkWordsCorrespondence(Token token1, Token token2) throws UnsupportedEncodingException {
-        GrammarGender p1 = token1.getGender();
-        GrammarGender p2 = token2.getGender();
-        GrammarNumber num1 = token1.getNumber();
-        GrammarNumber num2 = token2.getNumber();
-        GrammarCase case1 = token1.getCase();
-        GrammarCase case2 = token2.getCase();
+        String p1 = token1.getGender();
+        String p2 = token2.getGender();
+        String num1 = token1.getNumber();
+        String num2 = token2.getNumber();
+        String case1 = token1.getCase();
+        String case2 = token2.getCase();
         boolean con1 = check(p1, p2);       // Род
         boolean con2 = check(num1, num2);   // Число
         boolean con3 = check(case1, case2); // Падеж
@@ -110,7 +111,7 @@ public class ExtractThesis{
       boolean sep = con1 && con2 && con3;
        // boolean sep = con1 && con2;
        // boolean sep = (con1 && con2) || (con1 && con3);
-
+      // boolean sep = true;
         return sep;
     }
 
@@ -126,10 +127,8 @@ public class ExtractThesis{
         return false;
     }
 
-    static boolean check(Object obj1, Object obj2) {
+    static boolean check(String s1, String s2) {
         String unk = MystemReportAnalyzer.UNKNOUN;
-        String s1 = obj1.toString();
-        String s2 = obj2.toString();
         return !s1.equals(unk) && !s2.equals(unk) && s1.equals(s2);
     }
 

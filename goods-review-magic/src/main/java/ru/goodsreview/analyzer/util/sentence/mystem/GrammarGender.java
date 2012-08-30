@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer.util.sentence;
+package ru.goodsreview.analyzer.util.sentence.mystem;
 
 import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 

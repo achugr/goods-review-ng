@@ -1,22 +1,20 @@
-package ru.goodsreview.analyzer.util.sentence;
+package ru.goodsreview.analyzer.util.sentence.lucene;
 
 import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 
 /**
- * Date: 13.07.12
- * Time: 23:45
- * Author:
- * Ilya Makeev
- * ilya.makeev@gmail.com
+ * author : Ilya Makeev
+ * date: 30.08.12
  */
-public enum GrammarNumber {
-    SINGULAR("ед"),
-    PLURAL("мн"),
+public enum GrammarGender {
+    MASCULINE("мр"),
+    FEMININE("жр"),
+    NEUTER("ср"),
     UNKNOWN (MystemReportAnalyzer.UNKNOUN);
 
     private final String value;
 
-    private GrammarNumber(String value){
+    private GrammarGender(String value){
         this.value = value;
     }
 

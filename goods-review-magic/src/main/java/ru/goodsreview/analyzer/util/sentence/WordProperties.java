@@ -1,5 +1,8 @@
 package ru.goodsreview.analyzer.util.sentence;
 
+import ru.goodsreview.analyzer.util.sentence.mystem.GrammarCase;
+import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
+
 /**
  * Created with IntelliJ IDEA.
  * Date: 21.08.12

@@ -1,6 +1,10 @@
 package ru.goodsreview.analyzer.word.analyzer;
 
 import ru.goodsreview.analyzer.util.sentence.*;
+import ru.goodsreview.analyzer.util.sentence.mystem.GrammarCase;
+import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
+import ru.goodsreview.analyzer.util.sentence.GrammarNumber;
+import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -18,7 +22,7 @@ public class MystemReportAnalyzer {
     public static final String UNKNOUN = "unk";
 
     public static WordProperties wordProperties(String report) {
-        WordProperties property = new WordProperties(GrammarGender.UNKNOWN,GrammarNumber.UNKNOWN,GrammarCase.UNKNOWN);
+        WordProperties property = new WordProperties(GrammarGender.UNKNOWN, GrammarNumber.UNKNOWN, GrammarCase.UNKNOWN);
 
             GrammarGender[] genderCases = GrammarGender.values();
             for (GrammarGender gender:genderCases){
@@ -167,6 +171,8 @@ public class MystemReportAnalyzer {
 //        }
         return reportList;
     }
+
+
 
 
     public static void buildNormList(ArrayList<String> list, String report, String norm) {

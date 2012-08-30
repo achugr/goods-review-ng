@@ -11,6 +11,10 @@ package ru.goodsreview.analyzer.word.analyzer;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.analyzer.util.sentence.*;
+import ru.goodsreview.analyzer.util.sentence.mystem.GrammarCase;
+import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
+import ru.goodsreview.analyzer.util.sentence.GrammarNumber;
+import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -77,7 +81,7 @@ public class MystemAnalyzer implements WordAnalyzer{
                             GrammarNumber number = wordProp.getNumber();
                             GrammarCase caseOf = wordProp.getCase();
 
-                            Token newToken = new Token(word, normForm, partOfSpeech, gender, number, caseOf);
+                            Token newToken = new Token(word, normForm, partOfSpeech, gender.toString(), number.toString(), caseOf.toString());
                             tokensList.add(newToken);
                         }
                     } else {
@@ -89,24 +93,26 @@ public class MystemAnalyzer implements WordAnalyzer{
         }
 
         if(tokensList.size()==0){
-            tokensList.add(new Token(word, MystemReportAnalyzer.UNKNOUN,PartOfSpeech.UNKNOWN, GrammarGender.UNKNOWN, GrammarNumber.UNKNOWN,GrammarCase.UNKNOWN));
+            tokensList.add(new Token(word, MystemReportAnalyzer.UNKNOUN,PartOfSpeech.UNKNOWN, MystemReportAnalyzer.UNKNOUN, MystemReportAnalyzer.UNKNOUN,MystemReportAnalyzer.UNKNOUN));
         }
 
         return tokensList;
     }
 
 
-    public String report(final String word) {
+    public String report(final String word)  {
         if (isRussianWord(word)) {
             //TODO а если процесс не ответит, ну подвиснет на секунду?
             ps.println(word);
+
             while (!sc.hasNext()){
                 try {
-                    sc.wait(100);
+                    System.out.println(123);
+                   sc.wait(1);
                 } catch (InterruptedException e) {
                     log.error(e.getMessage(), e);
                 }
-            }
+           }
             return sc.nextLine();
         } else {
             return EMPTY_REPORT;

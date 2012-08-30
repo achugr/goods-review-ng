@@ -3,7 +3,11 @@ package ru.goodsreview.analyzer.word.analyzer;
 import org.apache.lucene.morphology.LuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
 import org.junit.Test;
-import ru.goodsreview.analyzer.util.sentence.*;
+import ru.goodsreview.analyzer.util.sentence.GrammarNumber;
+import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
+import ru.goodsreview.analyzer.util.sentence.Token;
+import ru.goodsreview.analyzer.util.sentence.lucene.GrammarCase;
+import ru.goodsreview.analyzer.util.sentence.lucene.GrammarGender;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -39,15 +43,15 @@ public class LuceneAnalyzer implements WordAnalyzer{
                 if (k != -1 && k + 1 < rep.length()) {
                     String tRep = rep.substring(k + 1);
                         String normForm = LuceneReportAnalyzer.normalizer(rep);
-
+                   // System.out.println(normForm);
                         PartOfSpeech partOfSpeech = LuceneReportAnalyzer.partOfSpeech(tRep);
+                    //System.out.println(partOfSpeech.toString());
 
-                        WordProperties wordProp = LuceneReportAnalyzer.wordProperties(tRep);
-                        GrammarGender gender = wordProp.getGender();
-                        GrammarNumber number = wordProp.getNumber();
-                        GrammarCase caseOf = wordProp.getCase();
+                        GrammarGender gender = LuceneReportAnalyzer.getGender(tRep);
+                        GrammarNumber number = LuceneReportAnalyzer.getNum(tRep);
+                        GrammarCase caseOf = LuceneReportAnalyzer.getCase(tRep);
 
-                        Token newToken = new Token(word, normForm, partOfSpeech, gender, number, caseOf);
+                        Token newToken = new Token(word, normForm, partOfSpeech, gender.toString(), number.toString(), caseOf.toString());
                         tokensList.add(newToken);
 
                 }
@@ -55,7 +59,7 @@ public class LuceneAnalyzer implements WordAnalyzer{
 
 
         if(tokensList.size()==0){
-            tokensList.add(new Token(word, MystemReportAnalyzer.UNKNOUN,PartOfSpeech.UNKNOWN, GrammarGender.UNKNOWN, GrammarNumber.UNKNOWN,GrammarCase.UNKNOWN));
+            tokensList.add(new Token(word, MystemReportAnalyzer.UNKNOUN,PartOfSpeech.UNKNOWN, MystemReportAnalyzer.UNKNOUN, MystemReportAnalyzer.UNKNOUN,MystemReportAnalyzer.UNKNOUN));
         }
 
         return tokensList;
@@ -74,17 +78,15 @@ public class LuceneAnalyzer implements WordAnalyzer{
 
     @Test
     public  void test(){
-        String str = "столовая";
+        String str = "кот";
         List<String> wordBaseForms = luceneMorph.getMorphInfo(str);
 
         for (String s:wordBaseForms){
             System.out.println(s);
             System.out.println(LuceneReportAnalyzer.normalizer(s));
-            WordProperties wp = LuceneReportAnalyzer.wordProperties(s);
+
             System.out.println(LuceneReportAnalyzer.partOfSpeech(s));
-            System.out.println(wp.getGender());
-            System.out.println(wp.getNumber());
-            System.out.println(wp.getCase());
+
         }
     }
 
