@@ -11,7 +11,7 @@ package ru.goodsreview.analyzer.util;
  */
 
 //TODO мутабл модельные классы -- зло полное
-public class Phrase {
+public final class Phrase {
     private final String feature;
     private final String opinion;
 

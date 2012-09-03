@@ -9,7 +9,7 @@ package ru.goodsreview.analyzer.util.sentence;
 
 
 //TODO мутабл модельные классы -- зло полное
-public class Token {
+public final class Token {
     private String content;
     private PartOfSpeech partOfSpeech;
     private String normForm;

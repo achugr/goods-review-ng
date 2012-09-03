@@ -25,7 +25,6 @@ public class ReviewTokens {
     private List<List<Token>> listsOfToken;
 
     //TODO удалить, переделать
-    //TODO про кодировки даж говорить не буду
     private static Dictionary featureDictionary = new SetDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt");
     private static MapDictionary opinionDictionary = new MapDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
 
@@ -44,36 +43,28 @@ public class ReviewTokens {
      */
     public ReviewTokens(String review) throws IOException, InterruptedException {
 
-        listsOfToken =  new ArrayList<List<Token>>();
+        listsOfToken = new ArrayList<List<Token>>();
 
         StringTokenizer stringTokenizer = new StringTokenizer(review, " ");
         while (stringTokenizer.hasMoreElements()) {
             String currToken = stringTokenizer.nextToken();
 
-            if(MystemAnalyzer.isRussianWord(currToken)){
+            if (MystemAnalyzer.isRussianWord(currToken)) {
 
 
-            currToken = currToken.trim();
+                currToken = currToken.trim();
 
-            if (!currToken.equals("")) {
-                currToken = currToken.toLowerCase();
+                if (!currToken.equals("")) {
+                    currToken = currToken.toLowerCase();
 
-                List<Token> list = wordAnalyzer.getTokenList(currToken);
+                    List<Token> list = wordAnalyzer.getTokenList(currToken);
 
-                dictionaryCheck(list);
-
-//                List<Token> newTokensList = new ArrayList<Token>();
-//                for (Token token :list){
-//                       if(!token.getPartOfSpeech().equals(PartOfSpeech.UNKNOWN)){
-//                           newTokensList.add(token);
-//                       }
-//                }
-
+                    dictionaryCheck(list);
 
                     listsOfToken.add(list);
 
-
-            }}
+                }
+            }
         }
     }
 

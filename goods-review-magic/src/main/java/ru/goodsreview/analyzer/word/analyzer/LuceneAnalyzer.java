@@ -65,13 +65,13 @@ public class LuceneAnalyzer implements WordAnalyzer{
         return tokensList;
     }
 
-//    public String report(String word){
-//        List<String> reportList = luceneMorph.getMorphInfo(word);
-//        if(reportList.size()!=0){
-//            return reportList.get(0);
-//        }
-//        return "";
-//    }
+    public String report(String word){
+        List<String> reportList = luceneMorph.getMorphInfo(word);
+        if(reportList.size()!=0){
+            return reportList.get(0);
+        }
+        return "";
+    }
 
     public void close(){
     }

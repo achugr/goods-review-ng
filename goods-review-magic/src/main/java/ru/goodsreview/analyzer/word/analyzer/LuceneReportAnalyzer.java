@@ -13,10 +13,11 @@ import ru.goodsreview.analyzer.util.sentence.lucene.GrammarGender;
  * Author: Ilya Makeev
  */
 public class LuceneReportAnalyzer {
-
+    private static GrammarNumber[] numCases = GrammarNumber.values();
+    private static GrammarGender[] genderCases = GrammarGender.values();
+    private static GrammarCase[] cases = GrammarCase.values();
 
     public static GrammarGender getGender(String report) {
-        GrammarGender[] genderCases = GrammarGender.values();
         for (GrammarGender gender : genderCases) {
             if (report.contains(gender.toString())) {
                 return gender;
@@ -27,7 +28,6 @@ public class LuceneReportAnalyzer {
     }
 
     public static GrammarNumber getNum(String report) {
-        GrammarNumber[] numCases = GrammarNumber.values();
         for (GrammarNumber num : numCases) {
             if (report.contains(num.toString())) {
                 return num;
@@ -39,7 +39,6 @@ public class LuceneReportAnalyzer {
 
 
     public static GrammarCase getCase(String report) {
-        GrammarCase[] cases = GrammarCase.values();
         for (GrammarCase grammarCase : cases) {
             if (report.contains(grammarCase.toString())) {
                 return grammarCase;
@@ -58,7 +57,7 @@ public class LuceneReportAnalyzer {
     public static PartOfSpeech getPartOfSpeech(String report) {
         int n = report.indexOf(" ");
         String partOfSpeech = report;
-        if(n!=-1){
+        if (n != -1) {
             partOfSpeech = report.substring(0, n);
         }
 

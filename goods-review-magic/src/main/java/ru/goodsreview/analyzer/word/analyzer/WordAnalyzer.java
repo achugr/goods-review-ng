@@ -12,4 +12,6 @@ public interface WordAnalyzer {
 
     void close();
 
+    String report(String word);
+
 }

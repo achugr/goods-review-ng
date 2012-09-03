@@ -39,7 +39,7 @@ public class MystemAnalyzer implements WordAnalyzer{
     public void setAnalyzerProcess(String path) {
         try {
            String CHARSET = "UTF8";
-           String command = "./"+ path + "mystem -nig -e " + CHARSET;
+           String command = "./"+ path + "mystem -ni -e " + CHARSET;
 
             analyzerProcess = Runtime.getRuntime().exec(command);
             sc = new Scanner(analyzerProcess.getInputStream(), CHARSET);
@@ -68,11 +68,12 @@ public class MystemAnalyzer implements WordAnalyzer{
                 if (!rep.equals(EMPTY_REPORT)) {
                     int k = rep.indexOf("=");
                     if (k != -1 && k + 1 < rep.length()) {
+                        //without normForm
                         String tRep = rep.substring(k + 1);
-                        if (MystemReportAnalyzer.isCorrect(tRep)) {
+
                             String normForm = MystemReportAnalyzer.getNormForm(rep);
 
-                            PartOfSpeech partOfSpeech = MystemReportAnalyzer.getPartOfSpeech(rep);
+                            PartOfSpeech partOfSpeech = MystemReportAnalyzer.getPartOfSpeech(tRep);
 
                             GrammarGender gender = MystemReportAnalyzer.getGender(tRep);
                             GrammarNumber number =  MystemReportAnalyzer.getNum(tRep);
@@ -80,7 +81,7 @@ public class MystemAnalyzer implements WordAnalyzer{
 
                             Token newToken = new Token(word, normForm, partOfSpeech, gender.toString(), number.toString(), caseOf.toString());
                             tokensList.add(newToken);
-                        }
+
                     } else {
                         // System.out.println(rep);
                     }
