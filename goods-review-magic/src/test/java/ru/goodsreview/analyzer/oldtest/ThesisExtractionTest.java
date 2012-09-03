@@ -310,7 +310,7 @@ public class ThesisExtractionTest {
                                 out.println("      <OK>" + humFeature + " " + opinion + "</OK>");
                                 // System.out.println(alThesis+" "+opinion+" ## "+sentence);
                                 successExtract++;
-                                //add(dictionaryScores, MystemReportAnalyzer.normalizer(mystemAnalyzer.report(opinion)), true);
+                                //add(dictionaryScores, MystemReportAnalyzer.getNormForm(mystemAnalyzer.report(opinion)), true);
                                 break;
                             }
                         }
@@ -334,7 +334,7 @@ public class ThesisExtractionTest {
                     }
                     if (!t) {
                         out.println("      <algo>" + algoFeature + " " + opinion + "</algo>");
-                        //add(dictionaryScores, MystemReportAnalyzer.normalizer(mystemAnalyzer.report(opinion)), false);
+                        //add(dictionaryScores, MystemReportAnalyzer.getNormForm(mystemAnalyzer.report(opinion)), false);
                         //System.out.println("      "+algoFeature + " "+opinion);
                     }
                 }

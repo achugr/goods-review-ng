@@ -50,12 +50,12 @@ public class LuceneReportAnalyzer {
     }
 
 
-    public static String normalizer(String report) {
+    public static String getNormForm(String report) {
         int n = report.indexOf("|");
         return report.substring(0, n);
     }
 
-    public static PartOfSpeech partOfSpeech(String report) {
+    public static PartOfSpeech getPartOfSpeech(String report) {
         int n = report.indexOf(" ");
         String partOfSpeech = report;
         if(n!=-1){

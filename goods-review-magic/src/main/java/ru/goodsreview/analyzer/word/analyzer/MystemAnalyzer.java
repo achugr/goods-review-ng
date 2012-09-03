@@ -70,14 +70,13 @@ public class MystemAnalyzer implements WordAnalyzer{
                     if (k != -1 && k + 1 < rep.length()) {
                         String tRep = rep.substring(k + 1);
                         if (MystemReportAnalyzer.isCorrect(tRep)) {
-                            String normForm = MystemReportAnalyzer.normalizer(rep);
+                            String normForm = MystemReportAnalyzer.getNormForm(rep);
 
-                            PartOfSpeech partOfSpeech = MystemReportAnalyzer.partOfSpeech(rep);
+                            PartOfSpeech partOfSpeech = MystemReportAnalyzer.getPartOfSpeech(rep);
 
-                            WordProperties wordProp = MystemReportAnalyzer.wordProperties(tRep);
-                            GrammarGender gender = wordProp.getGender();
-                            GrammarNumber number = wordProp.getNumber();
-                            GrammarCase caseOf = wordProp.getCase();
+                            GrammarGender gender = MystemReportAnalyzer.getGender(tRep);
+                            GrammarNumber number =  MystemReportAnalyzer.getNum(tRep);
+                            GrammarCase caseOf =  MystemReportAnalyzer.getCase(tRep);
 
                             Token newToken = new Token(word, normForm, partOfSpeech, gender.toString(), number.toString(), caseOf.toString());
                             tokensList.add(newToken);

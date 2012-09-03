@@ -1,6 +1,5 @@
 package ru.goodsreview.analyzer.word.analyzer;
 
-import ru.goodsreview.analyzer.util.sentence.*;
 import ru.goodsreview.analyzer.util.sentence.mystem.GrammarCase;
 import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
 import ru.goodsreview.analyzer.util.sentence.GrammarNumber;
@@ -21,53 +20,55 @@ import java.util.StringTokenizer;
 public class MystemReportAnalyzer {
     public static final String UNKNOUN = "unk";
 
-    public static WordProperties wordProperties(String report) {
-        WordProperties property = new WordProperties(GrammarGender.UNKNOWN, GrammarNumber.UNKNOWN, GrammarCase.UNKNOWN);
 
-            GrammarGender[] genderCases = GrammarGender.values();
-            for (GrammarGender gender:genderCases){
-                    if(report.contains(gender.toString())){
-                        property.setGender(gender);
+    public static GrammarGender getGender(String report) {
+        GrammarGender[] genderCases = GrammarGender.values();
+        for (GrammarGender gender : genderCases) {
+            if (report.contains(gender.toString())) {
+                return gender;
+            }
+        }
+
+        return GrammarGender.UNKNOWN;
+    }
+
+    public static GrammarNumber getNum(String report) {
+        GrammarNumber[] numCases = GrammarNumber.values();
+        for (GrammarNumber num : numCases) {
+            if (report.contains(num.toString())) {
+                return num;
+            }
+        }
+
+        return GrammarNumber.UNKNOWN;
+    }
+
+    public static GrammarCase getCase(String report) {
+        GrammarCase[] cases = GrammarCase.values();
+
+        boolean t1 = false;
+        for (int i = 0; i < cases.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (report.contains(cases[i].toString()) && report.contains(cases[j].toString())) {
+                    if (i != 3 && j != 0) {
+                        t1 = true;
                         break;
-                    }
-                }
-
-            GrammarNumber[] numCases = GrammarNumber.values();
-                for (GrammarNumber number:numCases){
-                    if(report.contains(number.toString())){
-                        property.setNumber(number);
-                        break;
-                    }
-                }
-
-            GrammarCase[] cases = GrammarCase.values();
-
-            boolean t1 = false;
-            for (int i = 0; i < cases.length; i++) {
-                for (int j = 0; j < i; j++) {
-                    if (report.contains(cases[i].toString()) && report.contains(cases[j].toString())) {
-                        if (i != 3 && j != 0) {
-                            t1 = true;
-                            break;
-                        }
                     }
                 }
             }
+        }
 
-            if (!t1) {
-                for (GrammarCase aCase : cases) {
-                    if (report.contains(aCase.toString())) {
-                        property.setCase(aCase);
-                        break;
-                    }
+        if (!t1) {
+            for (GrammarCase aCase : cases) {
+                if (report.contains(aCase.toString())) {
+                    return aCase;
                 }
-            } else {
-                // System.out.println(report);
             }
+        } else {
+            // System.out.println(report);
+        }
 
-
-
-        return property;
+        return GrammarCase.UNKNOWN;
     }
 
 
@@ -107,13 +108,13 @@ public class MystemReportAnalyzer {
         return isFull(report) && !hasAnyDualConclusion(report);
     }
 
-    public static PartOfSpeech partOfSpeech(String report) throws UnsupportedEncodingException {
+    public static PartOfSpeech getPartOfSpeech(String report) throws UnsupportedEncodingException {
 //            int pos1 = report.indexOf('=') + 1;
 //            int pos2 = pos1;
 //            while (Character.isUpperCase(report.charAt(pos2))) {
 //                pos2++;
 //            }
-//            String partOfSpeech = report.substring(pos1, pos2);
+//            String getPartOfSpeech = report.substring(pos1, pos2);
         PartOfSpeech[] parts = PartOfSpeech.values();
         for (PartOfSpeech part:parts){
             if(report.contains(part.toString())){
@@ -124,7 +125,7 @@ public class MystemReportAnalyzer {
           return PartOfSpeech.UNKNOWN;
     }
 
-    public static String normalizer(String report) throws UnsupportedEncodingException {
+    public static String getNormForm(String report) throws UnsupportedEncodingException {
         String norm = UNKNOUN;
             int n = report.indexOf("=");
             if (n != -1) {
@@ -144,7 +145,7 @@ public class MystemReportAnalyzer {
     public static List<String> buildReportList(String report) throws UnsupportedEncodingException {
         ArrayList<String> reportList = new ArrayList<String>();
         if (!report.equals(MystemAnalyzer.EMPTY_REPORT)) {
-            String norm = normalizer(report);
+            String norm = getNormForm(report);
             ArrayList<String> normList = new ArrayList<String>();
             buildNormList(normList, report, norm);
 

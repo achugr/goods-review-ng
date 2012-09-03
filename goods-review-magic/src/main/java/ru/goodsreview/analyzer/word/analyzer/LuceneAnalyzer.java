@@ -42,10 +42,10 @@ public class LuceneAnalyzer implements WordAnalyzer{
                 int k = rep.indexOf(" ");
                 if (k != -1 && k + 1 < rep.length()) {
                     String tRep = rep.substring(k + 1);
-                        String normForm = LuceneReportAnalyzer.normalizer(rep);
+                        String normForm = LuceneReportAnalyzer.getNormForm(rep);
                    // System.out.println(normForm);
-                        PartOfSpeech partOfSpeech = LuceneReportAnalyzer.partOfSpeech(tRep);
-                    //System.out.println(partOfSpeech.toString());
+                        PartOfSpeech partOfSpeech = LuceneReportAnalyzer.getPartOfSpeech(tRep);
+                    //System.out.println(getPartOfSpeech.toString());
 
                         GrammarGender gender = LuceneReportAnalyzer.getGender(tRep);
                         GrammarNumber number = LuceneReportAnalyzer.getNum(tRep);
@@ -83,9 +83,9 @@ public class LuceneAnalyzer implements WordAnalyzer{
 
         for (String s:wordBaseForms){
             System.out.println(s);
-            System.out.println(LuceneReportAnalyzer.normalizer(s));
+            System.out.println(LuceneReportAnalyzer.getNormForm(s));
 
-            System.out.println(LuceneReportAnalyzer.partOfSpeech(s));
+            System.out.println(LuceneReportAnalyzer.getPartOfSpeech(s));
 
         }
     }
