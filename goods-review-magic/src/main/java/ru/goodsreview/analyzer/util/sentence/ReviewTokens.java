@@ -13,6 +13,7 @@ import ru.goodsreview.analyzer.util.dictionary.Dictionary;
 import ru.goodsreview.analyzer.util.dictionary.MapDictionary;
 import ru.goodsreview.analyzer.util.dictionary.SetDictionary;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
+import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
 
 import java.io.IOException;
@@ -49,8 +50,7 @@ public class ReviewTokens {
         while (stringTokenizer.hasMoreElements()) {
             String currToken = stringTokenizer.nextToken();
 
-            if (MystemAnalyzer.isRussianWord(currToken)) {
-
+            if (ReportAnalyzer.isRussianWord(currToken)) {
 
                 currToken = currToken.trim();
 

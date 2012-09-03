@@ -17,10 +17,8 @@ import java.util.StringTokenizer;
  * Ilya Makeev
  * ilya.makeev@gmail.com
  */
-public class MystemReportAnalyzer {
-    public static final String UNKNOUN = "unk";
+public class MystemReportAnalyzer extends ReportAnalyzer{
     private static PartOfSpeech[] parts = PartOfSpeech.values();
-    private static GrammarNumber[] numCases = GrammarNumber.values();
     private static GrammarGender[] genderCases = GrammarGender.values();
     private static GrammarCase[] cases = GrammarCase.values();
 
@@ -34,15 +32,6 @@ public class MystemReportAnalyzer {
         return GrammarGender.UNKNOWN;
     }
 
-    public static GrammarNumber getNum(String report) {
-        for (GrammarNumber num : numCases) {
-            if (report.contains(num.toString())) {
-                return num;
-            }
-        }
-
-        return GrammarNumber.UNKNOWN;
-    }
 
     public static GrammarCase getCase(String report) {
         boolean t1 = false;

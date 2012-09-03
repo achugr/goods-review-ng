@@ -25,8 +25,8 @@ public class ThesisExtractionTest {
     private static double successExtract = 0;
     private static double numAlgo = 0;
     private static double numHum = 0;
-    private static HashMap<String, int[]> dictionaryScores = new HashMap<String, int[]>();
-    static WordAnalyzer mystemAnalyzer = ReviewTokens.getWordAnalyzer();
+//    private static HashMap<String, int[]> dictionaryScores = new HashMap<String, int[]>();
+//    static WordAnalyzer mystemAnalyzer = ReviewTokens.getWordAnalyzer();
 
     //   build list of Products for human markup file
     static ArrayList<Product> buildHumanProductList(final String filePath, final String encoding) throws IOException {

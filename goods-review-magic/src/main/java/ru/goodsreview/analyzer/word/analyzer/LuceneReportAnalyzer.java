@@ -12,8 +12,7 @@ import ru.goodsreview.analyzer.util.sentence.lucene.GrammarGender;
  * Date: 27.08.12
  * Author: Ilya Makeev
  */
-public class LuceneReportAnalyzer {
-    private static GrammarNumber[] numCases = GrammarNumber.values();
+public class LuceneReportAnalyzer extends ReportAnalyzer{
     private static GrammarGender[] genderCases = GrammarGender.values();
     private static GrammarCase[] cases = GrammarCase.values();
 
@@ -26,17 +25,6 @@ public class LuceneReportAnalyzer {
 
         return GrammarGender.UNKNOWN;
     }
-
-    public static GrammarNumber getNum(String report) {
-        for (GrammarNumber num : numCases) {
-            if (report.contains(num.toString())) {
-                return num;
-            }
-        }
-
-        return GrammarNumber.UNKNOWN;
-    }
-
 
     public static GrammarCase getCase(String report) {
         for (GrammarCase grammarCase : cases) {

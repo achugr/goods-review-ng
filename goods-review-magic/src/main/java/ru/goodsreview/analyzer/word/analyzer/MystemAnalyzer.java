@@ -26,7 +26,7 @@ import java.util.Scanner;
 /**
  * Class for the analysis of words, using mystem program http://company.yandex.ru/technologies/mystem/
  */
-public class MystemAnalyzer implements WordAnalyzer{
+public class MystemAnalyzer  implements WordAnalyzer{
     private Process analyzerProcess;
     private Scanner sc;
     private PrintStream ps;
@@ -91,7 +91,7 @@ public class MystemAnalyzer implements WordAnalyzer{
         }
 
         if(tokensList.size()==0){
-            tokensList.add(new Token(word, MystemReportAnalyzer.UNKNOUN,PartOfSpeech.UNKNOWN, MystemReportAnalyzer.UNKNOUN, MystemReportAnalyzer.UNKNOUN,MystemReportAnalyzer.UNKNOUN));
+            tokensList.add(new Token(word, ReportAnalyzer.UNKNOUN,PartOfSpeech.UNKNOWN, ReportAnalyzer.UNKNOUN, ReportAnalyzer.UNKNOUN,ReportAnalyzer.UNKNOUN));
         }
 
         return tokensList;
@@ -99,7 +99,7 @@ public class MystemAnalyzer implements WordAnalyzer{
 
 
     public String report(final String word)  {
-        if (isRussianWord(word)) {
+        if (ReportAnalyzer.isRussianWord(word)) {
             //TODO а если процесс не ответит, ну подвиснет на секунду?
             ps.println(word);
 
@@ -116,23 +116,6 @@ public class MystemAnalyzer implements WordAnalyzer{
         }
     }
 
-    /**
-     * Checks if letter belongs to russian alphabet.
-     *
-     * @param letter The letter itself.
-     * @return True if letter is russian, false — otherwise.
-     */
-    private static boolean isRussianLetter(char letter) {
-        return (letter >= 0x0410) && (letter <= 0x044F);
-    }
 
-    public static boolean isRussianWord(String word) {
-        for (char c : word.toCharArray()) {
-            if (!isRussianLetter(c)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
 }
