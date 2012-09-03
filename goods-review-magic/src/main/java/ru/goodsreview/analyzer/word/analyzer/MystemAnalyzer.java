@@ -38,17 +38,15 @@ public class MystemAnalyzer implements WordAnalyzer{
     @Required
     public void setAnalyzerProcess(String path) {
         try {
-            String CHARSET = "UTF8";
-           String command = "./";  //for Linux
+           String CHARSET = "UTF8";
+           String command = "./"+ path + "mystem -nig -e " + CHARSET;
 
-           // String command = "";   //for Windows
-
-            analyzerProcess = Runtime.getRuntime().exec(command + path + "mystem -nig -e " + CHARSET);
+            analyzerProcess = Runtime.getRuntime().exec(command);
             sc = new Scanner(analyzerProcess.getInputStream(), CHARSET);
             ps = new PrintStream(analyzerProcess.getOutputStream(), true, CHARSET);
 
         } catch (IOException e) {
-            // log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
+            log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
             throw new RuntimeException(e);
         }
     }
@@ -105,14 +103,13 @@ public class MystemAnalyzer implements WordAnalyzer{
             //TODO а если процесс не ответит, ну подвиснет на секунду?
             ps.println(word);
 
-            while (!sc.hasNext()){
-                try {
-                    System.out.println(123);
-                   sc.wait(1);
-                } catch (InterruptedException e) {
-                    log.error(e.getMessage(), e);
-                }
-           }
+//            while (!sc.hasNext()){
+//                try {
+//                   sc.wait(100);
+//                } catch (InterruptedException e) {
+//                    log.error(e.getMessage(), e);
+//                }
+//           }
             return sc.nextLine();
         } else {
             return EMPTY_REPORT;
