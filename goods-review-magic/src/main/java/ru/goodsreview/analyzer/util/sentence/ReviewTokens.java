@@ -12,8 +12,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.goodsreview.analyzer.util.dictionary.Dictionary;
 import ru.goodsreview.analyzer.util.dictionary.MapDictionary;
 import ru.goodsreview.analyzer.util.dictionary.SetDictionary;
-import ru.goodsreview.analyzer.word.analyzer.LuceneAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
+import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
 
 import java.io.IOException;
@@ -26,7 +26,6 @@ public class ReviewTokens {
     private List<List<Token>> listsOfToken;
 
     //TODO удалить, переделать
-    //TODO про кодировки даж говорить не буду
     private static Dictionary featureDictionary = new SetDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt");
     private static MapDictionary opinionDictionary = new MapDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
 
@@ -45,36 +44,27 @@ public class ReviewTokens {
      */
     public ReviewTokens(String review) throws IOException, InterruptedException {
 
-        listsOfToken =  new ArrayList<List<Token>>();
+        listsOfToken = new ArrayList<List<Token>>();
 
         StringTokenizer stringTokenizer = new StringTokenizer(review, " ");
         while (stringTokenizer.hasMoreElements()) {
             String currToken = stringTokenizer.nextToken();
 
-            if(MystemAnalyzer.isRussianWord(currToken)){
+            if (ReportAnalyzer.isRussianWord(currToken)) {
 
+                currToken = currToken.trim();
 
-            currToken = currToken.trim();
+                if (!currToken.equals("")) {
+                    currToken = currToken.toLowerCase();
 
-            if (!currToken.equals("")) {
-                currToken = currToken.toLowerCase();
+                    List<Token> list = wordAnalyzer.getTokenList(currToken);
 
-                List<Token> list = wordAnalyzer.getTokenList(currToken);
-
-                dictionaryCheck(list);
-
-//                List<Token> newTokensList = new ArrayList<Token>();
-//                for (Token token :list){
-//                       if(!token.getPartOfSpeech().equals(PartOfSpeech.UNKNOWN)){
-//                           newTokensList.add(token);
-//                       }
-//                }
-
+                    dictionaryCheck(list);
 
                     listsOfToken.add(list);
 
-
-            }}
+                }
+            }
         }
     }
 

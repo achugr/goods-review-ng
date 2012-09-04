@@ -7,16 +7,17 @@ package ru.goodsreview.analyzer.util.sentence;
  *      artemij.chugreev@gmail.com
  */
 
+
 //TODO мутабл модельные классы -- зло полное
-public class Token {
+public final class Token {
     private String content;
     private PartOfSpeech partOfSpeech;
     private String normForm;
-    private GrammarGender gender;
-    private GrammarNumber number;
-    private GrammarCase caseOf;
+    private String gender;
+    private String number;
+    private String caseOf;
 
-    public Token(String content, String normForm, PartOfSpeech partOfSpeech, GrammarGender gender, GrammarNumber number,GrammarCase caseOf) {
+    public Token(String content, String normForm,PartOfSpeech partOfSpeech, String gender, String number,String caseOf) {
         this.content = content;
         this.normForm = normForm;
         this.partOfSpeech = partOfSpeech;
@@ -33,19 +34,15 @@ public class Token {
         return normForm;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public GrammarGender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public GrammarNumber getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public GrammarCase getCase() {
+    public String getCase() {
         return caseOf;
     }
 

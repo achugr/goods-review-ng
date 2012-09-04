@@ -3,9 +3,11 @@ package ru.goodsreview.analyzer.util.sentence;
 import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 
 /**
- * Created with IntelliJ IDEA.
- * Date: 17.08.12
- * Author: Ilya Makeev
+ * Date: 13.07.12
+ * Time: 23:45
+ * Author:
+ * Ilya Makeev
+ * ilya.makeev@gmail.com
  */
 public enum GrammarNumber {
     SINGULAR("ед"),

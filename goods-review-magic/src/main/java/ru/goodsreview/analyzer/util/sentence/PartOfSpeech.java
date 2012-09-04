@@ -24,21 +24,13 @@ public enum PartOfSpeech {
     }
 
     public static PartOfSpeech getByName(String name) {
-        if (name.equals("A")) {
+        if (name.equals("П")||name.equals("КР_ПРИЛ")) {
             return ADJECTIVE;
-        } else if (name.equals("S")) {
+        } else if (name.equals("С")) {
             return NOUN;
-        } else if (name.equals("ADV")) {
-            return ADVERB;
-        } else if (name.equals("V")) {
+        } else if (name.equals("Г")) {
             return VERB;
-        } else if (name.equals("PR")) {
-            return PREPOSITION;
-        } else if (name.equals("PART")) {
-            return PARTICLE;
-        } else if (name.equals("")) {
-            return UNKNOWN;
-        } else {
+        }   else {
             return UNKNOWN;
         }
     }

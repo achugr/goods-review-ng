@@ -11,6 +11,10 @@ package ru.goodsreview.analyzer.word.analyzer;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.analyzer.util.sentence.*;
+import ru.goodsreview.analyzer.util.sentence.mystem.GrammarCase;
+import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
+import ru.goodsreview.analyzer.util.sentence.GrammarNumber;
+import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -22,7 +26,7 @@ import java.util.Scanner;
 /**
  * Class for the analysis of words, using mystem program http://company.yandex.ru/technologies/mystem/
  */
-public class MystemAnalyzer implements WordAnalyzer{
+public class MystemAnalyzer  implements WordAnalyzer{
     private Process analyzerProcess;
     private Scanner sc;
     private PrintStream ps;
@@ -34,17 +38,15 @@ public class MystemAnalyzer implements WordAnalyzer{
     @Required
     public void setAnalyzerProcess(String path) {
         try {
-            String CHARSET = "UTF8";
-           String command = "./";  //for Linux
+           String CHARSET = "UTF8";
+           String command = "./"+ path + "mystem -ni -e " + CHARSET;
 
-           // String command = "";   //for Windows
-
-            analyzerProcess = Runtime.getRuntime().exec(command + path + "mystem -nig -e " + CHARSET);
+            analyzerProcess = Runtime.getRuntime().exec(command);
             sc = new Scanner(analyzerProcess.getInputStream(), CHARSET);
             ps = new PrintStream(analyzerProcess.getOutputStream(), true, CHARSET);
 
         } catch (IOException e) {
-            // log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
+            log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
             throw new RuntimeException(e);
         }
     }
@@ -66,20 +68,20 @@ public class MystemAnalyzer implements WordAnalyzer{
                 if (!rep.equals(EMPTY_REPORT)) {
                     int k = rep.indexOf("=");
                     if (k != -1 && k + 1 < rep.length()) {
+                        //without normForm
                         String tRep = rep.substring(k + 1);
-                        if (MystemReportAnalyzer.isCorrect(tRep)) {
-                            String normForm = MystemReportAnalyzer.normalizer(rep);
 
-                            PartOfSpeech partOfSpeech = MystemReportAnalyzer.partOfSpeech(rep);
+                            String normForm = MystemReportAnalyzer.getNormForm(rep);
 
-                            WordProperties wordProp = MystemReportAnalyzer.wordProperties(tRep);
-                            GrammarGender gender = wordProp.getGender();
-                            GrammarNumber number = wordProp.getNumber();
-                            GrammarCase caseOf = wordProp.getCase();
+                            PartOfSpeech partOfSpeech = MystemReportAnalyzer.getPartOfSpeech(tRep);
 
-                            Token newToken = new Token(word, normForm, partOfSpeech, gender, number, caseOf);
+                            GrammarGender gender = MystemReportAnalyzer.getGender(tRep);
+                            GrammarNumber number =  MystemReportAnalyzer.getNum(tRep);
+                            GrammarCase caseOf =  MystemReportAnalyzer.getCase(tRep);
+
+                            Token newToken = new Token(word, normForm, partOfSpeech, gender.toString(), number.toString(), caseOf.toString());
                             tokensList.add(newToken);
-                        }
+
                     } else {
                         // System.out.println(rep);
                     }
@@ -89,47 +91,31 @@ public class MystemAnalyzer implements WordAnalyzer{
         }
 
         if(tokensList.size()==0){
-            tokensList.add(new Token(word, MystemReportAnalyzer.UNKNOUN,PartOfSpeech.UNKNOWN, GrammarGender.UNKNOWN, GrammarNumber.UNKNOWN,GrammarCase.UNKNOWN));
+            tokensList.add(new Token(word, ReportAnalyzer.UNKNOUN,PartOfSpeech.UNKNOWN, ReportAnalyzer.UNKNOUN, ReportAnalyzer.UNKNOUN,ReportAnalyzer.UNKNOUN));
         }
 
         return tokensList;
     }
 
 
-    public String report(final String word) {
-        if (isRussianWord(word)) {
+    public String report(final String word)  {
+        if (ReportAnalyzer.isRussianWord(word)) {
             //TODO а если процесс не ответит, ну подвиснет на секунду?
             ps.println(word);
-            while (!sc.hasNext()){
-                try {
-                    sc.wait(100);
-                } catch (InterruptedException e) {
-                    log.error(e.getMessage(), e);
-                }
-            }
+
+//            while (!sc.hasNext()){
+//                try {
+//                   sc.wait(100);
+//                } catch (InterruptedException e) {
+//                    log.error(e.getMessage(), e);
+//                }
+//           }
             return sc.nextLine();
         } else {
             return EMPTY_REPORT;
         }
     }
 
-    /**
-     * Checks if letter belongs to russian alphabet.
-     *
-     * @param letter The letter itself.
-     * @return True if letter is russian, false — otherwise.
-     */
-    private static boolean isRussianLetter(char letter) {
-        return (letter >= 0x0410) && (letter <= 0x044F);
-    }
 
-    public static boolean isRussianWord(String word) {
-        for (char c : word.toCharArray()) {
-            if (!isRussianLetter(c)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
 }

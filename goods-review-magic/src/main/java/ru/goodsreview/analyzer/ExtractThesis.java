@@ -10,6 +10,7 @@ package ru.goodsreview.analyzer;
 import ru.goodsreview.analyzer.util.Phrase;
 import ru.goodsreview.analyzer.util.ThesisPattern;
 import ru.goodsreview.analyzer.util.sentence.*;
+import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
 import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 
 import java.io.IOException;
@@ -27,13 +28,15 @@ public class ExtractThesis{
         thesisPatternList.add(new ThesisPattern(PartOfSpeech.NOUN, PartOfSpeech.ADJECTIVE));
         thesisPatternList.add(new ThesisPattern(PartOfSpeech.ADJECTIVE, PartOfSpeech.NOUN));
 
-        StringTokenizer stringTokenizer = new StringTokenizer(content, ".,-—:;!()+\'\"\\«»");  //without space:" "
+        int distance = 1;
+
+        StringTokenizer stringTokenizer = new StringTokenizer(content, ".,-—:;!()+\'\"\\«»");  //!without space:" "
 
         while (stringTokenizer.hasMoreElements()) {
             String sentence = stringTokenizer.nextToken();
 
             ReviewTokens reviewTokens = new ReviewTokens(sentence);
-            List<List<Token>> tokensList = reviewTokens.getListsOfToken();
+            List<List<Token>> listsOfToken = reviewTokens.getListsOfToken();
 
 //            for (int i = 0; i < tokensList.size(); i++) {
 //                System.out.print(tokensList.get(i).get(0).getContent()+"("+tokensList.get(i).get(0).getPartOfSpeech().name()+")"+" ");
@@ -50,7 +53,7 @@ public class ExtractThesis{
                 if(pos == -1){
                     System.out.println("incorrect pattern");
                 } else{
-                    extractPattern(extractedThesisList, tokensList, thesisPattern,pos);
+                    extractPattern(extractedThesisList, listsOfToken, thesisPattern,pos,distance);
                 }
 
             }
@@ -60,49 +63,55 @@ public class ExtractThesis{
     }
 
 
-    static void extractPattern(ArrayList<Phrase> extractedThesisList, List<List<Token>> tokensList, ThesisPattern<PartOfSpeech> pattern, int pos) throws UnsupportedEncodingException {
+    static void extractPattern(ArrayList<Phrase> extractedThesisList, List<List<Token>> listsOfToken, ThesisPattern<PartOfSpeech> pattern, int pos, int distance) throws UnsupportedEncodingException {
         PartOfSpeech part1 = pattern.get(0);
         PartOfSpeech part2 = pattern.get(1);
 
-        for (int i = 0; i < tokensList.size(); i++) {
-            Token rightToken = tokensList.get(i).get(0);
+        for (int i = 0; i < listsOfToken.size(); i++) {
+            List<Token> rightTokenList = listsOfToken.get(i);
 
-            if (rightToken.getPartOfSpeech().equals(part2)) {
-                int k = -1;
-                for (int j = i - 1; j >= 0; j--) {
-                    Token leftToken = tokensList.get(j).get(0);
-                    if (leftToken.getPartOfSpeech().equals(part1)) {
-                        k = j;
-                        break;
-                    }
-                }
-                if (k != -1) {
-                    if (Math.abs(i - k) == 1) {
-                        Token token1 = tokensList.get(k).get(0);
-                        Token token2 = tokensList.get(i).get(0);
-                        // System.out.println("#"+token1.getContent()+" "+token2.getContent());
-                        if (checkTokenListCorrespondence(tokensList.get(k), tokensList.get(i))) {
-                            Phrase newPhrase;
-                            if(pos==1){
-                                newPhrase =  new Phrase(token1.getContent(), token2.getContent());
-                            } else{
-                                newPhrase =  new Phrase(token2.getContent(), token1.getContent());
+            for (Token rightToken : rightTokenList) {
+                if (rightToken.getPartOfSpeech().equals(part2)) {
+
+                    for (int j = i - 1; j >= 0; j--) {
+
+                        if (Math.abs(i - j) <= distance) {
+
+                            List<Token> leftTokenList = listsOfToken.get(j);
+                            for (Token leftToken : leftTokenList) {
+                                if (leftToken.getPartOfSpeech().equals(part1)) {
+                                    if (checkTokenListCorrespondence(leftTokenList, rightTokenList)) {
+                                        Phrase newPhrase;
+                                        if (pos == 1) {
+                                            newPhrase = new Phrase(leftToken.getContent(), rightToken.getContent());
+                                        } else {
+                                            newPhrase = new Phrase(rightToken.getContent(), leftToken.getContent());
+                                        }
+                                        extractedThesisList.add(newPhrase);
+                                        break;
+                                    }
+
+                                }
                             }
-                            extractedThesisList.add(newPhrase);
                         }
                     }
+                    break;
                 }
             }
+
         }
     }
 
+
+
+
     static boolean checkWordsCorrespondence(Token token1, Token token2) throws UnsupportedEncodingException {
-        GrammarGender p1 = token1.getGender();
-        GrammarGender p2 = token2.getGender();
-        GrammarNumber num1 = token1.getNumber();
-        GrammarNumber num2 = token2.getNumber();
-        GrammarCase case1 = token1.getCase();
-        GrammarCase case2 = token2.getCase();
+        String p1 = token1.getGender();
+        String p2 = token2.getGender();
+        String num1 = token1.getNumber();
+        String num2 = token2.getNumber();
+        String case1 = token1.getCase();
+        String case2 = token2.getCase();
         boolean con1 = check(p1, p2);       // Род
         boolean con2 = check(num1, num2);   // Число
         boolean con3 = check(case1, case2); // Падеж
@@ -110,7 +119,7 @@ public class ExtractThesis{
       boolean sep = con1 && con2 && con3;
        // boolean sep = con1 && con2;
        // boolean sep = (con1 && con2) || (con1 && con3);
-
+      // boolean sep = true;
         return sep;
     }
 
@@ -126,10 +135,8 @@ public class ExtractThesis{
         return false;
     }
 
-    static boolean check(Object obj1, Object obj2) {
+    static boolean check(String s1, String s2) {
         String unk = MystemReportAnalyzer.UNKNOUN;
-        String s1 = obj1.toString();
-        String s2 = obj2.toString();
         return !s1.equals(unk) && !s2.equals(unk) && s1.equals(s2);
     }
 

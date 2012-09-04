@@ -12,5 +12,6 @@ public interface WordAnalyzer {
 
     void close();
 
-//    TODO add methods, gets other useful features by word ru.goodsreview.analyzer programs
+    String report(String word);
+
 }

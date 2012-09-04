@@ -25,8 +25,8 @@ public class ThesisExtractionTest {
     private static double successExtract = 0;
     private static double numAlgo = 0;
     private static double numHum = 0;
-    private static HashMap<String, int[]> dictionaryScores = new HashMap<String, int[]>();
-    static WordAnalyzer mystemAnalyzer = ReviewTokens.getWordAnalyzer();
+//    private static HashMap<String, int[]> dictionaryScores = new HashMap<String, int[]>();
+//    static WordAnalyzer mystemAnalyzer = ReviewTokens.getWordAnalyzer();
 
     //   build list of Products for human markup file
     static ArrayList<Product> buildHumanProductList(final String filePath, final String encoding) throws IOException {
@@ -310,7 +310,7 @@ public class ThesisExtractionTest {
                                 out.println("      <OK>" + humFeature + " " + opinion + "</OK>");
                                 // System.out.println(alThesis+" "+opinion+" ## "+sentence);
                                 successExtract++;
-                                //add(dictionaryScores, MystemReportAnalyzer.normalizer(mystemAnalyzer.report(opinion)), true);
+                                //add(dictionaryScores, MystemReportAnalyzer.getNormForm(mystemAnalyzer.report(opinion)), true);
                                 break;
                             }
                         }
@@ -334,7 +334,7 @@ public class ThesisExtractionTest {
                     }
                     if (!t) {
                         out.println("      <algo>" + algoFeature + " " + opinion + "</algo>");
-                        //add(dictionaryScores, MystemReportAnalyzer.normalizer(mystemAnalyzer.report(opinion)), false);
+                        //add(dictionaryScores, MystemReportAnalyzer.getNormForm(mystemAnalyzer.report(opinion)), false);
                         //System.out.println("      "+algoFeature + " "+opinion);
                     }
                 }

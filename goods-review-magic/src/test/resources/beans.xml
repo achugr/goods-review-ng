@@ -5,11 +5,11 @@
 
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 
-    <!--<bean id="wordAnalyzer" class="ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer">-->
-        <!--<property name="analyzerProcess" value="goods-review-magic/target/classes/ru/goodsreview/analyzer/tools/" />-->
-    <!--</bean>-->
+    <bean id="wordAnalyzer" class="ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer">
+        <property name="analyzerProcess" value="goods-review-magic/src/main/resources/ru/goodsreview/analyzer/tools/" />
+    </bean>
 
-    <bean id="wordAnalyzer" class="ru.goodsreview.analyzer.word.analyzer.LuceneAnalyzer"></bean>
+    <!--<bean id="wordAnalyzer" class="ru.goodsreview.analyzer.word.analyzer.LuceneAnalyzer"></bean>-->
 
 
 </beans>

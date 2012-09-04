@@ -12,7 +12,11 @@
     </distributionManagement>
 
     <repositories>
-
+        <repository>
+            <id>russian-morphology.lucene.apache.org</id>
+            <name>Lucene Russian Morphology Repository for Maven</name>
+            <url>http://russianmorphology.googlecode.com/svn/repo/releases/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -76,6 +80,12 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.9.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.lucene.morphology</groupId>
+            <artifactId>russian</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 

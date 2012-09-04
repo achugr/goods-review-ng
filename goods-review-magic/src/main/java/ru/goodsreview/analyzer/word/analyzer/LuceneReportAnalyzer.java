@@ -1,6 +1,10 @@
 package ru.goodsreview.analyzer.word.analyzer;
 
-import ru.goodsreview.analyzer.util.sentence.*;
+
+import ru.goodsreview.analyzer.util.sentence.GrammarNumber;
+import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
+import ru.goodsreview.analyzer.util.sentence.lucene.GrammarCase;
+import ru.goodsreview.analyzer.util.sentence.lucene.GrammarGender;
 
 
 /**
@@ -8,69 +12,43 @@ import ru.goodsreview.analyzer.util.sentence.*;
  * Date: 27.08.12
  * Author: Ilya Makeev
  */
-public class LuceneReportAnalyzer {
+public class LuceneReportAnalyzer extends ReportAnalyzer{
+    private static GrammarGender[] genderCases = GrammarGender.values();
+    private static GrammarCase[] cases = GrammarCase.values();
 
-    public static WordProperties wordProperties(String report) {
-        WordProperties property = new WordProperties(GrammarGender.UNKNOWN, GrammarNumber.UNKNOWN, GrammarCase.UNKNOWN);
-
-        if(report.contains("мр")){
-             property.setGender(GrammarGender.MASCULINE);
-        }
-        if(report.contains("жр")){
-            property.setGender(GrammarGender.FEMININE);
-        }
-        if(report.contains("ср")){
-            property.setGender(GrammarGender.NEUTER);
+    public static GrammarGender getGender(String report) {
+        for (GrammarGender gender : genderCases) {
+            if (report.contains(gender.toString())) {
+                return gender;
+            }
         }
 
-        if(report.contains("ед")){
-            property.setNumber(GrammarNumber.SINGULAR);
-        }
-        if(report.contains("мн")){
-            property.setNumber(GrammarNumber.PLURAL);
+        return GrammarGender.UNKNOWN;
+    }
+
+    public static GrammarCase getCase(String report) {
+        for (GrammarCase grammarCase : cases) {
+            if (report.contains(grammarCase.toString())) {
+                return grammarCase;
+            }
         }
 
-        if(report.contains("им")){
-            property.setCase(GrammarCase.IM);
-        }
-        if(report.contains("рд")){
-            property.setCase(GrammarCase.ROD);
-        }
-        if(report.contains("вн")){
-            property.setCase(GrammarCase.VIN);
-        }
-        if(report.contains("дт")){
-            property.setCase(GrammarCase.DAT);
-        }
-        if(report.contains("тв")){
-            property.setCase(GrammarCase.TVOR);
-        }
-        if(report.contains("пр")){
-            property.setCase(GrammarCase.PRED);
-        }
-
-        return property;
+        return GrammarCase.UNKNOWN;
     }
 
 
-    public static String normalizer(String report)  {
+    public static String getNormForm(String report) {
         int n = report.indexOf("|");
-        return report.substring(0,n);
+        return report.substring(0, n);
     }
 
-    public static PartOfSpeech partOfSpeech(String report)  {
-        if(report.contains("С")){
-            return PartOfSpeech.NOUN;
+    public static PartOfSpeech getPartOfSpeech(String report) {
+        int n = report.indexOf(" ");
+        String partOfSpeech = report;
+        if (n != -1) {
+            partOfSpeech = report.substring(0, n);
         }
-        if(report.contains("П")||report.contains("КР_ПРИЛ")){
-            return PartOfSpeech.ADJECTIVE;
-        }
-        if(report.contains("Г")){
-            return PartOfSpeech.VERB;
-        }
-        if(report.contains("ПРЕДЛ")){
-            return PartOfSpeech.PREPOSITION;
-        }
-        return PartOfSpeech.UNKNOWN;
+
+        return PartOfSpeech.getByName(partOfSpeech);
     }
 }

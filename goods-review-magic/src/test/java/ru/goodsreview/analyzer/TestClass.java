@@ -11,6 +11,8 @@ import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
+import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
+
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -20,21 +22,21 @@ public class TestClass extends TestCase {
         super(testName);
     }
 
-    public void testMystemAnalyzer() throws UnsupportedEncodingException {
-//        String s = "телефоном{телефон=S,муж,неод=твор,ед}";
-//        String report = ReviewTokens.getWordAnalyzer().report("телефоном");
-
-
-       // assertTrue(report.equals(s));
+    public void testWordAnalyzer() throws UnsupportedEncodingException {
+        String word = "дериватив";
+        WordAnalyzer analyzer = ReviewTokens.getWordAnalyzer();
+        System.out.println(analyzer.report(word));
+        analyzer.close();
     }
-//
+
+
     public void testReportList() throws UnsupportedEncodingException {
-        String s = "сборки{сборка=S,жен,неод=(им,мн|род,ед|вин,мн)}";
+        String s = "мурелки{мурелка?=S,жен,од=им,мн|?=S,жен,од=род,ед|мурелка?=S,жен,неод=им,мн|?=S,жен,неод=род,ед|?=S,жен,неод=вин,мн|мурелки?=S,мн,неод=им|?=S,мн,неод=вин|мурелок?=S,муж,од=им,мн}";
         List<String> reportList = MystemReportAnalyzer.buildReportList(s);
         for (String str:reportList){
             System.out.println(str);
         }
-        assertTrue(reportList.size()==3);
+
     }
 
     public void testFeatureDictionary() throws UnsupportedEncodingException {
@@ -49,8 +51,8 @@ public class TestClass extends TestCase {
     public static void main(String[] args) {
         TestRunner runner = new TestRunner();
         TestSuite suite = new TestSuite();
-        suite.addTest(new TestClass("testReportList"));
-     // suite.addTest(new TestClass("testMystemAnalyzer"));
+//        suite.addTest(new TestClass("testReportList"));
+     suite.addTest(new TestClass("testWordAnalyzer"));
       //  suite.addTest(new TestClass("testFeatureDictionary"));
       //  suite.addTest(new TestClass("testOpinionDictionary"));
         runner.doRun(suite);
