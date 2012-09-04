@@ -14,11 +14,24 @@ package ru.goodsreview.analyzer.util;
 public final class Phrase {
     private final String feature;
     private final String opinion;
+    private String normFeature;
 
     public Phrase(final String feature, final String opinion) {
         this.opinion = opinion;
         this.feature = feature;
     }
+
+    public Phrase(final String feature, final String opinion, String normFeature) {
+        this.opinion = opinion;
+        this.feature = feature;
+        this.normFeature = normFeature;
+    }
+
+    public String getNormFeature(){
+        return normFeature;
+    }
+
+
 
     public String getFeature(){
         return feature;

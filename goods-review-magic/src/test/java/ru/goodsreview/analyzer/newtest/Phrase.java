@@ -10,12 +10,21 @@ package ru.goodsreview.analyzer.newtest;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(propOrder = { "feature","opinion", "value"})
+@XmlType(propOrder = {"context", "feature","opinion", "value"})
 public class Phrase {
+    private String context;
     private String feature;
     private String opinion;
     private String value;
 
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
 
     public String getFeature() {
         return feature;

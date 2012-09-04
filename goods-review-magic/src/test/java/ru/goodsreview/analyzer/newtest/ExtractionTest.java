@@ -11,7 +11,8 @@ package ru.goodsreview.analyzer.newtest;
 import org.junit.Test;
 import ru.goodsreview.analyzer.ExtractThesis;
 import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
-import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
+import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import javax.xml.bind.Unmarshaller;
 
 public class ExtractionTest {
 
-    private static final String BOOKSTORE_XML = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/input.xml";
+    private static final String filePath = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/input.xml";
     private static double successExtract = 0;
     private static double numAlgo = 0;
     private static double numHum = 0;
@@ -33,27 +34,32 @@ public class ExtractionTest {
 
         JAXBContext context = JAXBContext.newInstance(ProductList.class);
 
-        System.out.println("Output from our XML File: ");
         Unmarshaller um = context.createUnmarshaller();
-        ProductList productList = (ProductList) um.unmarshal(new FileReader(BOOKSTORE_XML));
+        ProductList productList = (ProductList) um.unmarshal(new FileReader(filePath));
 
         for (Product p : productList.productList) {
             System.out.println(p.getName());
             for (Review r : p.reviewList) {
-                System.out.println("review: " + r.getContent());
-                ArrayList<ru.goodsreview.analyzer.util.Phrase> algoList = ExtractThesis.doExtraction(r.getContent());
+                String content = r.getContent();
+                System.out.println("review: " + content );
+                ArrayList<ru.goodsreview.analyzer.util.Phrase> algoList = ExtractThesis.doExtraction(content);
                 for (ru.goodsreview.analyzer.util.Phrase algoPhrase : algoList) {
                     System.out.println("algo:  " + algoPhrase.getFeature() + " " + algoPhrase.getOpinion());
                     for (Phrase phrase : r.phraseList) {
-                        if (match(algoPhrase.getFeature(), phrase.getFeature()) && match(algoPhrase.getOpinion(), phrase.getOpinion())) {
-                            successExtract++;
-                            break;
+                        if (equals(algoPhrase.getNormFeature(), phrase.getFeature())) {
+                            if (contains(phrase.getContext(),algoPhrase.getFeature())&&contains(phrase.getContext(),algoPhrase.getOpinion())) {
+                                successExtract++;
+                                break;
+                            }
                         }
                     }
                 }
+
                 numAlgo += algoList.size();
                 numHum += r.phraseList.size();
+
                 for (Phrase phrase : r.phraseList) {
+                    System.out.println("  " + phrase.getContext());
                     System.out.println("  " + phrase.getFeature());
                     System.out.println("  " + phrase.getOpinion());
                     System.out.println("  " + phrase.getValue());
@@ -78,8 +84,20 @@ public class ExtractionTest {
     }
 
 
-    static boolean match(String s1, String s2) throws UnsupportedEncodingException {
+    static boolean contains(String sentence, String s) {
+        sentence = sentence.toLowerCase();
+        if(!s.equals(ReportAnalyzer.UNKNOUN)){
+            s = s.toLowerCase();
+            return sentence.contains(s);
+        }else{
+            return false;
+        }
+    }
+
+    static boolean equals(String s1, String s2) {
+        s1 = s1.toLowerCase();
+        s2 = s2.toLowerCase();
         return s1.equals(s2);
+    }
 
     }
-}

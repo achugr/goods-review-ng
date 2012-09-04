@@ -38,8 +38,8 @@ public class ExtractThesis{
             ReviewTokens reviewTokens = new ReviewTokens(sentence);
             List<List<Token>> listsOfToken = reviewTokens.getListsOfToken();
 
-//            for (int i = 0; i < tokensList.size(); i++) {
-//                System.out.print(tokensList.get(i).get(0).getContent()+"("+tokensList.get(i).get(0).getPartOfSpeech().name()+")"+" ");
+//            for (int i = 0; i < listsOfToken.size(); i++) {
+//                System.out.print(listsOfToken.get(i).get(0).getContent()+"("+listsOfToken.get(i).get(0).getPartOfSpeech().name()+")"+" ");
 //            } System.out.println();
 
             for (ThesisPattern thesisPattern : thesisPatternList) {
@@ -53,7 +53,7 @@ public class ExtractThesis{
                 if(pos == -1){
                     System.out.println("incorrect pattern");
                 } else{
-                    extractPattern(extractedThesisList, listsOfToken, thesisPattern,pos,distance);
+                    extractPattern(extractedThesisList, listsOfToken, thesisPattern, pos, distance);
                 }
 
             }
@@ -80,12 +80,16 @@ public class ExtractThesis{
                             List<Token> leftTokenList = listsOfToken.get(j);
                             for (Token leftToken : leftTokenList) {
                                 if (leftToken.getPartOfSpeech().equals(part1)) {
+
                                     if (checkTokenListCorrespondence(leftTokenList, rightTokenList)) {
                                         Phrase newPhrase;
+
                                         if (pos == 1) {
-                                            newPhrase = new Phrase(leftToken.getContent(), rightToken.getContent());
+                                            newPhrase = new Phrase(leftToken.getContent(), rightToken.getContent(), leftToken.getNormForm());
+
                                         } else {
-                                            newPhrase = new Phrase(rightToken.getContent(), leftToken.getContent());
+                                            newPhrase = new Phrase(rightToken.getContent(), leftToken.getContent(), rightToken.getNormForm());
+
                                         }
                                         extractedThesisList.add(newPhrase);
                                         break;
@@ -116,8 +120,8 @@ public class ExtractThesis{
         boolean con2 = check(num1, num2);   // Число
         boolean con3 = check(case1, case2); // Падеж
 
-      boolean sep = con1 && con2 && con3;
-       // boolean sep = con1 && con2;
+      //boolean sep = con1 && con2 && con3;
+        boolean sep = con1 && con2;
        // boolean sep = (con1 && con2) || (con1 && con3);
       // boolean sep = true;
         return sep;

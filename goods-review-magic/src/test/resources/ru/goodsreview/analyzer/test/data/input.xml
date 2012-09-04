@@ -6,11 +6,13 @@
                 <content>Ноут крутой, дизайн зверский, из пары сотен этих ноутов можно сложить неплохую кирпичную стенку)) </content>
                 <phraseList>
                     <phrase>
+                        <context>Ноут крутой</context>
                         <feature>Ноут</feature>
                         <opinion>крутой</opinion>
                         <value>+1</value>
                     </phrase>
                     <phrase>
+                        <context>дизайн зверский</context>
                         <feature>дизайн</feature>
                         <opinion>зверский</opinion>
                         <value>+1</value>
@@ -21,6 +23,7 @@
                 <content>Корпус собран добротно, как уже писали ниже.</content>
                 <phraseList>
                     <phrase>
+                        <context>Корпус собран добротно</context>
                         <feature>Корпус</feature>
                         <opinion>добротный</opinion>
                         <value>+1</value>
@@ -35,6 +38,7 @@
                 <content>На удивление нормальный софт от Самсунга предустановлен.</content>
                 <phraseList>
                     <phrase>
+                        <context>нормальный софт</context>
                         <feature>софт</feature>
                         <opinion>нормальный</opinion>
                         <value>+1</value>
@@ -46,6 +50,7 @@
                     покупкй виниловой пленки что и собираюсь в будущем сделать.</content>
                 <phraseList>
                     <phrase>
+                        <context>крышка глянцевая</context>
                         <feature>крышка</feature>
                         <opinion>глянцевая</opinion>
                         <value>-1</value>
@@ -56,6 +61,7 @@
                 <content>Красивый дизайн и приятный на ощупь</content>
                 <phraseList>
                     <phrase>
+                        <context>Красивый дизайн</context>
                         <feature>дизайн</feature>
                         <opinion>Красивый</opinion>
                         <value>+1</value>
@@ -66,6 +72,7 @@
                 <content>В целом ноутбук хороший, не жалко таких денег.</content>
                 <phraseList>
                     <phrase>
+                        <context>ноутбук хороший</context>
                         <feature>ноутбук</feature>
                         <opinion>хороший</opinion>
                         <value>+1</value>
@@ -76,6 +83,7 @@
                 <content>Мощный по меркам ноутов процессор на новой архитектуре.</content>
                 <phraseList>
                     <phrase>
+                        <context>Мощный по меркам ноутов процессор</context>
                         <feature>Мощный</feature>
                         <opinion>процессор</opinion>
                         <value>+1</value>
