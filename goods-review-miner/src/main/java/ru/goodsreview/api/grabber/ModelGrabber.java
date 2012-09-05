@@ -7,7 +7,10 @@ import ru.goodsreview.api.request.builder.CategoryRequestBuilder;
 import ru.goodsreview.api.request.builder.RequestParams;
 import ru.goodsreview.api.request.builder.UrlRequest;
 import ru.goodsreview.core.db.entity.EntityType;
+import ru.goodsreview.core.util.JSONUtil;
 
+import javax.xml.ws.http.HTTPException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,10 +41,12 @@ public class ModelGrabber extends AbstractGrabber {
         log.info("Grabbing categories ended");
 
         log.info("Grabbing models to DB started");
-        try {
-            for(JSONObject category : categoriesList){
+        for(JSONObject category : categoriesList){
+            try {
+                //Here can be thrown JSONException - if there are no such keys in json object "category"
                 long categoryId = category.getLong(JSONKeys.ID.getKey());
                 int modelsNum = category.getInt(JSONKeys.MODELS_NUM.getKey());
+
                 if(modelsNum != 0){
                     int pageCount = ( modelsNum / COUNT_MAX_VALUE ) + 1;
                     for(Integer pageNum = 1; pageNum <= pageCount; pageNum++){
@@ -52,18 +57,32 @@ public class ModelGrabber extends AbstractGrabber {
                         parameters.put(RequestParams.PAGE.getKey(), pageNum.toString());
 
                         UrlRequest urlRequest = categoryRequestBuilder.requestForListOfModelsOfCategoryById(categoryId, parameters);
+                        try {
+                            //Here can be thrown HttpException or IOException - if something wrong in json object downloading
+                            JSONObject mainObject = contentApiProvider.provide(urlRequest);
 
-                        List<JSONObject> modelsList = contentApiProvider.provideAsList(urlRequest, JSONKeys.ITEMS.getKey(), JSONKeys.MODELS.getKey());
-                        processEntityList(modelsList);
-                        allModelsList.addAll(modelsList);
+                            //Here can be thrown JSONException - if something wrong with received json object
+                            List<JSONObject> modelsList = JSONUtil.extractList(mainObject, JSONKeys.ITEMS.getKey(), JSONKeys.MODELS.getKey());
+
+                            //If everything Ok - processing valid json object
+                            processEntityList(modelsList);
+                            allModelsList.addAll(modelsList);
+                        }catch (HTTPException e){
+                            log.error("Http error. " + e.getMessage());
+                        } catch (IOException e) {
+                            log.error("Error in JSON object transfer. " + "\n" +
+                                      "Request url: " + urlRequest.getUrl());
+                        }catch (JSONException e) {
+                            log.error("Error while parsing json object, received " +
+                                      "by url: " + urlRequest.getUrl(), e);
+                        }
                     }
                 }
+            } catch (JSONException e) {
+                log.error("Error while parsing json object: no such keys", e);
             }
-            log.info("Grabbing models to DB ended");
-        } catch (JSONException e) {
-            log.error("some problems with json", e);
-            throw new RuntimeException();
         }
+        log.info("Grabbing models to DB ended");
         return allModelsList;
     }
 }

@@ -1,16 +1,16 @@
 package ru.goodsreview.api.provider;
 
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.api.request.builder.UrlRequest;
-import ru.goodsreview.core.util.JSONUtil;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Artemij Chugreev
@@ -23,7 +23,6 @@ import java.util.List;
 public class ContentAPIProvider {
     private final static Logger log = Logger.getLogger(ContentAPIProvider.class);
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final int HTTP_OK = 200;
     private static final String TYPE_ID = "typeId";
     private static final int TIME_OUT = 500;
 
@@ -41,8 +40,8 @@ public class ContentAPIProvider {
         this.apiKey = apiKey;
     }
 
-    public JSONObject provide(final UrlRequest urlRequest) {
-        final GetMethod getMethod = new GetMethod(urlRequest.getUrl());
+    public JSONObject provide(final UrlRequest urlRequest) throws JSONException, IOException {
+        GetMethod getMethod = new GetMethod(urlRequest.getUrl());
         getMethod.addRequestHeader(AUTHORIZATION_HEADER, apiKey);
 //       timeout
         try {
@@ -59,46 +58,19 @@ public class ContentAPIProvider {
             lastQueryTime = System.currentTimeMillis();
         }*/
 
-        try {
-            httpClient.executeMethod(getMethod);
-            final JSONObject jsonObject = new JSONObject(getMethod.getResponseBodyAsString());
-//            if http status code isn't 202 => something wrong
-            if(getMethod.getStatusCode() != HTTP_OK){
-                log.error(jsonObject.toString());
-                return new JSONObject();
-            }
-
+        httpClient.executeMethod(getMethod);
+        if(getMethod.getStatusCode() == HttpStatus.SC_OK){
+            String response = getMethod.getResponseBodyAsString();
+            JSONObject jsonObject = new JSONObject(response);
             jsonObject.put(TYPE_ID, urlRequest.getResourceType().getTypeId());
+            log.debug("Http status : " + getMethod.getStatusCode() + "\n " +
+                      "JSON object : " + jsonObject.toString());
             return jsonObject;
-        } catch (IOException e) {
-            log.error("probably, can't execute http get method", e);
-            return new JSONObject();
-        } catch (JSONException e) {
-            try {
-                log.error("some problems with json, response: " + getMethod.getResponseBodyAsString(), e);
-            } catch (IOException e1) {
-                log.error(e.getMessage(), e);
-            }
-            throw new RuntimeException(e);
+        }else{
+            throw new HttpException("Bad response. " +
+                    "Http status : " + getMethod.getStatusCode() + "\n" +
+                    "Request url : " + urlRequest.getUrl());
         }
     }
-
-    public List<JSONObject> provideAsList(final UrlRequest urlRequest, final String key, final String... parents) {
-        JSONObject mainObject = provide(urlRequest);
-        try {
-//            go down by json to needed key
-            for (String parent : parents) {
-                mainObject = mainObject.getJSONObject(parent);
-            }
-//            get JSONArray by specified key and cast it to List<JSONObject>
-            return JSONUtil.convertJSONArrayToListOfJSONObjects(mainObject.getJSONArray(key));
-        } catch (JSONException e) {
-            log.error("some problems with json", e);
-            throw new RuntimeException(
-
-            );
-        }
-    }
-
 }
 

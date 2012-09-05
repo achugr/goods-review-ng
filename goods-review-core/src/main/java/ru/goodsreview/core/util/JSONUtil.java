@@ -32,6 +32,17 @@ public class JSONUtil {
         };
     }
 
+    public static List<JSONObject> extractList(JSONObject mainObject, final String key, final String... parents) throws JSONException {
+        if (mainObject == null) throw new NullPointerException("JSON object is null");
+
+        //go down by json to needed key
+        for (String parent : parents) {
+            mainObject = mainObject.getJSONObject(parent);
+        }
+        //get JSONArray by specified key and cast it to List<JSONObject>
+        return convertJSONArrayToListOfJSONObjects(mainObject.getJSONArray(key));
+    }
+
     public static String unsafeGetString(final JSONObject jsonObject, final String parameterName) {
         try {
             return jsonObject.getString(parameterName);
