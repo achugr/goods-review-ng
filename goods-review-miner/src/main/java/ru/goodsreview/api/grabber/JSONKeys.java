@@ -16,7 +16,10 @@ public enum JSONKeys {
     NAME("name"),
     ITEMS("items"),
     CHILDREN_COUNT("childrenCount"),
-    MODELS_NUM("modelsNum");
+    MODELS_NUM("modelsNum"),
+    REVIEWS_COUNT("reviewsCount"),
+    OPINION("opinion"),
+    MODEL_OPINIONS("modelOpinions");
 
     private final String key;
 
