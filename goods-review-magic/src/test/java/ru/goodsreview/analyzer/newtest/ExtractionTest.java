@@ -46,7 +46,7 @@ public class ExtractionTest {
                 for (ru.goodsreview.analyzer.util.Phrase algoPhrase : algoList) {
                     System.out.println("algo:  " + algoPhrase.getFeature() + " " + algoPhrase.getOpinion());
                     for (Phrase phrase : r.phraseList) {
-                        if (equals(algoPhrase.getNormFeature(), phrase.getFeature())) {
+                        if (contains(phrase.getFeature(), algoPhrase.getNormFeature())) {
                             if (contains(phrase.getContext(),algoPhrase.getFeature())&&contains(phrase.getContext(),algoPhrase.getOpinion())) {
                                 successExtract++;
                                 break;

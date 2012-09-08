@@ -1,20 +1,19 @@
-package ru.goodsreview.analyzer.newtest;
+package ru.goodsreview.analyzer.tool;
 /**
- * Date: 08.07.12
- * Time: 01:16
- * Author:
- * Ilya Makeev
- * ilya.makeev@gmail.com
+ * author : Ilya Makeev
+ * date: 08.09.12
  */
-import java.util.ArrayList;
-import javax.xml.bind.annotation.*;
 
-public class Product{
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
+
+public class Product {
     private String name;
 
-
     @XmlElement(name = "review")
-    ArrayList<Review> reviewList;
+     ArrayList<Review> reviewList;
 
 
     public void setReviewList(ArrayList<Review> reviewList) {

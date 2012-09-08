@@ -304,9 +304,14 @@ public class ThesisExtractionTest {
                         String normAlgoFeature = aThesis.getNormFeature();
                         // System.out.println(alThesis+" "+opinion);
 
+
                         for (Phrase hThesis : humThesis) {
                             String humFeature = hThesis.getFeature();
                             String sentence = hThesis.getOpinion();
+
+//                            if (contains(humFeature, normAlgoFeature)&&!equals(humFeature, normAlgoFeature)) {
+//                                System.out.println(humFeature+" # "+normAlgoFeature);
+//                            }
 
                             if (contains(humFeature, normAlgoFeature)) {
                                 // System.out.println(normAlgoFeature);

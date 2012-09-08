@@ -8,6 +8,19 @@ package ru.goodsreview.analyzer.newtest;
  * ilya.makeev@gmail.com
  */
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ * Date: 08.07.12
+ * Time: 01:16
+ * Author:
+ * Ilya Makeev
+ * ilya.makeev@gmail.com
+ */
+import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
