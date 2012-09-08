@@ -37,15 +37,15 @@ public class ExtractionTest {
         Unmarshaller um = context.createUnmarshaller();
         ProductList productList = (ProductList) um.unmarshal(new FileReader(filePath));
 
-        for (Product p : productList.productList) {
-            System.out.println(p.getName());
-            for (Review r : p.reviewList) {
-                String content = r.getContent();
+        for (Product product : productList.productList) {
+            System.out.println(product.getName());
+            for (Review review : product.reviewList) {
+                String content = review.getContent();
                 System.out.println("review: " + content );
                 ArrayList<ru.goodsreview.analyzer.util.Phrase> algoList = ExtractThesis.doExtraction(content);
                 for (ru.goodsreview.analyzer.util.Phrase algoPhrase : algoList) {
                     System.out.println("algo:  " + algoPhrase.getFeature() + " " + algoPhrase.getOpinion());
-                    for (Phrase phrase : r.phraseList) {
+                    for (Phrase phrase : review.phraseList) {
                         if (contains(phrase.getFeature(), algoPhrase.getNormFeature())) {
                             if (contains(phrase.getContext(),algoPhrase.getFeature())&&contains(phrase.getContext(),algoPhrase.getOpinion())) {
                                 successExtract++;
@@ -56,9 +56,9 @@ public class ExtractionTest {
                 }
 
                 numAlgo += algoList.size();
-                numHum += r.phraseList.size();
+                numHum += review.phraseList.size();
 
-                for (Phrase phrase : r.phraseList) {
+                for (Phrase phrase : review.phraseList) {
                     System.out.println("  " + phrase.getContext());
                     System.out.println("  " + phrase.getFeature());
                     System.out.println("  " + phrase.getOpinion());
