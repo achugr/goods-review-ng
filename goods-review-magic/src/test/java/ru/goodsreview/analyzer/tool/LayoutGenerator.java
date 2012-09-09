@@ -79,8 +79,10 @@ public class LayoutGenerator {
 
                 }
 
+                if(newPhraseList.size()!=0){
+                    newReview.setPhraseList(newPhraseList);
+                }
 
-                newReview.setPhraseList(newPhraseList);
                 newReviewList.add(newReview);
             }
             newProduct.setReviewList(newReviewList);
