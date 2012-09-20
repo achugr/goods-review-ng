@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <productList>
     <product name="SAMSUNG NP-NS310-A01">
-        <reviewList>
+
             <review quality="+">
                 <content>Ноут крутой, дизайн зверский, из пары сотен этих ноутов можно сложить неплохую кирпичную стенку)) </content>
                 <phraseList>
@@ -30,10 +30,10 @@
                     </phrase>
                 </phraseList>
             </review>
-        </reviewList>
+
     </product>
     <product name="SAMSUNG NP300E5A-S05">
-        <reviewList>
+
             <review quality="+">
                 <content>На удивление нормальный софт от Самсунга предустановлен.</content>
                 <phraseList>
@@ -90,6 +90,6 @@
                     </phrase>
                 </phraseList>
             </review>
-        </reviewList>
+
     </product>
 </productList>
