@@ -84,6 +84,7 @@ public class ReviewGrabber extends AbstractGrabber{
                             reviewsList = JSONUtil.extractList(mainObject, JSONKeys.OPINION.getKey(), JSONKeys.MODEL_OPINIONS.getKey());
 
                             //If everything Ok - processing valid json object
+                            setModelId(reviewsList, modelId);
                             processEntityList(reviewsList);
                             allReviewsList.addAll(reviewsList);
                         }catch (HTTPException e){
@@ -111,5 +112,16 @@ public class ReviewGrabber extends AbstractGrabber{
         List<JSONObject> reviews = grabReviews(models);
         log.info("Grabbing reviews to DB ended");
         return reviews;
+    }
+
+    private void setModelId(List<JSONObject> reviews, long modelId) {
+        for(JSONObject review : reviews){
+            try {
+                review.put("modelId", modelId);
+            } catch (JSONException e) {
+                log.error("Error in entity type setting");
+                throw new RuntimeException();
+            }
+        }
     }
 }

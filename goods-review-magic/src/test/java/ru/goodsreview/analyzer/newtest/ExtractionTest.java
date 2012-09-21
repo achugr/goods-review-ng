@@ -1,12 +1,12 @@
 package ru.goodsreview.analyzer.newtest;
 
 /**
-* Date: 08.07.12
-* Time: 01:16
-* Author:
-* Ilya Makeev
-* ilya.makeev@gmail.com
-*/
+ * Date: 08.07.12
+ * Time: 01:16
+ * Author:
+ * Ilya Makeev
+ * ilya.makeev@gmail.com
+ */
 
 import org.junit.Test;
 import ru.goodsreview.analyzer.ExtractThesis;
@@ -24,7 +24,9 @@ import javax.xml.bind.Unmarshaller;
 
 public class ExtractionTest {
 
-    private static final String filePath = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/input.xml";
+    //private static final String filePath = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/input.xml";
+    private static final String filePath = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/tInput.xml";
+   // private static final String filePath = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/marking_output.xml";
     private static double successExtract = 0;
     private static double numAlgo = 0;
     private static double numHum = 0;
@@ -37,36 +39,82 @@ public class ExtractionTest {
         Unmarshaller um = context.createUnmarshaller();
         ProductList productList = (ProductList) um.unmarshal(new FileReader(filePath));
 
-        for (Product p : productList.productList) {
-            System.out.println(p.getName());
-            for (Review r : p.reviewList) {
-                String content = r.getContent();
-                System.out.println("review: " + content );
-                ArrayList<ru.goodsreview.analyzer.util.Phrase> algoList = ExtractThesis.doExtraction(content);
-                for (ru.goodsreview.analyzer.util.Phrase algoPhrase : algoList) {
-                    System.out.println("algo:  " + algoPhrase.getFeature() + " " + algoPhrase.getOpinion());
-                    for (Phrase phrase : r.phraseList) {
-                        if (equals(algoPhrase.getNormFeature(), phrase.getFeature())) {
-                            if (contains(phrase.getContext(),algoPhrase.getFeature())&&contains(phrase.getContext(),algoPhrase.getOpinion())) {
-                                successExtract++;
-                                break;
+        String path = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/result.txt";
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path)));
+
+        for (Product product : productList.productList) {
+            out.println("<product name=\"" + product.getName() + "\">");
+            if (product.reviewList != null) {
+                for (Review review : product.reviewList) {
+                    String content = review.getContent();
+                    out.println("     <review>");
+                    out.println("        <content>" + content + "</content>");
+                    ArrayList<ru.goodsreview.analyzer.util.Phrase> algoList = ExtractThesis.doExtraction(content);
+
+                    for (ru.goodsreview.analyzer.util.Phrase algoPhrase : algoList) {
+                        // System.out.println("algo:  " + algoPhrase.getFeature() + " " + algoPhrase.getOpinion());
+                        if (review.phraseList != null) {
+                            for (Phrase phrase : review.phraseList) {
+                                if (contains(phrase.getFeature(), algoPhrase.getNormFeature())) {
+                                    if (contains(phrase.getContext(), algoPhrase.getFeature()) && contains(phrase.getContext(), algoPhrase.getOpinion())) {
+                                        successExtract++;
+                                        out.println("            <OK>" + algoPhrase.getFeature() + " " + algoPhrase.getOpinion() + "</OK>");
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
+
+                    for (ru.goodsreview.analyzer.util.Phrase algoPhrase : algoList) {
+                        boolean t = false;
+                        if (review.phraseList != null) {
+                            for (Phrase phrase : review.phraseList) {
+                                if (contains(phrase.getFeature(), algoPhrase.getNormFeature())) {
+                                    if (contains(phrase.getContext(), algoPhrase.getFeature()) && contains(phrase.getContext(), algoPhrase.getOpinion())) {
+                                        t = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (!t) {
+                            out.println("            <algo>" + algoPhrase.getFeature() + " " + algoPhrase.getOpinion() + "</algo>");
+                        }
+                    }
+
+
+                    if (review.phraseList != null) {
+                        for (Phrase phrase : review.phraseList) {
+                            boolean t = false;
+                            for (ru.goodsreview.analyzer.util.Phrase algoPhrase : algoList) {
+                                if (contains(phrase.getFeature(), algoPhrase.getNormFeature())) {
+                                    if (contains(phrase.getContext(), algoPhrase.getFeature()) && contains(phrase.getContext(), algoPhrase.getOpinion())) {
+                                        t = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (!t) {
+                                out.println("            <hum>" + phrase.getFeature() + " " + phrase.getOpinion() + "</hum>");
+                            }
+                        }
+                    }
+
+
+                    numAlgo += algoList.size();
+                    if (review.phraseList != null) {
+                        numHum += review.phraseList.size();
+                    }
+
+
+                    out.println("      </review>");
                 }
-
-                numAlgo += algoList.size();
-                numHum += r.phraseList.size();
-
-                for (Phrase phrase : r.phraseList) {
-                    System.out.println("  " + phrase.getContext());
-                    System.out.println("  " + phrase.getFeature());
-                    System.out.println("  " + phrase.getOpinion());
-                    System.out.println("  " + phrase.getValue());
-                }
-
             }
+            out.println("</product>");
         }
+
+        out.flush();
 
         System.out.println("successExtract = " + successExtract);
         System.out.println("numAlgo = " + numAlgo);
@@ -86,10 +134,10 @@ public class ExtractionTest {
 
     static boolean contains(String sentence, String s) {
         sentence = sentence.toLowerCase();
-        if(!s.equals(ReportAnalyzer.UNKNOUN)){
+        if (!s.equals(ReportAnalyzer.UNKNOUN)) {
             s = s.toLowerCase();
             return sentence.contains(s);
-        }else{
+        } else {
             return false;
         }
     }
@@ -100,4 +148,4 @@ public class ExtractionTest {
         return s1.equals(s2);
     }
 
-    }
+}
