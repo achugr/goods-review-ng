@@ -1,7 +1,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
-module ITMOPrelude.Primitive where
+module Primitive where
 
-import Prelude (Show,Read,error)
+import Prelude (Show,Read,error,print)
 
 ---------------------------------------------
 -- Синтаксис лямбда-выражений
@@ -84,9 +84,8 @@ data Nat = Zero | Succ Nat deriving (Show,Read)
 natZero = Zero     -- 0
 natOne = Succ Zero -- 1
 
-inverseSucc :: Nat -> Nat
-inverseSucc Zero = error "Trying to decrease natural zero!"
-inverseSucc (Succ n) = n
+dec :: Nat -> Nat
+dec (Succ n) = n
 
 -- Сравнивает два натуральных числа
 natCmp :: Nat -> Nat -> Tri
@@ -115,6 +114,8 @@ Zero     +. m = m
 infixl 6 -.
 -- Вычитание для натуральных чисел
 (-.) :: Nat -> Nat -> Nat
+n -. Zero = n
+Zero -. _ = error "Trying to deduct greater natural value from zero"
 (Succ n) -. m = case compare of LT -> error "Trying to deduct greater natural value from smaller"
                                 EQ -> Zero
                                 GT -> Succ (n -. m)
@@ -157,6 +158,14 @@ intNeg (Negative n) = (Positive n)
 intNeg IntZero = IntZero
 intNeg (Positive n) = (Negative n)
 
+posNat :: Nat -> Int
+posNat Zero = IntZero
+posNat n = Positive $ dec n
+
+negNat :: Nat -> Int
+negNat Zero = IntZero
+negNat n = Negative $ dec n
+
 -- Дальше также как для натуральных
 intCmp :: Int -> Int -> Tri
 intCmp (Negative n) (Negative m) = natCmp m n
@@ -182,16 +191,16 @@ infixl 6 .+., .-.
 (.+.) :: Int -> Int -> Int
 n .+. IntZero = n
 IntZero .+. m = m
-(Negative n) .+. (Negative m) = Negative (n +. m +. Succ (Zero))
-(Negative n) .+. (Positive m) = case compare of LT -> (Positive (m -. n))
+(Negative n) .+. (Negative m) = Negative (Succ (n +. m))
+(Negative n) .+. (Positive m) = case compare of LT -> (Positive (m -. Succ n))
                                                 EQ -> IntZero
-                                                GT -> (Negative (n -. m))
+                                                GT -> (Negative (n -. Succ m))
                                     where compare = natCmp n m
-(Positive m) .+. (Negative n) = case compare of LT -> (Positive (m -. n))
+(Positive n) .+. (Negative m) = case compare of LT -> (Negative (m -. Succ n))
                                                 EQ -> IntZero
-                                                GT -> (Negative (n -. m))
+                                                GT -> (Positive (n -. Succ m))
                                     where compare = natCmp n m
-(Positive n) .+. (Positive m) = Positive (n +. m +. Succ (Zero))
+(Positive n) .+. (Positive m) = Positive (Succ (n +. m))
 
 (.-.) :: Int -> Int -> Int
 n .-. m = n .+. (intNeg m)
@@ -200,37 +209,28 @@ infixl 7 .*.
 (.*.) :: Int -> Int -> Int
 n .*. IntZero = IntZero
 IntZero .*. m = IntZero
---(Negative n) .*. (Negative m) = Positive $ inversedSucc $ (Succ n) *. (Succ m)
---(Negative n) .*. (Positive m) = Negative $ inversedSucc $ (Succ n) *. (Succ m)
---(Positive m) .*. (Negative n) = Negative $ inversedSucc $ (Succ n) *. (Succ m)
---(Positive n) .*. (Positive m) = Positive $ inversedSucc $ (Succ n) *. (Succ m)
-(Negative n) .*. (Negative m) = Positive $ product
-    where (Succ product) = (Succ n) *. (Succ m)
-(Negative n) .*. (Positive m) = Negative $ product
-    where (Succ product) = (Succ n) *. (Succ m)
-(Positive m) .*. (Negative n) = Negative $ product
-    where (Succ product) = (Succ n) *. (Succ m)
-(Positive n) .*. (Positive m) = Positive $ product
-    where (Succ product) = (Succ n) *. (Succ m) --I'm not sure if this works
-
+(Negative n) .*. (Negative m) = posNat $ (Succ n) *. (Succ m)
+(Negative n) .*. (Positive m) = negNat $ (Succ n) *. (Succ m)
+(Positive m) .*. (Negative n) = negNat $ (Succ n) *. (Succ m)
+(Positive n) .*. (Positive m) = posNat $ (Succ n) *. (Succ m)
 
 -------------------------------------------
 -- Рациональные числа
 
-data Rat = Rat Int Nat
+data Rat = Rat Int Nat deriving (Show,Read)
 
 ratNeg :: Rat -> Rat
 ratNeg (Rat x y) = Rat (intNeg x) y
 
 -- У рациональных ещё есть обратные элементы
 ratInv :: Rat -> Rat
-ratInv (Rat (Negative n) (Succ m)) = (Rat (Negative m) (Succ n))
+ratInv (Rat (Negative n) m) = (Rat (negNat m) (Succ n))
 ratInv (Rat IntZero _) = error "Trying to get inversed from zero"
-ratInv (Rat (Positive n) (Succ m)) = (Rat (Positive m) (Succ n))
+ratInv (Rat (Positive n) m) = (Rat (posNat m) (Succ n))
 
 -- Дальше как обычно
 ratCmp :: Rat -> Rat -> Tri
-ratCmp (Rat n1 (Succ m1)) (Rat n2 (Succ m2)) = intCmp (n1 .*. (Positive m2)) (n2 .*. (Positive m1))
+ratCmp (Rat n1 m1) (Rat n2 m2) = intCmp (n1 .*. (posNat m2)) (n2 .*. (posNat m1))
 
 ratEq :: Rat -> Rat -> Bool
 ratEq n m = case (ratCmp n m) of LT -> False
@@ -244,14 +244,14 @@ ratLt n m = case (ratCmp n m) of LT -> True
 
 infixl 7 %+, %-
 (%+) :: Rat -> Rat -> Rat
-(Rat n1 (Succ m1)) %+ (Rat n2 (Succ m2)) = Rat ((n1 .*. (Positive m2)) .+. (n2 .*. (Positive m1))) ((Succ m1) *. (Succ m2))
+(Rat n1 m1) %+ (Rat n2 m2) = Rat ((n1 .*. (posNat m2)) .+. (n2 .*. (posNat m1))) (m1 *. m2)
 
 (%-) :: Rat -> Rat -> Rat
 n %- m = n %+ (ratNeg m)
 
 infixl 7 %*, %/
 (%*) :: Rat -> Rat -> Rat
-(Rat n1 (Succ m1)) %* (Rat n2 (Succ m2)) = Rat (n1 .*. n2) ((Succ m1) *. (Succ m2))
+(Rat n1 m1) %* (Rat n2 m2) = Rat (n1 .*. n2) (m1 *. m2)
 
 (%/) :: Rat -> Rat -> Rat
 n %/ m = n %* (ratInv m)
