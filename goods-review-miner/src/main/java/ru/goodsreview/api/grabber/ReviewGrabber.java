@@ -7,7 +7,7 @@ import ru.goodsreview.api.request.builder.OpinionRequestBuilder;
 import ru.goodsreview.api.request.builder.RequestParams;
 import ru.goodsreview.api.request.builder.UrlRequest;
 import ru.goodsreview.core.db.entity.EntityType;
-import ru.goodsreview.core.db.entity.Visitor;
+import ru.goodsreview.core.db.visitor.Visitor;
 import ru.goodsreview.core.util.JSONUtil;
 
 import javax.xml.ws.http.HTTPException;

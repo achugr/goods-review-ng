@@ -15,7 +15,6 @@ public class Main {
         if (args.length != 1) {
             throw new IllegalArgumentException("invalid arguments number");
         }
-
         new FileSystemXmlApplicationContext(new String[]{args[0]});
         log.info("app started");
     }

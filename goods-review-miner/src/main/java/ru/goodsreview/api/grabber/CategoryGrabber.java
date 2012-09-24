@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * achugr, achugr@yandex-team.ru
- * 13.07.12
+ * User: timur
+ * Date: 03.08.12
+ * Time: 4:06
  */
 public class CategoryGrabber extends AbstractGrabber {
     private final static Logger log = Logger.getLogger(CategoryGrabber.class);
