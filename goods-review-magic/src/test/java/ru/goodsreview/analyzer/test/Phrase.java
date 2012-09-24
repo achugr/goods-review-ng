@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer.newtest;
+package ru.goodsreview.analyzer.test;
 
 /**
  * Date: 08.07.12
@@ -7,7 +7,6 @@ package ru.goodsreview.analyzer.newtest;
  * Ilya Makeev
  * ilya.makeev@gmail.com
  */
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType(propOrder = {"context", "feature","opinion", "value"})

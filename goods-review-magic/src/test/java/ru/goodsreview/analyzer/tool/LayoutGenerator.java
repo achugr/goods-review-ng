@@ -1,6 +1,6 @@
 package ru.goodsreview.analyzer.tool;
 
-import ru.goodsreview.analyzer.newtest.Phrase;
+import ru.goodsreview.analyzer.test.Phrase;
 
 
 import javax.xml.bind.JAXBContext;
@@ -30,22 +30,22 @@ public class LayoutGenerator {
         Unmarshaller um = jaxbContext.createUnmarshaller();
         ProductList productList = (ProductList) um.unmarshal(new FileReader(inputFilePath));
 
-        ru.goodsreview.analyzer.newtest.ProductList outProductList = new  ru.goodsreview.analyzer.newtest.ProductList();
-        ArrayList<ru.goodsreview.analyzer.newtest.Product> newProductList = new  ArrayList<ru.goodsreview.analyzer.newtest.Product>();
+        ru.goodsreview.analyzer.test.ProductList outProductList = new  ru.goodsreview.analyzer.test.ProductList();
+        ArrayList<ru.goodsreview.analyzer.test.Product> newProductList = new  ArrayList<ru.goodsreview.analyzer.test.Product>();
 
         Scanner in = new Scanner(System.in);
         for (Product product : productList.productList) {
            // System.out.println(p.getName());
 
-            ru.goodsreview.analyzer.newtest.Product newProduct = new  ru.goodsreview.analyzer.newtest.Product();
+            ru.goodsreview.analyzer.test.Product newProduct = new  ru.goodsreview.analyzer.test.Product();
             newProduct.setName(product.getName());
 
-            ArrayList<ru.goodsreview.analyzer.newtest.Review> newReviewList = new  ArrayList<ru.goodsreview.analyzer.newtest.Review>();
+            ArrayList<ru.goodsreview.analyzer.test.Review> newReviewList = new  ArrayList<ru.goodsreview.analyzer.test.Review>();
             for (Review review : product.reviewList) {
                 //System.out.println("review: " + r.getQuality());
                 System.out.println("review: " + review.getValue());
 
-                ru.goodsreview.analyzer.newtest.Review newReview = new  ru.goodsreview.analyzer.newtest.Review();
+                ru.goodsreview.analyzer.test.Review newReview = new  ru.goodsreview.analyzer.test.Review();
                 newReview.setQuality(review.getQuality());
                 newReview.setContent(review.getValue());
 
@@ -93,7 +93,7 @@ public class LayoutGenerator {
 
 
         File file = new File(outputFilePath);
-        JAXBContext jaxbContext1 = JAXBContext.newInstance(ru.goodsreview.analyzer.newtest.ProductList.class);
+        JAXBContext jaxbContext1 = JAXBContext.newInstance(ru.goodsreview.analyzer.test.ProductList.class);
         Marshaller jaxbMarshaller = jaxbContext1.createMarshaller();
 
 
