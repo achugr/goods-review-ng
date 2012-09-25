@@ -46,7 +46,7 @@ public class CategoryGrabberTest {
         String[] mainCategoriesNames = new String[]{"Авто, мото","Аптека","Бытовая техника",
                 "Все для дома и дачи","Все для офиса","Досуг и развлечения","Животные и растения",
                 "Книги","Компьютеры","Красота и здоровье","Мебель","Музыка и видеофильмы",
-                "Оборудование","Одежда и обувь","Подарки, сувениры, цветы","Продукты, напитки, табак",
+                "Оборудование","Одежда, обувь и аксессуары","Подарки, сувениры, цветы","Продукты, напитки, табак",
                 "Путешествия, туризм","Спортивные товары","Строительство и ремонт","Телефоны",
                 "Товары для детей","Услуги","Электроника и Фото"};
 
@@ -60,12 +60,28 @@ public class CategoryGrabberTest {
                 throw new RuntimeException();
             }
         }
+        for(String name : mainCategoriesNamesFromJSON){
+            log.debug(name);
+        }
         Assert.assertTrue(mainCategoriesNamesFromJSON.containsAll(Arrays.asList(mainCategoriesNames)));
     }
 
     @Test
-    public void grabChildCategoriesListTest(){
-        List<JSONObject> childCategoriesList = categoryGrabber.grabChildCategoriesToDB();
+    public void grabOneCategoryChildrenTest(){
+        List<JSONObject> childCategoriesList = categoryGrabber.grabChildCategories("Компьютеры","Электроника и Фото");
+
+        for(JSONObject childCategory : childCategoriesList){
+            try {
+                log.debug(childCategory.getString("name"));
+            } catch (JSONException e) {
+                log.error("No such key \"name\" in json object " + childCategory.toString());
+            }
+        }
+    }
+
+    @Test
+    public void grabAllChildCategoriesListTest(){
+        List<JSONObject> childCategoriesList = categoryGrabber.grabAllChildCategoriesToDB();
         Set<String> childCategoriesNamesFromJSON = new HashSet<String>();
 
         for(JSONObject childCategory : childCategoriesList){
@@ -73,8 +89,7 @@ public class CategoryGrabberTest {
                 String name = childCategory.getString("name");
                 childCategoriesNamesFromJSON.add(name);
             } catch (JSONException e) {
-                log.error("Error occurs when getting child category name");
-                throw new RuntimeException();
+                log.error("No such key \"name\" in json object " + childCategory.toString());
             }
         }
 

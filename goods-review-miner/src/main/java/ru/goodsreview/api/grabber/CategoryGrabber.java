@@ -11,10 +11,7 @@ import ru.goodsreview.core.util.JSONUtil;
 
 import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * User: timur
@@ -116,15 +113,43 @@ public class CategoryGrabber extends AbstractGrabber {
         }
     }
 
-    public List<JSONObject> grabChildCategories() {
+    public List<JSONObject> grabChildCategories(String... someMainCategoriesNames) {
+        List<JSONObject> allMainCategoriesList = grabMainCategories();
+
+        //filter
+        List<String> someMainCategoriesNamesList = Arrays.asList(someMainCategoriesNames);
+        List<JSONObject> someMainCategories = new ArrayList<JSONObject>();
+        for(JSONObject mainCategory : allMainCategoriesList){
+            try {
+                if(someMainCategoriesNamesList.contains(mainCategory.getString("name"))){
+                    someMainCategories.add(mainCategory);
+                }
+            } catch (JSONException e) {
+                log.error("No such key \"name\" in json object " + mainCategory.toString());
+            }
+        }
+
+        List<JSONObject> childCategoriesList = new ArrayList<JSONObject>();
+        grabChildCategories(someMainCategories, childCategoriesList);
+        return childCategoriesList;
+
+    }
+
+    public List<JSONObject> grabChildCategoriesToDB(String... someMainCategoriesNames) {
+        List<JSONObject> childCategoriesList = grabChildCategories(someMainCategoriesNames);
+        processEntityList(childCategoriesList);
+        return childCategoriesList;
+    }
+
+    public List<JSONObject> grabAllChildCategories() {
         List<JSONObject> mainCategoriesList = grabMainCategories();
         List<JSONObject> allChildCategoriesList = new ArrayList<JSONObject>();
         grabChildCategories(mainCategoriesList, allChildCategoriesList);
         return allChildCategoriesList;
     }
 
-    public List<JSONObject> grabChildCategoriesToDB(){
-        List<JSONObject> allChildCategoriesList = grabChildCategories();
+    public List<JSONObject> grabAllChildCategoriesToDB(){
+        List<JSONObject> allChildCategoriesList = grabAllChildCategories();
         processEntityList(allChildCategoriesList);
         return allChildCategoriesList;
     }
