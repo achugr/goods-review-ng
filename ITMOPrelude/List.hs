@@ -2,7 +2,7 @@
 module ITMOPrelude.List where
 
 import Prelude (Show,Read,error)
-import Primitive
+import ITMOPrelude.Primitive
 
 ---------------------------------------------
 -- Что надо делать?
