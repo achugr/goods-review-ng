@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer.newtest;
+package ru.goodsreview.analyzer.test;
 
 /**
  * Date: 08.07.12
@@ -39,7 +39,7 @@ public class ExtractionTest {
         Unmarshaller um = context.createUnmarshaller();
         ProductList productList = (ProductList) um.unmarshal(new FileReader(filePath));
 
-        String path = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/result.txt";
+        String path = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/result.xml";
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path)));
 
         for (Product product : productList.productList) {

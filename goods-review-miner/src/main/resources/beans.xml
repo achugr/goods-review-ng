@@ -7,6 +7,21 @@
     <!--<bean id="properties" class="ru.goodsreview.api.request.builder.RequestBuilder" abstract="true">-->
         <!--<property name="geoIdValue" value="0"/>-->
     <!--</bean>-->
+    <bean id="propertiesConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:secure-api.properties</value>
+                <!--<value>classpath:local_db.properties</value>-->
+                <value>classpath:db.properties</value>
+            </list>
+        </property>
+
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+
+    <bean id="contentApiProvider" class="ru.goodsreview.api.provider.ContentAPIProvider" lazy-init="false">
+        <property name="apiKey" value="${api-key}"/>
+    </bean>
 
     <import resource="goods-review-db.xml"/>
 

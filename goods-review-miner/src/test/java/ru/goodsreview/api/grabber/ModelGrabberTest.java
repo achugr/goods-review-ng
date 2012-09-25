@@ -33,7 +33,6 @@ public class ModelGrabberTest {
         Assert.assertNotNull(modelGrabber.getGrabberBatch());
     }
 
-
     @Test
     public void grabModelsTest(){
         // Warning: This method may take a lot of time while executing

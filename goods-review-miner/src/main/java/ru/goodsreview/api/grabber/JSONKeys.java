@@ -1,11 +1,9 @@
 package ru.goodsreview.api.grabber;
 
 /**
- * Created by IntelliJ IDEA.
  * User: timur
  * Date: 03.08.12
  * Time: 4:06
- * To change this template use File | Settings | File Templates.
  */
 public enum JSONKeys {
 

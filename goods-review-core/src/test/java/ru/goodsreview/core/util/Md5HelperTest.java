@@ -2,7 +2,6 @@ package ru.goodsreview.core.util;
 
 import junit.framework.Assert;
 import org.json.JSONObject;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static ru.goodsreview.core.util.Md5Helper.hash;

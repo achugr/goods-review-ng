@@ -37,7 +37,7 @@ public class ModelGrabber extends AbstractGrabber {
         categoryGrabber.setContentApiProvider(contentApiProvider);
 
         log.info("Grabbing categories started");
-        List<JSONObject> categoriesList = categoryGrabber.grabChildCategories();
+        List<JSONObject> categoriesList = categoryGrabber.grabAllChildCategories();
         log.info("Grabbing categories ended");
 
         log.info("Grabbing models to DB started");
