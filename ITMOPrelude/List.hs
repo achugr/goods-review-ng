@@ -13,7 +13,7 @@ import Primitive
 ---------------------------------------------
 -- Определение
 
-data List a = Nil |  Cons a (List a) deriving (Show,Read)
+data List a = Nil | Cons a (List a) deriving (Show,Read)
 
 ---------------------------------------------
 -- Операции
