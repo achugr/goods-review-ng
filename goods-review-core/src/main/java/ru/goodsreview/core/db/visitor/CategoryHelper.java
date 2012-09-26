@@ -20,6 +20,8 @@ public class CategoryHelper {
     @Autowired
     private EntityService entityService;
 
+    //TODO How many JSONObjects you could visit before OutOfMemory?
+
     public Collection<JSONObject> visit(final int categoryId) {
         final Collection<JSONObject> set = new HashSet<JSONObject>();
 
