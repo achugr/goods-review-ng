@@ -17,15 +17,15 @@ public class Md5HelperTest {
 
         final String hash = hash("абвгд".getBytes());
         System.out.println(hash);
-        Assert.assertEquals(hash, "9cdb481887ae90c61ad975dc8e2eaeff");
+        Assert.assertEquals(hash, "1a21452a078f2a09d40b1d69c58beb8c");
 
         final String hash1 = hash("абвгд".getBytes());
         System.out.println(hash1);
-        Assert.assertEquals(hash1, "9cdb481887ae90c61ad975dc8e2eaeff");
+        Assert.assertEquals(hash1, "1a21452a078f2a09d40b1d69c58beb8c");
 
         final String hash2 = hash("йцукен".getBytes());
         System.out.println(hash2);
-        Assert.assertEquals(hash2, "41890cd2ac71e06b5f2c9ad5ccc07b45");
+        Assert.assertEquals(hash2, "acdc9128f7b0f3a84ed5b0a1640f17c7");
     }
 
     @Test
