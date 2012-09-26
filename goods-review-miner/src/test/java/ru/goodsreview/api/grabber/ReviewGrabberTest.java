@@ -27,15 +27,18 @@ public class ReviewGrabberTest {
     ReviewGrabber reviewGrabber;
 
     @Test
-    public void getModelsFromDBTest(){
-        List<JSONObject> models = reviewGrabber.getModelsFromDB();
-        /*for(JSONObject model : models){
-            log.debug(model.toString());
-        }*/
-        log.debug("Number of models = " + models.size());
-    }
-    @Test
     public void grabReviewsTest(){
-        reviewGrabber.grabReviewsToDB();
+        List<JSONObject> reviews = reviewGrabber.grabReviewsForModelsFromDB();
+        for(JSONObject review : reviews){
+            log.debug(review.toString());
+        }
+    }
+
+    @Test
+    public void grabReviewsForSpecificCategoriesTest(){
+        List<JSONObject> specificReviews = reviewGrabber.grabReviews("Планшеты");
+        for(JSONObject review : specificReviews){
+            log.debug(review.toString());
+        }
     }
 }

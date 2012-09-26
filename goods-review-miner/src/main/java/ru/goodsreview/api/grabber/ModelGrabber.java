@@ -29,19 +29,43 @@ public class ModelGrabber extends AbstractGrabber {
         this.entityType = EntityType.MODEL;
     }
 
-    public List<JSONObject> grabModelsToDB(){
-        List<JSONObject> allModelsList = new ArrayList<JSONObject>();
+    public List<JSONObject> getCategoriesFromDB() {
+        log.info("Getting categories from DB started");
+        EntityExtractor categoriesExtractor = new EntityExtractor();
+        grabberBatch.getEntityService().visitEntities(EntityType.CATEGORY.getTypeId(), categoriesExtractor);
+        log.info("Getting categories from DB ended");
+        return categoriesExtractor.getEntities();
+    }
 
+    public List<JSONObject> grabModelsForCategoriesFromDB(){
+        log.info("Grabbing models to DB started");
+        List<JSONObject> categoriesFromDB = getCategoriesFromDB();
+        return grabModels(categoriesFromDB);
+    }
+
+    public List<JSONObject> grabModels(String... categories){
+        CategoryGrabber categoryGrabber = setUpCategoryGrabber();
+        List<JSONObject> specificCategories = categoryGrabber.grabCategories(categories);
+        return grabModels(specificCategories);
+    }
+
+    public List<JSONObject> grabAllModels(){
+        CategoryGrabber categoryGrabber = setUpCategoryGrabber();
+        List<JSONObject> allCategoriesList = categoryGrabber.grabAllCategories();
+        return grabModels(allCategoriesList);
+    }
+
+    private CategoryGrabber setUpCategoryGrabber() {
         CategoryGrabber categoryGrabber = new CategoryGrabber();
         categoryGrabber.setGrabberBatch(grabberBatch);
         categoryGrabber.setContentApiProvider(contentApiProvider);
+        return categoryGrabber;
+    }
 
-        log.info("Grabbing categories started");
-        List<JSONObject> categoriesList = categoryGrabber.grabAllChildCategories();
-        log.info("Grabbing categories ended");
-
+    private List<JSONObject> grabModels(List<JSONObject> categories){
+        List<JSONObject> models = new ArrayList<JSONObject>();
         log.info("Grabbing models to DB started");
-        for(JSONObject category : categoriesList){
+        for(JSONObject category : categories){
             try {
                 //Here can be thrown JSONException - if there are no such keys in json object "category"
                 long categoryId = category.getLong(JSONKeys.ID.getKey());
@@ -66,15 +90,15 @@ public class ModelGrabber extends AbstractGrabber {
 
                             //If everything Ok - processing valid json object
                             processEntityList(modelsList);
-                            allModelsList.addAll(modelsList);
+                            models.addAll(modelsList);
                         }catch (HTTPException e){
                             log.error("Http error. " + e.getMessage());
                         } catch (IOException e) {
                             log.error("Error in JSON object transfer. " + "\n" +
-                                      "Request url: " + urlRequest.getUrl());
+                                    "Request url: " + urlRequest.getUrl());
                         }catch (JSONException e) {
                             log.error("Error while parsing json object, received " +
-                                      "by url: " + urlRequest.getUrl(), e);
+                                    "by url: " + urlRequest.getUrl(), e);
                         }
                     }
                 }
@@ -83,6 +107,6 @@ public class ModelGrabber extends AbstractGrabber {
             }
         }
         log.info("Grabbing models to DB ended");
-        return allModelsList;
+        return models;
     }
 }

@@ -38,8 +38,8 @@ public class CategoryGrabberTest {
     }
 
     @Test
-    public void grabMainCategoriesListTest(){
-        List<JSONObject> mainCategoriesList = categoryGrabber.grabMainCategoriesToDB();
+    public void grabMainCategoriesTest(){
+        List<JSONObject> mainCategoriesList = categoryGrabber.grabMainCategories();
 
         Assert.assertEquals(mainCategoriesList.size(), 23);
 
@@ -67,8 +67,8 @@ public class CategoryGrabberTest {
     }
 
     @Test
-    public void grabOneCategoryChildrenTest(){
-        List<JSONObject> childCategoriesList = categoryGrabber.grabChildCategories("Компьютеры","Электроника и Фото");
+    public void grabSpecificCategoriesTest(){
+        List<JSONObject> childCategoriesList = categoryGrabber.grabCategories("Компьютеры");
 
         for(JSONObject childCategory : childCategoriesList){
             try {
@@ -81,7 +81,7 @@ public class CategoryGrabberTest {
 
     @Test
     public void grabAllChildCategoriesListTest(){
-        List<JSONObject> childCategoriesList = categoryGrabber.grabAllChildCategoriesToDB();
+        List<JSONObject> childCategoriesList = categoryGrabber.grabAllCategories();
         Set<String> childCategoriesNamesFromJSON = new HashSet<String>();
 
         for(JSONObject childCategory : childCategoriesList){

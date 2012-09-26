@@ -7,7 +7,6 @@ import ru.goodsreview.api.request.builder.OpinionRequestBuilder;
 import ru.goodsreview.api.request.builder.RequestParams;
 import ru.goodsreview.api.request.builder.UrlRequest;
 import ru.goodsreview.core.db.entity.EntityType;
-import ru.goodsreview.core.db.visitor.Visitor;
 import ru.goodsreview.core.util.JSONUtil;
 
 import javax.xml.ws.http.HTTPException;
@@ -34,30 +33,65 @@ public class ReviewGrabber extends AbstractGrabber{
         entityType = EntityType.REVIEW;
     }
 
-    private class ModelsVisitor implements Visitor<JSONObject>{
-        private List<JSONObject> models = new ArrayList<JSONObject>();
-
-        public List<JSONObject> getModels(){
-            return models;
-        }
-
-        @Override
-        public void visit(JSONObject jsonObject) {
-            models.add(jsonObject);
-        }
+    /*
+    *Because there are huge number of models in market, it's mine requires a lot of time!
+    *In order to save time it is possible to mine models once and further get them from DB
+    *and use to mine reviews.
+    */
+    public List<JSONObject> grabReviewsForModelsFromDB(){
+        List<JSONObject> modelsFromDB = getModelsFromDB();
+        return grabReviews(modelsFromDB);
     }
 
-    public List<JSONObject> getModelsFromDB() {
+    /*
+    *For some purpose it is needed to have reviews on models of some specific categories.
+    *This method does this task!
+    */
+    public List<JSONObject> grabReviews(String... categories){
+        ModelGrabber modelGrabber = setUpModelGrabber();
+        List<JSONObject> specificModels = modelGrabber.grabModels(categories);
+        return grabReviews(specificModels);
+    }
+
+    /*
+    *NB: This method at first grabs ALL model from market and then grabs all reviews,
+    *so it works really long time!
+    */
+    public List<JSONObject> grabAllReviews(){
+        ModelGrabber modelGrabber = setUpModelGrabber();
+        List<JSONObject> allModels = modelGrabber.grabAllModels();
+        return grabReviews(allModels);
+    }
+
+    private List<JSONObject> getModelsFromDB() {
         log.info("Getting models from DB started");
-        ModelsVisitor modelsReader = new ModelsVisitor();
-        grabberBatch.getEntityService().visitEntities(EntityType.MODEL.getTypeId(), modelsReader);
+        EntityExtractor modelsExtractor = new EntityExtractor();
+        grabberBatch.getEntityService().visitEntities(EntityType.MODEL.getTypeId(), modelsExtractor);
         log.info("Getting models from DB ended");
-        return modelsReader.getModels();
+        return modelsExtractor.getEntities();
     }
 
-    public List<JSONObject> grabReviews(List<JSONObject> models) {
-        log.info("Grabbing reviews started");
-        List<JSONObject> allReviewsList = new ArrayList<JSONObject>();
+    private ModelGrabber setUpModelGrabber() {
+        ModelGrabber modelGrabber = new ModelGrabber();
+        modelGrabber.setGrabberBatch(grabberBatch);
+        modelGrabber.setContentApiProvider(contentApiProvider);
+        return modelGrabber;
+    }
+
+    private void setModelId(List<JSONObject> reviews, long modelId) {
+        for(JSONObject review : reviews){
+            try {
+                review.put("modelId", modelId);
+            } catch (JSONException e) {
+                log.error("Error in entity type setting");
+                throw new RuntimeException();
+            }
+        }
+    }
+
+    private List<JSONObject> grabReviews(List<JSONObject> models) {
+        List<JSONObject> reviews = new ArrayList<JSONObject>();
+        log.info("Grabbing reviews to DB started");
         for(JSONObject model : models){
             try {
                 //Here can be thrown JSONException - if there are no such keys in json object "model"
@@ -86,15 +120,15 @@ public class ReviewGrabber extends AbstractGrabber{
                             //If everything Ok - processing valid json object
                             setModelId(reviewsList, modelId);
                             processEntityList(reviewsList);
-                            allReviewsList.addAll(reviewsList);
+                            reviews.addAll(reviewsList);
                         }catch (HTTPException e){
                             log.error("Http error. " + e.getMessage());
                         } catch (IOException e) {
                             log.error("Error in JSON object transfer. " + "\n" +
-                                      "Request url: " + urlRequest.getUrl());
+                                    "Request url: " + urlRequest.getUrl());
                         }catch (JSONException e) {
                             log.error("Error while parsing json object, received " +
-                                      "by url: " + urlRequest.getUrl(), e);
+                                    "by url: " + urlRequest.getUrl(), e);
                         }
                     }
                 }
@@ -102,26 +136,7 @@ public class ReviewGrabber extends AbstractGrabber{
                 log.error("Error while parsing json object: no such keys", e);
             }
         }
-        log.info("Grabbing reviews ended");
-        return allReviewsList;
-    }
-
-    public List<JSONObject> grabReviewsToDB(){
-        log.info("Grabbing reviews to DB started");
-        List<JSONObject> models = getModelsFromDB();
-        List<JSONObject> reviews = grabReviews(models);
         log.info("Grabbing reviews to DB ended");
         return reviews;
-    }
-
-    private void setModelId(List<JSONObject> reviews, long modelId) {
-        for(JSONObject review : reviews){
-            try {
-                review.put("modelId", modelId);
-            } catch (JSONException e) {
-                log.error("Error in entity type setting");
-                throw new RuntimeException();
-            }
-        }
     }
 }

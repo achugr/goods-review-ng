@@ -53,104 +53,102 @@ public class CategoryGrabber extends AbstractGrabber {
         return mainCategories;
     }
 
-    public List<JSONObject> grabMainCategoriesToDB(){
-        log.info("Grabbing main categories to DB started");
-        List<JSONObject> mainCategoriesList = grabMainCategories();
-        processEntityList(mainCategoriesList);
-        log.info("Grabbing main categories to DB ended");
-        return mainCategoriesList;
+    public List<JSONObject> grabAllCategories() {
+        List<JSONObject> mainCategories = grabMainCategories();
+        List<JSONObject> allCategories = new ArrayList<JSONObject>(mainCategories);
+
+        log.info("Grabbing child categories started");
+        for(JSONObject mainCategory : mainCategories){
+            grabChildCategories(mainCategory, allCategories);
+        }
+        log.info("Grabbing child categories ended");
+
+        processEntityList(allCategories);
+        return allCategories;
     }
 
-    private void grabChildCategories(List<JSONObject> parentCategoriesList, List<JSONObject> allChildCategoriesList){
-        for(JSONObject category : parentCategoriesList){
-            try {
-                //Here can be thrown JSONException - if there are no such keys in json object "category"
-                int childrenCount = category.getInt(JSONKeys.CHILDREN_COUNT.getKey());
-                if(childrenCount != 0){
+    public List<JSONObject> grabCategories(String... specificMainCategoriesNames) {
+        List<JSONObject> allMainCategories = grabMainCategories();
+        List<JSONObject> specificCategories = new ArrayList<JSONObject>();
 
-                    int pageCount = (childrenCount / COUNT_MAX_VALUE) + 1;
+        log.info("Grabbing child categories started");
+        grabFilteredChildCategories(allMainCategories, specificCategories, specificMainCategoriesNames);
+        log.info("Grabbing child categories ended");
 
-                    for(Integer pageNum = 1; pageNum <= pageCount; pageNum++){
+        processEntityList(specificCategories);
+        return specificCategories;
+    }
 
-                        // Using category's id to construct request for it's child categories
-                        long currId = category.getLong(JSONKeys.ID.getKey());
+    private List<JSONObject> getNextLevelChildCategories(JSONObject parentCategory){
+        List<JSONObject> childCategories = new ArrayList<JSONObject>();
+        try {
+            //Here can be thrown JSONException - if there are no such keys in json object "category"
+            int childrenCount = parentCategory.getInt(JSONKeys.CHILDREN_COUNT.getKey());
+            if(childrenCount != 0){
 
-                        CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
+                int pageCount = (childrenCount / COUNT_MAX_VALUE) + 1;
 
-                        Map<String,String> parameters = new HashMap<String, String>();
-                        parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
-                        parameters.put(RequestParams.PAGE.getKey(), pageNum.toString());
+                for(Integer pageNum = 1; pageNum <= pageCount; pageNum++){
 
-                        UrlRequest urlRequest = categoryRequestBuilder.requestForListOfChildrenCategoriesById(currId, parameters);
-                        try {
-                            //Getting child categories of the current category
+                    // Using category's id to construct request for it's child categories
+                    long currId = parentCategory.getLong(JSONKeys.ID.getKey());
 
-                            //Here can be thrown HttpException or IOException - if something wrong in json object downloading
-                            JSONObject mainObject = getContentApiProvider().provide(urlRequest);
+                    CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
 
-                            //Here can be thrown JSONException - if something wrong with received json object
-                            List<JSONObject> childCategoriesList = JSONUtil.extractList(mainObject, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey());
+                    Map<String,String> parameters = new HashMap<String, String>();
+                    parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
+                    parameters.put(RequestParams.PAGE.getKey(), pageNum.toString());
 
-                            //If everything Ok - adding all valid child categories to list
-                            allChildCategoriesList.addAll(childCategoriesList);
-                            //Going on grabbing child categories of the next level
-                            grabChildCategories(childCategoriesList, allChildCategoriesList);
-                        }catch (HTTPException e){
-                            log.error("Http error. " + e.getMessage());
-                        } catch (IOException e) {
-                            log.error("Error in JSON object transfer. " + "\n" +
-                                      "Request url: " + urlRequest.getUrl());
-                        }catch (JSONException e) {
-                            log.error("Error while parsing json object, received " +
-                                      "by url: " + urlRequest.getUrl(), e);
-                        }
+                    UrlRequest urlRequest = categoryRequestBuilder.requestForListOfChildrenCategoriesById(currId, parameters);
+                    try {
+                        //Getting child categories of the current category
+
+                        //Here can be thrown HttpException or IOException - if something wrong in json object downloading
+                        JSONObject mainObject = getContentApiProvider().provide(urlRequest);
+
+                        //Here can be thrown JSONException - if something wrong with received json object
+                        childCategories.addAll(JSONUtil.extractList(mainObject, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey()));
+                    }catch (HTTPException e){
+                        log.error("Http error. " + e.getMessage());
+                    } catch (IOException e) {
+                        log.error("Error in JSON object transfer. " + "\n" +
+                                "Request url: " + urlRequest.getUrl());
+                    }catch (JSONException e) {
+                        log.error("Error while parsing json object, received " +
+                                "by url: " + urlRequest.getUrl(), e);
                     }
                 }
-            }catch (JSONException e) {
-                log.error("some problems with json", e);
-                throw new RuntimeException();
             }
+        }catch (JSONException e) {
+            log.error("Error while parsing json object: no such keys", e);
         }
+        return childCategories;
     }
 
-    public List<JSONObject> grabChildCategories(String... someMainCategoriesNames) {
-        List<JSONObject> allMainCategoriesList = grabMainCategories();
+    private void grabChildCategories(JSONObject parentCategory, List<JSONObject> allChildCategories){
+        List<JSONObject> childCategories = getNextLevelChildCategories(parentCategory);
+        allChildCategories.addAll(childCategories);
+        //Going on grabbing child categories of the next level
+        for(JSONObject childCategory : childCategories){
+            grabChildCategories(childCategory, allChildCategories);
+        }
 
-        //filter
-        List<String> someMainCategoriesNamesList = Arrays.asList(someMainCategoriesNames);
-        List<JSONObject> someMainCategories = new ArrayList<JSONObject>();
-        for(JSONObject mainCategory : allMainCategoriesList){
+    }
+
+    private void grabFilteredChildCategories(List<JSONObject> categories, List<JSONObject> filteredCategories, String... specificCategoriesNames){
+        List<String> specificCategoriesNamesList = Arrays.asList(specificCategoriesNames);
+        for(JSONObject category : categories){
             try {
-                if(someMainCategoriesNamesList.contains(mainCategory.getString("name"))){
-                    someMainCategories.add(mainCategory);
+                if(specificCategoriesNamesList.contains(category.getString("name"))){
+                    filteredCategories.add(category);
+                    grabChildCategories(category, filteredCategories);
+                }else{
+                    List<JSONObject> yetNotFilteredCategories = getNextLevelChildCategories(category);
+                    grabFilteredChildCategories(yetNotFilteredCategories, filteredCategories, specificCategoriesNames);
                 }
             } catch (JSONException e) {
-                log.error("No such key \"name\" in json object " + mainCategory.toString());
+                log.error("No such key \"name\" in json object " + category.toString());
             }
         }
-
-        List<JSONObject> childCategoriesList = new ArrayList<JSONObject>();
-        grabChildCategories(someMainCategories, childCategoriesList);
-        return childCategoriesList;
-
-    }
-
-    public List<JSONObject> grabChildCategoriesToDB(String... someMainCategoriesNames) {
-        List<JSONObject> childCategoriesList = grabChildCategories(someMainCategoriesNames);
-        processEntityList(childCategoriesList);
-        return childCategoriesList;
-    }
-
-    public List<JSONObject> grabAllChildCategories() {
-        List<JSONObject> mainCategoriesList = grabMainCategories();
-        List<JSONObject> allChildCategoriesList = new ArrayList<JSONObject>();
-        grabChildCategories(mainCategoriesList, allChildCategoriesList);
-        return allChildCategoriesList;
-    }
-
-    public List<JSONObject> grabAllChildCategoriesToDB(){
-        List<JSONObject> allChildCategoriesList = grabAllChildCategories();
-        processEntityList(allChildCategoriesList);
-        return allChildCategoriesList;
     }
 }
