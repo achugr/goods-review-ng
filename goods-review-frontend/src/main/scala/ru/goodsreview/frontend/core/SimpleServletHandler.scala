@@ -9,7 +9,7 @@ import javax.servlet.Servlet
 class SimpleServletHandler extends ServletHandler {
 
   def setServlets(servlets: Array[Servlet]) {
-    setServlets(servlets.map(_ => new ServletHolder(_)))
+    setServlets(servlets.map({s : Servlet => new ServletHolder(s)}))
   }
 
 }
