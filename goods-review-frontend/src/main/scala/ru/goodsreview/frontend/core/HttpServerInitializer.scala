@@ -33,12 +33,12 @@ class HttpServerInitializer extends InitializingBean {
       val handlerCollection = new HandlerCollection()
       handlerCollection.setHandlers(handlers)
 
-      server.setConnectors(new Array[Connector](connector))
+      server.setConnectors(Array(connector))
       server.setThreadPool(new QueuedThreadPool(maxThreads))
       server.setHandler(handlerCollection)
       server.start()
 
-      log.info("Server started: " + (System.currentTimeMillis() - st) + " ms")
+      log.info("Server started: " + (System.currentTimeMillis - st) + " ms")
     } catch {
       case e: Exception => log.error("Could not initialize server: ", e)
     }
