@@ -28,6 +28,14 @@ public class ReviewGrabberTest {
 
     @Test
     public void grabReviewsTest(){
+        List<JSONObject> reviews = reviewGrabber.grabAllReviews();
+        for(JSONObject review : reviews){
+            log.debug(review.toString());
+        }
+    }
+
+    @Test
+    public void grabReviewsForModelsFromDBTest(){
         List<JSONObject> reviews = reviewGrabber.grabReviewsForModelsFromDB();
         for(JSONObject review : reviews){
             log.debug(review.toString());

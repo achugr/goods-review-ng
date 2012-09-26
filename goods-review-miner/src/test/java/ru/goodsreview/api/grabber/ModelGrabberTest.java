@@ -43,6 +43,15 @@ public class ModelGrabberTest {
     }
 
     @Test
+    public void grabModelsForCategoriesFromDBTest(){
+        // Warning: This method may take a lot of time while executing
+        List<JSONObject> models = modelGrabber.grabModelsForCategoriesFromDB();
+        for(JSONObject model : models){
+            log.debug(model.toString());
+        }
+    }
+
+    @Test
     public void grabModelsForSpecificCategoriesTest(){
         List<JSONObject> specificModels = modelGrabber.grabModels("Фото");
         for(JSONObject model : specificModels){
