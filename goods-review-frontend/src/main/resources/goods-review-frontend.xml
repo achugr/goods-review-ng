@@ -16,7 +16,7 @@
                         </list>
                     </property>
                 </bean>
-                <!--handling static  content-->
+                <!--handling static content-->
                 <bean class="org.mortbay.jetty.handler.ResourceHandler">
                     <property name="resourceBase" value="./web/static"/>
                 </bean>
