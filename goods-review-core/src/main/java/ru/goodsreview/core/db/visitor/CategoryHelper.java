@@ -29,7 +29,7 @@ public class CategoryHelper {
             @Override
             public void visit(JSONObject jsonObject) {
                 try {
-                    if (jsonObject.getInt("categoryId") == categoryId) {
+                    if (jsonObject.getInt("id") == categoryId) {
                         set.add(jsonObject);
                         log.info(jsonObject.toString());
                     }
