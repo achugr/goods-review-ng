@@ -48,6 +48,7 @@ public abstract class AbstractGrabber {
         for(JSONObject entity : entityList) {
             grabberBatch.submit(entity);
         }
+        grabberBatch.flush();
     }
 
     protected void setTypeId(List<JSONObject> entityList){

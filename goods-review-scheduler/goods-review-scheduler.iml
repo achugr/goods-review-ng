@@ -38,6 +38,9 @@
     <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.mockito:mockito-all:1.9.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene.morphology:russian:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene.morphology:morph:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:3.0.0" level="project" />
   </component>
 </module>
 

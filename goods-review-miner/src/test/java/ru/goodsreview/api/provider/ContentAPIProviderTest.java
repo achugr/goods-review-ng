@@ -2,6 +2,7 @@ package ru.goodsreview.api.provider;
 
 
 import org.apache.log4j.Logger;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import ru.goodsreview.api.request.builder.CategoryRequestBuilder;
 import ru.goodsreview.api.request.builder.ModelRequestBuilder;
 import ru.goodsreview.api.request.builder.UrlRequest;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -33,7 +35,7 @@ public class ContentAPIProviderTest {
     private ContentAPIProvider contentApiProvider;
 
     @Test
-    public void isValidAnswerTest() {
+    public void isValidAnswerTest() throws IOException, JSONException {
         ModelRequestBuilder modelRequestBuilder = new ModelRequestBuilder();
         UrlRequest urlRequest = modelRequestBuilder.requestForModelById(7722505, new HashMap<String, String>());
         JSONObject result = contentApiProvider.provide(urlRequest);
@@ -42,7 +44,7 @@ public class ContentAPIProviderTest {
     }
 
     @Test
-    public void isValidAnswerTestOnCategoryRequest(){
+    public void isValidAnswerTestOnCategoryRequest() throws IOException, JSONException {
         CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
         UrlRequest urlRequest = categoryRequestBuilder.requestForListOfCategories(new HashMap<String, String>());
         JSONObject result = contentApiProvider.provide(urlRequest);

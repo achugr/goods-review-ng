@@ -5,8 +5,8 @@ import ru.goodsreview.scheduler.context.Context
 /**
  * @author daddy-bear
  */
-abstract class Indexer {
+trait Indexer {
 
-  abstract def index(context: Context)
+  def index(context: Context)
 
 }

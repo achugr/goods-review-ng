@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+    <bean id="httpServerInitializer" class="ru.goodsreview.frontend.core.HttpServerInitializer">
+        <property name="port" value="8080"/>
+        <property name="maxThreads" value="10"/>
+        <property name="handlers">
+            <list>
+                <bean class="ru.goodsreview.frontend.core.SimpleServletHandler">
+                    <property name="servlets">
+                        <list>
+                            <bean class="ru.goodsreview.frontend.test.TestServlet"/>
+                        </list>
+                    </property>
+                </bean>
+                <!--handling static content-->
+                <bean class="org.mortbay.jetty.handler.ResourceHandler">
+                    <property name="resourceBase" value="./web/static"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+</beans>
