@@ -6,7 +6,25 @@
 
     <import resource="beans.xml"/>
 
-    <bean id="minerRunner" class="ru.goodsreview.api.MinerTask">
+    <bean id="requiredAnnotationBeanPostProcessor"
+          class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
+
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg index="0" ref="dataSourceSSH"/>
+    </bean>
+
+    <bean id="timeTableService" class="ru.goodsreview.scheduler.TimeTableService">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="namedParameterJdbcTemplate" ref="namedParameterJdbcTemplate"/>
+    </bean>
+
+    <bean id="scheduler" class="ru.goodsreview.scheduler.Scheduler">
+        <property name="schedulerName" value="main-scheduler"/>
+        <property name="threadsCount" value="10"/>
+        <property name="timeTableService" ref="timeTableService"/>
+    </bean>
+
+    <bean id="minerRunnerTask" class="ru.goodsreview.api.MinerTask">
         <property name="reviewGrabber" ref="reviewGrabber"/>
     </bean>
 
