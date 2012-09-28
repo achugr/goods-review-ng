@@ -4,9 +4,6 @@
 
 <beans>
 
-    <!--<bean id="properties" class="ru.goodsreview.api.request.builder.RequestBuilder" abstract="true">-->
-        <!--<property name="geoIdValue" value="0"/>-->
-    <!--</bean>-->
     <bean id="propertiesConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
@@ -23,7 +20,26 @@
         <property name="apiKey" value="${api-key}"/>
     </bean>
 
-    <import resource="goods-review-db.xml"/>
+    <bean id="dataSourceSSH" class="ru.goodsreview.core.util.db.SSHTunnelDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+        <property name="host" value="${host}"/>
+        <property name="port" value="${port}"/>
+        <property name="sshUsername" value="${ssh.username}"/>
+        <property name="sshPassword" value="${ssh.password}"/>
+        <property name="tunnelLocalPort" value="${tunnel.local.port}"/>
+        <property name="tunnelRemotePort" value="${tunnel.remote.port}"/>
+        <property name="tunnelRemoteHost" value="${tunnel.remote.host}"/>
+        <property name="validationQuery" value="select 1"/>
+    </bean>
+
+    <!--Specifying dataSource here -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <!--<property name="dataSource" ref="dataSourceLocal"/>-->
+        <property name="dataSource" ref="dataSourceSSH"/>
+    </bean>
 
     <bean id="propertyFile" class="org.springframework.beans.factory.config.PropertiesFactoryBean" lazy-init="false">
         <property name="location" value="classpath:secure-api.properties"/>
@@ -50,4 +66,10 @@
         <property name="contentApiProvider" ref="contentApiProvider"/>
         <property name="grabberBatch" ref="grabberBatch"/>
     </bean>
+
+    <bean id="reviewGrabber" class="ru.goodsreview.api.grabber.ReviewGrabber">
+        <property name="contentApiProvider" ref="contentApiProvider"/>
+        <property name="grabberBatch" ref="grabberBatch"/>
+    </bean>
+
 </beans>

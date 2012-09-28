@@ -6,9 +6,8 @@
 
     <import resource="beans.xml"/>
 
-    <import resource="goods-review-db.xml"/>
-
     <bean id="minerRunner" class="ru.goodsreview.api.MinerTask">
-        <property name="entityService" ref="entityService"/>
+        <property name="reviewGrabber" ref="reviewGrabber"/>
     </bean>
+
 </beans>
