@@ -22,19 +22,19 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
     private String schedulerName;
     private TimeTableService timeTableService;
 
+    @Override
+    public void setApplicationContext(final ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
     @Required
-    public void setTimeTableService(TimeTableService timeTableService) {
+    public void setTimeTableService(final TimeTableService timeTableService) {
         this.timeTableService = timeTableService;
     }
 
     @Required
-    public void setSchedulerName(String schedulerName) {
+    public void setSchedulerName(final String schedulerName) {
         this.schedulerName = schedulerName;
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
     }
 
     @Required

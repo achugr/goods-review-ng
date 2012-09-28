@@ -13,7 +13,10 @@ import java.util.HashSet;
  * User: YaroslavSkudarnov
  * Date: 15.09.12
  * Time: 16:01
+ *
+ * Deprecated -- too many heap space required for usage of this class
  */
+@Deprecated
 public class CategoryHelper {
     private final static Logger log = Logger.getLogger(CategoryHelper.class);
 

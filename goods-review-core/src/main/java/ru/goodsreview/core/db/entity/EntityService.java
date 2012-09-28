@@ -68,11 +68,6 @@ public class EntityService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Required
-    public JdbcTemplate getJdbcTemplate(){
-        return jdbcTemplate;
-    }
-
     public void writeEntities(final Collection<JSONObject> entities) {
 
         //TODO this in batch
