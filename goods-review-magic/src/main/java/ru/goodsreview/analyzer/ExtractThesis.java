@@ -7,6 +7,7 @@ package ru.goodsreview.analyzer;
  *      artemij.chugreev@gmail.com
  */
 
+import org.json.JSONObject;
 import ru.goodsreview.analyzer.util.Phrase;
 import ru.goodsreview.analyzer.util.ThesisPattern;
 import ru.goodsreview.analyzer.util.sentence.*;
@@ -16,12 +17,13 @@ import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 
 public class ExtractThesis{
 
-    public static ArrayList<Phrase> doExtraction(String content) throws IOException, InterruptedException {
+    public static ArrayList<Phrase> doExtraction(String content){
         ArrayList<Phrase> extractedThesisList = new ArrayList<Phrase>();
 
         List<ThesisPattern> thesisPatternList = new ArrayList<ThesisPattern>();
@@ -63,7 +65,7 @@ public class ExtractThesis{
     }
 
 
-    static void extractPattern(ArrayList<Phrase> extractedThesisList, List<List<Token>> listsOfToken, ThesisPattern<PartOfSpeech> pattern, int pos, int distance) throws UnsupportedEncodingException {
+    static void extractPattern(ArrayList<Phrase> extractedThesisList, List<List<Token>> listsOfToken, ThesisPattern<PartOfSpeech> pattern, int pos, int distance) {
         PartOfSpeech part1 = pattern.get(0);
         PartOfSpeech part2 = pattern.get(1);
 
@@ -109,7 +111,7 @@ public class ExtractThesis{
 
 
 
-    static boolean checkWordsCorrespondence(Token token1, Token token2) throws UnsupportedEncodingException {
+    static boolean checkWordsCorrespondence(Token token1, Token token2) {
         String p1 = token1.getGender();
         String p2 = token2.getGender();
         String num1 = token1.getNumber();
@@ -127,7 +129,7 @@ public class ExtractThesis{
         return sep;
     }
 
-    static boolean checkTokenListCorrespondence(List<Token> tokenList1, List<Token> tokenList2) throws UnsupportedEncodingException {
+    static boolean checkTokenListCorrespondence(List<Token> tokenList1, List<Token> tokenList2)  {
         for (Token aTokenList1 : tokenList1) {
             for (Token aTokenList2 : tokenList2) {
                 if (checkWordsCorrespondence(aTokenList1, aTokenList2)) {
@@ -143,5 +145,6 @@ public class ExtractThesis{
         String unk = MystemReportAnalyzer.UNKNOUN;
         return !s1.equals(unk) && !s2.equals(unk) && s1.equals(s2);
     }
+
 
 }

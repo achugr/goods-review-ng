@@ -17,6 +17,7 @@ import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -42,7 +43,7 @@ public class ReviewTokens {
      *
      * @param review source String
      */
-    public ReviewTokens(String review) throws IOException, InterruptedException {
+    public ReviewTokens(String review)  {
 
         listsOfToken = new ArrayList<List<Token>>();
 
@@ -57,7 +58,12 @@ public class ReviewTokens {
                 if (!currToken.equals("")) {
                     currToken = currToken.toLowerCase();
 
-                    List<Token> list = wordAnalyzer.getTokenList(currToken);
+                    List<Token> list = null;
+                    try {
+                        list = wordAnalyzer.getTokenList(currToken);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
 
                     dictionaryCheck(list);
 

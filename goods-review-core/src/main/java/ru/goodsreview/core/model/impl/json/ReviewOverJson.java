@@ -27,6 +27,10 @@ public class ReviewOverJson implements Review {
         this.jsonObject = jsonObject;
     }
 
+    public JSONObject getJsonObject(){
+        return jsonObject;
+    }
+
     @Override
     public String getPro() {
         return unsafeGetString(jsonObject, "pro");

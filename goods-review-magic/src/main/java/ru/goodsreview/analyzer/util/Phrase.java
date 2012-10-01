@@ -31,8 +31,6 @@ public final class Phrase {
         return normFeature;
     }
 
-
-
     public String getFeature(){
         return feature;
     }
@@ -41,9 +39,8 @@ public final class Phrase {
         return opinion;
     }
 
-    public static void main(String[] args) {
-        Phrase phrase = new Phrase("", "");
-        phrase = new Phrase("", "asd");
+    public String toString(){
+        return feature+" "+opinion;
     }
 
 }
