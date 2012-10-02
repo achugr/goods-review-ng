@@ -14,8 +14,8 @@ import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
 public class ThesisOverJson implements Thesis {
 
     protected static final String VALUE_ATTR = "value";
-    protected static final String IMPORTANCE_ATTR = "value";
-    protected static final String SENTIMENT_ATTR = "value";
+    protected static final String IMPORTANCE_ATTR = "importance";
+    protected static final String SENTIMENT_ATTR = "sentiment";
 
     protected final JSONObject jsonObject;
 
