@@ -7,7 +7,7 @@ import org.scalatra.ScalatraServlet
  */
 class TestServlet extends ScalatraServlet {
 
-  get("/hello/:name") {
+  get("/*") {
     // Matches "GET /hello/foo" and "GET /hello/bar"
     // params("name") is "foo" or "bar"
     <p>Hello, {params("name")}</p>

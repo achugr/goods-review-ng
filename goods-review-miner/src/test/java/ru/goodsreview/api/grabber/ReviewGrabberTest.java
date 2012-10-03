@@ -44,7 +44,7 @@ public class ReviewGrabberTest {
 
     @Test
     public void grabReviewsForSpecificCategoriesTest(){
-        List<JSONObject> specificReviews = reviewGrabber.grabReviews("Планшеты");
+        List<JSONObject> specificReviews = reviewGrabber.grabReviews("Ноутбуки");
         for(JSONObject review : specificReviews){
             log.debug(review.toString());
         }

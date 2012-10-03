@@ -32,7 +32,7 @@ public class VisitorTest {
 
     @Test
     public void categoryVisitorTest() {
-        Collection<JSONObject> result = categoryVisitor.visit(91577);
+        Collection<JSONObject> result = categoryVisitor.visit(91009);
         for (JSONObject jsonObject : result) {
             System.out.println(jsonObject.toString());
         }

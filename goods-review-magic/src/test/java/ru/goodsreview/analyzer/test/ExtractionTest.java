@@ -127,7 +127,7 @@ public class ExtractionTest {
             System.out.println("recall = " + successExtract / numHum);
         }
 
-        ReviewTokens.getWordAnalyzer().close();
+//        ReviewTokens.getWordAnalyzer().close();
 
     }
 

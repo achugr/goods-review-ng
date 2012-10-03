@@ -33,6 +33,9 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
+  <component name="HighlightingAdvisor">
+    <option name="SUGGEST_TYPE_AWARE_HIGHLIGHTING" value="false" />
+  </component>
   <component name="IdProvider" IDEtalkID="F65CC30C4641D125C59A7AD25343EF65" />
   <component name="IvyIDEA.ProjectSettings">
     <option name="artifactTypeSettings">
@@ -70,6 +73,9 @@
         <option value="$PROJECT_DIR$/goods-review-scheduler/pom.xml" />
         <option value="$PROJECT_DIR$/goods-review-magic/pom.xml" />
         <option value="$PROJECT_DIR$/goods-review-miner/pom.xml" />
+        <option value="$PROJECT_DIR$/goods-review-server/pom.xml" />
+        <option value="$PROJECT_DIR$/goods-review-indexer/pom.xml" />
+        <option value="$PROJECT_DIR$/goods-review-frontend/pom.xml" />
       </list>
     </option>
   </component>
@@ -200,6 +206,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/goods-review-core/goods-review-core.iml" filepath="$PROJECT_DIR$/goods-review-core/goods-review-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/goods-review-frontend/goods-review-frontend.iml" filepath="$PROJECT_DIR$/goods-review-frontend/goods-review-frontend.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-indexer/goods-review-indexer.iml" filepath="$PROJECT_DIR$/goods-review-indexer/goods-review-indexer.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-magic/goods-review-magic.iml" filepath="$PROJECT_DIR$/goods-review-magic/goods-review-magic.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-miner/goods-review-miner.iml" filepath="$PROJECT_DIR$/goods-review-miner/goods-review-miner.iml" />
@@ -307,6 +314,17 @@
         <root url="jar://$MAVEN_REPOSITORY$/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: io.backchat.rl:rl_2.9.2:0.3.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/io/backchat/rl/rl_2.9.2/0.3.2/rl_2.9.2-0.3.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/io/backchat/rl/rl_2.9.2/0.3.2/rl_2.9.2-0.3.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/io/backchat/rl/rl_2.9.2/0.3.2/rl_2.9.2-0.3.2-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: junit:junit:4.8.1">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.8.1/junit-4.8.1.jar!/" />
@@ -362,6 +380,17 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/apache/lucene/morphology/russian/1.0/russian-1.0-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: org.apache.lucene:lucene-analyzers:3.6.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/lucene/lucene-analyzers/3.6.0/lucene-analyzers-3.6.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/lucene/lucene-analyzers/3.6.0/lucene-analyzers-3.6.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/lucene/lucene-analyzers/3.6.0/lucene-analyzers-3.6.0-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: org.apache.lucene:lucene-core:3.0.0">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/org/apache/lucene/lucene-core/3.0.0/lucene-core-3.0.0.jar!/" />
@@ -371,6 +400,28 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/apache/lucene/lucene-core/3.0.0/lucene-core-3.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.lucene:lucene-core:3.6.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/lucene/lucene-core/3.6.0/lucene-core-3.6.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/lucene/lucene-core/3.6.0/lucene-core-3.6.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/lucene/lucene-core/3.6.0/lucene-core-3.6.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.clapper:grizzled-slf4j_2.9.2:0.6.9">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/clapper/grizzled-slf4j_2.9.2/0.6.9/grizzled-slf4j_2.9.2-0.6.9.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/clapper/grizzled-slf4j_2.9.2/0.6.9/grizzled-slf4j_2.9.2-0.6.9-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/clapper/grizzled-slf4j_2.9.2/0.6.9/grizzled-slf4j_2.9.2-0.6.9-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.jgrapht:jgrapht-jdk1.5:0.7.3">
@@ -415,6 +466,99 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/mongodb/mongo-java-driver/2.8.0/mongo-java-driver-2.8.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mortbay.jetty:jetty-util:7.0.0.pre5">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jetty-util/7.0.0.pre5/jetty-util-7.0.0.pre5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jetty-util/7.0.0.pre5/jetty-util-7.0.0.pre5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jetty-util/7.0.0.pre5/jetty-util-7.0.0.pre5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mortbay.jetty:jetty:7.0.0.pre5">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jetty/7.0.0.pre5/jetty-7.0.0.pre5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jetty/7.0.0.pre5/jetty-7.0.0.pre5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/jetty/7.0.0.pre5/jetty-7.0.0.pre5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mortbay.jetty:servlet-api:3.0.pre4">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/servlet-api/3.0.pre4/servlet-api-3.0.pre4.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/servlet-api/3.0.pre4/servlet-api-3.0.pre4-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mortbay/jetty/servlet-api/3.0.pre4/servlet-api-3.0.pre4-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.scala-lang:scala-compiler-bundle:2.9.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-compiler/2.9.1/scala-compiler-2.9.1.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.9.1/scala-library-2.9.1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Maven: org.scala-lang:scala-compiler-bundle:2.9.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-compiler/2.9.2/scala-compiler-2.9.2.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.9.2/scala-library-2.9.2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Maven: org.scala-lang:scala-library:2.9.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.9.1/scala-library-2.9.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.9.1/scala-library-2.9.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.9.1/scala-library-2.9.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.scala-lang:scala-library:2.9.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.9.2/scala-library-2.9.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.9.2/scala-library-2.9.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.9.2/scala-library-2.9.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.scalatra:scalatra:2.1.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scalatra/scalatra/2.1.1/scalatra-2.1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scalatra/scalatra/2.1.1/scalatra-2.1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scalatra/scalatra/2.1.1/scalatra-2.1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.slf4j:slf4j-api:1.6.4">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.springframework:spring-aop:3.1.0.RELEASE">

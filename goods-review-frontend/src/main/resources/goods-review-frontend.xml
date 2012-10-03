@@ -10,7 +10,7 @@
         <property name="handlers">
             <list>
                 <bean class="ru.goodsreview.frontend.core.SimpleServletHandler">
-                    <property name="servlets">
+                    <property name="servlets1">
                         <list>
                             <bean class="ru.goodsreview.frontend.test.TestServlet"/>
                         </list>

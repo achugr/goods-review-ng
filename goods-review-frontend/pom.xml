@@ -31,24 +31,6 @@
             <artifactId>jetty</artifactId>
             <version>7.0.0.pre5</version>
         </dependency>
-            <dependency>
-                <groupId>org.fusesource.scalate</groupId>
-                <artifactId>scalate-wikitext</artifactId>
-                <version>1.5.3</version>
-            </dependency>
-            <dependency>
-                <groupId>org.fusesource.scalate</groupId>
-                <artifactId>scalate-page</artifactId>
-                <version>1.5.3</version>
-            </dependency>
-
-            <!-- testing -->
-            <dependency>
-                <groupId>org.fusesource.scalate</groupId>
-                <artifactId>scalate-test</artifactId>
-                <version>1.5.3</version>
-                <scope>test</scope>
-            </dependency>
     </dependencies>
 
     <build>

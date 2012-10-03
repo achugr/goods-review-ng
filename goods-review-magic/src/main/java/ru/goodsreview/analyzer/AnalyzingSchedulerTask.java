@@ -3,9 +3,8 @@ package ru.goodsreview.analyzer;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.core.db.entity.EntityService;
-import ru.goodsreview.core.db.visitor.Visitor;
 import ru.goodsreview.core.util.Batch;
-
+import ru.goodsreview.core.db.visitor.Visitor;
 import ru.goodsreview.scheduler.SchedulerTask;
 import ru.goodsreview.scheduler.TaskResult;
 import ru.goodsreview.scheduler.context.Context;

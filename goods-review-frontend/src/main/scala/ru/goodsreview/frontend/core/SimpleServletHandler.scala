@@ -8,8 +8,9 @@ import javax.servlet.Servlet
  */
 class SimpleServletHandler extends ServletHandler {
 
-  def setServlets(servlets: Array[Servlet]) {
+  def setServlets1(servlets: Array[Servlet]) {
     setServlets(servlets.map {new ServletHolder(_)})
+    print(servlets.map{new ServletHolder(_)})
   }
 
 }

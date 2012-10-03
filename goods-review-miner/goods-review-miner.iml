@@ -5,6 +5,8 @@
       <configuration>
         <fileset id="fileset1" name="Xml Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/resources/beans.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/run-miner-bean.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/run-miner-bean.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -19,7 +21,6 @@
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/test-annotations" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
-      <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
       <excludeFolder url="file://$MODULE_DIR$/target/surefire" />
       <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
       <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
