@@ -5,11 +5,53 @@
 
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 
-    <bean id="wordAnalyzer" class="ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer">
-        <property name="analyzerProcess" value="goods-review-magic/src/main/resources/ru/goodsreview/analyzer/tools/" />
-    </bean>
+    <!--<bean id="wordAnalyzer" class="ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer">-->
+        <!--<property name="analyzerProcess" value="goods-review-magic/src/main/resources/ru/goodsreview/analyzer/tools/" />-->
+    <!--</bean>-->
 
     <!--<bean id="wordAnalyzer" class="ru.goodsreview.analyzer.word.analyzer.LuceneAnalyzer"></bean>-->
 
+    <bean id="analyzerRunnerTask" class="ru.goodsreview.analyzer.AnalyzingTask">
+        <property name="entityService" ref="entityService"/>
+        <property name="entityUpdater" ref="entityUpdater"/>
+    </bean>
+
+    <bean id="entityService" class="ru.goodsreview.core.db.entity.EntityService">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="entityUpdater" class="ru.goodsreview.analyzer.ServiceUpdater">
+        <property name="entityService" ref="entityService"/>
+    </bean>
+
+    <!--Specifying dataSource here -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSourceLocal"/>
+        <!--<property name="dataSource" ref="dataSourceSSH"/>-->
+    </bean>
+
+    <bean id="dataSourceSSH" class="ru.goodsreview.core.util.db.SSHTunnelDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+        <property name="host" value="${host}"/>
+        <property name="port" value="${port}"/>
+        <property name="sshUsername" value="${ssh.username}"/>
+        <property name="sshPassword" value="${ssh.password}"/>
+        <property name="tunnelLocalPort" value="${tunnel.local.port}"/>
+        <property name="tunnelRemotePort" value="${tunnel.remote.port}"/>
+        <property name="tunnelRemoteHost" value="${tunnel.remote.host}"/>
+        <property name="validationQuery" value="select 1"/>
+    </bean>
+
+    <bean id="dataSourceLocal" class="org.apache.commons.dbcp.BasicDataSource" lazy-init="false">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+
+        <property name="validationQuery" value="select 1"/>
+    </bean>
 
 </beans>
