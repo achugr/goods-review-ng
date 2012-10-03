@@ -1,0 +1,43 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+
+    <bean id="wordAnalyzer" class="ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer">
+        <property name="analyzerProcess" value="goods-review-magic/src/main/assembly/ru/goodsreview/analyzer/tools/" />
+    </bean>
+
+    <import resource="beans.xml"/>
+
+    <bean id="requiredAnnotationBeanPostProcessor"
+          class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
+
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg index="0" ref="dataSourceSSH"/>
+    </bean>
+
+    <bean id="timeTableService" class="ru.goodsreview.scheduler.TimeTableService">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="namedParameterJdbcTemplate" ref="namedParameterJdbcTemplate"/>
+    </bean>
+
+    <bean id="scheduler" class="ru.goodsreview.scheduler.Scheduler">
+        <property name="schedulerName" value="main-scheduler"/>
+        <property name="threadsCount" value="10"/>
+        <property name="timeTableService" ref="timeTableService"/>
+    </bean>
+
+    <bean id="entityUpdater" class="ru.goodsreview.analyzer.ServiceUpdater">
+        <property name="entityService" ref="entityService"/>
+    </bean>
+
+    <bean id="analyzerRunnerTask" class="ru.goodsreview.analyzer.AnalyzingTask">
+        <property name="entityUpdater" ref="entityUpdater"/>
+        <property name="entityService" ref="entityService"/>
+    </bean>
+    <!--<bean id="wordAnalyzer" class="ru.goodsreview.analyzer.word.analyzer.LuceneAnalyzer"></bean>-->
+
+
+</beans>

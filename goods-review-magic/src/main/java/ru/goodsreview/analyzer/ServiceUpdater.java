@@ -10,7 +10,7 @@ import java.util.Collection;
  * Date: 01.10.12
  * Ilya Makeev
  */
-public class ServiceUpdater implements EntityUpdater{
+public class ServiceUpdater implements EntityUpdater {
 
     private EntityService entityService;
 

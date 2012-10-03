@@ -1,5 +1,6 @@
 package ru.goodsreview.analyzer;
 
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 
 public class AnalyzingTask extends AnalyzingSchedulerTask {
+    private final static Logger log = Logger.getLogger(AnalyzingTask.class);
 
     @Override
     protected JSONObject process(JSONObject object)  {
@@ -33,6 +35,7 @@ public class AnalyzingTask extends AnalyzingSchedulerTask {
                 for (Phrase phrase : phrases) {
                     Thesis thesis = new EvaluativeThesis(phrase.toString());
                     thesisList.add(thesis);
+                    log.info("Extracted thesis: " + thesis.getValue());
                 }
                 ReviewOverJson reviewOverJson = new ReviewOverJson(object);
                 reviewOverJson.addThesises(thesisList);
