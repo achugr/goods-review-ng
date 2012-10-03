@@ -11,6 +11,21 @@
 
     <!--<bean id="wordAnalyzer" class="ru.goodsreview.analyzer.word.analyzer.LuceneAnalyzer"></bean>-->
 
+    <bean id="scheduler" class="ru.goodsreview.scheduler.Scheduler">
+        <property name="schedulerName" value="main-scheduler"/>
+        <property name="threadsCount" value="10"/>
+        <property name="timeTableService" ref="timeTableService"/>
+    </bean>
+
+    <bean id="timeTableService" class="ru.goodsreview.scheduler.TimeTableService">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="namedParameterJdbcTemplate" ref="namedParameterJdbcTemplate"/>
+    </bean>
+
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg index="0" ref="dataSourceSSH"/>
+    </bean>
+
     <bean id="analyzerRunnerTask" class="ru.goodsreview.analyzer.AnalyzingTask">
         <property name="entityService" ref="entityService"/>
         <property name="entityUpdater" ref="entityUpdater"/>
