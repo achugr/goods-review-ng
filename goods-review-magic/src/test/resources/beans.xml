@@ -11,5 +11,4 @@
 
     <!--<bean id="wordAnalyzer" class="ru.goodsreview.analyzer.word.analyzer.LuceneAnalyzer"></bean>-->
 
-
 </beans>

@@ -26,7 +26,7 @@ import java.util.Scanner;
 /**
  * Class for the analysis of words, using mystem program http://company.yandex.ru/technologies/mystem/
  */
-public class MystemAnalyzer  implements WordAnalyzer{
+public class MystemAnalyzer implements WordAnalyzer{
     private Process analyzerProcess;
     private Scanner sc;
     private PrintStream ps;
@@ -35,12 +35,14 @@ public class MystemAnalyzer  implements WordAnalyzer{
 
     private final static Logger log = Logger.getLogger(MystemAnalyzer.class);
 
-    @Required
-    public void setAnalyzerProcess(String path) {
+//    TODO fix this
+//    @Required
+//    public void setAnalyzerProcess(String path) {      \
+    public MystemAnalyzer(){
         try {
            String CHARSET = "UTF8";
-           String command = "./"+ path + "mystem -ni -e " + CHARSET;
-
+//           String command = "./"+ path + "mystem -ni -e " + CHARSET;
+            String command = "mystem -ni -e" + CHARSET;
             analyzerProcess = Runtime.getRuntime().exec(command);
             sc = new Scanner(analyzerProcess.getInputStream(), CHARSET);
             ps = new PrintStream(analyzerProcess.getOutputStream(), true, CHARSET);

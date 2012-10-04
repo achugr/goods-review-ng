@@ -31,8 +31,8 @@ public class ReviewTokens {
     private static Dictionary featureDictionary = new SetDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt");
     private static MapDictionary opinionDictionary = new MapDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
 
-    private static WordAnalyzer wordAnalyzer = (WordAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("wordAnalyzer");
-
+//    private static WordAnalyzer wordAnalyzer = (WordAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("wordAnalyzer");
+    private static WordAnalyzer wordAnalyzer = new MystemAnalyzer();
 //    @Required
 //    public void setMystemAnalyzer(WordAnalyzer wordAnalyzer) {
 //        this.wordAnalyzer = wordAnalyzer;

@@ -1,8 +1,10 @@
 package ru.goodsreview.analyzer;
 
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.core.db.entity.EntityService;
+import ru.goodsreview.core.db.entity.EntityType;
 import ru.goodsreview.core.util.Batch;
 import ru.goodsreview.core.db.visitor.Visitor;
 import ru.goodsreview.scheduler.SchedulerTask;
@@ -16,6 +18,7 @@ import java.util.List;
 *         Date: 22.06.12
 */
 public abstract class AnalyzingSchedulerTask implements SchedulerTask {
+    private static final Logger log = Logger.getLogger(AnalyzingSchedulerTask.class);
 
     private EntityService entityService;
 
@@ -33,6 +36,7 @@ public abstract class AnalyzingSchedulerTask implements SchedulerTask {
 
     @Override
     public TaskResult run(final Context context) {
+        log.info("AnalyzingSchedulerTask started..");
 
         final Batch<JSONObject> batchUpdater = new Batch<JSONObject>() {
             @Override
@@ -41,7 +45,7 @@ public abstract class AnalyzingSchedulerTask implements SchedulerTask {
             }
         };
 
-        entityService.visitEntities(context.getParamAsLong("ENTITY_TYPE_ID"), new Visitor<JSONObject>() {
+        entityService.visitEntities(EntityType.REVIEW.getTypeId(), new Visitor<JSONObject>() {
             @Override
             public void visit(final JSONObject object) {
                 batchUpdater.submit(process(object));

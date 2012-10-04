@@ -113,6 +113,12 @@ public class EntityService {
                     @Override
                     protected void setValues(final PreparedStatement ps, final JSONObject element) throws SQLException {
                         try {
+
+                            System.out.println(element.toString());
+                            System.out.println(Long.parseLong(element.getString(EntityType.TYPE_ID_ATTR)));
+                            System.out.println(Long.parseLong(element.getString(ID_ATTR)));
+
+
                             ps.setString(1, element.toString());
                             ps.setLong(2, Long.parseLong(element.getString(EntityType.TYPE_ID_ATTR)));
                             ps.setLong(3, Long.parseLong(element.getString(ID_ATTR)));

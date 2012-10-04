@@ -21,6 +21,6 @@ public class ServiceUpdater implements EntityUpdater {
 
     @Override
     public void update(Collection<JSONObject> entities) {
-        entityService.improveEntities(entities);
+//        entityService.improveEntities(entities);
     }
 }
