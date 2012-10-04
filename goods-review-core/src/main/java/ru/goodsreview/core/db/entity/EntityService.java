@@ -108,17 +108,16 @@ public class EntityService {
     }
 
     public void improveEntities(final Collection<JSONObject> entities) {
-        jdbcTemplate.update("UPDATE ENTITY SET ENTITY_ATTRS = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
+        jdbcTemplate.batchUpdate("UPDATE ENTITY SET ENTITY_ATTRS = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
                 new IterativeBatchPreparedStatementSetter<JSONObject>(entities) {
                     @Override
-                    protected void setValues(PreparedStatement ps, JSONObject element) throws SQLException {
+                    protected void setValues(final PreparedStatement ps, final JSONObject element) throws SQLException {
                         try {
                             ps.setString(1, element.toString());
                             ps.setLong(2, Long.parseLong(element.getString(EntityType.TYPE_ID_ATTR)));
                             ps.setLong(3, Long.parseLong(element.getString(ID_ATTR)));
                         } catch (JSONException e) {
-                            log.error("Wrong entity", e);
-                            throw new RuntimeException(e);
+                            log.error("Wrong entity" + element, e);
                         }
                     }
                 });
