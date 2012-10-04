@@ -1,6 +1,7 @@
 package ru.goodsreview.core.db.entity;
 
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +13,7 @@ import ru.goodsreview.core.db.visitor.Visitor;
 import java.util.Collections;
 
 /**
- * User: daddy-bear
+ * User: daddy-bear                     3
  * Date: 18.06.12
  * Time: 18:40
  */
@@ -35,5 +36,21 @@ public class EntityServiceTest {
             }
         });
     }
+
+    @Test
+    public void improveEntitiesTest() throws JSONException {
+        JSONObject jsonObject = new JSONObject("{\"id\":\"123456789\",\"typeId\":\"4\",\"key\":\"value1\"}");
+//        entityService.writeEntities(Collections.singletonList(jsonObject));
+//        jsonObject.put("key", "value2");
+//        jsonObject.put("thesises", "blablabla");
+        entityService.improveEntities(Collections.singletonList(new JSONObject("{\"id\":\"123456789\",\"typeId\":\"4\",\"key\":\"value2\"}")));
+        entityService.visitEntities(4, new Visitor<JSONObject>() {
+            @Override
+            public void visit(JSONObject jsonObject) {
+                System.out.println(jsonObject);
+            }
+        });
+    }
+
 
 }
