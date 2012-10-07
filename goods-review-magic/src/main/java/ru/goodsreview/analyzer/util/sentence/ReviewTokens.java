@@ -32,7 +32,7 @@ public class ReviewTokens {
     private static MapDictionary opinionDictionary = new MapDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
 
 //    private static WordAnalyzer wordAnalyzer = (WordAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("wordAnalyzer");
-    private static WordAnalyzer wordAnalyzer = new MystemAnalyzer();
+    private static WordAnalyzer wordAnalyzer = new MystemAnalyzer("goods-review-magic/src/main/assembly/ru/goodsreview/analyzer/tools/");
 //    @Required
 //    public void setMystemAnalyzer(WordAnalyzer wordAnalyzer) {
 //        this.wordAnalyzer = wordAnalyzer;
