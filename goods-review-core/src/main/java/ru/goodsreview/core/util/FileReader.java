@@ -2,12 +2,10 @@ package ru.goodsreview.core.util;
 
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author Artemii Chugreev achugr@yandex-team.ru
@@ -42,5 +40,18 @@ public final class FileReader {
             }
         }
         return lines;
+    }
+
+    public static String readFileAsString(final String filePath, final Class holderClass) {
+        return StringUtil.inputStreamToString(holderClass.getResourceAsStream(filePath));
+    }
+
+    public static String readFileAsString(final String filePath) {
+        try {
+            final InputStream inputStream = new FileInputStream(new File(filePath));
+            return StringUtil.inputStreamToString(inputStream);
+        } catch (FileNotFoundException e) {
+            return "file " + filePath + " not found";
+        }
     }
 }

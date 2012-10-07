@@ -2,6 +2,7 @@ package ru.goodsreview.scheduler;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -77,18 +78,24 @@ public class Scheduler implements InitializingBean, ApplicationContextAware {
             }
 
             private void executeTask(final TaskInfo info) {
-                final SchedulerTask task = (SchedulerTask) Scheduler.this.applicationContext.getBean(info.getBeanName());
+//                TODO probably, it's hardcode
+                try {
+                    final SchedulerTask task = (SchedulerTask) Scheduler.this.applicationContext.getBean(info.getBeanName());
 
-                final Future<TaskResult> futureResult = executorService.submit(new Callable<TaskResult>() {
+                    final Future<TaskResult> futureResult = executorService.submit(new Callable<TaskResult>() {
 
-                    @Override
-                    public TaskResult call() throws Exception {
-                        Thread.currentThread().setName("SchedulerTask-" + info.getId());
-                        return new ThrowableCatchingSchedulerTask(task).run(info.getContext());
-                    }
-                });
-
-                currentTasksFuture.put(info.getId(), futureResult);
+                        @Override
+                        public TaskResult call() throws Exception {
+                            Thread.currentThread().setName("SchedulerTask-" + info.getId());
+                            final Logger logForNewThread = Logger.getLogger("SchedulerTask-" + info.getId());
+                            logForNewThread.info("hello world!");
+                            return new ThrowableCatchingSchedulerTask(task).run(info.getContext());
+                        }
+                    });
+                    currentTasksFuture.put(info.getId(), futureResult);
+                } catch (NoSuchBeanDefinitionException e) {
+                    log.error("Bean with name " + info.getBeanName() + " not found in context");
+                }
             }
 
             private void checkTasks() {

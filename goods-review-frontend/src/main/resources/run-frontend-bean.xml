@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <bean id="server" class="org.mortbay.jetty.Server" destroy-method="stop">
+
+        <property name="connectors">
+            <list>
+                <bean id="connector" class="org.mortbay.jetty.nio.SelectChannelConnector">
+                    <property name="port" value="8080"/>
+                </bean>
+            </list>
+        </property>
+
+        <property name="handlers">
+            <list>
+                <ref bean="basicContext"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean name="basicContext" class="org.mortbay.jetty.servlet.Context">
+        <property name="contextPath" value="/"/>
+
+        <property name="servletHandler">
+            <bean class="org.mortbay.jetty.servlet.ServletHandler">
+                <property name="servlets">
+                    <list>
+                        <bean class="org.mortbay.jetty.servlet.ServletHolder">
+                            <property name="name" value="spring-mvc"/>
+                            <property name="servlet">
+                                <bean class="ru.goodsreview.frontend.servlet.MainPageServlet"/>
+                            </property>
+                        </bean>
+                    </list>
+                </property>
+
+                <property name="servletMappings">
+                    <list>
+                        <bean class="org.mortbay.jetty.servlet.ServletMapping">
+                            <property name="servletName" value="spring-mvc"/>
+                            <property name="pathSpec" value="/*"/>
+                        </bean>
+                    </list>
+                </property>
+            </bean>
+        </property>
+
+    </bean>
+
+</beans>
