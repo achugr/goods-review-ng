@@ -35,14 +35,11 @@ public class MystemAnalyzer implements WordAnalyzer{
 
     private final static Logger log = Logger.getLogger(MystemAnalyzer.class);
 
-//    TODO fix this
-//    @Required
-//    public void setAnalyzerProcess(String path) {      \
-    public MystemAnalyzer(){
+   public MystemAnalyzer(String path){
         try {
-           String CHARSET = "UTF8";
-//           String command = "./"+ path + "mystem -ni -e " + CHARSET;
-            String command = "mystem -ni -e" + CHARSET;
+            String CHARSET = "UTF8";
+          String command = "./"+ path + "mystem -ni -e " + CHARSET;
+      //      String command = "mystem -ni -e" + CHARSET;
             analyzerProcess = Runtime.getRuntime().exec(command);
             sc = new Scanner(analyzerProcess.getInputStream(), CHARSET);
             ps = new PrintStream(analyzerProcess.getOutputStream(), true, CHARSET);
@@ -52,6 +49,24 @@ public class MystemAnalyzer implements WordAnalyzer{
             throw new RuntimeException(e);
         }
     }
+
+////    TODO fix this
+////    @Required
+//    public  void setAnalyzerProcess(String path) {
+//   // public MystemAnalyzer(){
+//        try {
+//           String CHARSET = "UTF8";
+////           String command = "./"+ path + "mystem -ni -e " + CHARSET;
+//            String command = "mystem -ni -e" + CHARSET;
+//            analyzerProcess = Runtime.getRuntime().exec(command);
+//            sc = new Scanner(analyzerProcess.getInputStream(), CHARSET);
+//            ps = new PrintStream(analyzerProcess.getOutputStream(), true, CHARSET);
+//
+//        } catch (IOException e) {
+//            log.error("Caution! Analyzer wasn't created. Check if mystem is installed", e);
+//            throw new RuntimeException(e);
+//        }
+//    }
 
 
     public void close() {
