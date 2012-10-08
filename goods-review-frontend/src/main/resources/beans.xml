@@ -51,4 +51,7 @@
         <property name="mainPageModel" ref="mainPageModel"/>
     </bean>
 
+    <bean class="ru.goodsreview.frontend.core.SettingsHolder$SettingsController">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
 </beans>

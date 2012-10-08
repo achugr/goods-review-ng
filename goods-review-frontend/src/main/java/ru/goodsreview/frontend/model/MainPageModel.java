@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import ru.goodsreview.core.db.entity.EntityType;
 import ru.goodsreview.core.db.visitor.Visitor;
+import ru.goodsreview.frontend.core.SettingsHolder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,18 +26,12 @@ import java.util.List;
 public class MainPageModel {
     private final static Logger log = Logger.getLogger(MainPageModel.class);
 
-    private JdbcTemplate jdbcTemplate;
-
-    @Required
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     public List<JSONObject> getPopularProducts(final int productsNumber) {
 //        TODO some logic here
 //        TODO it's temporarily solution
 //        TODO fix bug with parameters in sql query
-        return jdbcTemplate.query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID=1 LIMIT 4",
+        return SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID=1 LIMIT 4",
                 new RowMapper<JSONObject>() {
                     @Override
                     public JSONObject mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {
