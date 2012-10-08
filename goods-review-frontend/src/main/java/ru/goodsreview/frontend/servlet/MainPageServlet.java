@@ -1,6 +1,7 @@
 package ru.goodsreview.frontend.servlet;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.core.util.FileReader;
 import ru.goodsreview.frontend.model.MainPageModel;
 import ru.goodsreview.frontend.view.MainPageView;
@@ -20,10 +21,18 @@ import java.util.List;
 @Path("/")
 public class MainPageServlet {
 
+    private MainPageModel mainPageModel;
+
+    @Required
+    public void setMainPageModel(MainPageModel mainPageModel) {
+        this.mainPageModel = mainPageModel;
+    }
+
     @GET
     @Produces(MediaType.TEXT_HTML)
     public String getMainPage() {
-        final List<JSONObject> data = new MainPageModel().getPopularProducts(6);
+        System.out.println(mainPageModel);
+        final List<JSONObject> data = mainPageModel.getPopularProducts(6);
         return new MainPageView().createPage(data);
     }
 }

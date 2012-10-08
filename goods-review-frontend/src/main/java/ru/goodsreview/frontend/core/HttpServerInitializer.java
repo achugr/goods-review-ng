@@ -20,9 +20,16 @@ public class HttpServerInitializer implements InitializingBean {
 
     private int port;
 
+    private Handler [] handlers;
+
     @Required
     public void setPort(int port) {
         this.port = port;
+    }
+
+    @Required
+    public void setHandlers(Handler [] handlers) {
+        this.handlers = handlers;
     }
 
     @Override
@@ -33,8 +40,9 @@ public class HttpServerInitializer implements InitializingBean {
         connector.setPort(port);
         server.addConnector(connector);
 
-        WebAppContext root = new WebAppContext("goods-review-frontend/src/main/webapp/", "/");
-        server.setHandlers(new Handler[]{root});
+//        WebAppContext root = new WebAppContext("goods-review-frontend/src/main/webapp/", "/");
+//        server.setHandlers(new Handler[]{root});
+        server.setHandlers(handlers);
 
         server.start();
     }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <import resource="classpath:goods-review-db.xml"/>
+
+    <bean id="httpServerInitializer" class="ru.goodsreview.frontend.core.HttpServerInitializer" lazy-init="false">
+        <property name="port" value="8080"/>
+        <property name="handlers">
+            <list>
+                <bean class="org.mortbay.jetty.handler.ContextHandler">
+                    <property name="contextPath" value="/"/>
+                    <property name="handler">
+                        <bean class="org.mortbay.jetty.servlet.ServletHandler">
+                            <property name="servlets">
+                                <list>
+                                    <bean class="org.mortbay.jetty.servlet.ServletHolder">
+                                        <property name="servlet">
+                                            <bean class="com.sun.jersey.spi.container.servlet.ServletContainer"/>
+                                        </property>
+                                        <property name="name" value="GoodsReviewServ"/>
+                                        <property name="initParameters">
+                                            <map>
+                                                <entry key="com.sun.jersey.config.property.packages" value="ru.goodsreview.frontend.servlet"/>
+                                                <entry key="com.sun.jersey.api.json.POJOMappingFeature" value="true"/>
+                                            </map>
+                                        </property>
+                                    </bean>
+                                </list>
+                            </property>
+                            <property name="servletMappings">
+                                <list>
+                                    <bean class="org.mortbay.jetty.servlet.ServletMapping">
+                                        <property name="pathSpec" value="/*"/>
+                                        <property name="servletName" value="GoodsReviewServ"/>
+                                    </bean>
+                                </list>
+                            </property>
+                        </bean>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="mainPageModel" class="ru.goodsreview.frontend.model.MainPageModel">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="mainPageServlet" class="ru.goodsreview.frontend.servlet.MainPageServlet">
+        <property name="mainPageModel" ref="mainPageModel"/>
+    </bean>
+
+</beans>
