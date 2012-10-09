@@ -92,7 +92,7 @@
 
                         <p>тут потом будет что-нибудь красивое :)</p>
 
-                        <p>$data[0]</p>
+                        <p>$data[0].vendor</p>
                     </div>
                     <div class="span4">
                         <img src="img/gr_logo_big.png" height="75%" width="75%">

@@ -21,18 +21,10 @@ import java.util.List;
 @Path("/")
 public class MainPageServlet {
 
-    private MainPageModel mainPageModel;
-
-    @Required
-    public void setMainPageModel(MainPageModel mainPageModel) {
-        this.mainPageModel = mainPageModel;
-    }
-
     @GET
     @Produces(MediaType.TEXT_HTML)
     public String getMainPage() {
-        System.out.println(mainPageModel);
-        final List<JSONObject> data = mainPageModel.getPopularProducts(6);
+        final List<JSONObject> data = new MainPageModel().getPopularProducts(6);
         return new MainPageView().createPage(data);
     }
 }

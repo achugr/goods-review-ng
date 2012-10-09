@@ -14,7 +14,11 @@ public class SettingsHolder {
         return jdbcTemplate;
     }
 
-    public class SettingsController {
+    public SettingsHolder(){}
+
+    public static class SettingsController {
+
+        public SettingsController(){}
 
         @Required
         public void setJdbcTemplate(final JdbcTemplate jdbcTemplate) {
