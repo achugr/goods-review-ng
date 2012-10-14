@@ -30,6 +30,7 @@ public class AnalyzingTask extends AnalyzingSchedulerTask {
         try {
             if(object.has(TEXT_ATTR)){
                 String  review = object.get(TEXT_ATTR).toString();
+
                 ArrayList<Phrase> phrases = ExtractThesis.doExtraction(review);
                 List<Thesis> thesisList = new ArrayList<Thesis>();
                 for (Phrase phrase : phrases) {
@@ -39,8 +40,8 @@ public class AnalyzingTask extends AnalyzingSchedulerTask {
                 }
                 ReviewOverJson reviewOverJson = new ReviewOverJson(object);
                 reviewOverJson.addThesises(thesisList);
-                JSONObject newJsonObject = reviewOverJson.getJsonObject();
-                return newJsonObject;
+               // JSONObject newJsonObject = reviewOverJson.getJsonObject();
+                return object;
             }
 
         } catch (JSONException e) {

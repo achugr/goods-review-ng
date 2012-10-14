@@ -108,6 +108,7 @@ public class EntityService {
     }
 
     public void improveEntities(final Collection<JSONObject> entities) {
+
         jdbcTemplate.batchUpdate("UPDATE ENTITY SET ENTITY_ATTRS = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
                 new IterativeBatchPreparedStatementSetter<JSONObject>(entities) {
                     @Override
@@ -126,7 +127,13 @@ public class EntityService {
                             log.error("Wrong entity" + element, e);
                         }
                     }
+
+                    @Override
+                    public int getBatchSize() {
+                        return Batch.getSize();
+                    }
                 });
+
     }
 
     public void visitEntitiesWithCondition(final Condition condition, final Visitor<JSONObject> visitor) {
@@ -134,6 +141,7 @@ public class EntityService {
     }
 
     public void visitEntities(final long entityTypeId, final Visitor<JSONObject> visitor) {
+
 
         jdbcTemplate.query("SELECT ENTITY_ATTRS FROM ENTITY WHERE ENTITY_TYPE_ID = ?", new RowCallbackHandler() {
             @Override
