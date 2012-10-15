@@ -31,7 +31,8 @@ public class MainPageModel {
 //        TODO some logic here
 //        TODO it's temporarily solution
 //        TODO fix bug with parameters in sql query
-        return SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID=1 LIMIT 4",
+        return SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID=1 LIMIT ?",
+                new Object[]{productsNumber},
                 new RowMapper<JSONObject>() {
                     @Override
                     public JSONObject mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {

@@ -46,6 +46,7 @@
     <bean id="mainPageModel" class="ru.goodsreview.frontend.model.MainPageModel">
     </bean>
 
+
     <!--<bean id="mainPageServlet" class="ru.goodsreview.frontend.servlet.MainPageServlet">-->
         <!--<property name="mainPageModel" ref="mainPageModel"/>-->
     <!--</bean>-->

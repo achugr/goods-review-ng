@@ -1,5 +1,6 @@
 package ru.goodsreview.analyzer;
 
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.core.db.entity.EntityService;
@@ -11,6 +12,7 @@ import java.util.Collection;
  * Ilya Makeev
  */
 public class ServiceUpdater implements EntityUpdater {
+    private static final Logger log = Logger.getLogger(ServiceUpdater.class);
 
     private EntityService entityService;
 
@@ -21,6 +23,11 @@ public class ServiceUpdater implements EntityUpdater {
 
     @Override
     public void update(Collection<JSONObject> entities) {
+        log.info("Entities for improving: ");
+        for(JSONObject entity : entities){
+            log.info(entity.toString());
+        }
         entityService.improveEntities(entities);
+        log.info("Entities were improved..");
     }
 }

@@ -13,18 +13,13 @@ import java.util.List;
 public abstract class Batch<T> {
     private final static Logger log = Logger.getLogger(Batch.class);
 
-   // private final static int BATCH_SIZE = 512;
-   private final static int BATCH_SIZE = 128;
+    private final static int BATCH_SIZE = 5;
 
     private final int batchSize;
     private List<T> batchList;
 
     public Batch() {
         this(BATCH_SIZE);
-    }
-
-    public static int getSize(){
-        return BATCH_SIZE;
     }
 
     public Batch(final int size) {

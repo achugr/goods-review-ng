@@ -26,11 +26,11 @@ public class AnalyzingTask extends AnalyzingSchedulerTask {
 
     @Override
     protected JSONObject process(JSONObject object)  {
+        log.info("Review processing started..");
         String TEXT_ATTR = "text";
         try {
             if(object.has(TEXT_ATTR)){
                 String  review = object.get(TEXT_ATTR).toString();
-
                 ArrayList<Phrase> phrases = ExtractThesis.doExtraction(review);
                 List<Thesis> thesisList = new ArrayList<Thesis>();
                 for (Phrase phrase : phrases) {
@@ -40,8 +40,10 @@ public class AnalyzingTask extends AnalyzingSchedulerTask {
                 }
                 ReviewOverJson reviewOverJson = new ReviewOverJson(object);
                 reviewOverJson.addThesises(thesisList);
-               // JSONObject newJsonObject = reviewOverJson.getJsonObject();
-                return object;
+                JSONObject newJsonObject = reviewOverJson.getJsonObject();
+                log.info("thesises: " + newJsonObject.get("thesises").toString());
+
+                return newJsonObject;
             }
 
         } catch (JSONException e) {

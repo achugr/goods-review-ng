@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>GoodsReview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/my.css"/>
+    <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/bootstrap.css"/>
+    <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/bootstrap-responsive.css">
+
+
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+    </style>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<!--<div class="navbar navbar-inverse navbar-fixed-top">-->
+<div class="navbar navbar-fixed-top">
+
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">GoodsReview</a>
+
+            <div class="nav-collapse collapse">
+                <!--<p class="navbar-text pull-right">-->
+                <!--Logged in as <a href="#" class="navbar-link">Username</a>-->
+                <!--</p>-->
+                <ul class="nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Категории</li>
+                    <li class="active"><a href="#">Ноутбуки</a></li>
+                    <li><a href="#">Мобильные телефоны</a></li>
+                    <li><a href="#">Планшеты</a></li>
+                    <li><a href="#">Аудио-плееры</a></li>
+                </ul>
+            </div>
+            <form class="form-search">
+                <input type="text" class="input-medium search-query">
+                <button type="submit" class="btn">Факты о товаре</button>
+            </form>
+            <!--/.well -->
+        </div>
+        <!--/span-->
+        <div class="span9">
+            <div class="row">
+                <div class="span3"></div>
+                <div class="span5">
+                    <img src="img/tag_cloud.png">
+                    <p>data: $data</p>
+                </div>
+                <!--<p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>-->
+            </div>
+            <div class="tabbable"> <!-- Only required for left/right tabs -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab1" data-toggle="tab">Комментарии</a></li>
+                    <li><a href="#tab2" data-toggle="tab">Описание</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <div class="row-fluid comment">
+                            <div class="span1 username"><h4>Петя</h4></div>
+                            <div class="span9 commentContent">Почему не держит батарейка 5 часов и все!!!????а так все супер купил оригинал с гарантией в магазине.может как то надо настроить что то?????подскажите!!!</div>
+                            <div class="span2 commentDate">30.09.2012</div>
+                        </div>
+                        <div class="row-fluid comment">
+                            <div class="span1 username"><h4>Вася</h4></div>
+                            <div class="span9 commentContent">Покупал в 2011 г в подарок дочери. <span class="label label-info">Плеер</span> <span class="label label-success">хорош</span>, нет слов. Штатные "ушки" хороши для блюза, классики,возможно, джаза. Для рока используем Фишер аудио Этерна.
+                                Но вот незадача случилась. <span class="label label-important">Умер</span> <span class="label label-info">аккум</span>, а чек не найти. Спасибо сервису Юлмарта, сказали что чек можно восстановить и плеер сдать в ремонт. Сдадим. Менять на что то другое не хотим, до этого покупали powerman - 3шт, texet - 4шт, ritmix - 1шт, meizu m6 - 1шт, но все это не серьезно.
+                                Ставлю твердую 4 (балл снижен с 5 из-за проблеммы с аккумулятором).</div>
+                            <div class="span2 commentDate">30.09.2012</div>
+                        </div>
+                        <div class="row-fluid comment">
+                            <div class="span1 username"><h4>Маша</h4></div>
+                            <div class="span9 commentContent">Оч.<span class="label label-success">Хороший</span> <span class="label label-info">плеер</span>, нет лишнего всё по делу и оч.удобно. Уши в комплекте не плохие,Cвязка с ушами Sennheiser даёт приличный эффект. Отличное решение за эти деньги .
+                            </div>
+                            <div class="span2 commentDate">30.09.2012</div>
+                        </div>
+                        <!--/span-->
+                        <!--/row-->
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <p>Howdy, I'm in Section 2.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!--/row-->
+        </div>
+        <!--/span-->
+    </div>
+    <!--/row-->
+
+    <hr>
+
+    <footer class="footer">
+        <p>&copy; GoodsReview 2012</p>
+    </footer>
+
+</div>
+<!--/.fluid-container-->
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../assets/js/jquery.js"></script>
+<script src="../assets/js/bootstrap-transition.js"></script>
+<script src="../assets/js/bootstrap-alert.js"></script>
+<script src="../assets/js/bootstrap-modal.js"></script>
+<script src="../assets/js/bootstrap-dropdown.js"></script>
+<script src="../assets/js/bootstrap-scrollspy.js"></script>
+<script src="../assets/js/bootstrap-tab.js"></script>
+<script src="../assets/js/bootstrap-tooltip.js"></script>
+<script src="../assets/js/bootstrap-popover.js"></script>
+<script src="../assets/js/bootstrap-button.js"></script>
+<script src="../assets/js/bootstrap-collapse.js"></script>
+<script src="../assets/js/bootstrap-carousel.js"></script>
+<script src="../assets/js/bootstrap-typeahead.js"></script>
+
+</body>
+</html>
