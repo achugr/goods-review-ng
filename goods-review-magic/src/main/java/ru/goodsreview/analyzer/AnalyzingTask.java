@@ -12,6 +12,7 @@ import ru.goodsreview.core.db.visitor.Visitor;
 import ru.goodsreview.core.model.Thesis;
 import ru.goodsreview.core.model.impl.json.ReviewOverJson;
 import ru.goodsreview.core.model.impl.json.ReviewOverJson;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,26 +26,31 @@ public class AnalyzingTask extends AnalyzingSchedulerTask {
     private final static Logger log = Logger.getLogger(AnalyzingTask.class);
 
     @Override
-    protected JSONObject process(JSONObject object)  {
+    protected JSONObject process(JSONObject object) {
         log.info("Review processing started..");
-        String TEXT_ATTR = "text";
-        try {
-            if(object.has(TEXT_ATTR)){
-                String  review = object.get(TEXT_ATTR).toString();
-                ArrayList<Phrase> phrases = ExtractThesis.doExtraction(review);
-                List<Thesis> thesisList = new ArrayList<Thesis>();
-                for (Phrase phrase : phrases) {
-                    Thesis thesis = new EvaluativeThesis(phrase.toString());
-                    thesisList.add(thesis);
-                    log.info("Extracted thesis: " + thesis.getValue());
-                }
-                ReviewOverJson reviewOverJson = new ReviewOverJson(object);
-                reviewOverJson.addThesises(thesisList);
-                JSONObject newJsonObject = reviewOverJson.getJsonObject();
-                log.info("thesises: " + newJsonObject.get("thesises").toString());
+        String[] atrs = {"text", "pro", "contra"};
 
-                return newJsonObject;
+        try {
+            List<Thesis> thesisList = new ArrayList<Thesis>();
+
+            for (String atr : atrs) {
+                if (object.has(atr)) {
+                    String review = object.get(atr).toString();
+                    ArrayList<Phrase> phrases = ExtractThesis.doExtraction(review);
+                    for (Phrase phrase : phrases) {
+                        Thesis thesis = new EvaluativeThesis(phrase.toString());
+                        thesisList.add(thesis);
+                        //    log.info("Extracted thesis: " + thesis.getValue());
+                    }
+                }
             }
+
+
+            ReviewOverJson.updateObject(object, thesisList);
+
+            // log.info("thesises: " + object.get("thesises").toString());
+
+            return object;
 
         } catch (JSONException e) {
             e.printStackTrace();
