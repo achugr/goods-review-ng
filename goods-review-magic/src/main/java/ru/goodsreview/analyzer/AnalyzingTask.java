@@ -36,14 +36,14 @@ public class AnalyzingTask extends AnalyzingSchedulerTask {
                 for (Phrase phrase : phrases) {
                     Thesis thesis = new EvaluativeThesis(phrase.toString());
                     thesisList.add(thesis);
-                    log.info("Extracted thesis: " + thesis.getValue());
+                //    log.info("Extracted thesis: " + thesis.getValue());
                 }
-                ReviewOverJson reviewOverJson = new ReviewOverJson(object);
-                reviewOverJson.addThesises(thesisList);
-                JSONObject newJsonObject = reviewOverJson.getJsonObject();
-                log.info("thesises: " + newJsonObject.get("thesises").toString());
 
-                return newJsonObject;
+                ReviewOverJson.updateObject(object,thesisList);
+
+               // log.info("thesises: " + object.get("thesises").toString());
+
+                return object;
             }
 
         } catch (JSONException e) {
