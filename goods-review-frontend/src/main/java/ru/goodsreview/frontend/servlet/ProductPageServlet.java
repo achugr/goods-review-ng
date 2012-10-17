@@ -2,6 +2,7 @@ package ru.goodsreview.frontend.servlet;
 
 import org.json.JSONObject;
 import ru.goodsreview.core.util.Pair;
+import ru.goodsreview.frontend.controller.ProductPageController;
 import ru.goodsreview.frontend.model.ProductPageModel;
 import ru.goodsreview.frontend.view.ProductPageView;
 
@@ -25,13 +26,7 @@ public class ProductPageServlet {
     @Path("/{modelId}")
     @Produces(MediaType.TEXT_HTML)
     public String getProductPageById(@PathParam("modelId") final long modelId){
-        final ProductPageModel productPageModel = new ProductPageModel();
-        JSONObject model = productPageModel.getModelById(modelId);
-        List<JSONObject> reviews = productPageModel.getReviewsByModelId(modelId);
-        Map<String, Object> data = new HashMap<String, Object>();
-        data.put("modelInfo", model);
-        data.put("reviews", reviews);
-        return new ProductPageView().createPage(data);
+        return new ProductPageController().generatePage(modelId);
     }
 
 }
