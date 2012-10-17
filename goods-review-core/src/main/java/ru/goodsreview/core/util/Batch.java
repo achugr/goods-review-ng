@@ -27,6 +27,10 @@ public abstract class Batch<T> {
         batchList = new ArrayList<T>(size);
     }
 
+    public static int getSize(){
+        return BATCH_SIZE;
+    }
+
     public void submit(final T element) {
         batchList.add(element);
         log.info("[Batch] submitted");

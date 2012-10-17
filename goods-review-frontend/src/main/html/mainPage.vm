@@ -92,7 +92,7 @@
 
                         <p>тут потом будет что-нибудь красивое :)</p>
 
-                        <p>$data.get(0)</p>
+                        <p>$models.get(0)</p>
 
                     </div>
                     <div class="span4">
@@ -112,7 +112,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab1">
                         <div class="row-fluid">
-                            #foreach($product in $data)
+                            #foreach($product in $models)
                                 #if($velocityCount>3)
                                     #break;
                                 #end
@@ -127,7 +127,7 @@
                             #end
                         </div>
                         <div class="row-fluid">
-                            #foreach($product in $data)
+                            #foreach($product in $models)
 
                                 #if($velocityCount > 3)
                                     <div class="span4">

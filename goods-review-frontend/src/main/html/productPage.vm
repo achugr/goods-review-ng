@@ -83,7 +83,8 @@
                 <div class="span3"></div>
                 <div class="span5">
                     <img src="img/tag_cloud.png">
-                    <p>data: $data</p>
+                    <p>data: $modelInfo</p>
+                    <p>data: $reviews</p>
                 </div>
                 <!--<p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>-->
             </div>

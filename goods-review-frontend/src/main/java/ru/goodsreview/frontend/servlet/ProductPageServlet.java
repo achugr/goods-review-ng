@@ -1,6 +1,7 @@
 package ru.goodsreview.frontend.servlet;
 
 import org.json.JSONObject;
+import ru.goodsreview.core.util.Pair;
 import ru.goodsreview.frontend.model.ProductPageModel;
 import ru.goodsreview.frontend.view.ProductPageView;
 
@@ -9,7 +10,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Artemii Chugreev achugr@yandex-team.ru
@@ -25,7 +28,10 @@ public class ProductPageServlet {
         final ProductPageModel productPageModel = new ProductPageModel();
         JSONObject model = productPageModel.getModelById(modelId);
         List<JSONObject> reviews = productPageModel.getReviewsByModelId(modelId);
-        return new ProductPageView().createPage(model);
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("modelInfo", model);
+        data.put("reviews", reviews);
+        return new ProductPageView().createPage(data);
     }
 
 }
