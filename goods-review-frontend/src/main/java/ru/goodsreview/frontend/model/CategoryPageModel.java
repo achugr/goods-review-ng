@@ -10,6 +10,7 @@ import ru.goodsreview.frontend.core.SettingsHolder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,6 +43,9 @@ public class CategoryPageModel {
     public Pair<Integer, List<JSONObject>> getModelsByCategoryId(final long categoryId, final int pageNumber) {
         List<JSONObject> allModels = getAllModelsByCategoryId(categoryId);
         int modelsNumber = allModels.size();
+        if(modelsNumber == 0){
+            return new Pair<Integer, List<JSONObject>>(1, new ArrayList<JSONObject>());
+        }
         int pagesNumber = modelsNumber % MODELS_ON_PAGE_NUM == 0 ? modelsNumber / MODELS_ON_PAGE_NUM :
                                                                    modelsNumber / MODELS_ON_PAGE_NUM + 1;
         int indexFrom, indexTo;
