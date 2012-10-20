@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>GoodsReview</title>
+</head>
+<body>
+Number of pages: $pagesNumber  <br>
+List of models: $models
+</body>
+</html>

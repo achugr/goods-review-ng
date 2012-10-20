@@ -26,7 +26,7 @@ public class CategoryPageModel {
     private final static int MODELS_ON_PAGE_NUM = 9;
     
     private List<JSONObject> getAllModelsByCategoryId(final long categoryId){
-        return SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 3 AND ENTITY_ATTRS like ?",
+        return SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1 AND ENTITY_ATTRS like ?",
                 new String[]{"%\"categoryId\":" + categoryId + "%"},
                 new RowMapper<JSONObject>() {
                     @Override

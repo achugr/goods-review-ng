@@ -22,7 +22,7 @@ public class CategoryPageController {
         Pair<Integer, List<JSONObject>> categoryData = categoryPageModel.getModelsByCategoryId(categoryId, pageNumber);
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("pagesNumber", categoryData.first);
-        data.put("categories", categoryData.second);
+        data.put("models", categoryData.second);
         return new CategoryPageView().createPage(data);
     }
 }
