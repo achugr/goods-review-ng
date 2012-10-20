@@ -1,6 +1,6 @@
 package ru.goodsreview.frontend.servlet;
 
-import ru.goodsreview.frontend.controller.CategoryPageController;
+import ru.goodsreview.frontend.controller.CategoryController;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,6 +22,6 @@ public class CategoryPageServlet {
     @Path("/{category_id}/page/{page_number}")
     @Produces(MediaType.TEXT_HTML)
     public String getProductPageById(@PathParam("category_id") final long categoryId, @PathParam("page_number") final int pageNumber){
-        return new CategoryPageController().generatePage(categoryId, pageNumber);
+        return new CategoryController().generatePage(categoryId, pageNumber);
     }
 }

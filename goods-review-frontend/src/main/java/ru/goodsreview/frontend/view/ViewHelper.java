@@ -20,6 +20,7 @@ public class ViewHelper {
 
     public String createPage(final String templatePath, Map<String, Object> data) {
         VelocityEngine ve = new VelocityEngine();
+
         try {
             ve.init();
             Template t = ve.getTemplate(templatePath, "UTF-8");
@@ -31,7 +32,7 @@ public class ViewHelper {
             t.merge(context, writer);
             return writer.toString();
         } catch (Exception e) {
-            return "404 -> page not found";
+            return e.getMessage();
         }
     }
 

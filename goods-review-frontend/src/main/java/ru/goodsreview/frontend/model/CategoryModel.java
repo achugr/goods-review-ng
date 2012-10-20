@@ -20,8 +20,8 @@ import java.util.List;
  * Time: 15:45
  * To change this template use File | Settings | File Templates.
  */
-public class CategoryPageModel {
-    private final static Logger log = Logger.getLogger(CategoryPageModel.class);
+public class CategoryModel {
+    private final static Logger log = Logger.getLogger(CategoryModel.class);
     
     private final static int MODELS_ON_PAGE_NUM = 9;
     

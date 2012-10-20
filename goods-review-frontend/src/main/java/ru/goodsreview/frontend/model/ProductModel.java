@@ -3,27 +3,21 @@ package ru.goodsreview.frontend.model;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
-import ru.goodsreview.core.db.entity.EntityService;
-import ru.goodsreview.core.db.entity.EntityType;
-import ru.goodsreview.core.db.visitor.Visitor;
 import ru.goodsreview.frontend.core.SettingsHolder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         06.10.12
  */
-public class ProductPageModel {
+public class ProductModel {
 
-    private static final Logger log = Logger.getLogger(ProductPageModel.class);
+    private static final Logger log = Logger.getLogger(ProductModel.class);
 
     public JSONObject getModelById(final long modelId) {
 //        TODO it's govnokod

@@ -50,11 +50,4 @@
         </property>
     </bean>
 
-    <bean id="mainPageModel" class="ru.goodsreview.frontend.model.MainPageModel">
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
-
-    <bean id="mainPageServlet" class="ru.goodsreview.frontend.servlet.MainPageServlet">
-        <property name="mainPageModel" ref="mainPageModel"/>
-    </bean>
 </beans>
