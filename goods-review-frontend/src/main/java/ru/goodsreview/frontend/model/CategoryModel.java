@@ -5,12 +5,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
-import ru.goodsreview.core.util.Pair;
 import ru.goodsreview.frontend.core.SettingsHolder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,11 +21,25 @@ import java.util.List;
 public class CategoryModel {
     private final static Logger log = Logger.getLogger(CategoryModel.class);
     
-    private final static int MODELS_ON_PAGE_NUM = 9;
+    private final static Integer MODELS_ON_PAGE_NUM = 9;
     
-    private List<JSONObject> getAllModelsByCategoryId(final long categoryId){
-        return SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1 AND ENTITY_ATTRS like ?",
+    public int getModelsNumber(final long categoryId){
+        return SettingsHolder.getJdbcTemplate().query("SELECT COUNT(ENTITY_ATTRS) from ENTITY where ENTITY_TYPE_ID = 1 AND ENTITY_ATTRS like ?",
                 new String[]{"%\"categoryId\":" + categoryId + "%"},
+                new RowMapper<Integer>() {
+                    @Override
+                    public Integer mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {
+                        return rs.getInt("COUNT(ENTITY_ATTRS)");
+                    }
+                }
+        ).get(0);
+    }
+
+    public List<JSONObject> getModelsByCategoryId(final long categoryId, final int pageNumber) {
+        Integer indexFrom = (pageNumber - 1) * MODELS_ON_PAGE_NUM;
+        return SettingsHolder.getJdbcTemplate().query(
+                "SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1 AND ENTITY_ATTRS like ? LIMIT ?, ?",
+                new Object[]{"%\"categoryId\":" + categoryId + "%", indexFrom, MODELS_ON_PAGE_NUM},
                 new RowMapper<JSONObject>() {
                     @Override
                     public JSONObject mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {
@@ -37,28 +49,7 @@ public class CategoryModel {
                             throw new RuntimeException(e);
                         }
                     }
-                });
-    }
-
-    public Pair<Integer, List<JSONObject>> getModelsByCategoryId(final long categoryId, final int pageNumber) {
-        List<JSONObject> allModels = getAllModelsByCategoryId(categoryId);
-        int modelsNumber = allModels.size();
-        if(modelsNumber == 0){
-            return new Pair<Integer, List<JSONObject>>(1, new ArrayList<JSONObject>());
-        }
-        int pagesNumber = modelsNumber % MODELS_ON_PAGE_NUM == 0 ? modelsNumber / MODELS_ON_PAGE_NUM :
-                                                                   modelsNumber / MODELS_ON_PAGE_NUM + 1;
-        int indexFrom, indexTo;
-        if(pageNumber < pagesNumber){
-            indexFrom = (pageNumber - 1) * MODELS_ON_PAGE_NUM;
-            indexTo = pageNumber * MODELS_ON_PAGE_NUM - 1;
-        }else if(pageNumber == pagesNumber){
-            indexFrom = (pageNumber - 1) * MODELS_ON_PAGE_NUM;
-            indexTo = modelsNumber - 1;
-        }else{
-            indexFrom = 0;
-            indexTo = pagesNumber > 1 ? MODELS_ON_PAGE_NUM - 1 : modelsNumber - 1;
-        }
-        return new Pair<Integer, List<JSONObject>>(pagesNumber, allModels.subList(indexFrom, indexTo));
+                }
+        );
     }
 }

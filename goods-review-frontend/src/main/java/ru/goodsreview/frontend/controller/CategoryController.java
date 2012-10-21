@@ -1,7 +1,6 @@
 package ru.goodsreview.frontend.controller;
 
 import org.json.JSONObject;
-import ru.goodsreview.core.util.Pair;
 import ru.goodsreview.frontend.model.CategoryModel;
 import ru.goodsreview.frontend.view.CategoryPageView;
 
@@ -19,10 +18,11 @@ import java.util.Map;
 public class CategoryController {
     public String generatePage(final long categoryId, final int pageNumber){
         final CategoryModel categoryPageModel = new CategoryModel();
-        Pair<Integer, List<JSONObject>> categoryData = categoryPageModel.getModelsByCategoryId(categoryId, pageNumber);
+        int pagesNumber = categoryPageModel.getModelsNumber(categoryId);
+        List<JSONObject> models = categoryPageModel.getModelsByCategoryId(categoryId, pageNumber);
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("pagesNumber", categoryData.first);
-        data.put("models", categoryData.second);
+        data.put("pagesNumbers", pagesNumber);
+        data.put("models", models);
         return new CategoryPageView().createPage(data);
     }
 }
