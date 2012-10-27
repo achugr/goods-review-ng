@@ -1,6 +1,7 @@
 package ru.goodsreview.analyzer.util.dictionary;
 
 import org.apache.log4j.Logger;
+import org.junit.Test;
 import ru.goodsreview.core.util.FileReader;
 
 import java.io.BufferedReader;
@@ -52,5 +53,12 @@ public class MapDictionary implements KeyValueDictionary<String, Double> {
         for (String word : dictionary.keySet()) {
             System.out.println(word + " " + dictionary.get(word));
         }
+    }
+
+    @Test
+    public  void test(){
+        MapDictionary md = MapDictionary.getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
+        Double value = md.getValue("бессмысленный1");
+        System.out.print(value);
     }
 }

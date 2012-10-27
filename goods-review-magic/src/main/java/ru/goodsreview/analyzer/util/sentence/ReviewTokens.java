@@ -74,10 +74,13 @@ public class ReviewTokens {
         }
     }
 
-    private static void dictionaryCheck(List<Token> list){
+    private static void dictionaryCheck(List<Token> list) {
         for (Token token : list) {
             if (token.getPartOfSpeech().equals(PartOfSpeech.ADJECTIVE)) {
-                if (!opinionDictionary.contains(token.getNormForm())) {
+                Double opinionValue = opinionDictionary.getValue(token.getNormForm());
+                if (opinionValue != null) {
+                    token.setSentiment(opinionValue.doubleValue());
+                } else {
                     token.setPartOfSpeech(PartOfSpeech.UNKNOWN);
                 }
             }
