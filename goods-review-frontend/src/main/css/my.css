@@ -2,6 +2,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 10px;
+    padding-left: 10px;
     background-color: #EEE;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -24,4 +25,19 @@
 
 .footer{
     text-align: center;
+}
+
+.commentLabel{
+    text-align: center;
+}
+
+#tagCloudContainer{
+    min-height: 500px;
+}
+
+.modelName{
+    background-color: #EEE;
+    -webkit-border-radius: 3px;
+    margin-left: 30px;
+    padding-left: 10px;
 }

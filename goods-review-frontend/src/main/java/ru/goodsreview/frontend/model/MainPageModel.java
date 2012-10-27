@@ -26,7 +26,6 @@ import java.util.List;
 public class MainPageModel {
     private final static Logger log = Logger.getLogger(MainPageModel.class);
 
-
     public List<JSONObject> getPopularProducts(final int productsNumber) {
 //        TODO some logic here
 //        TODO it's temporarily solution

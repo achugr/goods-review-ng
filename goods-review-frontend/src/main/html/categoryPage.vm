@@ -7,10 +7,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <!-- Le styles -->
+
     <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/my.css"/>
     <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/bootstrap.css"/>
     <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/bootstrap-responsive.css">
-
 
     <style type="text/css">
         body {
@@ -79,76 +80,91 @@
         </div>
         <!--/span-->
         <div class="span9">
-            <div class="row">
-                <div class="span3"></div>
-                <div class="span5">
-                    <img src="$modelInfo.get("mainPhoto")">
-                    $modelInfo
-                    $reviews
-                    #foreach($review in $reviews)
-                        #set($thesises = $review.get("thesises"))
-                        #set($thesisesRange = [0..$thesises.length()])
-                        #if($thesisesRange.size()!=1)
-                            #foreach($i in $thesisesRange)
-                                #if($i < $thesisesRange.size() - 1)
-                                    $thesises.get($i).get("value"),
-                                #end
+            <div class="hero-unit">
+                <div class="row">
+                    <div class="span8">
+                        <h1>К вашим услугам!</h1>
 
-                            #end
-                        #end
-                    #end
+                        <p>Команда GoodsReview рада приветствовать вас на нашем сервисе!</p>
+
+                        <p>тут будет формочка для <span class="text-error">альтернативного</span> поиска. например,
+                            можно отметить "хорошая батарея", "удобная клавиатура", или ввести свой критерий.</p>
+                    </div>
+                    <div class="span4">
+                        <img src="http://i.imgur.com/Cg8br.png" height="75%" width="75%">
+
+                    </div>
                 </div>
+
                 <!--<p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>-->
             </div>
-            <div class="tabbable"> <!-- Only required for left/right tabs -->
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab1" data-toggle="tab">Комментарии</a></li>
-                    <li><a href="#tab2" data-toggle="tab">Описание</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="tab1">
-                        #foreach($review in $reviews)
-                            $review
-                            <div class="row-fluid comment">
-                                <div class="span1 username"><h4>Username</h4></div>
-                                <div class="span9 commentContent">
-                                    #if($review.has("text"))
-                                        $review.text
-                                    #end
-                                    <br><br>
-                                    #if($review.has("contra"))
-                                        $review.contra
-                                    #end
-                                    <br><br>
-                                    #if($review.has("pro"))
-                                        $review.pro
-                                    #end
-                                </div>
-                                <div class="span2 commentDate">$review.date</div>
-                            </div>
+        ##            <div class="row-fluid">
+        ##                <h4 class="text-info">Результаты поиска по запросу "ноутбук"</h4>
+        ##            </div>
+            <div class="row-fluid">
+                #foreach($product in $models)
+                    #if($velocityCount>3)
+                        #break;
+                    #end
+                    <div class="span4">
+                        <h3>
+                            <a href="http://localhost:8080/product/$product.get("id")">$product.get("vendor") $product.get("name")</a>
+                        </h3>
+                        <img src="$product.get("mainPhoto")"/>
+
+                        <p>Тут инфа. Какая - еще решим.</p>
+
+                        <p><a class="btn" href="#">Подробнее &raquo;</a></p>
+                    </div>
+                #end
+            </div>
+            <div class="row-fluid">
+                #foreach($product in $models)
+
+                    #if($velocityCount > 3 && $velocityCount<7)
+                        <div class="span4">
+                            <h3>
+                                <a href="http://localhost:8080/product/$product.get("id")">$product.get("vendor") $product.get("name")</a>
+                            </h3>
+                            <img src="$product.get("mainPhoto")"/>
+
+                            <p>Тут инфа. Какая - еще решим.</p>
+
+                            <p><a class="btn" href="#">Подробнее &raquo;</a></p>
+                        </div>
+                    #end
+                #end
+            </div>
+            <div class="row-fluid">
+                <div class="pagination span9 pull-right">
+                    <ul>
+                        <li><a href="#">Prev</a></li>
+                    ##                        <li><a href="#">1</a></li>
+                    ##                        <li><a href="#">2</a></li>
+                    ##                        <li><a href="#">3</a></li>
+                    ##                        <li><a href="#">4</a></li>
+                        #set($pagesEnumeration = [0..5])
+                        #foreach($pageId in $pagesEnumeration)
+                            <li><a href="http://localhost:8080/category/91148/page/$pageId">$pageId</a></li>
                         #end
-                        <!--/span-->
-                        <!--/row-->
-                    </div>
-                    <div class="tab-pane" id="tab2">
-                        <p>Howdy, I'm in Section 2.</p>
-                    </div>
+                        <li><a href="#">Next</a></li>
+
+                    </ul>
                 </div>
             </div>
-
-            <!--/row-->
         </div>
-        <!--/span-->
     </div>
+
     <!--/row-->
-
-    <hr>
-
-    <footer class="footer">
-        <p>&copy; GoodsReview 2012</p>
-    </footer>
-
 </div>
+<!--/span-->
+<!--/row-->
+<hr>
+
+<footer class="footer">
+    <p>&copy; GoodsReview 2012</p>
+</footer>
+
 <!--/.fluid-container-->
 
 <!-- Le javascript
