@@ -3,20 +3,12 @@ package ru.goodsreview.frontend.model;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
-import ru.goodsreview.core.db.entity.EntityType;
-import ru.goodsreview.core.db.visitor.Visitor;
 import ru.goodsreview.frontend.core.SettingsHolder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -30,7 +22,9 @@ public class MainPageModel {
 //        TODO some logic here
 //        TODO it's temporarily solution
 //        TODO fix bug with parameters in sql query
-        return SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID=1 LIMIT ?",
+        return SettingsHolder.getJdbcTemplate().query("select ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID=1 and " +
+                "ENTITY_ATTRS like \'%\"reviewsCount\":__,%\' and ENTITY_ATTRS like \'%\"rating\":5%\' " +
+                "order by RAND() limit ?",
                 new Object[]{productsNumber},
                 new RowMapper<JSONObject>() {
                     @Override
