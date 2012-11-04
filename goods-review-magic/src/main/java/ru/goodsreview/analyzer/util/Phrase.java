@@ -15,20 +15,26 @@ public final class Phrase implements Thesis {
     private final String feature;
     private final String opinion;
     private String normFeature;
+    private String normOpinion;
     private double importace = 0;
     private double sentiment = 0;
 
 
 
-    public Phrase(final String feature, final String opinion, String normFeature, double sentiment) {
+    public Phrase(final String feature, final String opinion, String normFeature, String normOpinion, double sentiment) {
         this.opinion = opinion;
         this.feature = feature;
         this.normFeature = normFeature;
+        this.normOpinion=normOpinion;
         this.sentiment = sentiment;
     }
 
     public String getNormFeature(){
         return normFeature;
+    }
+
+    public String getNormOpinion(){
+        return normOpinion;
     }
 
     public String getFeature(){
