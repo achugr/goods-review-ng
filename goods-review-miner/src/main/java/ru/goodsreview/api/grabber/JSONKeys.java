@@ -17,7 +17,8 @@ public enum JSONKeys {
     MODELS_NUM("modelsNum"),
     REVIEWS_COUNT("reviewsCount"),
     OPINION("opinion"),
-    MODEL_OPINIONS("modelOpinions");
+    MODEL_OPINIONS("modelOpinions"),
+    TOTAL("total");
 
     private final String key;
 
