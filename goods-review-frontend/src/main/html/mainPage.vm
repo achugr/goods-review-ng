@@ -117,7 +117,7 @@
                                     #break;
                                 #end
                                 <div class="span4">
-                                    <h3>$product.get("vendor") $product.get("name")</h3>
+                                    <h3><a href="http://localhost:8080/product/$product.get("id")">$product.get("vendor") $product.get("name")</a></h3>
                                     <img src="$product.get("mainPhoto")"/>
 
                                     <p>Тут инфа. Какая - еще решим.</p>
@@ -131,7 +131,7 @@
 
                                 #if($velocityCount > 3)
                                     <div class="span4">
-                                        <h3>$product.get("vendor") $product.get("name")</h3>
+                                        <h3><a href="http://localhost:8080/product/$product.get("id")">$product.get("vendor") $product.get("name")</a></h3>
                                         <img src="$product.get("mainPhoto")"/>
 
                                         <p>Тут инфа. Какая - еще решим.</p>
