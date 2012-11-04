@@ -16,6 +16,7 @@ public final class Token {
     private String gender;
     private String number;
     private String caseOf;
+    private double sentiment = 0.0;
 
     public Token(String content, String normForm,PartOfSpeech partOfSpeech, String gender, String number,String caseOf) {
         this.content = content;
@@ -48,6 +49,14 @@ public final class Token {
 
     public PartOfSpeech getPartOfSpeech() {
         return partOfSpeech;
+    }
+
+    public double getSentiment() {
+        return sentiment;
+    }
+
+    public void setSentiment(double value) {
+        this.sentiment = value;
     }
 
     public void setPartOfSpeech(PartOfSpeech partOfSpeech) {

@@ -115,12 +115,16 @@ public class ReviewOverJson implements Review {
 
 
     public static void updateObject(JSONObject object, final List<Thesis> thesises) {
+        if (object.has(THESISES_ATTR)) {
+            object.remove(THESISES_ATTR);
+        }
+        if (!object.has(THESISES_ATTR)) {
+            writeThesises(object,thesises);
+        }
+    }
 
+    public static void writeThesises(JSONObject object, final List<Thesis> thesises) {
         try {
-            if (object.has(THESISES_ATTR)) {
-                object.remove(THESISES_ATTR);
-            }
-
             object.put(THESISES_ATTR, new JSONArray());
 
             final JSONArray thesisArray = object.getJSONArray(THESISES_ATTR);
@@ -131,6 +135,6 @@ public class ReviewOverJson implements Review {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-
     }
+
 }

@@ -85,13 +85,10 @@ public class ExtractThesis{
 
                                     if (checkTokenListCorrespondence(leftTokenList, rightTokenList)) {
                                         Phrase newPhrase;
-
                                         if (pos == 1) {
-                                            newPhrase = new Phrase(leftToken.getContent(), rightToken.getContent(), leftToken.getNormForm());
-
+                                            newPhrase = new Phrase(leftToken.getContent(), rightToken.getContent(), leftToken.getNormForm(),rightToken.getNormForm(),rightToken.getSentiment());
                                         } else {
-                                            newPhrase = new Phrase(rightToken.getContent(), leftToken.getContent(), rightToken.getNormForm());
-
+                                            newPhrase = new Phrase(rightToken.getContent(), leftToken.getContent(), rightToken.getNormForm(),leftToken.getNormForm(),leftToken.getSentiment());
                                         }
                                         extractedThesisList.add(newPhrase);
                                         break;
