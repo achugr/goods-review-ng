@@ -72,7 +72,7 @@ public class ModelGrabber extends AbstractGrabber {
                 int modelsNum = category.getInt(JSONKeys.MODELS_NUM.getKey());
 
                 if(modelsNum != 0){
-                    int pageCount = ( modelsNum / COUNT_MAX_VALUE ) + 1;
+                    int pageCount = (modelsNum % COUNT_MAX_VALUE == 0) ? (modelsNum / COUNT_MAX_VALUE) : (modelsNum / COUNT_MAX_VALUE) + 1;
                     for(Integer pageNum = 1; pageNum <= pageCount; pageNum++){
                         CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
 

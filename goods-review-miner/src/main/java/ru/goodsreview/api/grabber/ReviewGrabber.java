@@ -133,7 +133,7 @@ public class ReviewGrabber extends AbstractGrabber{
                     int opinionsCount = mainObject.getInt(JSONKeys.TOTAL.getKey());
 
                     if(opinionsCount > COUNT_MAX_VALUE){
-                        int pageCount = ( opinionsCount / COUNT_MAX_VALUE ) + 1;
+                        int pageCount = (opinionsCount % COUNT_MAX_VALUE == 0) ? (opinionsCount / COUNT_MAX_VALUE) : (opinionsCount / COUNT_MAX_VALUE) + 1;
                         for(Integer pageNum = 2; pageNum <= pageCount; pageNum++){
 
                             parameters = new HashMap<String, String>();
