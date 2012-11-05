@@ -89,6 +89,19 @@ public class ReviewGrabber extends AbstractGrabber{
         }
     }
 
+    private void setOpinionsCount(JSONObject model, int opinionsCount) {
+        try {
+            model.put("opinionsCount", opinionsCount);
+        } catch (JSONException e) {
+            log.error("Error in entity type setting");
+            throw new RuntimeException();
+        }
+    }
+
+    private void update(List<JSONObject> models) {
+        grabberBatch.getEntityService().improveEntities(models);
+    }
+
     private List<JSONObject> grabReviews(List<JSONObject> models) {
         List<JSONObject> reviews = new ArrayList<JSONObject>();
         log.info("Grabbing reviews to DB started");
@@ -96,47 +109,79 @@ public class ReviewGrabber extends AbstractGrabber{
             try {
                 //Here can be thrown JSONException - if there are no such keys in json object "model"
                 long modelId = model.getLong(JSONKeys.ID.getKey());
-                int reviewsCount = model.getInt(JSONKeys.REVIEWS_COUNT.getKey());
 
-                if(reviewsCount != 0){
-                    int pageCount = ( reviewsCount / COUNT_MAX_VALUE ) + 1;
-                    for(Integer pageNum = 1; pageNum <= pageCount; pageNum++){
-                        OpinionRequestBuilder opinionRequestBuilder = new OpinionRequestBuilder();
+                Map<String,String> parameters = new HashMap<String, String>();
+                parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
+                parameters.put(RequestParams.PAGE.getKey(), "1");
 
-                        Map<String,String> parameters = new HashMap<String, String>();
-                        parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
-                        parameters.put(RequestParams.PAGE.getKey(), pageNum.toString());
+                OpinionRequestBuilder opinionRequestBuilder = new OpinionRequestBuilder();
+                UrlRequest urlRequest = opinionRequestBuilder.requestForOpinionOnModelById(modelId, parameters);
 
-                        UrlRequest urlRequest = opinionRequestBuilder.requestForOpinionOnModelById(modelId, parameters);
+                List<JSONObject> reviewsList = null;
+                try {
+                    //Here can be thrown HttpException or IOException - if something wrong in json object downloading
+                    JSONObject mainObject = contentApiProvider.provide(urlRequest);
 
-                        List<JSONObject> reviewsList = null;
-                        try {
-                            //Here can be thrown HttpException or IOException - if something wrong in json object downloading
-                            JSONObject mainObject = contentApiProvider.provide(urlRequest);
+                    //Here can be thrown JSONException - if something wrong with received json object
+                    reviewsList = JSONUtil.extractList(mainObject, JSONKeys.OPINION.getKey(), JSONKeys.MODEL_OPINIONS.getKey());
 
-                            //Here can be thrown JSONException - if something wrong with received json object
-                            reviewsList = JSONUtil.extractList(mainObject, JSONKeys.OPINION.getKey(), JSONKeys.MODEL_OPINIONS.getKey());
+                    //If everything Ok - processing valid json object
+                    setModelId(reviewsList, modelId);
+                    processEntityList(reviewsList);
+                    reviews.addAll(reviewsList);
 
-                            //If everything Ok - processing valid json object
-                            setModelId(reviewsList, modelId);
-                            processEntityList(reviewsList);
-                            reviews.addAll(reviewsList);
-                        }catch (HTTPException e){
-                            log.error("Http error. " + e.getMessage());
-                        } catch (IOException e) {
-                            log.error("Error in JSON object transfer. " + "\n" +
-                                    "Request url: " + urlRequest.getUrl());
-                        }catch (JSONException e) {
-                            log.error("Error while parsing json object, received " +
-                                    "by url: " + urlRequest.getUrl(), e);
+                    int opinionsCount = mainObject.getInt(JSONKeys.TOTAL.getKey());
+
+                    if(opinionsCount > COUNT_MAX_VALUE){
+                        int pageCount = ( opinionsCount / COUNT_MAX_VALUE ) + 1;
+                        for(Integer pageNum = 2; pageNum <= pageCount; pageNum++){
+
+                            parameters = new HashMap<String, String>();
+                            parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
+                            parameters.put(RequestParams.PAGE.getKey(), pageNum.toString());
+
+                            urlRequest = opinionRequestBuilder.requestForOpinionOnModelById(modelId, parameters);
+                            try{
+                                //Here can be thrown HttpException or IOException - if something wrong in json object downloading
+                                mainObject = contentApiProvider.provide(urlRequest);
+
+                                //Here can be thrown JSONException - if something wrong with received json object
+                                reviewsList = JSONUtil.extractList(mainObject, JSONKeys.OPINION.getKey(), JSONKeys.MODEL_OPINIONS.getKey());
+
+                                //If everything Ok - processing valid json object
+                                setModelId(reviewsList, modelId);
+                                processEntityList(reviewsList);
+                                reviews.addAll(reviewsList);
+                            }catch (HTTPException e){
+                                log.error("Http error. " + e.getMessage());
+                            } catch (IOException e) {
+                                log.error("Error in JSON object transfer. " + "\n" +
+                                        "Request url: " + urlRequest.getUrl());
+                            }catch (JSONException e) {
+                                log.error("Error while parsing json object, received " +
+                                        "by url: " + urlRequest.getUrl(), e);
+                            }
                         }
                     }
+                    setOpinionsCount(model, opinionsCount);
+                }catch (HTTPException e){
+                    log.error("Http error. " + e.getMessage());
+                } catch (IOException e) {
+                    log.error("Error in JSON object transfer. " + "\n" +
+                            "Request url: " + urlRequest.getUrl());
+                }catch (JSONException e) {
+                    log.error("Error while parsing json object, received " +
+                            "by url: " + urlRequest.getUrl(), e);
                 }
             } catch (JSONException e) {
                 log.error("Error while parsing json object: no such keys", e);
             }
         }
         log.info("Grabbing reviews to DB ended");
+
+        log.info("Updating models in DB started");
+        update(models);
+        log.info("Updating models in DB ended");
         return reviews;
     }
 }
