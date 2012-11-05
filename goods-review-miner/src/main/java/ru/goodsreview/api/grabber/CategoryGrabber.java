@@ -86,7 +86,7 @@ public class CategoryGrabber extends AbstractGrabber {
             int childrenCount = parentCategory.getInt(JSONKeys.CHILDREN_COUNT.getKey());
             if(childrenCount != 0){
 
-                int pageCount = (childrenCount / COUNT_MAX_VALUE) + 1;
+                int pageCount = (childrenCount % COUNT_MAX_VALUE == 0) ? (childrenCount / COUNT_MAX_VALUE) : (childrenCount / COUNT_MAX_VALUE) + 1;
 
                 for(Integer pageNum = 1; pageNum <= pageCount; pageNum++){
 
