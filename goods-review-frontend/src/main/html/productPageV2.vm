@@ -13,8 +13,8 @@
 
     <script type="text/javascript"
             src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="http://localhost:8080/static/js/bootstrap.min.js"></script>
 
     <style type="text/css">
         body {
@@ -38,10 +38,93 @@
     </script>
 
     <script type="text/javascript">
-        var paper;
         var thesises = [];
-        var positiveThesises = [];
-        var negativeThesises = [];
+        var classificatedThesises = new Array();
+        var green = "#008000";
+        var red = "#ff0000";
+
+        function contains(a, obj) {
+            var i = a.length;
+            while (i--) {
+                if (a[i] === obj) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function classifyThesises() {
+            var opinionsSet = [];
+            for (var i = 0; i < thesises.length; i++) {
+                var value = thesises[i].value.split(" ");
+                var feature = value[0];
+                classificatedThesises[feature] = {};
+                classificatedThesises[feature]['opinion']=[];
+                classificatedThesises[feature]['sentence']=[];
+                opinionsSet[feature] = [];
+            }
+            for (var i = 0; i < thesises.length; i++) {
+                var value = thesises[i].value.split(" ");
+                var feature = value[0];
+                var opinion = {};
+                opinion['content'] = value[1];
+                opinion['sentiment'] = thesises[i].sentiment;
+//                var opinion = value[1];
+//                console.log("content: " + opinion.content + " sentiment: " + opinion.sentiment);
+                if(!contains(opinionsSet[feature], opinion.content)){
+                    classificatedThesises[feature]['opinion'].push(opinion);
+                    var sentence = findSentenceForThesis(thesises[i].value);
+                    classificatedThesises[feature]['sentence'].push(sentence);
+                    opinionsSet[feature].push(opinion.content);
+                }
+            }
+        }
+
+        function findSentenceForThesis(thesis){
+            var commentsContent = document.getElementById("tab1").innerHTML;
+            var thesisParts = thesis.split(" ");
+            var regexp = new RegExp("\.(.*(" + thesisParts[1] + " " + thesisParts[0] + "|" + thesisParts[0] + " " + thesisParts[1] + ").*)\.", 'g');
+            console.log(regexp);
+            console.log(thesis);
+            var matches = commentsContent.toLowerCase().match(regexp);
+            for(index in matches){
+                matches[index] = matches[index].replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ');
+            }
+            console.log("matches! : " + matches);
+            return matches;
+        }
+
+        function viewThesises() {
+            var container = document.getElementById("thesises");
+            var staticContainer = document.getElementById("thesisMenu");
+            var thesisTabContent = document.getElementById("thesisTabContent");
+            for (i in classificatedThesises) {
+                console.log("thesis is: " + i);
+                $('<div class="row thesisForView"><a name="'+ i + '" id="'+ i +'"href="#activeThesis" class="btn btn-large" style="width:100px;" rel="popover">'+ i + '</a></div>').
+                        appendTo(container);
+                //data-content="' + classificatedThesises[i] +'"
+                var opinions = "";
+                for(j in classificatedThesises[i]['opinion']){
+                    var infoStyle;
+                    if(classificatedThesises[i]['opinion'][j].sentiment >= 0){
+                        infoStyle = "label label-success";
+                    } else {
+                        infoStyle = "label label-important";
+                    }
+                    opinions += "<span style='font-size:12pt ; margin-right: 10px; margin-bottom: 10px; margin-top: 10px;' class='"+infoStyle +"'> " + classificatedThesises[i]['opinion'][j].content + " </span>";
+                }
+                var sentences = "";
+                for(j in classificatedThesises[i]['sentence']){
+                    sentences += classificatedThesises[i]['sentence'][j] + "<br>";
+                }
+//                console.log("i am here " + classificatedThesises[i].);
+                var options = [];
+                options['title']=opinions;
+                options['html']=true;
+                options['content']=sentences;
+                $('#' + i).popover(options);
+            }
+        }
 
         function initThesises() {
             var rawThesises = document.getElementsByClassName("thesis");
@@ -49,88 +132,18 @@
                 console.log(i + ' ' + rawThesises[i].innerHTML);
                 thesises.push(JSON.parse(rawThesises[i].innerHTML));
                 thesises[i].importance = 1.0;
-                thesises[i].sentiment = (Math.random() - 0.5) * 3;
+//                thesises[i].sentiment = ;
             }
-        }
+            classifyThesises();
+            viewThesises();
 
-        function groupThesises() {
-            var j = 0;
-            for (var i = 0; i < thesises.length; i++) {
-                if (thesises[i].sentiment >= 0) {
-
-                    var k = 0;
-                    while (k < positiveThesises.length) {
-                        if (positiveThesises.sentiment < thesises.sentiment) {
-                            break;
-                        }
-                        k++;
-                    }
-                    positiveThesises.splice(k, 0, thesises[i]);
-                } else {
-                    var k = 0;
-                    while (k < negativeThesises.length) {
-                        if (negativeThesises.sentiment > thesises.sentiment) {
-                            break;
-                        }
-                        k++;
-                    }
-                    negativeThesises.splice(k, 0, thesises[i]);
-                }
-            }
-        }
-
-        function drawCloud() {
-            var zeroX = document.getElementById("tagCloudContainer").offsetLeft;
-            var zeroY = document.getElementById("tagCloudContainer").offsetTop;
-            var containerHeight = document.getElementById("tagCloudContainer").offsetHeight;
-            var containerWidth = document.getElementById("tagCloudContainer").offsetWidth;
-            var imageWidth = 200;
-            var imageHeight = 157;
-            paper = new Raphael(zeroX, zeroY, containerWidth, containerHeight);
-        ##            place product image in the center of container
-            paper.image('$modelInfo.get("mainPhoto")', containerWidth / 2 - imageWidth / 2, containerHeight / 2 - imageHeight / 2, 200, 157);
-            initThesises();
-            groupThesises();
-            var rowY = 100;
-            var positiveColumnX = 130;
-            var negativeColumnX = containerWidth / 2 + imageWidth / 2 + 130;
-            for (var j = 0; j < positiveThesises.length; j++) {
-                console.log("thesis ok");
-
-                var text = paper.text(positiveColumnX, rowY + j * 20, positiveThesises[j].value).attr({
-                    'fill':Raphael.getRGB("green"),
-//                    'opacity':Math.abs(positiveThesises[j].sentiment / 3),
-                    'opacity':1.0,
-//                    'font-size':positiveThesises[j].importance * 100 + 15,
-                    'font-size':20,
-                    'font-family':'arial'
-                });
-            }
-            for (var j = 0; j < negativeThesises.length; j++) {
-                t = paper.text(negativeColumnX, rowY + j * 20, negativeThesises[j].value).attr({
-
-                    'fill':Raphael.getRGB("red"),
-                    'opacity':1.0,
-                    'font-size':20,
-                    'font-family':'arial'
-                });
-            }
+//            var options = new Array();
+//            options["html"]="hello!";
+//            $("#test").popover();
+//            $("#example").popover();
 
         }
 
-        function highlightThesises() {
-            var commentsContent = document.getElementById("tab1").innerHTML;
-
-            for (var i = 0; i < thesises.length; i++) {
-                console.log("hello");
-                var thesisParts = thesises[i].value.split(" ");
-                for (var j = 0; j < thesisParts.length; j++) {
-                    console.log(thesisParts[j]);
-                    commentsContent = commentsContent.replace(new RegExp(thesisParts[j],'g'), "<span class='label label-info'>" + thesisParts[j] + "</span>");
-                }
-            }
-            document.getElementById("tab1").innerHTML = commentsContent;
-        }
 
     </script>
 
@@ -141,7 +154,8 @@
 
 </head>
 
-<body onload="drawCloud();highlightThesises();">
+<body onload="initThesises();">
+
 
 <div class="navbar navbar-fixed-top">
 
@@ -178,7 +192,7 @@
                     <li class="active"><a href="#">Ноутбуки</a></li>
                     <li><a href="#">Мобильные телефоны</a></li>
                     <li><a href="#">Планшеты</a></li>
-                    <li><a href="#">Аудио-плееры</a></li>
+                    <li><a href="#" id="contact">Аудио-плееры</a></li>
                 </ul>
             </div>
             <form class="form-search">
@@ -194,10 +208,17 @@
             </div>
             <div class="row">
                 <div class="span1"></div>
-                <div class="span9" id="tagCloudContainer">
+                <div class="span2">
+                    <img src="$modelInfo.get("mainPhoto")">
+                </div>
+                <div class="span7" id="thesisesContainer">
+##                    <ul id="thesises">
+##
+##                    </ul>
+                    <div id="thesises">
 
-                ##                    <img src="$modelInfo.get("mainPhoto")">
-                    <ul hidden="true">
+                    </div>
+                    <ul hidden="hidden">
                         #foreach($review in $reviews)
                             #set($thesises = $review.get("thesises"))
                             #set($thesisesRange = [0..$thesises.length()])

@@ -12,7 +12,7 @@ import java.util.Map;
  *         06.10.12
  */
 public class ProductPageView implements View<Map<String, Object>>{
-    private static final String TEMPLATE_PATH = "goods-review-frontend/src/main/html/productPage.vm";
+    private static final String TEMPLATE_PATH = "goods-review-frontend/src/main/html/productPageV2.vm";
 
     @Override
     public String createPage(Map<String, Object> data) {

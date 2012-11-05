@@ -17,11 +17,19 @@ import java.io.File;
 @Path("/static")
 public class StaticFilesServlet {
     private static final String CSS_DIR = "goods-review-frontend/src/main/css/";
+    private static final String JS_DIR = "goods-review-frontend/src/main/js/";
 
     @GET
     @Path("/css/{fileName}")
     @Produces("text/css")
     public String getCss(@PathParam("fileName") String fileName){
         return FileReader.readFileAsString(CSS_DIR + fileName);
+    }
+
+    @GET
+    @Path("/js/{fileName}")
+    @Produces("text/javascript")
+    public String getJs(@PathParam("fileName") String fileName){
+        return FileReader.readFileAsString(JS_DIR + fileName);
     }
 }

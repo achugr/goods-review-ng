@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/category")
 public class CategoryPageServlet {
+
     @GET
     @Path("/{category_id}/page/{page_number}")
     @Produces(MediaType.TEXT_HTML)

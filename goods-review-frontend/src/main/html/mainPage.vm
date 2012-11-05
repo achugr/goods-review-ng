@@ -93,6 +93,10 @@
                         <p>тут потом будет что-нибудь красивое :)</p>
 
                         <p>$models.get(0)</p>
+                        #set($productsRange = [0..5])
+                        #foreach($index in $productsRange)
+                            <br>$models.get($index)
+                        #end
 
                     </div>
                     <div class="span4">
