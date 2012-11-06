@@ -7,6 +7,15 @@
     <packaging>pom</packaging>
     <version>0.0.1</version>
 
+    <modules>
+        <module>goods-review-core</module>
+        <module>goods-review-frontend</module>
+        <module>goods-review-indexer</module>
+        <module>goods-review-magic</module>
+        <module>goods-review-scheduler</module>
+        <module>goods-review-server</module>
+    </modules>
+
     <distributionManagement>
 
     </distributionManagement>
