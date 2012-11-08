@@ -23,7 +23,7 @@ public class MainPageModel {
 //        TODO it's temporarily solution
 //        TODO fix bug with parameters in sql query
         return SettingsHolder.getJdbcTemplate().query("select ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID=1 and " +
-                "ENTITY_ATTRS like \'%\"reviewsCount\":__,%\' and ENTITY_ATTRS like \'%\"rating\":5%\' " +
+                "ENTITY_ATTRS like \'%\"rating\":5%\' and ENTITY_ATTRS like \'%\"opinionsCount\":__}%\'" +
                 "order by RAND() limit ?",
                 new Object[]{productsNumber},
                 new RowMapper<JSONObject>() {

@@ -37,16 +37,16 @@ public class ReviewGrabberTest {
     @Test
     public void grabReviewsForModelsFromDBTest(){
         List<JSONObject> reviews = reviewGrabber.grabReviewsForModelsFromDB();
-        for(JSONObject review : reviews){
+        /*for(JSONObject review : reviews){
             log.debug(review.toString());
-        }
+        }*/
     }
 
     @Test
     public void grabReviewsForSpecificCategoriesTest(){
         List<JSONObject> specificReviews = reviewGrabber.grabReviews("Ноутбуки");
-        for(JSONObject review : specificReviews){
+        /*for(JSONObject review : specificReviews){
             log.debug(review.toString());
-        }
+        }*/
     }
 }
