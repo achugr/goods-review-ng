@@ -15,13 +15,7 @@
         <version>0.0.1</version>
     </parent>
 
-    <repositories>
-        <repository>
-            <id>russian-morphology.lucene.apache.org</id>
-            <name>Lucene Russian Morphology Repository for Maven</name>
-            <url>http://russianmorphology.googlecode.com/svn/repo/releases/</url>
-        </repository>
-    </repositories>
+
 
     <dependencies>
         <dependency>
@@ -51,6 +45,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
+                    <encoding>UTF-8</encoding>
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>

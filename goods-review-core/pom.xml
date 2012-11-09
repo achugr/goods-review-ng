@@ -38,6 +38,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
+                    <encoding>UTF-8</encoding>
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
@@ -54,30 +55,7 @@
                     <threadCount>10</threadCount>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                        <configuration>
-                            <mainClass>ru.goodsreview.core.util.Main</mainClass>
-                            <arguments>
-                                <!--<argument>abs path</argument>-->
-
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <workingDirectory></workingDirectory>
-                </configuration>
-            </plugin>
+          
         </plugins>
 
     </build>

@@ -11,7 +11,7 @@ import java.util.Scanner;
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         24.08.12
  */
-//TODO название класса лучше сменить на FileUtils ибо FileReader подразумевает под собой то, у чего можно создать инстанс
+//TODO rename to FileUtils
 public final class FileReader {
     private static final Logger log = Logger.getLogger(FileReader.class);
 

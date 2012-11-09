@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
@@ -107,6 +108,29 @@ public class EntityService {
         batchForWatch.flush();
     }
 
+    public void improveEntity(final JSONObject model){
+        jdbcTemplate.batchUpdate("UPDATE ENTITY SET ENTITY_ATTRS = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
+                new BatchPreparedStatementSetter() {
+                    @Override
+                    public void setValues(PreparedStatement ps, int i) throws SQLException {
+                        try {
+                            ps.setString(1, model.toString());
+                            ps.setLong(2, Long.parseLong(model.getString(EntityType.TYPE_ID_ATTR)));
+                            ps.setLong(3, Long.parseLong(model.getString(ID_ATTR)));
+
+                            log.debug("Updated element: " + model.toString());
+                        } catch (JSONException e) {
+                            log.error("Wrong entity" + model, e);
+                        }
+                    }
+
+                    @Override
+                    public int getBatchSize() {
+                        return Batch.getSize();
+                    }
+                });
+    }
+
     public void improveEntities(final Collection<JSONObject> entities) {
 
         jdbcTemplate.batchUpdate("UPDATE ENTITY SET ENTITY_ATTRS = ? WHERE ENTITY_TYPE_ID = ? AND ENTITY_ID = ?",
@@ -114,15 +138,11 @@ public class EntityService {
                     @Override
                     protected void setValues(final PreparedStatement ps, final JSONObject element) throws SQLException {
                         try {
-
-                            System.out.println(element.toString());
-                            System.out.println(Long.parseLong(element.getString(EntityType.TYPE_ID_ATTR)));
-                            System.out.println(Long.parseLong(element.getString(ID_ATTR)));
-
-
                             ps.setString(1, element.toString());
                             ps.setLong(2, Long.parseLong(element.getString(EntityType.TYPE_ID_ATTR)));
                             ps.setLong(3, Long.parseLong(element.getString(ID_ATTR)));
+
+                            log.debug("Updated element: " + element.toString());
                         } catch (JSONException e) {
                             log.error("Wrong entity" + element, e);
                         }
