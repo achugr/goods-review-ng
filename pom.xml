@@ -83,12 +83,6 @@
             <artifactId>mockito-all</artifactId>
             <version>1.9.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.lucene.morphology</groupId>
-            <artifactId>russian</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
 
     <build>
