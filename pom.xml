@@ -16,6 +16,7 @@
         <module>goods-review-server</module>
     </modules>
 
+
     <distributionManagement>
 
     </distributionManagement>
@@ -101,45 +102,6 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
-
-            <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>exec-maven-plugin</artifactId>-->
-
-                <!--<version>1.2.1</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>test</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>java</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<mainClass>ru.goodsreview.core.util.Main</mainClass>-->
-                            <!--<arguments>-->
-                                <!--<argument>/goods-review-frontend/src/main/resources/beans.xml</argument>-->
-                            <!--</arguments>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<workingDirectory></workingDirectory>-->
-                    <!--<classpathScope></classpathScope>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-
-            <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>exec-maven-plugin</artifactId>-->
-                <!--<version>1.2.1</version>-->
-                <!--<configuration>-->
-                    <!--<executable>java</executable>-->
-                    <!--<mainClass>ru.goodsreview.core.util.Main</mainClass>-->
-                    <!--&lt;!&ndash;<arguments>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<argument>/goods-review-frontend/src/main/resources/beans.xml</argument>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</arguments>&ndash;&gt;-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-
         </plugins>
     </build>
 

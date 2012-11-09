@@ -37,7 +37,7 @@
         <property name="entityUpdater" ref="entityUpdater"/>
         <property name="entityService" ref="entityService"/>
     </bean>
-    <!--<bean id="wordAnalyzer" class="ru.goodsreview.analyzer.word.analyzer.LuceneAnalyzer"></bean>-->
+
 
 
 </beans>
