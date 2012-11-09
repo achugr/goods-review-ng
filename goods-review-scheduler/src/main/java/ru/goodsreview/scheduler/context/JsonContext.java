@@ -1,6 +1,6 @@
 package ru.goodsreview.scheduler.context;
 
-import com.sun.istack.internal.Nullable;
+//import com.sun.istack.internal.Nullable;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +22,7 @@ public class JsonContext extends AbstractContext {
         this.jsonObject = jsonObject;
     }
 
-    @Nullable
+   // @Nullable
     public static JsonContext from(final String jsonString) throws JSONException {
         if (jsonString.isEmpty()) {
             return new JsonContext(new JSONObject());
