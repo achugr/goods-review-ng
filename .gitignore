@@ -1,2 +1,3 @@
 secure-api.properties
 *OSValidator.java
+*.scala
