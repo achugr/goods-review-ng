@@ -7,9 +7,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/my.css"/>
-    <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/bootstrap.css"/>
-    <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/bootstrap-responsive.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/my.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-responsive.css">
 
     <script type="text/javascript"
             src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"></script>
@@ -205,6 +205,7 @@
         <div class="span9">
             <div class="row">
                 <h3 class="modelName">$modelInfo.get("vendor") $modelInfo.get("name")</h3>
+               $reviews.get(0)
             </div>
             <div class="row">
                 <div class="span1"></div>
@@ -220,20 +221,22 @@
                     </div>
                     <ul hidden="hidden">
                         #foreach($review in $reviews)
-                            #set($thesises = $review.get("thesises"))
-                            #set($thesisesRange = [0..$thesises.length()])
-                            #if($thesisesRange.size()!=1)
-                                #foreach($i in $thesisesRange)
-                                    #if($i < $thesisesRange.size() - 1)
-                                        <li class="thesis">$thesises.get($i)</li>
-                                    #end
-                                #end
-                            #end
+                        $review
+##                            #set($thesises = $review.get("thesises"))
+##                            #set($thesisesRange = [0..$thesises.length()])
+##                            #if($thesisesRange.size()!=1)
+##                                #foreach($i in $thesisesRange)
+##                                    #if($i < $thesisesRange.size() - 1)
+##                                        <li class="thesis">$thesises.get($i)</li>
+##                                    #end
+##                                #end
+##                            #end
                         #end
                     </ul>
                 </div>
                 <div class="span2"><a href=$modelInfo.get("link")><img height="75%" width="75%"
                                                                        src="http://i.imgur.com/wdXgD.jpg"></a></div>
+
                 <!--<p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>-->
             </div>
             <div class="tabbable"> <!-- Only required for left/right tabs -->

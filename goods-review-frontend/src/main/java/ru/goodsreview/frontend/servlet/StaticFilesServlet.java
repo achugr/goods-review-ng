@@ -1,13 +1,11 @@
 package ru.goodsreview.frontend.servlet;
 
-import ru.goodsreview.core.util.FileReader;
+import ru.goodsreview.core.util.FileUtils;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import java.io.File;
 
 /**
  * @author Artemii Chugreev achugr@yandex-team.ru
@@ -23,13 +21,13 @@ public class StaticFilesServlet {
     @Path("/css/{fileName}")
     @Produces("text/css")
     public String getCss(@PathParam("fileName") String fileName){
-        return FileReader.readFileAsString(CSS_DIR + fileName);
+        return FileUtils.readFileAsString(CSS_DIR + fileName);
     }
 
     @GET
     @Path("/js/{fileName}")
     @Produces("text/javascript")
     public String getJs(@PathParam("fileName") String fileName){
-        return FileReader.readFileAsString(JS_DIR + fileName);
+        return FileUtils.readFileAsString(JS_DIR + fileName);
     }
 }

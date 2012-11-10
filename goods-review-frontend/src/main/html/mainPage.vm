@@ -10,9 +10,9 @@
     <!-- Le styles -->
 ##    <link href="https://raw.github.com/AChugr/goods-review-ng/master/goods-review-frontend/src/main/html/css/bootstrap.css" rel="stylesheet"/>
 ##    <link href="https://raw.github.com/AChugr/goods-review-ng/master/goods-review-frontend/src/main/html/css/my.css" rel="stylesheet"/>
-    <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/my.css"/>
-    <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/bootstrap.css"/>
-    <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/bootstrap-responsive.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/my.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-responsive.css">
 
     <style type="text/css">
         body {
@@ -121,7 +121,7 @@
                                     #break;
                                 #end
                                 <div class="span4">
-                                    <h3><a href="http://localhost:8080/product/$product.get("id")">$product.get("vendor") $product.get("name")</a></h3>
+                                    <h3><a href="/product/$product.get("id")">$product.get("vendor") $product.get("name")</a></h3>
                                     <img src="$product.get("mainPhoto")"/>
 
                                     <p>Тут инфа. Какая - еще решим.</p>
@@ -135,7 +135,7 @@
 
                                 #if($velocityCount > 3)
                                     <div class="span4">
-                                        <h3><a href="http://localhost:8080/product/$product.get("id")">$product.get("vendor") $product.get("name")</a></h3>
+                                        <h3><a href="/product/$product.get("id")">$product.get("vendor") $product.get("name")</a></h3>
                                         <img src="$product.get("mainPhoto")"/>
 
                                         <p>Тут инфа. Какая - еще решим.</p>

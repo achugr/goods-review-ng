@@ -7,9 +7,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/my.css"/>
-    <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/bootstrap.css"/>
-    <link type="text/css" rel="stylesheet" href="http://localhost:8080/static/css/bootstrap-responsive.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/my.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-responsive.css">
 
     <script type="text/javascript"
             src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"></script>

@@ -21,7 +21,6 @@
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/test-annotations" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
-      <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
       <excludeFolder url="file://$MODULE_DIR$/target/surefire" />
       <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
       <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
@@ -52,9 +51,6 @@
     <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.mockito:mockito-all:1.9.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene.morphology:russian:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene.morphology:morph:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:3.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.jgrapht:jgrapht-jdk1.5:0.7.3" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:2.8.0" level="project" />
   </component>

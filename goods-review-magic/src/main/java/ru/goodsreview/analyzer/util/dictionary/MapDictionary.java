@@ -2,12 +2,8 @@ package ru.goodsreview.analyzer.util.dictionary;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
-import ru.goodsreview.core.util.FileReader;
+import ru.goodsreview.core.util.FileUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +28,7 @@ public class MapDictionary implements KeyValueDictionary<String, Double> {
     }
 
     private void initDictionary(final String dictionaryFileName) {
-        final List<String> fileLines = FileReader.readAsListOfLines(dictionaryFileName, MapDictionary.class);
+        final List<String> fileLines = FileUtils.readAsListOfLines(dictionaryFileName, MapDictionary.class);
         for(String line : fileLines){
             final String [] record = line.split("\\s");
             dictionary.put(record[WORD_INDEX], Double.parseDouble(record[WEIGHT_INDEX]));

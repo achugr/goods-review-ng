@@ -5,17 +5,16 @@ import org.apache.log4j.Logger;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         24.08.12
  */
 //TODO rename to FileUtils
-public final class FileReader {
-    private static final Logger log = Logger.getLogger(FileReader.class);
+public final class FileUtils {
+    private static final Logger log = Logger.getLogger(FileUtils.class);
 
-    private FileReader() {
+    private FileUtils() {
     }
 
     public static List<String> readAsListOfLines(final String filePath, final Class holderClass) {

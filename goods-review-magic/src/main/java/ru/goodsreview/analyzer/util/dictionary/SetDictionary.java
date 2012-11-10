@@ -9,11 +9,9 @@ package ru.goodsreview.analyzer.util.dictionary;
 
 import org.apache.log4j.Logger;
 
-import ru.goodsreview.core.util.FileReader;
+import ru.goodsreview.core.util.FileUtils;
 
 
-
-import java.io.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +28,7 @@ public class SetDictionary implements Dictionary<String> {
     }
 
     private void initDictionary(final String filePath) {
-        List<String> fileLines = FileReader.readAsListOfLines(filePath, SetDictionary.class);
+        List<String> fileLines = FileUtils.readAsListOfLines(filePath, SetDictionary.class);
         for (String line : fileLines) {
             dictionary.add(line);
         }
