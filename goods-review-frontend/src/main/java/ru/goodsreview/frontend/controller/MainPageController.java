@@ -1,8 +1,9 @@
 package ru.goodsreview.frontend.controller;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.frontend.model.MainPageModel;
-import ru.goodsreview.frontend.view.MainPageView;
+import ru.goodsreview.frontend.view.SimpleViewBuilder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,10 +15,18 @@ import java.util.Map;
  */
 public class MainPageController {
 
+    // "goods-review-frontend/src/main/html/mainPage.vm"
+    private SimpleViewBuilder viewBuilder;
+
+    @Required
+    public void setViewBuilder(final SimpleViewBuilder viewBuilder) {
+        this.viewBuilder = viewBuilder;
+    }
+
     public String generatePage(){
         final List<JSONObject> models = new MainPageModel().getPopularProducts(6);
-        Map<String, Object> data = new HashMap<String, Object>();
+        final Map<String, Object> data = new HashMap<String, Object>();
         data.put("models", models);
-        return new MainPageView().createPage(data);
+        return viewBuilder.build(data);
     }
 }

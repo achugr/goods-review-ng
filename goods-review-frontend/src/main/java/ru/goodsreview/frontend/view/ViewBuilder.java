@@ -4,7 +4,7 @@ package ru.goodsreview.frontend.view;
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         11.10.12
  */
-public interface View<T> {
+public interface ViewBuilder<T> {
 
-    String createPage(T data);
+    String build(T data);
 }

@@ -14,12 +14,13 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/product")
 public class ProductPageServlet {
+    private final ProductController controller = new ProductController();
 
     @GET
     @Path("/{modelId}")
     @Produces(MediaType.TEXT_HTML)
     public String getProductPageById(@PathParam("modelId") final long modelId){
-        return new ProductController().generatePage(modelId);
+        return controller.generatePage(modelId);
     }
 
 }

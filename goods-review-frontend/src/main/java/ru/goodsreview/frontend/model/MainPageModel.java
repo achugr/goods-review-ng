@@ -14,14 +14,11 @@ import java.util.List;
 /**
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         06.10.12
+ *
+ *        hardcoded class should be replaced by searcher
  */
 public class MainPageModel {
-    private final static Logger log = Logger.getLogger(MainPageModel.class);
-
     public List<JSONObject> getPopularProducts(final int productsNumber) {
-//        TODO some logic here
-//        TODO it's temporarily solution
-//        TODO fix bug with parameters in sql query
         return SettingsHolder.getJdbcTemplate().query("select ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID=1 and " +
                 "ENTITY_ATTRS like \'%\"rating\":5%\' and ENTITY_ATTRS like \'%\"opinionsCount\":__}%\'" +
                 "order by RAND() limit ?",

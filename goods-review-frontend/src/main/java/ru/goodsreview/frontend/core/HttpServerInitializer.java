@@ -33,16 +33,11 @@ public class HttpServerInitializer implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Server server = new Server();
-// TODO configure webAppContexts by spring
+        final Server server = new Server();
         Connector connector = new SelectChannelConnector();
         connector.setPort(port);
         server.addConnector(connector);
-
-//        WebAppContext root = new WebAppContext("goods-review-frontend/src/main/webapp/", "/");
-//        server.setHandlers(new Handler[]{root});
         server.setHandlers(handlers);
-
         server.start();
     }
 }

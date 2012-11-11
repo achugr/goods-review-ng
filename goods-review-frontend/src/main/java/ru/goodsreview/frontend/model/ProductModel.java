@@ -14,15 +14,15 @@ import java.util.List;
 /**
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         06.10.12
+ *
+ *
+ *         hardcoded class should be replaced by searcher
  */
 public class ProductModel {
-
-    private static final Logger log = Logger.getLogger(ProductModel.class);
-
-    public JSONObject getModelById(final long modelId) {
+    public JSONObject getModelById(final long id) {
 //        TODO it's govnokod
-        return SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1 AND ENTITY_ATTRS like ?",
-                new String[]{"%modelid=" + modelId + "%"},
+        final List<JSONObject> rawModels = SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1 AND ENTITY_ATTRS like ? limit 1",
+                new String[]{"%modelid=" + id + "%"},
                 new RowMapper<JSONObject>() {
                     @Override
                     public JSONObject mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {
@@ -32,13 +32,14 @@ public class ProductModel {
                             throw new RuntimeException(e);
                         }
                     }
-                }).get(0);
-
+                });
+        if (rawModels.isEmpty()) {
+            throw new RuntimeException(String.format("couldn't find model with id = %s", id));
+        }
+        return rawModels.get(0);
     }
 
-    //    TODO it's hard-hard-hard-hard code
     public List<JSONObject> getReviewsByModelId(final long modelId) {
-
         return SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 2 AND ENTITY_ATTRS like ?",
                 new String[]{"%" + modelId + "%"},
                 new RowMapper<JSONObject>() {
