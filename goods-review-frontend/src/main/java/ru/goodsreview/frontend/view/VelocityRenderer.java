@@ -27,12 +27,12 @@ public class VelocityRenderer {
 
     public static String render(final String templatePath, Map<String, Object> data) {
         try {
-            Template t = VE.getTemplate(templatePath, "UTF-8");
-            VelocityContext context = new VelocityContext();
-            for (Map.Entry<String, Object> entry : data.entrySet()) {
+            final Template t = VE.getTemplate(templatePath, "UTF-8");
+            final VelocityContext context = new VelocityContext();
+            for (final Map.Entry<String, Object> entry : data.entrySet()) {
                 context.put(entry.getKey(), entry.getValue());
             }
-            StringWriter writer = new StringWriter();
+            final StringWriter writer = new StringWriter();
             t.merge(context, writer);
             return writer.toString();
         } catch (final Exception e) {
