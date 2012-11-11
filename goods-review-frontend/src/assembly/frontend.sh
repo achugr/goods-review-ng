@@ -11,8 +11,6 @@ PID=../frontend.pid
 start() {
     LANG=ru_RU.UTF8
 
-    #CP1=lib/*/*.jar
-    #CP2=lib/*.jar
     CLASSPATH=`find lib -name '*.jar' -printf '%p:'`$CLASSPATH
 
     if [ -s $PID ]; then
