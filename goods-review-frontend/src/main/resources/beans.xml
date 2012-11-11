@@ -43,8 +43,7 @@
         </property>
     </bean>
 
-    <bean id="mainPageModel" class="ru.goodsreview.frontend.model.MainPageModel">
-    </bean>
+    <bean id="mainPageModel" class="ru.goodsreview.frontend.model.MainPageModel"/>
 
     <bean class="ru.goodsreview.frontend.core.SettingsHolder$SettingsController">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>

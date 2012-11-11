@@ -16,11 +16,11 @@ import java.util.Map;
  *         06.10.12
  */
 public class ProductController {
-
     private final SimpleViewBuilder viewBuilder = new SimpleViewBuilder(TemplatePath.PRODUCT_PAGE_TEMPLATE);
 
+    private final ProductModel productPageModel = new ProductModel();
+
     public String generatePage(final long modelId) {
-        final ProductModel productPageModel = new ProductModel();
         JSONObject model = productPageModel.getModelById(modelId);
         List<JSONObject> reviews = productPageModel.getReviewsByModelId(modelId);
         Map<String, Object> data = new HashMap<String, Object>();

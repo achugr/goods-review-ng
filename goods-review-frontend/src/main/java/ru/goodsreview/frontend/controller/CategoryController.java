@@ -18,8 +18,9 @@ import java.util.Map;
 public class CategoryController {
     private final SimpleViewBuilder viewBuilder =  new SimpleViewBuilder(TemplatePath.CATEGORY_PAGE_TEMPLATE);
 
+    private final CategoryModel categoryPageModel = new CategoryModel();
+
     public String generatePage(final long categoryId, final int pageNumber){
-        final CategoryModel categoryPageModel = new CategoryModel();
         int pagesNumber = categoryPageModel.getModelsCount(categoryId);
         List<JSONObject> models = categoryPageModel.getModelsByCategoryId(categoryId, pageNumber);
         Map<String, Object> data = new HashMap<String, Object>();
