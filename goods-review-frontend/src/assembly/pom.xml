@@ -28,7 +28,7 @@
                         <version>2.2.2</version>
                         <configuration>
                             <descriptors>
-                                <descriptor>dev/development.xml</descriptor>
+                                <descriptor>descriptor.xml</descriptor>
                             </descriptors>
                         </configuration>
                         <executions>
@@ -55,8 +55,8 @@
                                         <exec executable="rsync" dir="${basedir}" failonerror="true">
                                             <arg value="-rvpc"/>
                                             <arg value="--del"/>
-                                            <arg value="./target/${componentId}-development/"/>
-                                            <arg value="${ssh.username}@${ssh.host}:my_servants/${componentId}/"/>
+                                            <arg value="./target/goodsreview-frontend-upload/"/>
+                                            <arg value="${ssh.username}@${ssh.host}:goodsreview/"/>
                                         </exec>
                                     </target>
                                 </configuration>
