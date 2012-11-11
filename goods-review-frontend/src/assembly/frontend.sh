@@ -1,5 +1,10 @@
 #!/bin/sh
 
+#
+# usage:
+# ./frontend.sh (start|restart|stop)
+#
+
 LOG=frontend.log
 PID=../frontend.pid
 
