@@ -6,6 +6,7 @@ import org.mortbay.jetty.Server;
 import org.mortbay.jetty.bio.SocketConnector;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.servlet.Holder;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Required;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         07.10.12
  */
-public class HttpServerInitializer implements InitializingBean {
+public class HttpServerInitializer implements InitializingBean, DisposableBean {
 
     private int port;
 
@@ -31,13 +32,20 @@ public class HttpServerInitializer implements InitializingBean {
         this.handlers = handlers;
     }
 
+    private Server server;
+
     @Override
     public void afterPropertiesSet() throws Exception {
-        final Server server = new Server();
+        server = new Server();
         Connector connector = new SelectChannelConnector();
         connector.setPort(port);
         server.addConnector(connector);
         server.setHandlers(handlers);
         server.start();
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        server.stop();
     }
 }
