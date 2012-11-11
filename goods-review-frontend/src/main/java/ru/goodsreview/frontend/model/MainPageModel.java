@@ -17,11 +17,11 @@ import java.util.List;
  *        hardcoded class should be replaced by searcher
  */
 public class MainPageModel {
-    public List<JSONObject> getPopularProducts(final int productsNumber) {
+    public List<JSONObject> getPopularProducts(final int count) {
         return SettingsHolder.getJdbcTemplate().query("select ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID=1 and " +
                 "ENTITY_ATTRS like \'%\"rating\":5%\' and ENTITY_ATTRS like \'%\"opinionsCount\":__}%\'" +
                 "order by RAND() limit ?",
-                new Object[]{productsNumber},
+                new Object[]{count},
                 new RowMapper<JSONObject>() {
                     @Override
                     public JSONObject mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {

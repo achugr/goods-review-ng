@@ -23,8 +23,8 @@ public class CategoryModel {
                 new String[]{"%\"categoryId\":" + categoryId + "%"}, Integer.class);
     }
 
-    public List<JSONObject> getModelsByCategoryId(final long categoryId, final int pageNumber) {
-        final int indexFrom = (pageNumber - 1) * MODELS_ON_PAGE_NUM;
+    public List<JSONObject> getModels(final long categoryId, final int page) {
+        final int indexFrom = (page - 1) * MODELS_ON_PAGE_NUM;
         return SettingsHolder.getJdbcTemplate().query(
                 "SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1 AND ENTITY_ATTRS like ? LIMIT ?, ?",
                 new Object[]{"%\"categoryId\":" + categoryId + "%", indexFrom, MODELS_ON_PAGE_NUM},
