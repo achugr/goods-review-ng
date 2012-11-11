@@ -8,8 +8,6 @@ package ru.goodsreview.analyzer.util.sentence;
  */
 
 
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.goodsreview.analyzer.util.dictionary.Dictionary;
 import ru.goodsreview.analyzer.util.dictionary.MapDictionary;
 import ru.goodsreview.analyzer.util.dictionary.SetDictionary;
@@ -17,7 +15,6 @@ import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,11 +82,11 @@ public class ReviewTokens {
                 }
             }
 
-            if (token.getPartOfSpeech().equals(PartOfSpeech.NOUN)) {
-                if (!featureDictionary.contains(token.getNormForm())) {
-                    token.setPartOfSpeech(PartOfSpeech.UNKNOWN);
-                }
-            }
+//            if (token.getPartOfSpeech().equals(PartOfSpeech.NOUN)) {
+//                if (!featureDictionary.contains(token.getNormForm())) {
+//                    token.setPartOfSpeech(PartOfSpeech.UNKNOWN);
+//                }
+//            }
         }
     }
 
