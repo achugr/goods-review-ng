@@ -19,7 +19,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
-import ru.goodsreview.core.util.FileReader;
+import ru.goodsreview.core.util.FileUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
