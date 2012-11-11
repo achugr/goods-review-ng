@@ -27,9 +27,11 @@
         <sourceRoots>
           <root url="file://$MODULE_DIR$/frontend/src/main/scala" />
           <root url="file://$MODULE_DIR$/src/main/html" />
-          <root url="file://$MODULE_DIR$/target/generated-sources/annotations" />
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
+          <root url="file://$MODULE_DIR$/src/test/java" />
+          <root url="file://$MODULE_DIR$/target/generated-sources/test-annotations" />
+          <root url="file://$MODULE_DIR$/target/generated-sources/annotations" />
         </sourceRoots>
       </configuration>
     </facet>
@@ -39,13 +41,14 @@
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/frontend/src/main/scala" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/html" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/test-annotations" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
-      <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
+      <excludeFolder url="file://$MODULE_DIR$/target/surefire" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -72,9 +75,6 @@
     <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.mockito:mockito-all:1.9.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene.morphology:russian:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene.morphology:morph:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:3.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.mortbay.jetty:jetty:7.0.0.pre5" level="project" />
     <orderEntry type="library" name="Maven: org.mortbay.jetty:servlet-api:3.0.pre4" level="project" />
     <orderEntry type="library" name="Maven: org.mortbay.jetty:jetty-util:7.0.0.pre5" level="project" />
