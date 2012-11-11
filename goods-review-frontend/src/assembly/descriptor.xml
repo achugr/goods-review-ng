@@ -29,10 +29,8 @@
             </includes>
             <outputDirectory>/</outputDirectory>
         </fileSet>
-    </fileSets>
 
-    <!--copying static files-->
-    <fileSets>
+        <!--copying static files-->
         <fileSet>
             <directory>${basedir}/../main/static/vm</directory>
             <includes>
