@@ -20,15 +20,15 @@ public class HttpServerInitializer implements InitializingBean, DisposableBean {
 
     private int port;
 
-    private Handler [] handlers;
+    private Handler[] handlers;
 
     @Required
-    public void setPort(int port) {
+    public void setPort(final int port) {
         this.port = port;
     }
 
     @Required
-    public void setHandlers(Handler [] handlers) {
+    public void setHandlers(final Handler[] handlers) {
         this.handlers = handlers;
     }
 
