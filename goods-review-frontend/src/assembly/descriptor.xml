@@ -33,6 +33,7 @@
         <!--copying static files-->
         <fileSet>
             <directory>${basedir}/../main/static/vm</directory>
+            <fileMode>644</fileMode>
             <includes>
                 <include>*.vm</include>
             </includes>
@@ -41,6 +42,7 @@
 
         <fileSet>
             <directory>${basedir}/../main/static/css</directory>
+            <fileMode>644</fileMode>
             <includes>
                 <include>*.css</include>
             </includes>
@@ -49,6 +51,7 @@
 
         <fileSet>
             <directory>${basedir}/../main/static/js</directory>
+            <fileMode>644</fileMode>
             <includes>
                 <include>*.js</include>
             </includes>
