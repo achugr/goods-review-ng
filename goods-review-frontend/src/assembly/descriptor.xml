@@ -34,7 +34,7 @@
     <!--copying static files-->
     <fileSets>
         <fileSet>
-            <directory>${basedir}/../main/vm</directory>
+            <directory>${basedir}/../main/static/vm</directory>
             <includes>
                 <include>*.vm</include>
             </includes>
@@ -42,7 +42,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>${basedir}/../main/css</directory>
+            <directory>${basedir}/../main/static/css</directory>
             <includes>
                 <include>*.css</include>
             </includes>
@@ -50,7 +50,7 @@
         </fileSet>
 
         <fileSet>
-            <directory>${basedir}/../main/js</directory>
+            <directory>${basedir}/../main/static/js</directory>
             <includes>
                 <include>*.js</include>
             </includes>
