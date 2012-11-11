@@ -17,7 +17,6 @@ import java.util.Map;
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         11.10.12
  */
-//TODO make precompiled templates for header, footer
 public class ViewHelper {
     private static VelocityEngine ve = new VelocityEngine();
     static {

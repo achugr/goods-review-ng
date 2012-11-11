@@ -56,7 +56,7 @@
                                             <arg value="-rvpc"/>
                                             <arg value="--del"/>
                                             <arg value="./target/goodsreview-frontend-upload/"/>
-                                            <arg value="${ssh.username}@${ssh.host}:goodsreview/"/>
+                                            <arg value="${ssh.username}@${ssh.host}:${dir.name}/"/>
                                         </exec>
                                     </target>
                                 </configuration>
