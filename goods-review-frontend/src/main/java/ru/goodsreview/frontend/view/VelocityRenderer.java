@@ -20,15 +20,6 @@ import java.util.Map;
  */
 public class VelocityRenderer {
     private final static Logger log = Logger.getLogger(VelocityRenderer.class);
-    private static VelocityEngine ve = new VelocityEngine();
-    static {
-        try {
-            ve.init();
-        } catch (Exception e) {
-            log.error("Couldn't initializate velocity renderer");
-            throw new RuntimeException(e);
-        }
-    }
 
     public static String render(final String templatePath, Map<String, Object> data) {
         try {
