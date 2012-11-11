@@ -3,6 +3,7 @@ package ru.goodsreview.frontend.view;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.json.JSONObject;
@@ -27,13 +28,11 @@ public class VelocityRenderer {
             log.error("Couldn't initializate velocity renderer");
             throw new RuntimeException(e);
         }
-        ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, "org.apache.velocity.runtime.log.Log4JLogChute");
-        ve.setProperty(RuntimeConstants.RUNTIME_LOG, "frontend.log");
     }
 
     public static String render(final String templatePath, Map<String, Object> data) {
         try {
-            Template t = ve.getTemplate(templatePath, "UTF-8");
+            Template t = Velocity.getTemplate(templatePath, "UTF-8");
             VelocityContext context = new VelocityContext();
             for (Map.Entry<String, Object> entry : data.entrySet()) {
                 context.put(entry.getKey(), entry.getValue());
