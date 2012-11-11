@@ -1,10 +1,9 @@
 package ru.goodsreview.frontend.controller;
 
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.frontend.model.CategoryModel;
 import ru.goodsreview.frontend.view.SimpleViewBuilder;
-import ru.goodsreview.frontend.view.TemplatePath;
+import ru.goodsreview.frontend.view.TemplatePathsHolder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.Map;
  * Time: 15:42
  */
 public class CategoryController {
-    private final SimpleViewBuilder viewBuilder =  new SimpleViewBuilder(TemplatePath.CATEGORY_PAGE_TEMPLATE);
+    private final SimpleViewBuilder viewBuilder =  new SimpleViewBuilder(TemplatePathsHolder.getCategoryTemplatePath());
 
     private final CategoryModel categoryPageModel = new CategoryModel();
 

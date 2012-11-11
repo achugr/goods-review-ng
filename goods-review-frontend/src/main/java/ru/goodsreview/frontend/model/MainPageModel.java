@@ -1,6 +1,5 @@
 package ru.goodsreview.frontend.model;
 
-import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.dao.DataAccessException;

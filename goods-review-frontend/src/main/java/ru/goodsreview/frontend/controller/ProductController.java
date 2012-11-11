@@ -1,11 +1,9 @@
 package ru.goodsreview.frontend.controller;
 
-import org.apache.log4j.Logger;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.frontend.model.ProductModel;
 import ru.goodsreview.frontend.view.SimpleViewBuilder;
-import ru.goodsreview.frontend.view.TemplatePath;
+import ru.goodsreview.frontend.view.TemplatePathsHolder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.Map;
  *         06.10.12
  */
 public class ProductController {
-    private final SimpleViewBuilder viewBuilder = new SimpleViewBuilder(TemplatePath.PRODUCT_PAGE_TEMPLATE);
+    private final SimpleViewBuilder viewBuilder = new SimpleViewBuilder(TemplatePathsHolder.getProductTemplatePath());
 
     private final ProductModel productPageModel = new ProductModel();
 
