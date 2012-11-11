@@ -37,9 +37,8 @@ public class MystemAnalyzer implements WordAnalyzer{
 
    public MystemAnalyzer(String path){
         try {
-            String CHARSET = "UTF8";
-          String command = "./"+ path + "mystem -ni -e " + CHARSET;
-    //        String command = "mystem -ni -e " + CHARSET;
+          String CHARSET = "UTF8";
+          String command = "/usr/bin/mystem -ni -e " + CHARSET;
 
             analyzerProcess = Runtime.getRuntime().exec(command);
             sc = new Scanner(analyzerProcess.getInputStream(), CHARSET);
