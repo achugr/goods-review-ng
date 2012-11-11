@@ -14,6 +14,63 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <profiles>
+        <profile>
+            <id>upload-component</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>2.2.2</version>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>dev/development.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>make-assembly</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
+                        <executions>
+                            <execution>
+                                <id>sync-component</id>
+                                <phase>install</phase>
+                                <configuration>
+                                    <target>
+                                        <property file="upload.properties"/>
+                                        <exec executable="rsync" dir="${basedir}" failonerror="true">
+                                            <arg value="-rvpc"/>
+                                            <arg value="--del"/>
+                                            <arg value="./target/${componentId}-development/"/>
+                                            <arg value="${ssh.username}@${ssh.host}:my_servants/${componentId}/"/>
+                                        </exec>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <properties>
         <componentId>goodsreview-frontend</componentId>
     </properties>

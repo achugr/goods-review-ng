@@ -17,15 +17,22 @@ import java.util.Map;
  */
 //TODO make precompiled templates for header, footer
 public class ViewHelper {
+    static VelocityEngine ve = new VelocityEngine();
 
-    public String createPage(final String templatePath, Map<String, Object> data) {
-        VelocityEngine ve = new VelocityEngine();
-
+    static {
         try {
             ve.init();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String createPage(final String templatePath, Map<String, Object> data) {
+
+        try {
             Template t = ve.getTemplate(templatePath, "UTF-8");
             VelocityContext context = new VelocityContext();
-            for(Map.Entry<String, Object> entry : data.entrySet()){
+            for (Map.Entry<String, Object> entry : data.entrySet()) {
                 context.put(entry.getKey(), entry.getValue());
             }
             StringWriter writer = new StringWriter();
@@ -35,6 +42,4 @@ public class ViewHelper {
             return e.getMessage();
         }
     }
-
-
 }

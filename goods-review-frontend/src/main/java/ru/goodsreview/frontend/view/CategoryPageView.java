@@ -9,12 +9,11 @@ import java.util.Map;
  * Time: 14:51
  * To change this template use File | Settings | File Templates.
  */
-public class CategoryPageView implements View<Map<String, Object>> {
-    // TODO Create categoryPage.vm in goods-review-frontend/src/main/html/
+public class CategoryPageView extends SimpleView {
     private static final String TEMPLATE_PATH = "goods-review-frontend/src/main/html/categoryPage.vm";
 
     @Override
-    public String createPage(Map<String, Object> data) {
-        return new ViewHelper().createPage(TEMPLATE_PATH, data);
+    protected String getPath() {
+        return TEMPLATE_PATH;
     }
 }

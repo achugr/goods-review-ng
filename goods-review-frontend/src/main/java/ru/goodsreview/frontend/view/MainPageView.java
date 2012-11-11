@@ -16,11 +16,11 @@ import java.util.Properties;
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         07.10.12
  */
-public class MainPageView implements View<Map<String, Object>> {
-//    TODO here we can use spring
+public class MainPageView extends SimpleView {
     private final static String TEMPLATE_PATH = "goods-review-frontend/src/main/html/mainPage.vm";
 
-    public String createPage(final Map<String, Object> data) {
-        return new ViewHelper().createPage(TEMPLATE_PATH, data);
+    @Override
+    protected String getPath() {
+        return TEMPLATE_PATH;
     }
 }
