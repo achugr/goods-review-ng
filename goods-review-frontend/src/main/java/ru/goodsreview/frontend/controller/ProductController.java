@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.frontend.model.ProductModel;
 import ru.goodsreview.frontend.view.SimpleViewBuilder;
+import ru.goodsreview.frontend.view.TemplatePath;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,15 +16,8 @@ import java.util.Map;
  *         06.10.12
  */
 public class ProductController {
-    private static final Logger log = Logger.getLogger(ProductController.class);
 
-    private SimpleViewBuilder viewBuilder;
-
-    //"/Users/achugr/IdeaProjects/goods-review-frontend/src/main/html/productPageV2.vm"
-    @Required
-    public void setViewBuilder(final SimpleViewBuilder viewBuilder) {
-        this.viewBuilder = viewBuilder;
-    }
+    private final SimpleViewBuilder viewBuilder = new SimpleViewBuilder(TemplatePath.PRODUCT_PAGE_TEMPLATE);
 
     public String generatePage(final long modelId) {
         final ProductModel productPageModel = new ProductModel();
