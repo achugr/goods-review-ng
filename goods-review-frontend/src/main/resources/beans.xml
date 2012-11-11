@@ -44,7 +44,7 @@
     </bean>
 
     <bean class="ru.goodsreview.frontend.view.TemplatePathsHolder$TemplatePathsController">
-        <property name="templatesDir" value="/root/goodsreview/static/vm"/>
+        <property name="templatesDir" value="static/vm/"/>
     </bean>
 
     <bean class="ru.goodsreview.frontend.core.SettingsHolder$SettingsController">

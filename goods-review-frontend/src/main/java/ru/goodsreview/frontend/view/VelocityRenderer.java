@@ -3,15 +3,9 @@ package ru.goodsreview.frontend.view;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.json.JSONObject;
 
-import java.io.File;
 import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,9 +15,19 @@ import java.util.Map;
 public class VelocityRenderer {
     private final static Logger log = Logger.getLogger(VelocityRenderer.class);
 
+    private final static VelocityEngine VE = new VelocityEngine();
+
+    static {
+        try {
+            VE.init();
+        } catch (final Exception e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
     public static String render(final String templatePath, Map<String, Object> data) {
         try {
-            Template t = Velocity.getTemplate(templatePath, "UTF-8");
+            Template t = VE.getTemplate(templatePath, "UTF-8");
             VelocityContext context = new VelocityContext();
             for (Map.Entry<String, Object> entry : data.entrySet()) {
                 context.put(entry.getKey(), entry.getValue());

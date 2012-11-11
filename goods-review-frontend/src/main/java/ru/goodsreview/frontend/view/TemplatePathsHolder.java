@@ -15,7 +15,7 @@ public class TemplatePathsHolder {
     private static String TEMPLATES_DIR;
 
     private static String makePath(final String templateName) {
-        return TEMPLATES_DIR + "/" + templateName;
+        return TEMPLATES_DIR + templateName;
     }
 
     public static String getProductTemplatePath() {
