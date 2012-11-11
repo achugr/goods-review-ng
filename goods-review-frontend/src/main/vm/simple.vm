@@ -1,3 +1,0 @@
-<HTML>
-<BODY>
-Hello $name.get("some")!  Welcome to Velocity!

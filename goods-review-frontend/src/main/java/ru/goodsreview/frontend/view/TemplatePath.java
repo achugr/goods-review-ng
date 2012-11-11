@@ -7,10 +7,10 @@ package ru.goodsreview.frontend.view;
  */
 public class TemplatePath {
 
-    public static String CATEGORY_PAGE_TEMPLATE = "goods-review-frontend/src/main/html/categoryPage.vm";
+    public static String CATEGORY_PAGE_TEMPLATE = "goods-review-frontend/src/main/html/category.vm";
 
-    public static String MAIN_PAGE_TEMPLATE = "goods-review-frontend/src/main/html/mainPage.vm";
+    public static String MAIN_PAGE_TEMPLATE = "goods-review-frontend/src/main/html/main.vm";
 
-    public static String PRODUCT_PAGE_TEMPLATE = "/Users/achugr/IdeaProjects/goods-review-frontend/src/main/html/productPageV2.vm";
+    public static String PRODUCT_PAGE_TEMPLATE = "/Users/achugr/IdeaProjects/goods-review-frontend/src/main/html/product.vm";
 
 }
