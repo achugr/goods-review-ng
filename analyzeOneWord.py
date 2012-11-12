@@ -3,16 +3,15 @@ from pymorphy import get_morph
 
 morph = get_morph('/home/ilya/github/ru.sqlite-json')
 
-word = raw_input()
+command = raw_input()
+array = command.split('#')
 
-#print word
+word = array[0]
+case = array[1]
 
 word = word.decode("utf-8").upper()
+case = case.decode("utf-8")
 
-#info = morph.normalize(word)
-
-info = morph.inflect_ru(unicode(word), u"жр")
-
-#print info.pop().encode("utf-8")
+info = morph.inflect_ru(unicode(word), unicode(case))
 
 print info.encode("utf-8")

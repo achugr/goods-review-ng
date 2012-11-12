@@ -13,9 +13,9 @@ public class PyMorphyAnalyzer {
     private static Process analyzer;
 
 
-    private PyMorphyAnalyzer() throws IOException {
+    public PyMorphyAnalyzer(String path) {
         try {
-            analyzer = Runtime.getRuntime().exec("python analyzeOneWord.py");
+            analyzer = Runtime.getRuntime().exec("python "+path);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -25,40 +25,41 @@ public class PyMorphyAnalyzer {
         analyzer.destroy();
     }
 
-    public String normalizeWord(String word) {
+    public String transform(String word, String gender) {
+        String newWord = word;
+        String command = word+"#"+gender+"\n";
         try {
             String line;
 
             BufferedReader bri = new BufferedReader(new InputStreamReader(analyzer.getInputStream()));
-        //    BufferedReader bre = new BufferedReader(new InputStreamReader(analyzer.getErrorStream()));
+            BufferedReader bre = new BufferedReader(new InputStreamReader(analyzer.getErrorStream()));
 
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(analyzer.getOutputStream()));
-            writer.write(word+ "\n");
+            writer.write(command);
             writer.flush();
 
             while ((line = bri.readLine()) != null) {
-                word = line;
-                word = word.toLowerCase();
+                newWord = line.toLowerCase();
             }
             bri.close();
 
-//            if ((line = bre.readLine()) != null) {
-//                System.out.println(line);
-//            }
-         //   bre.close();
+            while ((line = bre.readLine()) != null) {
+                System.out.println(line);
+            }
+            bre.close();
 
             analyzer.waitFor();
 
         } catch (Exception err) {
             err.printStackTrace();
         }
-        return word;
+        return newWord;
     }
 
 
     public static void main(final String[] args) throws IOException {
-        PyMorphyAnalyzer analyzer1 = new PyMorphyAnalyzer();
-        System.out.println(analyzer1.normalizeWord("красивое"));
+        PyMorphyAnalyzer analyzer1 = new PyMorphyAnalyzer("analyzeOneWord.py");
+        System.out.println(analyzer1.transform("красивое","мр"));
         close();
     }
 

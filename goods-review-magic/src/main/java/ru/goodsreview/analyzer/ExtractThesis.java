@@ -105,6 +105,12 @@ public class ExtractThesis{
                                             sentiment = leftToken.getSentiment();
                                         }
 
+                                        if(!feature.equals(normFeature)){
+                                            System.out.println(feature+" "+opinion+" # "+normFeature+" "+normOpinion);
+                                            System.out.println(ReviewTokens.getWordAnalyzer().getGenger(feature).toString());
+
+                                        }
+
                                         newPhrase = new Phrase(feature, opinion, normFeature, normOpinion, sentiment);
 
                                         extractedThesisList.add(newPhrase);
