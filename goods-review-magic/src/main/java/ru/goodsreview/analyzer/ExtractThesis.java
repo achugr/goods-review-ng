@@ -84,12 +84,29 @@ public class ExtractThesis{
                                 if (leftToken.getPartOfSpeech().equals(part1)) {
 
                                     if (checkTokenListCorrespondence(leftTokenList, rightTokenList)) {
+
                                         Phrase newPhrase;
+                                        String feature;
+                                        String opinion;
+                                        String normFeature;
+                                        String normOpinion;
+                                        double sentiment;
                                         if (pos == 1) {
-                                            newPhrase = new Phrase(leftToken.getContent(), rightToken.getContent(), leftToken.getNormForm(),rightToken.getNormForm(),rightToken.getSentiment());
+                                            feature = leftToken.getContent();
+                                            opinion = rightToken.getContent();
+                                            normFeature = leftToken.getNormForm();
+                                            normOpinion = rightToken.getNormForm();
+                                            sentiment = rightToken.getSentiment();
                                         } else {
-                                            newPhrase = new Phrase(rightToken.getContent(), leftToken.getContent(), rightToken.getNormForm(),leftToken.getNormForm(),leftToken.getSentiment());
+                                            feature = rightToken.getContent();
+                                            opinion = leftToken.getContent();
+                                            normFeature = rightToken.getNormForm();
+                                            normOpinion = leftToken.getNormForm();
+                                            sentiment = leftToken.getSentiment();
                                         }
+
+                                        newPhrase = new Phrase(feature, opinion, normFeature, normOpinion, sentiment);
+
                                         extractedThesisList.add(newPhrase);
                                         break;
                                     }
