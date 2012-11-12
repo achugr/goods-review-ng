@@ -2,7 +2,7 @@ package ru.goodsreview.analyzer.word.analyzer;
 
 
 import java.io.*;
-import java.util.Scanner;
+
 
 /**
  * User: ilya
@@ -13,7 +13,7 @@ public class PyMorphyAnalyzer {
     private static Process analyzer;
 
 
-    PyMorphyAnalyzer() throws IOException {
+    private PyMorphyAnalyzer() throws IOException {
         try {
             analyzer = Runtime.getRuntime().exec("python analyzeOneWord.py");
         } catch (IOException e) {
@@ -21,51 +21,47 @@ public class PyMorphyAnalyzer {
         }
     }
 
-    public void close() {
+    public static void close() {
         analyzer.destroy();
     }
 
     public String normalizeWord(String word) {
-        OutputStream stdin = analyzer.getOutputStream();
-        InputStream stdout = analyzer.getInputStream();
-
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
-//        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stdin));
-        Scanner scanner = new Scanner(stdout);
-        PrintWriter writer = new PrintWriter(stdin);
-        InputStreamReader reader = new InputStreamReader(stdout);
-//        OutputStreamWriter writer = new OutputStreamWriter(stdin);
-
-        writer.write(word);
-        writer.flush();
-
-        String line;
-//        while ((line = reader.readLine()) != null) {
-//            return line;
-//        }
-
-        while (scanner.hasNext()){
-            System.out.println(scanner.next());
-        }
-        return "1";
-    }
-
-    public static String getNormalizedWord(String s) throws IOException {
-        String res = s;
-        PyMorphyAnalyzer pyMorphyAnalyzer = new PyMorphyAnalyzer();
         try {
+            String line;
 
-            res = pyMorphyAnalyzer.normalizeWord(s);
+            BufferedReader bri = new BufferedReader(new InputStreamReader(analyzer.getInputStream()));
+        //    BufferedReader bre = new BufferedReader(new InputStreamReader(analyzer.getErrorStream()));
 
-        } finally {
-            pyMorphyAnalyzer.close();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(analyzer.getOutputStream()));
+            writer.write(word+ "\n");
+            writer.flush();
+
+            while ((line = bri.readLine()) != null) {
+                word = line;
+                word = word.toLowerCase();
+            }
+            bri.close();
+
+//            if ((line = bre.readLine()) != null) {
+//                System.out.println(line);
+//            }
+         //   bre.close();
+
+            analyzer.waitFor();
+
+        } catch (Exception err) {
+            err.printStackTrace();
         }
-
-        return res;
+        return word;
     }
 
-    public static void main(String[] args) throws IOException {
-        System.out.println(getNormalizedWord("клавиатуры"));
 
+    public static void main(final String[] args) throws IOException {
+        PyMorphyAnalyzer analyzer1 = new PyMorphyAnalyzer();
+        System.out.println(analyzer1.normalizeWord("красивое"));
+        close();
     }
+
+
+
 }
