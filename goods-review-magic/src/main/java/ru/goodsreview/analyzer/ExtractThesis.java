@@ -14,7 +14,7 @@ import ru.goodsreview.analyzer.util.sentence.*;
 import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
 import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
 import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
-import ru.goodsreview.analyzer.word.analyzer.PyMorphyAnalyzer;
+
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -107,14 +107,17 @@ public class ExtractThesis{
                                             sentiment = leftToken.getSentiment();
                                         }
 
-//                                        if(!feature.equals(normFeature)){
-//                                            GrammarGender requiredGender = ReviewTokens.getWordAnalyzer().getGenger(normFeature);
-//                                            String newOpinion = ReviewTokens.getPymorphyAnalyzer().transform(normOpinion, requiredGender);
-//
-//                                          //  System.out.println(feature+" "+opinion+" # "+normFeature+" "+normOpinion+" # "+normFeature+" "+newOpinion);
-//                                            System.out.println(feature+" "+opinion+" --> "+normFeature+" "+newOpinion);
-//
-//                                        }
+                                        if(!feature.equals(normFeature)){
+                                            GrammarGender requiredGender = ReviewTokens.getWordAnalyzer().getGenger(normFeature);
+                                            String newOpinion = transform(normOpinion, requiredGender);
+
+                                          //  System.out.println(feature+" "+opinion+" # "+normFeature+" "+normOpinion+" # "+normFeature+" "+newOpinion);
+                                          //  System.out.println(feature+" "+opinion+" --> "+normFeature+" "+newOpinion);
+
+                                            normOpinion = newOpinion;
+                                        }else{
+                                            normOpinion=opinion;
+                                        }
 
                                         newPhrase = new Phrase(feature, opinion, normFeature, normOpinion, sentiment);
 
@@ -169,6 +172,31 @@ public class ExtractThesis{
     static boolean check(String s1, String s2) {
         String unk = MystemReportAnalyzer.UNKNOUN;
         return !s1.equals(unk) && !s2.equals(unk) && s1.equals(s2);
+    }
+
+
+    public static String transform(String word, GrammarGender gender) {
+        String newWord = word;
+
+        int indexOfGender;
+        if (gender.equals(GrammarGender.MASCULINE)) {
+            indexOfGender = 0;
+        } else if (gender.equals(GrammarGender.FEMININE)) {
+            indexOfGender = 1;
+        } else if (gender.equals(GrammarGender.NEUTER)) {
+            indexOfGender = 2;
+        } else {
+            indexOfGender = -1;
+        }
+
+        if (indexOfGender != -1) {
+            String[] forms = ReviewTokens.getPymorphyDict().getForms(word);
+            if (forms.length == 3) {
+                newWord = forms[indexOfGender];
+            }
+        }
+
+        return newWord;
     }
 
 

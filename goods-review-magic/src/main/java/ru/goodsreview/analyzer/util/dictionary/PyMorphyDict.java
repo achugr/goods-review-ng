@@ -40,7 +40,12 @@ public class PyMorphyDict  {
 
 
     public String[] getForms(final String key) {
-        return dictionary.get(key);
+        String[] forms = dictionary.get(key);
+        if(forms==null){
+            return new String[0];
+        } else{
+            return forms;
+        }
     }
 
     public void print() {
@@ -55,6 +60,7 @@ public class PyMorphyDict  {
     @Test
     public  void test(){
         PyMorphyDict pd = PyMorphyDict.getInstance("/ru/goodsreview/analyzer/util/dictionary/pyDict.txt");
+      //  System.out.println(pd.getForms("потрясныйsdf"));
         pd.print();
     }
 

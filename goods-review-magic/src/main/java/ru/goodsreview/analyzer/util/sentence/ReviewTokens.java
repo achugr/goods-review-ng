@@ -10,9 +10,9 @@ package ru.goodsreview.analyzer.util.sentence;
 
 import ru.goodsreview.analyzer.util.dictionary.Dictionary;
 import ru.goodsreview.analyzer.util.dictionary.MapDictionary;
+import ru.goodsreview.analyzer.util.dictionary.PyMorphyDict;
 import ru.goodsreview.analyzer.util.dictionary.SetDictionary;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
-import ru.goodsreview.analyzer.word.analyzer.PyMorphyAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
 
@@ -29,7 +29,7 @@ public class ReviewTokens {
     private static Dictionary featureDictionary = new SetDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt");
     private static MapDictionary opinionDictionary = new MapDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
 
-    //private static PyMorphyAnalyzer pymorphyAnalyzer = new PyMorphyAnalyzer("analyzeOneWord.py");
+    private static PyMorphyDict pymorphyDict = PyMorphyDict.getInstance("/ru/goodsreview/analyzer/util/dictionary/pyDict.txt");
 
 //    private static WordAnalyzer wordAnalyzer = (WordAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("wordAnalyzer");
     private static WordAnalyzer wordAnalyzer = new MystemAnalyzer("goods-review-magic/src/main/assembly/ru/goodsreview/analyzer/tools/");
@@ -97,9 +97,9 @@ public class ReviewTokens {
         return wordAnalyzer;
     }
 
-//    public static PyMorphyAnalyzer getPymorphyAnalyzer(){
-//        return new PyMorphyAnalyzer("analyzeOneWord.py");
-//    }
+    public static PyMorphyDict getPymorphyDict(){
+        return pymorphyDict;
+    }
 
     public static Dictionary getFeatureDictionary(){
         return featureDictionary;
