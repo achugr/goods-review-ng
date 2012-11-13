@@ -29,7 +29,7 @@ public class ReviewTokens {
     private static Dictionary featureDictionary = new SetDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt");
     private static MapDictionary opinionDictionary = new MapDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
 
-    private static final PyMorphyAnalyzer pymorphyAnalyzer = new PyMorphyAnalyzer("analyzeOneWord.py");
+    //private static PyMorphyAnalyzer pymorphyAnalyzer = new PyMorphyAnalyzer("analyzeOneWord.py");
 
 //    private static WordAnalyzer wordAnalyzer = (WordAnalyzer)new ClassPathXmlApplicationContext("beans.xml").getBean("wordAnalyzer");
     private static WordAnalyzer wordAnalyzer = new MystemAnalyzer("goods-review-magic/src/main/assembly/ru/goodsreview/analyzer/tools/");
@@ -95,6 +95,10 @@ public class ReviewTokens {
 
     public static WordAnalyzer getWordAnalyzer(){
         return wordAnalyzer;
+    }
+
+    public static PyMorphyAnalyzer getPymorphyAnalyzer(){
+        return new PyMorphyAnalyzer("analyzeOneWord.py");
     }
 
     public static Dictionary getFeatureDictionary(){

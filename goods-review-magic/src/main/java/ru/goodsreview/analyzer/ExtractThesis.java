@@ -12,7 +12,9 @@ import ru.goodsreview.analyzer.util.Phrase;
 import ru.goodsreview.analyzer.util.ThesisPattern;
 import ru.goodsreview.analyzer.util.sentence.*;
 import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
+import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
 import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
+import ru.goodsreview.analyzer.word.analyzer.PyMorphyAnalyzer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -105,11 +107,14 @@ public class ExtractThesis{
                                             sentiment = leftToken.getSentiment();
                                         }
 
-                                        if(!feature.equals(normFeature)){
-                                            System.out.println(feature+" "+opinion+" # "+normFeature+" "+normOpinion);
-                                            System.out.println(ReviewTokens.getWordAnalyzer().getGenger(feature).toString());
-
-                                        }
+//                                        if(!feature.equals(normFeature)){
+//                                            GrammarGender requiredGender = ReviewTokens.getWordAnalyzer().getGenger(normFeature);
+//                                            String newOpinion = ReviewTokens.getPymorphyAnalyzer().transform(normOpinion, requiredGender);
+//
+//                                          //  System.out.println(feature+" "+opinion+" # "+normFeature+" "+normOpinion+" # "+normFeature+" "+newOpinion);
+//                                            System.out.println(feature+" "+opinion+" --> "+normFeature+" "+newOpinion);
+//
+//                                        }
 
                                         newPhrase = new Phrase(feature, opinion, normFeature, normOpinion, sentiment);
 

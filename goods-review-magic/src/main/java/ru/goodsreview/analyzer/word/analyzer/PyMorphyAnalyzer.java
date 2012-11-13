@@ -1,6 +1,8 @@
 package ru.goodsreview.analyzer.word.analyzer;
 
 
+import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
+
 import java.io.*;
 
 
@@ -25,41 +27,59 @@ public class PyMorphyAnalyzer {
         analyzer.destroy();
     }
 
-    public String transform(String word, String gender) {
+    public String transform(String word, GrammarGender gender) {
         String newWord = word;
-        String command = word+"#"+gender+"\n";
-        try {
-            String line;
 
-            BufferedReader bri = new BufferedReader(new InputStreamReader(analyzer.getInputStream()));
-            BufferedReader bre = new BufferedReader(new InputStreamReader(analyzer.getErrorStream()));
-
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(analyzer.getOutputStream()));
-            writer.write(command);
-            writer.flush();
-
-            while ((line = bri.readLine()) != null) {
-                newWord = line.toLowerCase();
-            }
-            bri.close();
-
-            while ((line = bre.readLine()) != null) {
-                System.out.println(line);
-            }
-            bre.close();
-
-            analyzer.waitFor();
-
-        } catch (Exception err) {
-            err.printStackTrace();
+        String requiredGender;
+        if (gender.equals(GrammarGender.FEMININE)) {
+            requiredGender = "жр";
+        } else
+        if (gender.equals(GrammarGender.MASCULINE)) {
+            requiredGender = "мр";
+        } else
+        if (gender.equals(GrammarGender.NEUTER)) {
+            requiredGender = "ср";
+        } else{
+            requiredGender = "unk";
         }
+
+        if (!requiredGender.equals("unk")) {
+            String command = word + "#" + requiredGender + "\n";
+            try {
+                String line;
+
+                BufferedReader bri = new BufferedReader(new InputStreamReader(analyzer.getInputStream()));
+                BufferedReader bre = new BufferedReader(new InputStreamReader(analyzer.getErrorStream()));
+
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(analyzer.getOutputStream()));
+                writer.write(command);
+                writer.flush();
+
+                while ((line = bri.readLine()) != null) {
+                    newWord = line.toLowerCase();
+                }
+                bri.close();
+
+                while ((line = bre.readLine()) != null) {
+                    System.out.println(line);
+                }
+                bre.close();
+
+                analyzer.waitFor();
+
+            } catch (Exception err) {
+                err.printStackTrace();
+            }
+        }
+
         return newWord;
     }
 
 
     public static void main(final String[] args) throws IOException {
         PyMorphyAnalyzer analyzer1 = new PyMorphyAnalyzer("analyzeOneWord.py");
-        System.out.println(analyzer1.transform("красивое","мр"));
+        System.out.println(analyzer1.transform("нормальный",GrammarGender.FEMININE));
+
         close();
     }
 
