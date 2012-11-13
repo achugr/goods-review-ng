@@ -97,9 +97,9 @@ public class ReviewTokens {
         return wordAnalyzer;
     }
 
-    public static PyMorphyAnalyzer getPymorphyAnalyzer(){
-        return new PyMorphyAnalyzer("analyzeOneWord.py");
-    }
+//    public static PyMorphyAnalyzer getPymorphyAnalyzer(){
+//        return new PyMorphyAnalyzer("analyzeOneWord.py");
+//    }
 
     public static Dictionary getFeatureDictionary(){
         return featureDictionary;

@@ -4,7 +4,7 @@ from pymorphy import get_morph
 
 morph = get_morph('/home/ilya/github/ru.sqlite-json') #dict path
 
-ins = open("opinion_words.txt", "r")
+ins = open("adjective_opinion_words.txt", "r")
 
 array = []
 for line in ins:
