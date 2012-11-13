@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         13.11.12
  */
+//TODO code in this class is horrible
 public class ProductInfoPreparatory {
 
     private static final Logger log = Logger.getLogger(ProductInfoPreparatory.class);
@@ -23,18 +24,38 @@ public class ProductInfoPreparatory {
         List<JSONObject> thesises = extractThesises(reviews);
         Map<String, List<JSONObject>> featureMap = groupByFeature(thesises);
         Map<String, Map<String, JSONObject>> info = groupByOpinion(featureMap);
-
-        return new JSONObject();
+        return buildProductInfo(info);
     }
 
-    private JSONObject buildProductInfo(Map<String, Map<String, JSONObject>> info){
-        List<String> features = new ArrayList<String>(info.keySet());
-        Collections.sort(features);
+    private JSONObject buildProductInfo(Map<String, Map<String, JSONObject>> info) {
+        List<String> featureNames = new ArrayList<String>(info.keySet());
+        Collections.sort(featureNames);
         final JSONObject productInfo = new JSONObject();
-        for(String featureName : features){
-            productInfo.put("")
+        JSONArray features = new JSONArray();
+        try {
+            for (String featureName : featureNames) {
+                JSONObject feature = new JSONObject();
+                feature.put("feature", featureName);
+                JSONArray opinions = new JSONArray();
+                List<String> opinionNames = new ArrayList<String>(info.get(featureName).keySet());
+                Collections.sort(opinionNames);
+                for (String opinionName : opinionNames) {
+                    JSONObject opinion = new JSONObject();
+                    opinion.put("opinion", opinionName);
+                    opinion.put("sentiment", info.get(featureName).get(opinionName).getInt("sentiment"));
+                    opinion.put("importance", info.get(featureName).get(opinionName).getDouble("importance"));
+                    opinion.put("sentences", info.get(featureName).get(opinionName).getJSONArray("sentences"));
+                    opinions.put(opinion);
+                }
+                feature.put("opinions", opinions);
+                features.put(feature);
+            }
+            productInfo.put("features", features);
+        } catch (JSONException e) {
+            log.error("Some problem with json", e);
+            throw new RuntimeException(e);
         }
-
+        return productInfo;
     }
 
     private List<JSONObject> extractThesises(List<JSONObject> reviews) {
@@ -143,32 +164,5 @@ public class ProductInfoPreparatory {
         }
         return sentences;
     }
-
-    public static void main(String[] args) {
-        final List<JSONObject> reviews = new LinkedList<JSONObject>();
-        try {
-            reviews.add(new JSONObject("{\"id\":24826722,\"modelId\":7284127,\"reject\":0,\"contra\":\"звук великолепный просто!\",\"thesises\":[{\"sentiment\":2.75,\"importance\":0,\"value\":\"звук великолепный\"}, {\"sentiment\":2.75,\"importance\":0,\"value\":\"ноутбук отличный\"},{\"sentiment\":2,\"importance\":0,\"value\":\"звук хороший\"}],\"pro\":\"Отличный ноутбук! Не греется,хороший звук,видео,все игры тянет.wi-fi работает отлично.Советую всем приобрести этот ноутбук,не пожалеете.\",\"grade\":2,\"date\":1334330677000,\"typeId\":2,\"agree\":3}\n"));
-            reviews.add(new JSONObject("{\"id\":11646215,\"modelId\":6386529,\"text\":\"Удобный, компактный, беззвучный, мощный, ну и стоит умеренно \\r\\n:)\",\"reject\":18,\"contra\":\"слабая видюха и всё. я вам скажу, ноутбук великолепный!\",\"thesises\":[{\"sentiment\":2,\"importance\":0,\"value\":\"дисплей хороший\"}, {\"sentiment\":2.75,\"importance\":0,\"value\":\"ноутбук отличный\"}, {\"sentiment\":2,\"importance\":0,\"value\":\"ноутбук великолепный\"}],\"pro\":\"Хороший дисплей, очень мощный симс 3. ну просто Ноутбук отличный! идёт хорошо на минимальных настройках без лагов\\r\\n\",\"grade\":2,\"date\":1290934577000,\"typeId\":2,\"agree\":24}\n"));
-        } catch (JSONException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        ProductInfoPreparatory preparatory = new ProductInfoPreparatory();
-
-        List<JSONObject> thesises = preparatory.extractThesises(reviews);
-        Map<String, List<JSONObject>> featureMap = preparatory.groupByFeature(thesises);
-        for (Map.Entry<String, List<JSONObject>> entry : featureMap.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-        Map<String, Map<String, JSONObject>> info = preparatory.groupByOpinion(featureMap);
-
-        System.out.println("result");
-        for (Map.Entry<String, Map<String, JSONObject>> entry : info.entrySet()) {
-            System.out.println(entry.getKey());
-            for (Map.Entry<String, JSONObject> entry1 : entry.getValue().entrySet()) {
-                System.out.println(entry1.getKey() + " " + entry1.getValue());
-            }
-        }
-    }
-
 
 }
