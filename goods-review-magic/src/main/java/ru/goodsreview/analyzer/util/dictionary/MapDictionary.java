@@ -51,10 +51,20 @@ public class MapDictionary implements KeyValueDictionary<String, Double> {
         }
     }
 
+
+    public static String keysToString() {
+        MapDictionary md = MapDictionary.getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
+        StringBuffer strbuf = new StringBuffer();
+        for(String word:md.dictionary.keySet()){
+          strbuf.append(word+" ");
+        }
+        return strbuf.toString().trim();
+    }
+
     @Test
     public  void test(){
         MapDictionary md = MapDictionary.getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
-        Double value = md.getValue("бессмысленный1");
+        Double value = md.getValue("бессмысленный");
         System.out.print(value);
     }
 }
