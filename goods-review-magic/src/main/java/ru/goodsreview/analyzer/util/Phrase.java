@@ -46,12 +46,12 @@ public final class Phrase implements Thesis {
     }
 
     public String toString(){
-        return feature+" "+opinion;
+        return normFeature+" "+normOpinion;
     }
 
     @Override
     public String getValue() {
-        return feature+" "+opinion;
+        return normFeature+" "+normOpinion;
     }
 
     @Override
