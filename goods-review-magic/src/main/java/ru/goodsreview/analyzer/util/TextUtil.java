@@ -35,16 +35,18 @@ public final class TextUtil {
         Matcher sentenceMatcher = sentencePattern.matcher(text);
         while (sentenceMatcher.find()) {
             sentences.add(sentenceMatcher.group());
-            log.debug("sentence: " + sentenceMatcher.group());
+//            log.debug("sentence: " + sentenceMatcher.group());
         }
         return sentences;
     }
 
     public static List<String> getSentencesWhichContains(final String text, final Pattern pattern){
         List<String> sentences = divideOnSentences(text);
+        log.debug("text sentences are: " + sentences);
         List<String> neededSentences = new LinkedList<String>();
         for(String sentence : sentences){
             Matcher matcher = pattern.matcher(sentence.toLowerCase());
+            log.debug("sentence: " + sentence);
             if(matcher.matches()){
                 log.debug("matches! " + matcher.group());
                 neededSentences.add(matcher.group());
