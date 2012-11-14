@@ -16,18 +16,26 @@ import java.util.regex.Pattern;
  *         13.11.12
  */
 //TODO code in this class is horrible
-public class ProductInfoPreparatory {
+//    TODO structure programming style
+public final class ProductInfoPreparatory {
 
     private static final Logger log = Logger.getLogger(ProductInfoPreparatory.class);
 
-    public JSONObject prepareInfo(final List<JSONObject> reviews) {
+    public static JSONObject prepareInfo(final long modelId, final List<JSONObject> reviews) {
         List<JSONObject> thesises = extractThesises(reviews);
         Map<String, List<JSONObject>> featureMap = groupByFeature(thesises);
         Map<String, Map<String, JSONObject>> info = groupByOpinion(featureMap);
-        return buildProductInfo(info);
+        final JSONObject productInfo = buildProductInfo(info);
+        try {
+            productInfo.put("modelId", modelId);
+        } catch (JSONException e) {
+            log.error("Some problem with json", e);
+            throw new RuntimeException(e);
+        }
+        return productInfo;
     }
 
-    private JSONObject buildProductInfo(Map<String, Map<String, JSONObject>> info) {
+    private static JSONObject buildProductInfo(Map<String, Map<String, JSONObject>> info) {
         List<String> featureNames = new ArrayList<String>(info.keySet());
         Collections.sort(featureNames);
         final JSONObject productInfo = new JSONObject();
@@ -58,7 +66,7 @@ public class ProductInfoPreparatory {
         return productInfo;
     }
 
-    private List<JSONObject> extractThesises(List<JSONObject> reviews) {
+    private static List<JSONObject> extractThesises(List<JSONObject> reviews) {
         final List<JSONObject> thesises = new LinkedList<JSONObject>();
         try {
             for (JSONObject review : reviews) {
@@ -84,7 +92,7 @@ public class ProductInfoPreparatory {
     }
 
 
-    private Map<String, List<JSONObject>> groupByFeature(List<JSONObject> thesises) {
+    private static Map<String, List<JSONObject>> groupByFeature(List<JSONObject> thesises) {
 //        final Map<String, List<JSONObject>> featureMap = new HashMap<String, List<JSONObject>>();
         final Map<String, List<JSONObject>> featureMap = new HashMap<String, List<JSONObject>>();
         for (JSONObject thesis : thesises) {
@@ -105,7 +113,7 @@ public class ProductInfoPreparatory {
         return featureMap;
     }
 
-    private Map<String, Map<String, JSONObject>> groupByOpinion(final Map<String, List<JSONObject>> featureMap) {
+    private static Map<String, Map<String, JSONObject>> groupByOpinion(final Map<String, List<JSONObject>> featureMap) {
         final Map<String, Map<String, JSONObject>> classifiedThesises = new HashMap<String, Map<String, JSONObject>>();
         try {
             for (Map.Entry<String, List<JSONObject>> entry : featureMap.entrySet()) {
@@ -137,7 +145,7 @@ public class ProductInfoPreparatory {
         return classifiedThesises;
     }
 
-    private List<String> findSentencesForThesis(JSONObject thesis, JSONObject review) {
+    private static List<String> findSentencesForThesis(JSONObject thesis, JSONObject review) {
         final List<String> sentences = new LinkedList<String>();
         try {
             final String feature = thesis.getString("feature");
