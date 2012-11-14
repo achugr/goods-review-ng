@@ -21,11 +21,11 @@ public class TemplatePathsHolder {
     }
 
     public static String getProductTemplatePath() {
-        return makePath(CATEGORY_PAGE_TEMPLATE);
+        return makePath(PRODUCT_PAGE_TEMPLATE);
     }
 
     public static String getCategoryTemplatePath() {
-        return makePath(PRODUCT_PAGE_TEMPLATE);
+        return makePath(CATEGORY_PAGE_TEMPLATE);
     }
 
     public static String getMainPageTemplatePath() {
