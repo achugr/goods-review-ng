@@ -87,8 +87,8 @@
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-servlet:1.12" level="project" />
     <orderEntry type="library" name="Maven: org.mortbay.jetty:jetty-threadpool:7.0.0.pre5" level="project" />
     <orderEntry type="library" name="Maven: org.mortbay.jetty:jetty-webapp:7.0.0.pre5" level="project" />
-    <orderEntry type="library" name="Maven: org.mortbay.jetty:jetty-xml:7.0.0.pre5" level="project" />
     <orderEntry type="library" name="Maven: org.mortbay.jetty:jetty-security:7.0.0.pre5" level="project" />
+    <orderEntry type="library" name="Maven: org.mortbay.jetty:jetty-xml:7.0.0.pre5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-web:3.0.5.RELEASE" level="project" />
   </component>
 </module>

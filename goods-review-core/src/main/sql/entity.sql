@@ -16,3 +16,5 @@ create table ENTITY_TYPE(
     TYPE_NAME text not null,
     primary key(TYPE_ID)
 );
+
+
