@@ -18,7 +18,7 @@
         <profile>
             <id>upload-component</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <build>
                 <plugins>
@@ -52,10 +52,11 @@
                                 <configuration>
                                     <target>
                                         <property file="upload.properties"/>
+                                        <echo>${basedir}</echo>
                                         <exec executable="rsync" dir="${basedir}" failonerror="true">
                                             <arg value="-rvpc"/>
                                             <arg value="--del"/>
-                                            <arg value="./target/goodsreview-frontend-upload/"/>
+                                            <arg value="./target/goods-review-frontend-assembly-0.0.1-SNAPSHOT-upload/"/>
                                             <arg value="${ssh.username}@${ssh.host}:${dir.name}/"/>
                                         </exec>
                                     </target>
