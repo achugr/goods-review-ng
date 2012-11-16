@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import ru.goodsreview.analyzer.util.ProductInfoPreparatory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,10 +35,10 @@ public class ProductInfo {
     @Test
     public void test(){
 
-        final String[] searchWords = {"6504630"};
+        int modelId = 6504630;
 
         final List<JSONObject> searchResults = jdbcTemplate.query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 2 AND ENTITY_ATTRS like ?",
-                new String[]{"%modelid=" + searchWords[0] + "%"},
+                new String[]{"%" + modelId + "%"},
                 new RowMapper<JSONObject>() {
                     @Override
                     public JSONObject mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {
@@ -49,9 +50,12 @@ public class ProductInfo {
                     }
                 });
 
+
         for (JSONObject object1:searchResults){
             System.out.println(object1);
         }
+        JSONObject res = ProductInfoPreparatory.prepareInfo(modelId,searchResults);
+        System.out.println(res);
 
     }
 }
