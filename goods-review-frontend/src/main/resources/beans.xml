@@ -5,7 +5,7 @@
     <import resource="classpath:goods-review-db.xml"/>
 
     <bean id="httpServerInitializer" class="ru.goodsreview.frontend.core.HttpServerInitializer" lazy-init="false">
-        <property name="port" value="8080"/>
+        <property name="port" value="8081"/>
         <property name="handlers">
             <list>
                 <bean class="org.mortbay.jetty.handler.ContextHandler">
@@ -43,8 +43,12 @@
         </property>
     </bean>
 
-    <bean class="ru.goodsreview.frontend.view.TemplatePathsHolder$TemplatePathsController">
+    <bean class="ru.goodsreview.frontend.view.velocity.TemplatePathsHolder$TemplatePathsController">
         <property name="templatesDir" value="static/vm/"/>
+    </bean>
+
+    <bean class="ru.goodsreview.frontend.view.jade.TemplatePathsHolder$TemplatePathsController">
+        <property name="templatesDir" value="static/jade/"/>
     </bean>
 
     <bean class="ru.goodsreview.frontend.core.SettingsHolder$SettingsController">

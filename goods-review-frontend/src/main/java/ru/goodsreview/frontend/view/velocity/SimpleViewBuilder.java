@@ -1,4 +1,6 @@
-package ru.goodsreview.frontend.view;
+package ru.goodsreview.frontend.view.velocity;
+
+import ru.goodsreview.frontend.view.ViewBuilder;
 
 import java.util.Map;
 

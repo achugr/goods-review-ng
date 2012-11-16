@@ -1,4 +1,4 @@
-package ru.goodsreview.frontend.view;
+package ru.goodsreview.frontend.view.velocity;
 
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;

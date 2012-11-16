@@ -1,4 +1,4 @@
-package ru.goodsreview.frontend.view;
+package ru.goodsreview.frontend.view.velocity;
 
 /**
  * @author Dmitry Batkovich <daddy-bear@yandex-team.ru>

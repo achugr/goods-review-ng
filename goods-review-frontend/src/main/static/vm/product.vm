@@ -1,187 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>GoodsReview</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <link type="text/css" rel="stylesheet" href="/static/css/my.css"/>
-    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.css"/>
-    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-responsive.css">
-
-    <script type="text/javascript"
-            src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="http://localhost:8080/static/js/bootstrap.min.js"></script>
-
-    <style type="text/css">
-        body {
-            padding-top: 60px;
-            padding-bottom: 40px;
-        }
-
-        .sidebar-nav {
-            padding: 9px 0;
-        }
-    </style>
-
-    <script type="text/javascript">
-        function convertDate() {
-            var dates = document.getElementsByClassName("span2 commentDate");
-            for (date in dates) {
-                var date = new Date(date * 1000);
-                date.innerHTML = date.getDay() + ' ' + date.getMonth() + ' ' + date.getYear();
-            }
-        }
-    </script>
-
-    <script type="text/javascript">
-        var thesises = [];
-        var classificatedThesises = new Array();
-        var green = "#008000";
-        var red = "#ff0000";
-
-        function contains(a, obj) {
-            var i = a.length;
-            while (i--) {
-                if (a[i] === obj) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        function classifyThesises() {
-            var opinionsSet = [];
-            for (var i = 0; i < thesises.length; i++) {
-                var value = thesises[i].value.split(" ");
-                var feature = value[0];
-                classificatedThesises[feature] = {};
-                classificatedThesises[feature]['opinion']=[];
-                classificatedThesises[feature]['sentence']=[];
-                opinionsSet[feature] = [];
-            }
-            for (var i = 0; i < thesises.length; i++) {
-                var value = thesises[i].value.split(" ");
-                var feature = value[0];
-                var opinion = {};
-                opinion['content'] = value[1];
-                opinion['sentiment'] = thesises[i].sentiment;
-//                var opinion = value[1];
-//                console.log("content: " + opinion.content + " sentiment: " + opinion.sentiment);
-                if(!contains(opinionsSet[feature], opinion.content)){
-                    classificatedThesises[feature]['opinion'].push(opinion);
-                    var sentence = findSentenceForThesis(thesises[i].value);
-                    classificatedThesises[feature]['sentence'].push(sentence);
-                    opinionsSet[feature].push(opinion.content);
-                }
-            }
-        }
-
-        function findSentenceForThesis(thesis){
-            var commentsContent = document.getElementById("tab1").innerHTML;
-            var thesisParts = thesis.split(" ");
-            var regexp = new RegExp("\.(.*(" + thesisParts[1] + " " + thesisParts[0] + "|" + thesisParts[0] + " " + thesisParts[1] + ").*)\.", 'g');
-            console.log(regexp);
-            console.log(thesis);
-            var matches = commentsContent.toLowerCase().match(regexp);
-            for(index in matches){
-                matches[index] = matches[index].replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ');
-            }
-            console.log("matches! : " + matches);
-            return matches;
-        }
-
-        function viewThesises() {
-            var container = document.getElementById("thesises");
-            var staticContainer = document.getElementById("thesisMenu");
-            var thesisTabContent = document.getElementById("thesisTabContent");
-            for (i in classificatedThesises) {
-                console.log("thesis is: " + i);
-                $('<div class="row thesisForView"><a name="'+ i + '" id="'+ i +'"href="#activeThesis" class="btn btn-large" style="width:100px;" rel="popover">'+ i + '</a></div>').
-                        appendTo(container);
-                //data-content="' + classificatedThesises[i] +'"
-                var opinions = "";
-                for(j in classificatedThesises[i]['opinion']){
-                    var infoStyle;
-                    if(classificatedThesises[i]['opinion'][j].sentiment >= 0){
-                        infoStyle = "label label-success";
-                    } else {
-                        infoStyle = "label label-important";
-                    }
-                    opinions += "<span style='font-size:12pt ; margin-right: 10px; margin-bottom: 10px; margin-top: 10px;' class='"+infoStyle +"'> " + classificatedThesises[i]['opinion'][j].content + " </span>";
-                }
-                var sentences = "";
-                for(j in classificatedThesises[i]['sentence']){
-                    sentences += classificatedThesises[i]['sentence'][j] + "<br>";
-                }
-//                console.log("i am here " + classificatedThesises[i].);
-                var options = [];
-                options['title']=opinions;
-                options['html']=true;
-                options['content']=sentences;
-                $('#' + i).popover(options);
-            }
-        }
-
-        function initThesises() {
-            var rawThesises = document.getElementsByClassName("thesis");
-            for (var i = 0; i < rawThesises.length; i++) {
-                console.log(i + ' ' + rawThesises[i].innerHTML);
-                thesises.push(JSON.parse(rawThesises[i].innerHTML));
-                thesises[i].importance = 1.0;
-//                thesises[i].sentiment = ;
-            }
-            classifyThesises();
-            viewThesises();
-
-//            var options = new Array();
-//            options["html"]="hello!";
-//            $("#test").popover();
-//            $("#example").popover();
-
-        }
-
-
-    </script>
-
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-</head>
+    #include("/static/vm/head.vm")
 
 <body onload="initThesises();">
 
-
-<div class="navbar navbar-fixed-top">
-
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <a class="brand" href="#">GoodsReview</a>
-
-            <div class="nav-collapse collapse">
-                <!--<p class="navbar-text pull-right">-->
-                <!--Logged in as <a href="#" class="navbar-link">Username</a>-->
-                <!--</p>-->
-                <ul class="nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <!--/.nav-collapse -->
-        </div>
-    </div>
-</div>
+    #include("/static/vm/header.vm")
 
 <div class="container-fluid">
     <div class="row-fluid">
@@ -205,7 +28,7 @@
         <div class="span9">
             <div class="row">
                 <h3 class="modelName">$modelInfo.get("vendor") $modelInfo.get("name")</h3>
-               $reviews.get(0)
+                $reviews.get(0)
             </div>
             <div class="row">
                 <div class="span1"></div>
@@ -213,24 +36,24 @@
                     <img src="$modelInfo.get("mainPhoto")">
                 </div>
                 <div class="span7" id="thesisesContainer">
-##                    <ul id="thesises">
-##
-##                    </ul>
+                ##                    <ul id="thesises">
+                ##
+                ##                    </ul>
                     <div id="thesises">
 
                     </div>
                     <ul hidden="hidden">
                         #foreach($review in $reviews)
-                        $review
-##                            #set($thesises = $review.get("thesises"))
-##                            #set($thesisesRange = [0..$thesises.length()])
-##                            #if($thesisesRange.size()!=1)
-##                                #foreach($i in $thesisesRange)
-##                                    #if($i < $thesisesRange.size() - 1)
-##                                        <li class="thesis">$thesises.get($i)</li>
-##                                    #end
-##                                #end
-##                            #end
+                            $review
+                            #set($thesises = $review.get("thesises"))
+                            #set($thesisesRange = [0..$thesises.length()])
+                            #if($thesisesRange.size()!=1)
+                                #foreach($i in $thesisesRange)
+                                    #if($i < $thesisesRange.size() - 1)
+                                        <li class="thesis">$thesises.get($i)</li>
+                                    #end
+                                #end
+                            #end
                         #end
                     </ul>
                 </div>

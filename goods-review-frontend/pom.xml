@@ -15,6 +15,13 @@
         <version>0.0.1</version>
     </parent>
 
+    <repositories>
+        <repository>
+            <id>jade4j-releases</id>
+            <url>https://raw.github.com/neuland/jade4j/master/releases</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>ru.goodsreview</groupId>
@@ -70,6 +77,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>3.0.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>de.neuland</groupId>
+            <artifactId>jade4j</artifactId>
+            <version>0.3.3</version>
         </dependency>
     </dependencies>
 

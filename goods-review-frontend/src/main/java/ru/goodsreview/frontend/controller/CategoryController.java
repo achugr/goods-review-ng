@@ -2,8 +2,8 @@ package ru.goodsreview.frontend.controller;
 
 import org.json.JSONObject;
 import ru.goodsreview.frontend.model.CategoryModel;
-import ru.goodsreview.frontend.view.SimpleViewBuilder;
-import ru.goodsreview.frontend.view.TemplatePathsHolder;
+import ru.goodsreview.frontend.view.velocity.SimpleViewBuilder;
+import ru.goodsreview.frontend.view.velocity.TemplatePathsHolder;
 
 import java.util.HashMap;
 import java.util.List;
