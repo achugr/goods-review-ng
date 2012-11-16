@@ -7,20 +7,11 @@ package ru.goodsreview.analyzer;
  * ilya.makeev@gmail.com
  */
 
+import org.json.JSONObject;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.goodsreview.analyzer.util.Phrase;
 import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
-import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
 import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
-import ru.goodsreview.core.util.FileUtils;
-
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Scanner;
@@ -56,31 +47,10 @@ public class TestClass {
 
     }
 
+
+
     public static void main(String[] args) {
-//        Scanner scanner = null;
-//        try {
-//            scanner = new Scanner(new File("reviews.txt"));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
-//        while (scanner.hasNext()){
-//            String review = scanner.nextLine();
-//            try {
-//                List<Phrase> phrases = ExtractThesis.doExtraction(review);
-//                for(Phrase phrase : phrases){
-//                    System.out.println(phrase.toString());
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//            }
+
     }
-//        TestRunner runner = new TestRunner();
-//        TestSuite suite = new TestSuite();
-////        suite.addTest(new TestClass("testReportList"));
-//     suite.addTest(new TestClass("testWordAnalyzer"));
-//      //  suite.addTest(new TestClass("testFeatureDictionary"));
-//      //  suite.addTest(new TestClass("testOpinionDictionary"));
-//        runner.doRun(suite);
+
 }
