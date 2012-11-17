@@ -8,10 +8,7 @@ package ru.goodsreview.analyzer.util.sentence;
  */
 
 
-import ru.goodsreview.analyzer.util.dictionary.Dictionary;
-import ru.goodsreview.analyzer.util.dictionary.MapDictionary;
-import ru.goodsreview.analyzer.util.dictionary.PyMorphyDict;
-import ru.goodsreview.analyzer.util.dictionary.SetDictionary;
+import ru.goodsreview.analyzer.util.dictionary.*;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
@@ -28,6 +25,7 @@ public class ReviewTokens {
     //TODO удалить, переделать
     private static Dictionary featureDictionary = new SetDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/feat_dic.txt");
     private static MapDictionary opinionDictionary = new MapDictionary().getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
+    private static ObserveDict observeDict = new ObserveDict();
 
     private static PyMorphyDict pymorphyDict = PyMorphyDict.getInstance("/ru/goodsreview/analyzer/util/dictionary/pyDict.txt");
 
@@ -107,6 +105,10 @@ public class ReviewTokens {
 
     public static MapDictionary getMapDictionary(){
         return opinionDictionary;
+    }
+
+    public static ObserveDict getObserveDict(){
+        return observeDict;
     }
 
     public List<List<Token>> getListsOfToken() {

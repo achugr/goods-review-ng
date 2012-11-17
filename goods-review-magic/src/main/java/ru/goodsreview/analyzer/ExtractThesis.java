@@ -32,7 +32,7 @@ public class ExtractThesis{
         thesisPatternList.add(new ThesisPattern(PartOfSpeech.NOUN, PartOfSpeech.ADJECTIVE));
         thesisPatternList.add(new ThesisPattern(PartOfSpeech.ADJECTIVE, PartOfSpeech.NOUN));
 
-        int distance = 1;
+        int distance = 2;
 
         StringTokenizer stringTokenizer = new StringTokenizer(content, ".,-—:;!()+\'\"\\«»");  //!without space:" "
 
@@ -93,13 +93,28 @@ public class ExtractThesis{
                                         String normFeature;
                                         String normOpinion;
                                         double sentiment;
+                                        String proem = "";
                                         if (pos == 1) {
+                                            if (Math.abs(i - j) > 1) {
+                                                String str = listsOfToken.get(i - 1).get(0).getContent();
+                                                if (ReviewTokens.getObserveDict().contains(str)) {
+                                                    proem = str;
+                                                }
+                                            }
+
                                             feature = leftToken.getContent();
                                             opinion = rightToken.getContent();
                                             normFeature = leftToken.getNormForm();
                                             normOpinion = rightToken.getNormForm();
                                             sentiment = rightToken.getSentiment();
                                         } else {
+                                            if (j > 0) {
+                                                String str = listsOfToken.get(j - 1).get(0).getContent();
+                                                if (ReviewTokens.getObserveDict().contains(str)) {
+                                                    proem = str;
+                                                }
+                                            }
+
                                             feature = rightToken.getContent();
                                             opinion = leftToken.getContent();
                                             normFeature = rightToken.getNormForm();
@@ -107,16 +122,16 @@ public class ExtractThesis{
                                             sentiment = leftToken.getSentiment();
                                         }
 
-                                        if(!feature.equals(normFeature)){
+                                        if (!(feature.equals(normFeature) && opinion.equals(normOpinion))) {
                                             GrammarGender requiredGender = ReviewTokens.getWordAnalyzer().getGenger(normFeature);
-                                            String newOpinion = transform(normOpinion, requiredGender);
+                                            normOpinion = transform(normOpinion, requiredGender);
+                                            //System.out.println(feature+" "+opinion+" # "+normFeature+" "+normOpinion);
+                                        }
 
-                                          //  System.out.println(feature+" "+opinion+" # "+normFeature+" "+normOpinion+" # "+normFeature+" "+newOpinion);
-                                          //  System.out.println(feature+" "+opinion+" --> "+normFeature+" "+newOpinion);
-
-                                            normOpinion = newOpinion;
-                                        }else{
-                                            normOpinion = opinion;
+                                        if (proem.length() != 0) {
+                                            opinion = proem + " " + opinion;
+                                            normOpinion = proem + " " + normOpinion;
+                                           // System.out.println(feature+" "+opinion+" # "+normFeature+" "+normOpinion);
                                         }
 
                                         newPhrase = new Phrase(feature, opinion, normFeature, normOpinion, sentiment);
