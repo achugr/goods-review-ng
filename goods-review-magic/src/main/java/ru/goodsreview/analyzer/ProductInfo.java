@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.goodsreview.analyzer.util.ProductInfoPreparatory;
+import ru.goodsreview.core.db.entity.EntityBatchPreparedStatementSetter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,6 +32,12 @@ public class ProductInfo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+
+    public void update(JSONObject object){
+        String  query = "INSERT INTO ENTITY (ENTITY_ATTRS, ENTITY_HASH, WATCH_DATE, ENTITY_TYPE_ID, ENTITY_ID) VALUES (?, ?, CURRENT_TIMESTAMP, ?, ?)";
+
+        jdbcTemplate.update(query, new Object[] { object.toString(),  0 , 4, 0});
+    }
 
     @Test
     public void test(){
@@ -51,11 +58,12 @@ public class ProductInfo {
                 });
 
 
-        for (JSONObject object1:searchResults){
-            System.out.println(object1);
-        }
-        JSONObject res = ProductInfoPreparatory.prepareInfo(modelId,searchResults);
-        System.out.println(res);
+//        for (JSONObject object1:searchResults){
+//            System.out.println(object1);
+//        }
 
+        JSONObject res = ProductInfoPreparatory.prepareInfo(modelId,searchResults);
+        System.out.println(res.toString());
+        update(res);
     }
 }

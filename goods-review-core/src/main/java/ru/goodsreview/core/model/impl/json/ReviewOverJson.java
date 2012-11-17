@@ -118,9 +118,8 @@ public class ReviewOverJson implements Review {
         if (object.has(THESISES_ATTR)) {
             object.remove(THESISES_ATTR);
         }
-        if (!object.has(THESISES_ATTR)) {
-            writeThesises(object,thesises);
-        }
+        writeThesises(object, thesises);
+
     }
 
     public static void writeThesises(JSONObject object, final List<Thesis> thesises) {

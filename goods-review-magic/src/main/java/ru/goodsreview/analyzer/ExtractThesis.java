@@ -116,7 +116,7 @@ public class ExtractThesis{
 
                                             normOpinion = newOpinion;
                                         }else{
-                                            normOpinion=opinion;
+                                            normOpinion = opinion;
                                         }
 
                                         newPhrase = new Phrase(feature, opinion, normFeature, normOpinion, sentiment);

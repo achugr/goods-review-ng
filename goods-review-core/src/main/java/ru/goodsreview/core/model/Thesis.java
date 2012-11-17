@@ -9,6 +9,8 @@ public interface Thesis {
 
     String getValue();
 
+    String getNormValue();
+
     double getImportance();
 
     double getSentiment();

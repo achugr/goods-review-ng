@@ -13,7 +13,7 @@ import ru.goodsreview.core.db.visitor.Visitor;
 import java.util.Collections;
 
 /**
- * User: daddy-bear                     3
+ * User: daddy-bear
  * Date: 18.06.12
  * Time: 18:40
  */
@@ -44,10 +44,10 @@ public class EntityServiceTest {
 //        jsonObject.put("key", "value2");
 //        jsonObject.put("thesises", "blablabla");
 //               entityService.improveEntities(Collections.singletonList(new JSONObject("{\"id\":\"123456789\",\"typeId\":\"4\",\"key\":\"value2\"}")));
-        entityService.visitEntities(EntityType.REVIEW.getTypeId(), new Visitor<JSONObject>() {
+        entityService.visitEntities(2, new Visitor<JSONObject>() {
             @Override
             public void visit(JSONObject jsonObject) {
-                System.out.println(jsonObject);
+                    System.out.println(jsonObject);
             }
         });
     }
