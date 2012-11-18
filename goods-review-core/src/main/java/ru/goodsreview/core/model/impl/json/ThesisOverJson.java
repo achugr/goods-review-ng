@@ -14,6 +14,7 @@ import static ru.goodsreview.core.util.JSONUtil.unsafeGetString;
 public class ThesisOverJson implements Thesis {
 
     protected static final String VALUE_ATTR = "value";
+    protected static final String NORM_VALUE_ATTR = "norm";
     protected static final String IMPORTANCE_ATTR = "importance";
     protected static final String SENTIMENT_ATTR = "sentiment";
 
@@ -26,6 +27,11 @@ public class ThesisOverJson implements Thesis {
     @Override
     public String getValue() {
         return unsafeGetString(jsonObject, VALUE_ATTR);
+    }
+
+    @Override
+    public String getNormValue() {
+        return unsafeGetString(jsonObject, NORM_VALUE_ATTR);
     }
 
     @Override

@@ -35,7 +35,7 @@ public class MystemAnalyzer implements WordAnalyzer{
 
     private final static Logger log = Logger.getLogger(MystemAnalyzer.class);
 
-   public MystemAnalyzer(String path){
+   public MystemAnalyzer(){
         try {
           String CHARSET = "UTF8";
           String command = "/usr/bin/mystem -ni -e " + CHARSET;

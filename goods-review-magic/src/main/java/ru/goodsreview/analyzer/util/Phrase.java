@@ -25,7 +25,7 @@ public final class Phrase implements Thesis {
         this.opinion = opinion;
         this.feature = feature;
         this.normFeature = normFeature;
-        this.normOpinion=normOpinion;
+        this.normOpinion = normOpinion;
         this.sentiment = sentiment;
     }
 
@@ -45,13 +45,18 @@ public final class Phrase implements Thesis {
         return opinion;
     }
 
-    public String toString(){
-        return normFeature+" "+normOpinion;
+    public String toString() {
+        return feature + " " + opinion;
     }
 
     @Override
     public String getValue() {
-        return normFeature+" "+normOpinion;
+        return feature + " " + opinion;
+    }
+
+    @Override
+    public String getNormValue() {
+        return normFeature + " " + normOpinion;
     }
 
     @Override

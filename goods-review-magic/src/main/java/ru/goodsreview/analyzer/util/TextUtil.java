@@ -47,9 +47,9 @@ public final class TextUtil {
         for(String sentence : sentences){
             Matcher matcher = pattern.matcher(sentence.toLowerCase());
             log.debug("sentence: " + sentence);
-            if(matcher.matches()){
+            if(matcher.find()){
                 log.debug("matches! " + matcher.group());
-                neededSentences.add(matcher.group());
+                neededSentences.add(sentence);
             }
         }
         return neededSentences;
