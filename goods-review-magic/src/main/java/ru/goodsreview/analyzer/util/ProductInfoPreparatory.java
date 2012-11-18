@@ -70,16 +70,27 @@ public final class ProductInfoPreparatory {
             for (JSONObject review : reviews) {
                 JSONArray thesisArray = review.getJSONArray("thesises");
                 for (int i = 0; i < thesisArray.length(); i++) {
-                    System.out.println("i am here");
+                   // System.out.println("i am here");
                     JSONObject thesis = thesisArray.getJSONObject(i);
+                  //  System.out.println(thesis);
+
                     final String[] thesisParts = thesis.getString("value").split(" ");
                     final String feature = thesisParts[0];
-                    final String opinion = thesisParts[1];
+                    final String opinion = thesisParts[thesisParts.length - 1];
+
+                    final String nthesis = thesis.getString("norm");
+                    int ind = nthesis.indexOf(" ");
+                    final String nfeature = nthesis.substring(0, ind);
+                    final String nopinion = nthesis.substring(ind + 1);
+
                     thesis.remove("value");
-                    thesis.put("feature", feature);
-                    thesis.put("opinion", opinion);
-                    List<String> sentences = findSentencesForThesis(thesis, review);
+                    thesis.remove("norm");
+                    thesis.put("feature", nfeature);
+                    thesis.put("opinion", nopinion);
+
+                    List<String> sentences = findSentencesForThesis(feature, opinion, review);
                     thesis.put("sentences", sentences);
+
                     thesises.add(thesis);
                 }
             }
@@ -143,12 +154,13 @@ public final class ProductInfoPreparatory {
         return classifiedThesises;
     }
 
-    private static List<String> findSentencesForThesis(JSONObject thesis, JSONObject review) {
+    private static List<String> findSentencesForThesis(String feature, String opinion, JSONObject review) {
         final List<String> sentences = new LinkedList<String>();
         try {
-            final String feature = thesis.getString("feature");
-            final String opinion = thesis.getString("opinion");
-            final String regexp = ".*(" + feature + " " + opinion + "|" + opinion + " " + feature + ").*";
+//            final String feature = thesis.getString("feature");
+//            final String opinion = thesis.getString("opinion");
+            //final String regexp = ".*(" + feature + " " + opinion + "|" + opinion + " " + feature + ").*";
+            final String regexp = ".*(" + feature + "(\\s)*[A-Яа-я]*(\\s)*" + opinion + "|" + opinion + "(\\s)*" + feature + ").*";
             final Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
             System.out.println(pattern);
             if (review.has("text")) {

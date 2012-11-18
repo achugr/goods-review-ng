@@ -42,8 +42,8 @@ public class ProductInfo {
     @Test
     public void test(){
 
-        int modelId = 6504630;
-
+       // int modelId = 6504630;
+        int modelId = 6456057;
         final List<JSONObject> searchResults = jdbcTemplate.query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 2 AND ENTITY_ATTRS like ?",
                 new String[]{"%" + modelId + "%"},
                 new RowMapper<JSONObject>() {
