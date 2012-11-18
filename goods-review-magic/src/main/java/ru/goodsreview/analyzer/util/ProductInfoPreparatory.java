@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Test;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -89,6 +90,9 @@ public final class ProductInfoPreparatory {
                     thesis.put("opinion", nopinion);
 
                     List<String> sentences = findSentencesForThesis(feature, opinion, review);
+                    if(sentences.size()==0){
+                        System.out.println("#####"+review+" "+feature+" "+opinion);
+                    }
                     thesis.put("sentences", sentences);
 
                     thesises.add(thesis);
@@ -157,9 +161,6 @@ public final class ProductInfoPreparatory {
     private static List<String> findSentencesForThesis(String feature, String opinion, JSONObject review) {
         final List<String> sentences = new LinkedList<String>();
         try {
-//            final String feature = thesis.getString("feature");
-//            final String opinion = thesis.getString("opinion");
-            //final String regexp = ".*(" + feature + " " + opinion + "|" + opinion + " " + feature + ").*";
             final String regexp = ".*(" + feature + "(\\s)*[A-Яа-я]*(\\s)*" + opinion + "|" + opinion + "(\\s)*" + feature + ").*";
             final Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
             System.out.println(pattern);
@@ -176,11 +177,28 @@ public final class ProductInfoPreparatory {
                 sentences.addAll(TextUtil.getSentencesWhichContains(pro, pattern));
             }
 
+
         } catch (JSONException e) {
             log.error("Something wrong with json", e);
             throw new RuntimeException(e);
         }
         return sentences;
+    }
+
+    @Test
+    public void test(){
+        String feature ="мультитач";
+        String opinion ="доступный";
+        final String regexp = ".*(" + feature + "(\\s)*[A-Яа-я]*(\\s)*" + opinion + "|" + opinion + "(\\s)*" + feature + ").*";
+        final Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
+        System.out.println(pattern);
+
+        final String text = "жесткий диск медленноват, но не думаю, что это такой уж проблема (захочешь быстрее - докупишь более быстрый), зато штатный - тихий и холодный.\r\nЭкран, ладно еще, что зеркальный, но вот контрастности явно не хватает - из-за этого моя оценка удобства эксплуатации - 4\r\nнет мультитача (весь доступный мультитач - это двойное_нажатие_и_удержание_пальца на тачпаде для перемещения иконок и прочего)";
+        List<String> list = TextUtil.getSentencesWhichContains(text, pattern);
+        for (String s:list){
+          System.out.println(s);
+        }
+
     }
 
 }
