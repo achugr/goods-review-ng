@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,23 +21,41 @@ import java.util.List;
  */
 public class SearchPageModel {
 
-    public List<JSONObject> getSearchResults(final String searchQuery) {
-        final String[] searchWords = searchQuery.split("\\+");
+    private enum OPERATOR{
+        AND("and"),
+        OR("or");
 
-        List<JSONObject> searchResults = SettingsHolder.getJdbcTemplate().query(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-                StringBuilder searchSql = new StringBuilder("select ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1");
-                for(int i = 1; i <= searchWords.length; i++){
-                    searchSql.append(" or ENTITY_ATTRS like ?");
-                }
-                PreparedStatement searchStatement = con.prepareStatement(searchSql.toString());
-                for(int i = 1; i <= searchWords.length; i++){
-                    searchStatement.setString(i, "%" + searchWords[i] + "%");
-                }
-                return searchStatement;
-            }
-        }, new RowMapper<JSONObject>() {
+        String name;
+        
+        OPERATOR(String name){
+            this.name = name;
+        }
+
+        public String getName(){
+            return name;
+        }
+    };
+
+    private List<JSONObject> searhWordsWithOperator(final String[] searchWords, final OPERATOR operator) {
+        return SettingsHolder.getJdbcTemplate().query(new PreparedStatementCreator() {
+                    @Override
+                    public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                        StringBuilder searchSql = new StringBuilder("select ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1 and ( ");
+                        for(int i = 0; i < searchWords.length; i++){
+                            searchSql.append(" ENTITY_ATTRS like ?");
+                            if(i != searchWords.length - 1){
+                                searchSql.append(" " + operator.getName());
+                            }
+                        }
+                        searchSql.append(" )");
+                        System.out.println(searchSql.toString());
+                        PreparedStatement searchStatement = con.prepareStatement(searchSql.toString());
+                        for(int i = 0; i < searchWords.length; i++){
+                            searchStatement.setString(i+1, "%\"name\":\"%" + searchWords[i] + "%");
+                        }
+                        return searchStatement;
+                    }
+                }, new RowMapper<JSONObject>() {
             @Override
             public JSONObject mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {
                 try {
@@ -46,7 +65,19 @@ public class SearchPageModel {
                 }
             }
         });
+    }
 
-        return searchResults;
+    public List<JSONObject> getSearchResults(final String searchQuery) {
+        String trimedSearchQuery = searchQuery.trim();
+        if(!trimedSearchQuery.equals("")){
+            final String[] searchWords = trimedSearchQuery.split(" ");
+            List<JSONObject> searchResultsForAndOp = searhWordsWithOperator(searchWords, OPERATOR.AND);
+            if(searchResultsForAndOp.size() != 0){
+                return searchResultsForAndOp;
+            }else{
+                return searhWordsWithOperator(searchWords, OPERATOR.OR);
+            }
+        }
+        return new ArrayList<JSONObject>();
     }
 }
