@@ -142,6 +142,7 @@
         <option value="$PROJECT_DIR$/goods-review-indexer/pom.xml" />
         <option value="$PROJECT_DIR$/goods-review-frontend/pom.xml" />
         <option value="$PROJECT_DIR$/goods-review-frontend/src/assembly/pom.xml" />
+        <option value="$PROJECT_DIR$/goods-review-miner/src/assembly/pom.xml" />
       </list>
     </option>
     <option name="activeProfiles">
@@ -282,6 +283,7 @@
       <module fileurl="file://$PROJECT_DIR$/goods-review-indexer/goods-review-indexer.iml" filepath="$PROJECT_DIR$/goods-review-indexer/goods-review-indexer.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-magic/goods-review-magic.iml" filepath="$PROJECT_DIR$/goods-review-magic/goods-review-magic.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-miner/goods-review-miner.iml" filepath="$PROJECT_DIR$/goods-review-miner/goods-review-miner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/goods-review-miner/src/assembly/goods-review-miner-assembly.iml" filepath="$PROJECT_DIR$/goods-review-miner/src/assembly/goods-review-miner-assembly.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-parent.iml" filepath="$PROJECT_DIR$/goods-review-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-scheduler/goods-review-scheduler.iml" filepath="$PROJECT_DIR$/goods-review-scheduler/goods-review-scheduler.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-server/goods-review-server.iml" filepath="$PROJECT_DIR$/goods-review-server/goods-review-server.iml" />
