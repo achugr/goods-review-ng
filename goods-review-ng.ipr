@@ -280,10 +280,10 @@
       <module fileurl="file://$PROJECT_DIR$/goods-review-core/goods-review-core.iml" filepath="$PROJECT_DIR$/goods-review-core/goods-review-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-frontend/goods-review-frontend.iml" filepath="$PROJECT_DIR$/goods-review-frontend/goods-review-frontend.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-frontend/src/assembly/goods-review-frontend-assembly.iml" filepath="$PROJECT_DIR$/goods-review-frontend/src/assembly/goods-review-frontend-assembly.iml" />
-      <module fileurl="file://$PROJECT_DIR$/goods-review-miner/src/assembly/goods-review-frontend-assembly (2).iml" filepath="$PROJECT_DIR$/goods-review-miner/src/assembly/goods-review-frontend-assembly (2).iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-indexer/goods-review-indexer.iml" filepath="$PROJECT_DIR$/goods-review-indexer/goods-review-indexer.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-magic/goods-review-magic.iml" filepath="$PROJECT_DIR$/goods-review-magic/goods-review-magic.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-miner/goods-review-miner.iml" filepath="$PROJECT_DIR$/goods-review-miner/goods-review-miner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/goods-review-miner/src/assembly/goods-review-miner-assembly.iml" filepath="$PROJECT_DIR$/goods-review-miner/src/assembly/goods-review-miner-assembly.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-parent.iml" filepath="$PROJECT_DIR$/goods-review-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-scheduler/goods-review-scheduler.iml" filepath="$PROJECT_DIR$/goods-review-scheduler/goods-review-scheduler.iml" />
       <module fileurl="file://$PROJECT_DIR$/goods-review-server/goods-review-server.iml" filepath="$PROJECT_DIR$/goods-review-server/goods-review-server.iml" />
