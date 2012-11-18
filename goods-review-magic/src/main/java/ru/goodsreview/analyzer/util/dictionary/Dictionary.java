@@ -1,6 +1,6 @@
 package ru.goodsreview.analyzer.util.dictionary;
 
-import java.util.Collection;
+
 
 /**
  * achugr, achugr@yandex-team.ru

@@ -31,6 +31,7 @@ public final class TransformerUtil {
         try {
             final JSONObject rawThesis = new JSONObject();
             rawThesis.put(ThesisOverJson.VALUE_ATTR, thesis.getValue());
+            rawThesis.put(ThesisOverJson.NORM_VALUE_ATTR, thesis.getNormValue());
             rawThesis.put(ThesisOverJson.IMPORTANCE_ATTR, thesis.getImportance());
             rawThesis.put(ThesisOverJson.SENTIMENT_ATTR, thesis.getSentiment());
 

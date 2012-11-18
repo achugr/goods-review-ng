@@ -14,6 +14,64 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <profiles>
+        <profile>
+            <id>upload-component</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>2.2.2</version>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>descriptor.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>make-assembly</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
+                        <executions>
+                            <execution>
+                                <id>sync-component</id>
+                                <phase>install</phase>
+                                <configuration>
+                                    <target>
+                                        <property file="upload.properties"/>
+                                        <echo>${basedir}</echo>
+                                        <exec executable="rsync" dir="${basedir}" failonerror="true">
+                                            <arg value="-rvpc"/>
+                                            <arg value="--del"/>
+                                            <arg value="./target/goods-review-frontend-assembly-0.0.1-SNAPSHOT-upload/"/>
+                                            <arg value="${ssh.username}@${ssh.host}:${dir.name}/"/>
+                                        </exec>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <properties>
         <componentId>goodsreview-frontend</componentId>
     </properties>

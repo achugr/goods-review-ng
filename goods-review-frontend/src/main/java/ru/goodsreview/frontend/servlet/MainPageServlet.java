@@ -13,10 +13,11 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/")
 public class MainPageServlet {
+    private final MainPageController controller = new MainPageController();
 
     @GET
     @Produces(MediaType.TEXT_HTML)
     public String getMainPage() {
-        return new MainPageController().generatePage();
+        return controller.generatePage();
     }
 }

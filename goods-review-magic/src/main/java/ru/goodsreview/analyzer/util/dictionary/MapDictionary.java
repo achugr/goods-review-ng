@@ -27,7 +27,7 @@ public class MapDictionary implements KeyValueDictionary<String, Double> {
         return mapDictionary;
     }
 
-    private void initDictionary(final String dictionaryFileName) {
+    public void initDictionary(final String dictionaryFileName) {
         final List<String> fileLines = FileUtils.readAsListOfLines(dictionaryFileName, MapDictionary.class);
         for(String line : fileLines){
             final String [] record = line.split("\\s");
@@ -51,10 +51,13 @@ public class MapDictionary implements KeyValueDictionary<String, Double> {
         }
     }
 
+
+
+
     @Test
     public  void test(){
         MapDictionary md = MapDictionary.getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
-        Double value = md.getValue("бессмысленный1");
+        Double value = md.getValue("бессмысленный");
         System.out.print(value);
     }
 }

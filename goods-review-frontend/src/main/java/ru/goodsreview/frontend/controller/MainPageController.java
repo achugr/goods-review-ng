@@ -2,7 +2,8 @@ package ru.goodsreview.frontend.controller;
 
 import org.json.JSONObject;
 import ru.goodsreview.frontend.model.MainPageModel;
-import ru.goodsreview.frontend.view.MainPageView;
+import ru.goodsreview.frontend.view.SimpleViewBuilder;
+import ru.goodsreview.frontend.view.TemplatePathsHolder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,11 +14,14 @@ import java.util.Map;
  *         06.10.12
  */
 public class MainPageController {
+    private final SimpleViewBuilder viewBuilder = new SimpleViewBuilder(TemplatePathsHolder.getMainPageTemplatePath());
+
+    private final MainPageModel mainPageModel = new MainPageModel();
 
     public String generatePage(){
-        final List<JSONObject> models = new MainPageModel().getPopularProducts(6);
-        Map<String, Object> data = new HashMap<String, Object>();
+        final List<JSONObject> models = mainPageModel.getPopularProducts(6);
+        final Map<String, Object> data = new HashMap<String, Object>();
         data.put("models", models);
-        return new MainPageView().createPage(data);
+        return viewBuilder.build(data);
     }
 }

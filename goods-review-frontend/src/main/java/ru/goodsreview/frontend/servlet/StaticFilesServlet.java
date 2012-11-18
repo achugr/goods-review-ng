@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         07.10.12
  */
-//TODO i think, it's bad practice
+@Deprecated
 @Path("/static")
 public class StaticFilesServlet {
     private static final String CSS_DIR = "goods-review-frontend/src/main/css/";

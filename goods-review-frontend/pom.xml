@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.goodsreview</groupId>
     <artifactId>goods-review-frontend</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>goods-review-frontend</name>
 
@@ -15,54 +15,17 @@
         <version>0.0.1</version>
     </parent>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>ru.goodsreview.core.util.Main</mainClass>
-                    <includeProjectDependencies>true</includeProjectDependencies>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>ru.goodsreview</groupId>
             <artifactId>goods-review-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.scalatra</groupId>-->
-            <!--<artifactId>scalatra</artifactId>-->
-            <!--<version>2.1.1</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>jetty</artifactId>
             <version>7.0.0.pre5</version>
         </dependency>
-        <!--for server on java-->
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
@@ -98,14 +61,11 @@
             <artifactId>jetty-xml</artifactId>
             <version>7.0.0.pre5</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>3.1.2.RELEASE</version>
         </dependency>
-
-        <!---->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
@@ -113,45 +73,25 @@
         </dependency>
     </dependencies>
 
-
-
-    <!--<build>-->
-        <!--<resources>-->
-            <!--<resource>-->
-                <!--<directory>src/main/resources</directory>-->
-                <!--<excludes>-->
-
-                <!--</excludes>-->
-            <!--</resource>-->
-        <!--</resources>-->
-        <!--<plugins>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-compiler-plugin</artifactId>-->
-                <!--<version>2.3.2</version>-->
-                <!--<configuration>-->
-                    <!--<source>1.6</source>-->
-                    <!--<target>1.6</target>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-            <!--&lt;!&ndash;<plugin>&ndash;&gt;-->
-                <!--&lt;!&ndash;<groupId>org.scala-tools</groupId>&ndash;&gt;-->
-                <!--&lt;!&ndash;<artifactId>maven-scala-plugin</artifactId>&ndash;&gt;-->
-                <!--&lt;!&ndash;<executions>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<execution>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<id>scala-compile-first</id>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<phase>process-resources</phase>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<goals>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<goal>add-source</goal>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<goal>compile</goal>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<goal>testCompile</goal>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</goals>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</execution>&ndash;&gt;-->
-                <!--&lt;!&ndash;</executions>&ndash;&gt;-->
-            <!--&lt;!&ndash;</plugin>&ndash;&gt;-->
-
-        <!--</plugins>-->
-
-    <!--</build>-->
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

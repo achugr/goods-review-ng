@@ -2,7 +2,7 @@
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
-    <id>make</id>
+    <id>upload</id>
 
     <formats>
         <format>dir</format>
@@ -10,6 +10,7 @@
 
     <includeBaseDirectory>false</includeBaseDirectory>
 
+    <!--copying server files -->
     <dependencySets>
         <dependencySet>
             <useProjectArtifact>false</useProjectArtifact>
@@ -21,21 +22,41 @@
 
     <fileSets>
         <fileSet>
-            <directory>dev</directory>
+            <directory>${basedir}</directory>
             <fileMode>755</fileMode>
             <includes>
                 <include>*.sh</include>
             </includes>
             <outputDirectory>/</outputDirectory>
         </fileSet>
-    </fileSets>
 
-    <files>
-        <file>
-            <source>${basedir}/../main/resources/log4j.xml</source>
+        <!--copying static files-->
+        <fileSet>
+            <directory>${basedir}/../main/static/vm</directory>
             <fileMode>644</fileMode>
-            <outputDirectory>/</outputDirectory>
-        </file>
-    </files>
+            <includes>
+                <include>*.vm</include>
+            </includes>
+            <outputDirectory>/static/vm</outputDirectory>
+        </fileSet>
+
+        <fileSet>
+            <directory>${basedir}/../main/static/css</directory>
+            <fileMode>644</fileMode>
+            <includes>
+                <include>*.css</include>
+            </includes>
+            <outputDirectory>/static/css</outputDirectory>
+        </fileSet>
+
+        <fileSet>
+            <directory>${basedir}/../main/static/js</directory>
+            <fileMode>644</fileMode>
+            <includes>
+                <include>*.js</include>
+            </includes>
+            <outputDirectory>/static/js</outputDirectory>
+        </fileSet>
+    </fileSets>
 
 </assembly>

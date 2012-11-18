@@ -43,13 +43,9 @@
         </property>
     </bean>
 
-    <bean id="mainPageModel" class="ru.goodsreview.frontend.model.MainPageModel">
+    <bean class="ru.goodsreview.frontend.view.TemplatePathsHolder$TemplatePathsController">
+        <property name="templatesDir" value="static/vm/"/>
     </bean>
-
-
-    <!--<bean id="mainPageServlet" class="ru.goodsreview.frontend.servlet.MainPageServlet">-->
-        <!--<property name="mainPageModel" ref="mainPageModel"/>-->
-    <!--</bean>-->
 
     <bean class="ru.goodsreview.frontend.core.SettingsHolder$SettingsController">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>

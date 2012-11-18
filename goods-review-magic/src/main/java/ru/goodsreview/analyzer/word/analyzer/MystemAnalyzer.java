@@ -35,7 +35,7 @@ public class MystemAnalyzer implements WordAnalyzer{
 
     private final static Logger log = Logger.getLogger(MystemAnalyzer.class);
 
-   public MystemAnalyzer(String path){
+   public MystemAnalyzer(){
         try {
           String CHARSET = "UTF8";
           String command = "/usr/bin/mystem -ni -e " + CHARSET;
@@ -112,6 +112,40 @@ public class MystemAnalyzer implements WordAnalyzer{
         }
 
         return tokensList;
+    }
+
+    public  GrammarGender getGenger(String word)  {
+
+        String mystemReport =  report(word);
+
+        if (!mystemReport.equals(EMPTY_REPORT)) {
+            List<String> reportList = null;
+            try {
+                reportList = MystemReportAnalyzer.buildReportList(mystemReport);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+
+            for (String rep : reportList) {
+                if (!rep.equals(EMPTY_REPORT)) {
+                    int k = rep.indexOf("=");
+                    if (k != -1 && k + 1 < rep.length()) {
+                        //without normForm
+                        String tRep = rep.substring(k + 1);
+
+                        GrammarGender gender = MystemReportAnalyzer.getGender(tRep);
+
+                        return gender;
+
+                    } else {
+                        // System.out.println(rep);
+                    }
+
+                }
+            }
+        }
+
+        return GrammarGender.UNKNOWN;
     }
 
 

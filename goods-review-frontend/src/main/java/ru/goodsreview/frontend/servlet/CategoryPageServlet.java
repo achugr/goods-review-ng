@@ -9,20 +9,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- * Created by IntelliJ IDEA.
  * User: timur
  * Date: 18.10.12
  * Time: 15:36
- * To change this template use File | Settings | File Templates.
  */
 
 @Path("/category")
 public class CategoryPageServlet {
+    private final CategoryController controller = new CategoryController();
 
     @GET
     @Path("/{category_id}/page/{page_number}")
     @Produces(MediaType.TEXT_HTML)
     public String getProductPageById(@PathParam("category_id") final long categoryId, @PathParam("page_number") final int pageNumber){
-        return new CategoryController().generatePage(categoryId, pageNumber);
+        return controller.generatePage(categoryId, pageNumber);
     }
 }

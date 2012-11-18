@@ -1,33 +1,30 @@
 package ru.goodsreview.frontend.controller;
 
-import org.apache.log4j.Logger;
-import org.json.JSONException;
 import org.json.JSONObject;
 import ru.goodsreview.frontend.model.ProductModel;
-import ru.goodsreview.frontend.view.ProductPageView;
+import ru.goodsreview.frontend.view.SimpleViewBuilder;
+import ru.goodsreview.frontend.view.TemplatePathsHolder;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
- * @author Artemii Chugreev achugr@yandex-team.ru
+ * @author Artemii Chugreev achugr@yandex-team.ru -- лох
  *         06.10.12
  */
 public class ProductController {
-    private static final Logger log = Logger.getLogger(ProductController.class);
+    private final SimpleViewBuilder viewBuilder = new SimpleViewBuilder(TemplatePathsHolder.getProductTemplatePath());
+
+    private final ProductModel productPageModel = new ProductModel();
 
     public String generatePage(final long modelId) {
-        final ProductModel productPageModel = new ProductModel();
-        JSONObject model = productPageModel.getModelById(modelId);
-        List<JSONObject> reviews = productPageModel.getReviewsByModelId(modelId);
+        JSONObject model = productPageModel.getModel(modelId);
+        List<JSONObject> reviews = productPageModel.getReviews(modelId);
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("modelInfo", model);
         data.put("reviews", reviews);
-        return new ProductPageView().createPage(data);
+        return viewBuilder.build(data);
     }
 
 }

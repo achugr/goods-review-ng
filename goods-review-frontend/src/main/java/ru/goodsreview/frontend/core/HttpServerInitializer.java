@@ -6,6 +6,7 @@ import org.mortbay.jetty.Server;
 import org.mortbay.jetty.bio.SocketConnector;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.jetty.servlet.Holder;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Required;
 
@@ -15,34 +16,36 @@ import java.util.List;
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         07.10.12
  */
-public class HttpServerInitializer implements InitializingBean {
+public class HttpServerInitializer implements InitializingBean, DisposableBean {
 
     private int port;
 
-    private Handler [] handlers;
+    private Handler[] handlers;
 
     @Required
-    public void setPort(int port) {
+    public void setPort(final int port) {
         this.port = port;
     }
 
     @Required
-    public void setHandlers(Handler [] handlers) {
+    public void setHandlers(final Handler[] handlers) {
         this.handlers = handlers;
     }
 
+    private Server server;
+
     @Override
     public void afterPropertiesSet() throws Exception {
-        Server server = new Server();
-// TODO configure webAppContexts by spring
+        server = new Server();
         Connector connector = new SelectChannelConnector();
         connector.setPort(port);
         server.addConnector(connector);
-
-//        WebAppContext root = new WebAppContext("goods-review-frontend/src/main/webapp/", "/");
-//        server.setHandlers(new Handler[]{root});
         server.setHandlers(handlers);
-
         server.start();
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        server.stop();
     }
 }

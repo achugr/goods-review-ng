@@ -12,7 +12,8 @@ public enum EntityType {
 
     MODEL(1L),
     REVIEW(2L),
-    CATEGORY(3L);
+    CATEGORY(3L),
+    PREPARED_INFO(4L);
 
     public final static String TYPE_ID_ATTR = "typeId";
 
