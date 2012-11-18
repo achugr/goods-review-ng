@@ -89,23 +89,24 @@ public class ProductInfo {
 //        }
 
         JSONObject res = ProductInfoPreparatory.prepareInfo(modelId, searchResults);
-     //   System.out.println(res.toString());
+     //  System.out.println(res.toString());
         update(res);
     }
 
     @Test
     public void test(){
-//        Set<Integer> set = getModelsId();
-//       // System.out.println(set.size());
-//        int k = 0;
-//        for (Integer i:set){
-//            if(k%100==0){
-//                System.out.println(k);
-//            }
-//            prepareModel(i);
-//            k++;
-//        }
-         prepareModel(8290995);
+        Set<Integer> set = getModelsId();
+       // System.out.println(set.size());
+        int k = 0;
+        for (Integer id:set){
+            if(k%100==0){
+                System.out.println(k);
+            }
+            prepareModel(id);
+            k++;
+        }
+     //    prepareModel(8290995);
+     //   prepareModel(6504630);
        // int modelId = 6504630;
       //  int modelId = 6456057;
 

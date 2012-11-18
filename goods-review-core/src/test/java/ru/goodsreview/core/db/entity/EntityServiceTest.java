@@ -39,12 +39,8 @@ public class EntityServiceTest {
 
     @Test
     public void improveEntitiesTest() throws JSONException {
-//        JSONObject jsonObject = new JSONObject("{\"id\":\"123456789\",\"typeId\":\"4\",\"key\":\"value1\"}");
-//        entityService.writeEntities(Collections.singletonList(jsonObject));
-//        jsonObject.put("key", "value2");
-//        jsonObject.put("thesises", "blablabla");
-//               entityService.improveEntities(Collections.singletonList(new JSONObject("{\"id\":\"123456789\",\"typeId\":\"4\",\"key\":\"value2\"}")));
-        entityService.visitEntities(2, new Visitor<JSONObject>() {
+
+        entityService.visitEntities(4, new Visitor<JSONObject>() {
             @Override
             public void visit(JSONObject jsonObject) {
                     System.out.println(jsonObject);

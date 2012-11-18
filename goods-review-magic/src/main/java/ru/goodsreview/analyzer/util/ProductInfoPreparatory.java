@@ -90,9 +90,9 @@ public final class ProductInfoPreparatory {
                     thesis.put("opinion", nopinion);
 
                     List<String> sentences = findSentencesForThesis(feature, opinion, review);
-                    if(sentences.size()==0){
-                        System.out.println("#####"+review+" "+feature+" "+opinion);
-                    }
+                   // if(sentences.size()==0){
+                  //      System.out.println("#####"+review+" "+feature+" "+opinion);
+                   // }
                     thesis.put("sentences", sentences);
 
                     thesises.add(thesis);
@@ -161,7 +161,7 @@ public final class ProductInfoPreparatory {
     private static List<String> findSentencesForThesis(String feature, String opinion, JSONObject review) {
         final List<String> sentences = new LinkedList<String>();
         try {
-            final String regexp = ".*(" + feature + "(\\s)*[A-Яа-я]*(\\s)*" + opinion + "|" + opinion + "(\\s)*" + feature + ").*";
+            final String regexp = "(" + feature + "(\\s)+[A-Яа-я]+(\\s)+" + opinion + ")|(" + feature + "(\\s)+" + opinion + ")|(" + opinion + "(\\s)+" + feature + ")";
             final Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
             System.out.println(pattern);
             if (review.has("text")) {
@@ -170,6 +170,10 @@ public final class ProductInfoPreparatory {
             }
             if (review.has("contra")) {
                 final String contra = review.getString("contra");
+             //   System.out.println("contra+"+contra);
+             //   System.out.println(feature+" "+opinion);
+             //   System.out.println(contra.contains(feature));
+             //   System.out.println(contra.contains(opinion));
                 sentences.addAll(TextUtil.getSentencesWhichContains(contra, pattern));
             }
             if (review.has("pro")) {
