@@ -52,4 +52,23 @@ public class ProductModel {
                     }
                 });
     }
+    
+    public JSONObject getInfo(final long modelId) {
+        List<JSONObject> res = SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 4 AND ENTITY_ATTRS like ?",
+                new String[]{"%" + modelId + "%"},
+                new RowMapper<JSONObject>() {
+                    @Override
+                    public JSONObject mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {
+                        try {
+                            return new JSONObject(rs.getString("ENTITY_ATTRS"));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+        if(res.size()!=0){
+            return res.get(0);
+        } else {
+            return new JSONObject();
+        }
 }
