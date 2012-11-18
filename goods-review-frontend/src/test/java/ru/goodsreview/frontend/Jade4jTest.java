@@ -9,7 +9,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,11 +22,17 @@ public class Jade4jTest {
 
     @Test
     public void testIt() throws IOException {
-        JadeTemplate template = Jade4J.getTemplate("goods-review-frontend/src/test/resources/test.jade");
+        JadeTemplate template = Jade4J.getTemplate("goods-review-frontend/src/main/static/jade/test.jade");
 
         System.out.println(new File(".").getAbsolutePath());
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put("name", "artemij");
+        List<String> models = new ArrayList<String>();
+        models.add("model1");
+        models.add("model2");
+        models.add("model3");
+        models.add("model4");
+        models.add("model5");
+        model.put("models", models);;
         String html = Jade4J.render(template, model);
         System.out.println(html);
     }

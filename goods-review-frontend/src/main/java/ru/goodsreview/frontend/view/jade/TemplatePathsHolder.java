@@ -7,6 +7,7 @@ package ru.goodsreview.frontend.view.jade;
 public class TemplatePathsHolder {
 
     private static final String TEST_PAGE_TEMPLATE = "test.jade";
+    private static final String MAIN_PAGE_TEMPLATE = "mainPage.jade";
 
     private static String TEMPLATES_DIR;
 
@@ -16,6 +17,10 @@ public class TemplatePathsHolder {
 
     public static String getTestPageTemplate() {
         return makePath(TEST_PAGE_TEMPLATE);
+    }
+
+    public static String getMainPageTemplate() {
+        return makePath(MAIN_PAGE_TEMPLATE);
     }
 
     private TemplatePathsHolder() {}

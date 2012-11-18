@@ -6,23 +6,7 @@ html
 
     div.container-fluid
         div.row-fluid
-            div.span3
-                div.well.sidebar-nav
-                    ul.nav.nav-list
-                        li.nav-header Категории
-                        li.active
-                            a(href='#') Link
-                        li
-                            a(href='#') Ноутбуки
-                        li
-                            a(href='#') Мобильные телефоны
-                        li
-                            a(href='#') Планшеты
-                        li
-                            a(href='#') Аудио-плееры
-                form.form-search
-                    input.input-medium.search-query(type='text')
-                    button.btn(type='submit') Факты о товаре
+            include leftMenu
             div.span9
                 div.hero-unit
                     div.row
@@ -30,7 +14,6 @@ html
                             h1 К вашим услугам!
                             p Команда GoodsReview рада приветствовать вас на нашем сервисе!
                             p тут потом будет что-нибудь красивое :)
-                            p $models.get(0)
                         div.span4
                             img(src='http://i.imgur.com/Cg8br.png', height='75%', width='75%')
                 div.tabbable
@@ -40,20 +23,29 @@ html
                     div.tab-content
                         #tab1.tab-pane.active
                             div.row-fluid
-                            each model, index in models
-                                if index < 3
-                                    div.span4
-                                        h3
-                                            a#id(href="/product/#{model.id}") model.name
-                                                img(src='$product.get(', mainphoto='mainPhoto')
+                                each model, index in models
+                                    if index < 3
+                                        div.span4
+                                            h3
+                                                a#id(href="/product/#{model.id}") #{model.name}
+                                            img(src="#{model.mainPhoto}")
                                             p Тут инфа. Какая - еще решим.
-                                                p
-                                                    a.btn(href='#') Подробнее »
+                                            p
+                                                a.btn(href='#') Подробнее »
 
 
                             div.row-fluid
+                                each model, index in models
+                                    if index > 2
+                                        div.span4
+                                            h3
+                                                a#id(href="/product/#{model.id}") #{model.name}
+                                            img(src="#{model.mainPhoto}")
+                                            p Тут инфа. Какая - еще решим.
+                                            p
+                                                a.btn(href='#') Подробнее »
 
 
 
-        include footer
+    include footer
 

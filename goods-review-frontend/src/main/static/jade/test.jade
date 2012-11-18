@@ -3,4 +3,10 @@ html
 head
 title my jade template
 body
-h1 Hello #{name}
+
+    each model, index in models
+        if index < 3
+            span #{index} == #{model}
+        br
+        br
+

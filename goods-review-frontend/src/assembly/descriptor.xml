@@ -57,6 +57,15 @@
             </includes>
             <outputDirectory>/static/js</outputDirectory>
         </fileSet>
+
+        <fileSet>
+            <directory>${basedir}/../main/static/jade</directory>
+            <fileMode>644</fileMode>
+            <includes>
+                <include>*.jade</include>
+            </includes>
+            <outputDirectory>/static/jade</outputDirectory>
+        </fileSet>
     </fileSets>
 
 </assembly>

@@ -23,19 +23,19 @@
     text-align: center;
 }
 
-.footer{
+.footer {
     text-align: center;
 }
 
-.commentLabel{
+.commentLabel {
     text-align: center;
 }
 
-#tagCloudContainer{
+#tagCloudContainer {
     min-height: 500px;
 }
 
-.modelName{
+.modelName {
     background-color: #EEE;
     -webkit-border-radius: 3px;
     margin-left: 30px;
@@ -48,4 +48,13 @@
 
 .thesisForViewBtn {
     width: 200px;
+}
+
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.sidebar-nav {
+    padding: 9px 0;
 }
