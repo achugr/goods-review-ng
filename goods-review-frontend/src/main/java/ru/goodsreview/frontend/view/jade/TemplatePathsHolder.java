@@ -8,6 +8,8 @@ public class TemplatePathsHolder {
 
     private static final String TEST_PAGE_TEMPLATE = "test.jade";
     private static final String MAIN_PAGE_TEMPLATE = "mainPage.jade";
+    private static final String SEARCH_RESULT_PAGE_TEMPLATE = "searchResult.jade";
+    private static final String MODEL_PAGE_TEMPLATE = "modelPage.jade";
 
     private static String TEMPLATES_DIR;
 
@@ -23,7 +25,16 @@ public class TemplatePathsHolder {
         return makePath(MAIN_PAGE_TEMPLATE);
     }
 
-    private TemplatePathsHolder() {}
+    public static String getSearchResultPageTemplate() {
+        return makePath(SEARCH_RESULT_PAGE_TEMPLATE);
+    }
+
+    public static String getModelPageTemplate() {
+        return makePath(MODEL_PAGE_TEMPLATE);
+    }
+
+    private TemplatePathsHolder() {
+    }
 
     public static class TemplatePathsController {
         public void setTemplatesDir(final String templatesDir) {

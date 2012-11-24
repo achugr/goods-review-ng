@@ -4,9 +4,20 @@ head
 title my jade template
 body
 
-    each model, index in models
-        if index < 3
-            span #{index} == #{model}
-        br
-        br
+    indexes = [1, 2, 3]
+    each i in array
+        p #{i}
 
+
+            each j in iterator
+                opinion = feature.opinions[j]
+            p #{opinion.opinion}
+                each k in iterator
+                if opinion.sentences[k]
+                    sentence = opinion.sentences[k]
+                p #{sentence}
+
+
+                    ul
+                        each sentence in opinion.sentences
+                            li #{sentence}

@@ -1,15 +1,10 @@
 package ru.goodsreview.frontend.view.jade;
 
 import de.neuland.jade4j.JadeConfiguration;
-import de.neuland.jade4j.template.FileTemplateLoader;
 import de.neuland.jade4j.template.JadeTemplate;
-import de.neuland.jade4j.template.TemplateLoader;
 import org.apache.log4j.Logger;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 
-import java.io.StringWriter;
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -21,12 +16,6 @@ public class JadeRenderer {
     private final static Logger log = Logger.getLogger(JadeRenderer.class);
 
     private final static JadeConfiguration config = new JadeConfiguration();
-
-    static {
-//        TODO path hardcode
-//        TemplateLoader loader = new FileTemplateLoader("/goods-review-frontend/src/main/static/jade", "UTF-8");
-//        config.setTemplateLoader(loader);
-    }
 
     public static String render(final String templatePath, Map<String, Object> data) {
         try {

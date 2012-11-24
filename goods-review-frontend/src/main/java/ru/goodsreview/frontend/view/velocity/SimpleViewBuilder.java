@@ -11,7 +11,6 @@ public class SimpleViewBuilder implements ViewBuilder<Map<String, Object>> {
 
     private String templatePath;
 
-
     public SimpleViewBuilder(final String templatePath) {
         this.templatePath = templatePath;
     }

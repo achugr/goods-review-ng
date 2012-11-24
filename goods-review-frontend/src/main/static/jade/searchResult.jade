@@ -14,7 +14,7 @@ html
                             h1 К вашим услугам!
                             p Команда GoodsReview рада приветствовать вас на нашем сервисе!
                             p тут потом будет что-нибудь красивое :)
-                            p hello world
+                            p Результаты по запросу #{searchQuery}, всего #{models.length} результатов.
                         div.span4
                             img(src='http://i.imgur.com/Cg8br.png', height='75%', width='75%')
                 div.tabbable
@@ -37,7 +37,7 @@ html
 
                             div.row-fluid
                                 each model, index in models
-                                    if index > 2
+                                    if index > 2 && index < 6
                                         div.span4
                                             h3
                                                 a#id(href="/product/#{model.id}") #{model.name}

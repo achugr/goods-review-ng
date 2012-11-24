@@ -12,6 +12,7 @@ div.span3
                 a(href='#') Планшеты
             li
                 a(href='#') Аудио-плееры
-    form.form-search
-        input.input-medium.search-query(type='text')
-        button.btn(type='submit') Факты о товаре
+    form(method='GET', action='/search').form-search
+        input#searchField.input-medium.search-query(type="text", name="q", size="20")
+        input(type='submit').btn
+//        button.btn Факты о товаре

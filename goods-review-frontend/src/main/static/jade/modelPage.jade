@@ -1,0 +1,66 @@
+!!! 5
+html
+    include head
+    body
+    include header
+
+    div.container-fluid
+        div.row-fluid
+            include leftMenu
+            div.span9
+                div.row
+                    h3.modelName #{model.name}
+                div.row
+                    div.span1
+                    div.span2
+                        img(src='#{model.mainPhoto}')
+                    div.span7
+                        each feature in featureForViewList
+                            p #{feature.getValue()}
+                            ul
+                            each opinion in feature.getOpinions()
+                                li #{opinion.getValue()}
+                                ul
+                                    each sentence in opinion.getSentences()
+                                        li #{sentence}
+
+
+                    div.span2
+                        a(href='#{model.link}')
+                            img(height='75%', width='75%', src='http://i.imgur.com/wdXgD.jpg')
+                div.tabbable
+                    ul.nav.nav-tabs
+                        li.active
+                            a(href='#tab1', data-toggle='tab') Комментарии
+                        li
+                            a(href='#tab2', data-toggle='tab') Описание
+                    div.tab-content
+                        #tab1.tab-pane.active
+                            each review in reviews
+                                div.row-fluid.comment
+                                    div.span10.commentContent
+                                        div.row-fluid
+                                            if review.text
+                                                div.span2
+                                                    h6.commentLabel.label.label-info Комментарий
+                                                div.span9
+                                                    #{review.text}
+                                        br
+                                        div.row-fluid
+                                            if review.pro
+                                                div.span2
+                                                    h6.commentLabel.label.label-success Преимущества
+                                                div.span9
+                                                    #{review.pro}
+                                        br
+                                        div.row-fluid
+                                            if review.contra
+                                                div.span2
+                                                    h6.commentLabel.label.label-important Недостатки
+                                                div.span9
+                                                    #{review.contra}
+                                        br
+
+
+include footer
+

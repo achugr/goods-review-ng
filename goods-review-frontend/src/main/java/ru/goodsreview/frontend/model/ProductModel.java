@@ -6,18 +6,22 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import ru.goodsreview.frontend.core.SettingsHolder;
 
+import javax.management.monitor.StringMonitorMBean;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Artemii Chugreev achugr@yandex-team.ru
  *         06.10.12
- *
- *
+ *         <p/>
+ *         <p/>
  *         hardcoded class should be replaced by searcher
  */
 public class ProductModel {
+
     public JSONObject getModel(final long modelId) {
 //        TODO it's govnokod
         final List<JSONObject> rawModels = SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1 AND ENTITY_ATTRS like ? limit 1",
@@ -52,8 +56,8 @@ public class ProductModel {
                     }
                 });
     }
-    
-    public JSONObject getInfo(final long modelId) {
+
+    public List<FeatureForView> getInfo(final long modelId) {
         List<JSONObject> res = SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 4 AND ENTITY_ATTRS like ?",
                 new String[]{"%" + modelId + "%"},
                 new RowMapper<JSONObject>() {
@@ -66,9 +70,11 @@ public class ProductModel {
                         }
                     }
                 });
-        if(res.size()!=0){
-            return res.get(0);
+        if (res.size() != 0) {
+            return DataForViewUtils.convertToObjectForView(res.get(0));
         } else {
-            return new JSONObject();
+            return new LinkedList<FeatureForView>();
         }
+    }
+
 }
