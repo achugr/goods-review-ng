@@ -71,9 +71,7 @@ public final class ProductInfoPreparatory {
             for (JSONObject review : reviews) {
                 JSONArray thesisArray = review.getJSONArray("thesises");
                 for (int i = 0; i < thesisArray.length(); i++) {
-                   // System.out.println("i am here");
                     JSONObject thesis = thesisArray.getJSONObject(i);
-                  //  System.out.println(thesis);
 
                     final String[] thesisParts = thesis.getString("value").split(" ");
                     final String feature = thesisParts[0];
@@ -106,7 +104,6 @@ public final class ProductInfoPreparatory {
 
 
     private static Map<String, List<JSONObject>> groupByFeature(List<JSONObject> thesises) {
-//        final Map<String, List<JSONObject>> featureMap = new HashMap<String, List<JSONObject>>();
         final Map<String, List<JSONObject>> featureMap = new HashMap<String, List<JSONObject>>();
         for (JSONObject thesis : thesises) {
             try {
@@ -170,10 +167,6 @@ public final class ProductInfoPreparatory {
             }
             if (review.has("contra")) {
                 final String contra = review.getString("contra");
-             //   System.out.println("contra+"+contra);
-             //   System.out.println(feature+" "+opinion);
-             //   System.out.println(contra.contains(feature));
-             //   System.out.println(contra.contains(opinion));
                 sentences.addAll(TextUtil.getSentencesWhichContains(contra, pattern));
             }
             if (review.has("pro")) {
@@ -193,7 +186,7 @@ public final class ProductInfoPreparatory {
     public void test(){
         String feature ="мультитач";
         String opinion ="доступный";
-        final String regexp = ".*(" + feature + "(\\s)*[A-Яа-я]*(\\s)*" + opinion + "|" + opinion + "(\\s)*" + feature + ").*";
+        final String regexp = "(" + feature + "(\\s)+[A-Яа-я]+(\\s)+" + opinion + ")|(" + feature + "(\\s)+" + opinion + ")|(" + opinion + "(\\s)+" + feature + ")";
         final Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
         System.out.println(pattern);
 

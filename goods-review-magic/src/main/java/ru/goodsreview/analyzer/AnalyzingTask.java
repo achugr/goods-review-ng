@@ -36,7 +36,7 @@ public class AnalyzingTask extends AnalyzingSchedulerTask {
             for (String atr : atrs) {
                 if (object.has(atr)) {
                     String review = object.get(atr).toString();
-                    ArrayList<Phrase> phrases = ExtractThesis.doExtraction(review);
+                    List<Phrase> phrases = ExtractThesis.doExtraction(review);
                     for (Thesis thesis : phrases) {
                         thesisList.add(thesis);
                         //    log.info("Extracted thesis: " + thesis.getValue());
