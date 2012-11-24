@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.goodsreview.analyzer.util.ProductInfoPreparatory;
-import ru.goodsreview.core.db.entity.EntityBatchPreparedStatementSetter;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -58,11 +58,11 @@ public class ProductInfo {
                 });
 
 
-        for (JSONObject object1:searchResults){
+        for (JSONObject obj:searchResults){
             try {
-                set.add(Integer.parseInt(object1.get("modelId").toString()));
+                set.add(Integer.parseInt(obj.get("modelId").toString()));
             } catch (JSONException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
             }
         }
 
@@ -94,21 +94,17 @@ public class ProductInfo {
     }
 
     @Test
-    public void test(){
+    public void prepareModels() {
         Set<Integer> set = getModelsId();
-       // System.out.println(set.size());
-        int k = 0;
-        for (Integer id:set){
-            if(k%100==0){
-                System.out.println(k);
-            }
+        // System.out.println(set.size());
+
+        for (Integer id : set) {
             prepareModel(id);
-            k++;
         }
-     //    prepareModel(8290995);
-     //   prepareModel(6504630);
-       // int modelId = 6504630;
-      //  int modelId = 6456057;
+
+        // int modelId = 6504630;
+        //  int modelId = 6456057;
+        //   prepareModel(modelId);
 
     }
 
@@ -116,7 +112,6 @@ public class ProductInfo {
     public void clear(){
         String query = "delete from ENTITY where  ENTITY_TYPE_ID = 4";
         jdbcTemplate.update(query);
-
     }
 
 
