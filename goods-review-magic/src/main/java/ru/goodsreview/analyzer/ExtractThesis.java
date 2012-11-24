@@ -1,4 +1,5 @@
 package ru.goodsreview.analyzer;
+
 /*
  *  Date: 18.02.12
  *   Time: 16:04
@@ -7,7 +8,6 @@ package ru.goodsreview.analyzer;
  *      artemij.chugreev@gmail.com
  */
 
-import org.json.JSONObject;
 import ru.goodsreview.analyzer.util.Phrase;
 import ru.goodsreview.analyzer.util.ThesisPattern;
 import ru.goodsreview.analyzer.util.sentence.*;
@@ -15,17 +15,13 @@ import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
 import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
 import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 
 public class ExtractThesis{
 
-    public static ArrayList<Phrase> doExtraction(String content){
+    public static List<Phrase> doExtraction(String content){
         ArrayList<Phrase> extractedThesisList = new ArrayList<Phrase>();
 
         List<ThesisPattern> thesisPatternList = new ArrayList<ThesisPattern>();

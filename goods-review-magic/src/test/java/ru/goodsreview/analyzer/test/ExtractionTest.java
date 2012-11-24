@@ -15,7 +15,7 @@ import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -49,7 +49,7 @@ public class ExtractionTest {
                     String content = review.getContent();
                     out.println("     <review>");
                     out.println("        <content>" + content + "</content>");
-                    ArrayList<ru.goodsreview.analyzer.util.Phrase> algoList = ExtractThesis.doExtraction(content);
+                    List<ru.goodsreview.analyzer.util.Phrase> algoList = ExtractThesis.doExtraction(content);
 
                     for (ru.goodsreview.analyzer.util.Phrase algoPhrase : algoList) {
                         // System.out.println("algo:  " + algoPhrase.getFeature() + " " + algoPhrase.getOpinion());
