@@ -21,61 +21,66 @@ import java.util.List;
  */
 public class SearchPageModel {
 
-    private enum OPERATOR{
+    private enum OPERATOR {
         AND("and"),
         OR("or");
 
         String name;
-        
-        OPERATOR(String name){
+
+        OPERATOR(String name) {
             this.name = name;
         }
 
-        public String getName(){
+        public String getName() {
             return name;
         }
-    };
-
-    private List<JSONObject> searhWordsWithOperator(final String[] searchWords, final OPERATOR operator) {
-        return SettingsHolder.getJdbcTemplate().query(new PreparedStatementCreator() {
-                    @Override
-                    public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-                        StringBuilder searchSql = new StringBuilder("select ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1 and ( ");
-                        for(int i = 0; i < searchWords.length; i++){
-                            searchSql.append(" ENTITY_ATTRS like ?");
-                            if(i != searchWords.length - 1){
-                                searchSql.append(" " + operator.getName());
-                            }
-                        }
-                        searchSql.append(" )");
-                        System.out.println(searchSql.toString());
-                        PreparedStatement searchStatement = con.prepareStatement(searchSql.toString());
-                        for(int i = 0; i < searchWords.length; i++){
-                            searchStatement.setString(i+1, "%\"name\":\"%" + searchWords[i] + "%");
-                        }
-                        return searchStatement;
-                    }
-                }, new RowMapper<JSONObject>() {
-            @Override
-            public JSONObject mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {
-                try {
-                    return new JSONObject(rs.getString("ENTITY_ATTRS"));
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
     }
 
-    public List<JSONObject> getSearchResults(final String searchQuery) {
+    private List<JSONObject> searhWordsWithOperator(final String[] searchWords, final int pageNumber, final int modelsOnPage, final OPERATOR operator) {
+        return SettingsHolder.getJdbcTemplate().query(new PreparedStatementCreator() {
+                                                          @Override
+                                                          public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                                                              StringBuilder searchSql = new StringBuilder("select ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1 and ( ");
+                                                              for (int i = 0; i < searchWords.length; i++) {
+                                                                  searchSql.append(" ENTITY_ATTRS like ?");
+                                                                  if (i != searchWords.length - 1) {
+                                                                      searchSql.append(" " + operator.getName());
+                                                                  }
+                                                              }
+                                                              searchSql.append(" )");
+                                                              searchSql.append("LIMIT ?, ? ");
+                                                              System.out.println(searchSql.toString());
+                                                              PreparedStatement searchStatement = con.prepareStatement(searchSql.toString());
+                                                              for (int i = 0; i < searchWords.length; i++) {
+                                                                  searchStatement.setString(i + 1, "%\"name\":\"%" + searchWords[i] + "%");
+                                                              }
+                                                              final int indexFrom = (pageNumber - 1) * modelsOnPage;
+                                                              searchStatement.setInt(searchWords.length + 1, indexFrom);
+                                                              searchStatement.setInt(searchWords.length + 2, modelsOnPage);
+                                                              return searchStatement;
+                                                          }
+                                                      }, new RowMapper<JSONObject>() {
+                                                          @Override
+                                                          public JSONObject mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {
+                                                              try {
+                                                                  return new JSONObject(rs.getString("ENTITY_ATTRS"));
+                                                              } catch (JSONException e) {
+                                                                  throw new RuntimeException(e);
+                                                              }
+                                                          }
+                                                      }
+        );
+    }
+
+    public List<JSONObject> getSearchResults(final String searchQuery, final int pageNumber, final int modelsOnPage) {
         String trimedSearchQuery = searchQuery.trim();
-        if(!trimedSearchQuery.equals("")){
+        if (!trimedSearchQuery.equals("")) {
             final String[] searchWords = trimedSearchQuery.split(" ");
-            List<JSONObject> searchResultsForAndOp = searhWordsWithOperator(searchWords, OPERATOR.AND);
-            if(searchResultsForAndOp.size() != 0){
+            List<JSONObject> searchResultsForAndOp = searhWordsWithOperator(searchWords, pageNumber, modelsOnPage, OPERATOR.AND);
+            if (searchResultsForAndOp.size() != 0) {
                 return searchResultsForAndOp;
-            }else{
-                return searhWordsWithOperator(searchWords, OPERATOR.OR);
+            } else {
+                return searhWordsWithOperator(searchWords, pageNumber, modelsOnPage, OPERATOR.OR);
             }
         }
         return new ArrayList<JSONObject>();

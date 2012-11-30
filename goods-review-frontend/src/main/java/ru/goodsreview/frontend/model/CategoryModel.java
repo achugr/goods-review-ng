@@ -16,18 +16,17 @@ import java.util.List;
  * Time: 15:45
  */
 public class CategoryModel {
-    private final static int MODELS_ON_PAGE_NUM = 9;
 
     public int getModelsCount(final long categoryId) {
         return SettingsHolder.getJdbcTemplate().queryForObject("SELECT COUNT(ENTITY_ATTRS) from ENTITY where ENTITY_TYPE_ID = 1 AND ENTITY_ATTRS like ?",
                 new String[]{"%\"categoryId\":" + categoryId + "%"}, Integer.class);
     }
 
-    public List<JSONObject> getModels(final long categoryId, final int page) {
-        final int indexFrom = (page - 1) * MODELS_ON_PAGE_NUM;
+    public List<JSONObject> getModels(final long categoryId, final int page, final int modelsOnPage) {
+        final int indexFrom = (page - 1) * modelsOnPage;
         return SettingsHolder.getJdbcTemplate().query(
                 "SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1 AND ENTITY_ATTRS like ? LIMIT ?, ?",
-                new Object[]{"%\"categoryId\":" + categoryId + "%", indexFrom, MODELS_ON_PAGE_NUM},
+                new Object[]{"%\"categoryId\":" + categoryId + "%", indexFrom, indexFrom},
                 new RowMapper<JSONObject>() {
                     @Override
                     public JSONObject mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {

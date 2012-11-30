@@ -24,7 +24,7 @@ public class ProductController {
     public String generatePage(final long modelId) {
         JSONObject model = productPageModel.getModel(modelId);
         List<JSONObject> reviews = productPageModel.getReviews(modelId);
-        List<FeatureForView> featureForViewList = productPageModel.getInfo(modelId);
+        List<FeatureForView> featureForViewList = productPageModel.getInfoForJade(modelId);
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("model", model);
         data.put("reviews", reviews);

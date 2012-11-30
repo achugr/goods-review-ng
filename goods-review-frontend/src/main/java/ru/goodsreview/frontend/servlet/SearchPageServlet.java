@@ -18,7 +18,7 @@ public class SearchPageServlet {
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public String getSearchResults(@QueryParam("q") final String searchQuery){
-        return new SearchPageController().generatePage(searchQuery);
+    public String getSearchResults(@QueryParam("query") final String searchQuery, @QueryParam("page-number") int pageNumber, @QueryParam("models-on-page") int modelsOnPage){
+        return new SearchPageController().generatePage(searchQuery, pageNumber, modelsOnPage);
     }
 }

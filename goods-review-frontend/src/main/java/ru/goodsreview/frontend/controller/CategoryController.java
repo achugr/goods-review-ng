@@ -19,9 +19,9 @@ public class CategoryController {
 
     private final CategoryModel categoryPageModel = new CategoryModel();
 
-    public String generatePage(final long categoryId, final int pageNumber){
+    public String generatePage(final long categoryId, final int pageNumber, final int modelsOnPage){
         int pagesNumber = categoryPageModel.getModelsCount(categoryId);
-        List<JSONObject> models = categoryPageModel.getModels(categoryId, pageNumber);
+        List<JSONObject> models = categoryPageModel.getModels(categoryId, pageNumber, modelsOnPage);
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("pagesNumbers", pagesNumber);
         data.put("models", models);

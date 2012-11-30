@@ -19,8 +19,8 @@ public class SearchPageController {
 
     private final SearchPageModel searchPageModel = new SearchPageModel();
 
-    public String generatePage(String searchQuery) {
-        final List<JSONObject> searchResults = searchPageModel.getSearchResults(searchQuery);
+    public String generatePage(String searchQuery, final int pageNumber, final int modelsOnPage) {
+        final List<JSONObject> searchResults = searchPageModel.getSearchResults(searchQuery, pageNumber, modelsOnPage);
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("searchQuery", searchQuery);
         data.put("models", searchResults);

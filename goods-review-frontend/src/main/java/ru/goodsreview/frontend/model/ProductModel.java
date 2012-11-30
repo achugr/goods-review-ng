@@ -57,7 +57,7 @@ public class ProductModel {
                 });
     }
 
-    public List<FeatureForView> getInfo(final long modelId) {
+    public JSONObject getInfo(final long modelId) {
         List<JSONObject> res = SettingsHolder.getJdbcTemplate().query("SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 4 AND ENTITY_ATTRS like ?",
                 new String[]{"%" + modelId + "%"},
                 new RowMapper<JSONObject>() {
@@ -71,10 +71,14 @@ public class ProductModel {
                     }
                 });
         if (res.size() != 0) {
-            return DataForViewUtils.convertToObjectForView(res.get(0));
+            return res.get(0);
         } else {
-            return new LinkedList<FeatureForView>();
+            return new JSONObject();
         }
+    }
+
+    public List<FeatureForView> getInfoForJade(final long modelId){
+        return DataForViewUtils.convertToObjectForView(getInfo(modelId));
     }
 
 }
