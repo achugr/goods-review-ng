@@ -88,9 +88,7 @@ public final class ProductInfoPreparatory {
                     thesis.put("opinion", nopinion);
 
                     List<String> sentences = findSentencesForThesis(feature, opinion, review);
-                   // if(sentences.size()==0){
-                  //      System.out.println("#####"+review+" "+feature+" "+opinion);
-                   // }
+
                     thesis.put("sentences", sentences);
 
                     thesises.add(thesis);
@@ -160,7 +158,7 @@ public final class ProductInfoPreparatory {
         try {
             final String regexp = "(" + feature + "(\\s)+[A-Яа-я]+(\\s)+" + opinion + ")|(" + feature + "(\\s)+" + opinion + ")|(" + opinion + "(\\s)+" + feature + ")";
             final Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
-            System.out.println(pattern);
+
             if (review.has("text")) {
                 final String text = review.getString("text");
                 sentences.addAll(TextUtil.getSentencesWhichContains(text, pattern));
@@ -180,22 +178,6 @@ public final class ProductInfoPreparatory {
             throw new RuntimeException(e);
         }
         return sentences;
-    }
-
-    @Test
-    public void test(){
-        String feature ="мультитач";
-        String opinion ="доступный";
-        final String regexp = "(" + feature + "(\\s)+[A-Яа-я]+(\\s)+" + opinion + ")|(" + feature + "(\\s)+" + opinion + ")|(" + opinion + "(\\s)+" + feature + ")";
-        final Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
-        System.out.println(pattern);
-
-        final String text = "жесткий диск медленноват, но не думаю, что это такой уж проблема (захочешь быстрее - докупишь более быстрый), зато штатный - тихий и холодный.\r\nЭкран, ладно еще, что зеркальный, но вот контрастности явно не хватает - из-за этого моя оценка удобства эксплуатации - 4\r\nнет мультитача (весь доступный мультитач - это двойное_нажатие_и_удержание_пальца на тачпаде для перемещения иконок и прочего)";
-        List<String> list = TextUtil.getSentencesWhichContains(text, pattern);
-        for (String s:list){
-          System.out.println(s);
-        }
-
     }
 
 }
