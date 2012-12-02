@@ -24,7 +24,7 @@ import java.util.Map;
 public class ModelGrabber extends AbstractGrabber {
     private final static Logger log = Logger.getLogger(ModelGrabber.class);
 
-    private static final Integer COUNT_MAX_VALUE = 30;
+    private static final int MAX_MODELS_NUM_PER_PAGE = 30;
 
     public ModelGrabber() {
         this.entityType = EntityType.MODEL;
@@ -73,13 +73,13 @@ public class ModelGrabber extends AbstractGrabber {
                 int modelsNum = category.getInt(JSONKeys.MODELS_NUM.getKey());
 
                 if(modelsNum != 0){
-                    int pageCount = (modelsNum % COUNT_MAX_VALUE == 0) ? (modelsNum / COUNT_MAX_VALUE) : (modelsNum / COUNT_MAX_VALUE) + 1;
-                    for(Integer pageNum = 1; pageNum <= pageCount; pageNum++){
+                    int pageCount = (modelsNum % MAX_MODELS_NUM_PER_PAGE == 0) ? (modelsNum / MAX_MODELS_NUM_PER_PAGE) : (modelsNum / MAX_MODELS_NUM_PER_PAGE) + 1;
+                    for(int pageNumber = 1; pageNumber <= pageCount; pageNumber++){
                         CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
 
                         Map<String,String> parameters = new HashMap<String, String>();
-                        parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
-                        parameters.put(RequestParams.PAGE.getKey(), pageNum.toString());
+                        parameters.put(RequestParams.COUNT.getKey(), Integer.toString(MAX_MODELS_NUM_PER_PAGE));
+                        parameters.put(RequestParams.PAGE.getKey(), Integer.toString(pageNumber));
 
                         UrlRequest urlRequest = categoryRequestBuilder.requestForListOfModelsOfCategoryById(categoryId, parameters);
                         try {

@@ -153,7 +153,6 @@ public class EntityService {
                         return Batch.getSize();
                     }
                 });
-
     }
 
     public void visitEntitiesWithCondition(final Condition condition, final Visitor<JSONObject> visitor) {
