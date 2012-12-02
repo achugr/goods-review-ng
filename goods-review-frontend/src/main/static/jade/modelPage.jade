@@ -10,6 +10,50 @@ html
             div.span9
                 div.row
                     h3.modelName #{model.name}
+                    div.accordion(id="accordion")
+                        each feature in featureForViewList
+                            div.accordion-group
+                                div.accordion-heading
+                                    a.accordion-toggle.collapsed(data-toggle="collapse", data-parent="#accordion", href="##{feature.getValue()}") #{feature.getValue()}
+                                div.accordion-body.collapse(style="height: 0px; ", id="#{feature.getValue()}")
+                                    div.accordion-inner
+                                        div.accordion(id="accordion-#{feature.getValue()}")
+                                            each opinion in feature.getOpinions()
+                                                div.accordion-group
+                                                    div.accordion-heading
+                                                        a.accordion-toggle.collapsed(data-toggle="collapse", data-parent="#accordion-#{feature.getValue()}", href="##{opinion.getValue().hashCode()}") #{opinion.getValue()}
+                                                    div.accordion-body.collapse(style="height: 0px; ", id="#{opinion.getValue().hashCode()}")
+                                                        div.accordion-inner
+                                                            ul
+                                                                each sentence in opinion.getSentences()
+                                                                    li #{sentence}
+
+
+                br
+                br
+                br
+                br
+                br
+                br
+
+                div.row
+                    div.span1
+                    div.span2
+                        img(src='#{model.mainPhoto}')
+                    div.span7
+                        each feature in featureForViewList
+                            div.btn-group(style="margin:10px;")
+                                button.btn.dropdown-toggle(data-toggle="dropdown") #{feature.getValue()}
+                                    span.caret
+                                ul.dropdown-menu
+                                    each opinion in feature.getOpinions()
+                                        li
+                                            a(href="#", rel="popover", data-content="And here's some amazing content. It's very engaging. right?") #{opinion.getValue()}
+                br
+                br
+                br
+                br
+                br3
                 div.row
                     div.span1
                     div.span2
@@ -28,38 +72,7 @@ html
                     div.span2
                         a(href='#{model.link}')
                             img(height='75%', width='75%', src='http://i.imgur.com/wdXgD.jpg')
-                div.tabbable
-                    ul.nav.nav-tabs
-                        li.active
-                            a(href='#tab1', data-toggle='tab') Комментарии
-                        li
-                            a(href='#tab2', data-toggle='tab') Описание
-                    div.tab-content
-                        #tab1.tab-pane.active
-                            each review in reviews
-                                div.row-fluid.comment
-                                    div.span10.commentContent
-                                        div.row-fluid
-                                            if review.text
-                                                div.span2
-                                                    h6.commentLabel.label.label-info Комментарий
-                                                div.span9
-                                                    #{review.text}
-                                        br
-                                        div.row-fluid
-                                            if review.pro
-                                                div.span2
-                                                    h6.commentLabel.label.label-success Преимущества
-                                                div.span9
-                                                    #{review.pro}
-                                        br
-                                        div.row-fluid
-                                            if review.contra
-                                                div.span2
-                                                    h6.commentLabel.label.label-important Недостатки
-                                                div.span9
-                                                    #{review.contra}
-                                        br
+
 
 
 include footer
