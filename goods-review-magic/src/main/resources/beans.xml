@@ -7,7 +7,7 @@
     <bean id="propertiesConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:db.properties</value>
+                <value>classpath:ssh_db.properties</value>
             </list>
         </property>
 
