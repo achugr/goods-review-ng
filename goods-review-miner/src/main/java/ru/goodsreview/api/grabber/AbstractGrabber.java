@@ -11,11 +11,9 @@ import ru.goodsreview.core.db.entity.EntityType;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: timur
- * Date: 24.08.12
- * Time: 23:48
- * To change this template use File | Settings | File Templates.
+ * @author: Mokaev Timur
+ * Date: 11.11.12
+ * Time: 12:26
  */
 public abstract class AbstractGrabber {
     private final static Logger log = Logger.getLogger(AbstractGrabber.class);
@@ -27,16 +25,6 @@ public abstract class AbstractGrabber {
     @Required
     public void setGrabberBatch(GrabberBatch grabberBatch){
         this.grabberBatch = grabberBatch;
-    }
-
-    @Required
-    public GrabberBatch getGrabberBatch(){
-        return grabberBatch;
-    }
-
-    @Required
-    public ContentAPIProvider getContentApiProvider() {
-        return contentApiProvider;
     }
 
     @Required

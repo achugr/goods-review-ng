@@ -1,11 +1,9 @@
 package ru.goodsreview.api.request.builder;
 
 /**
- * Created by IntelliJ IDEA.
- * User: timur
- * Date: 26.07.12
- * Time: 2:44
- * To change this template use File | Settings | File Templates.
+ * @author: Mokaev Timur
+ * Date: 11.11.12
+ * Time: 12:26
  */
 public enum RequestParams {
 

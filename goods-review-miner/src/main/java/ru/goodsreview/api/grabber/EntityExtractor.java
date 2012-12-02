@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: timur
- * Date: 26.09.12
- * Time: 15:30
- * To change this template use File | Settings | File Templates.
+ * @author: Mokaev Timur
+ * Date: 11.11.12
+ * Time: 12:26
  */
 public class EntityExtractor implements Visitor<JSONObject> {
     private List<JSONObject> entities = new ArrayList<JSONObject>();

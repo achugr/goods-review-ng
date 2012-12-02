@@ -17,11 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
- * User: timur
- * Date: 29.08.12
- * Time: 0:46
- * To change this template use File | Settings | File Templates.
+ * @author: Mokaev Timur
+ * Date: 11.11.12
+ * Time: 12:26
  */
 
 public class ReviewGrabber extends AbstractGrabber{

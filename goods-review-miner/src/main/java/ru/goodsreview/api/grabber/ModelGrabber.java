@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * achugr, achugr@yandex-team.ru
- * 13.07.12
+ * @author: Mokaev Timur
+ * Date: 11.11.12
+ * Time: 12:26
  */
 public class ModelGrabber extends AbstractGrabber {
     private final static Logger log = Logger.getLogger(ModelGrabber.class);

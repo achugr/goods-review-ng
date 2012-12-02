@@ -14,9 +14,9 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * User: timur
- * Date: 03.08.12
- * Time: 4:06
+ * @author: Mokaev Timur
+ * Date: 11.11.12
+ * Time: 12:26
  */
 public class CategoryGrabber extends AbstractGrabber {
     private final static Logger log = Logger.getLogger(CategoryGrabber.class);
@@ -104,7 +104,7 @@ public class CategoryGrabber extends AbstractGrabber {
                         //Getting child categories of the current category
 
                         //Here can be thrown HttpException or IOException - if something wrong in json object downloading
-                        JSONObject mainObject = getContentApiProvider().provide(urlRequest);
+                        JSONObject mainObject = contentApiProvider.provide(urlRequest);
 
                         //Here can be thrown JSONException - if something wrong with received json object
                         childCategories.addAll(JSONUtil.extractList(mainObject, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey()));
