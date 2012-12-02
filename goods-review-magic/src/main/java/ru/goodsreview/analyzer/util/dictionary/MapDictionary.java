@@ -45,19 +45,4 @@ public class MapDictionary implements KeyValueDictionary<String, Double> {
         return dictionary.get(key);
     }
 
-    public void print() {
-        for (String word : dictionary.keySet()) {
-            System.out.println(word + " " + dictionary.get(word));
-        }
-    }
-
-
-
-
-    @Test
-    public  void test(){
-        MapDictionary md = MapDictionary.getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
-        Double value = md.getValue("бессмысленный");
-        System.out.print(value);
-    }
 }

@@ -48,21 +48,6 @@ public class PyMorphyDict  {
         }
     }
 
-    public void print() {
-        for (String word : dictionary.keySet()) {
-            System.out.println(word + " " + Arrays.toString(dictionary.get(word)));
-        }
-    }
-
-
-
-
-    @Test
-    public  void test(){
-        PyMorphyDict pd = PyMorphyDict.getInstance("/ru/goodsreview/analyzer/util/dictionary/pyDict.txt");
-      //  System.out.println(pd.getForms("потрясныйsdf"));
-        pd.print();
-    }
 
 
 }
