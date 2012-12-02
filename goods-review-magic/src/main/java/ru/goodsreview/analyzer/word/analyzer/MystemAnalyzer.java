@@ -72,7 +72,7 @@ public class MystemAnalyzer implements WordAnalyzer{
         analyzerProcess.destroy();
     }
 
-    public  List<Token> getTokenList(String word) throws UnsupportedEncodingException {
+    public  List<Token> getTokenList(String word) {
         ArrayList<Token> tokensList = new ArrayList<Token>();
 
         String mystemReport =  report(word);
@@ -118,12 +118,7 @@ public class MystemAnalyzer implements WordAnalyzer{
         String mystemReport =  report(word);
 
         if (!mystemReport.equals(EMPTY_REPORT)) {
-            List<String> reportList = null;
-            try {
-                reportList = MystemReportAnalyzer.buildReportList(mystemReport);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
+            List<String> reportList=MystemReportAnalyzer.buildReportList(mystemReport);
 
             for (String rep : reportList) {
                 if (!rep.equals(EMPTY_REPORT)) {

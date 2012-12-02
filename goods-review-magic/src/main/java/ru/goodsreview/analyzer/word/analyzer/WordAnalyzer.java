@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface WordAnalyzer {
 
-    List<Token> getTokenList(String word) throws UnsupportedEncodingException;
+    List<Token> getTokenList(String word);
 
     void close();
 

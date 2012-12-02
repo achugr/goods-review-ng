@@ -58,7 +58,7 @@ public class MystemReportAnalyzer extends ReportAnalyzer{
     }
 
 
-    public static PartOfSpeech getPartOfSpeech(String report) throws UnsupportedEncodingException {
+    public static PartOfSpeech getPartOfSpeech(String report) {
         for (PartOfSpeech part:parts){
             if(report.contains(part.toString())){
                 return part;
@@ -68,7 +68,7 @@ public class MystemReportAnalyzer extends ReportAnalyzer{
           return PartOfSpeech.UNKNOWN;
     }
 
-    public static String getNormForm(String report) throws UnsupportedEncodingException {
+    public static String getNormForm(String report) {
         String norm = UNKNOUN;
         int n = report.indexOf("?=");
         if (n != -1) {
@@ -91,7 +91,7 @@ public class MystemReportAnalyzer extends ReportAnalyzer{
     }
 
 
-    public static List<String> buildReportList(String report) throws UnsupportedEncodingException {
+    public static List<String> buildReportList(String report) {
         ArrayList<String> reportList = new ArrayList<String>();
         int k = report.indexOf("{");
         if(k!=-1){

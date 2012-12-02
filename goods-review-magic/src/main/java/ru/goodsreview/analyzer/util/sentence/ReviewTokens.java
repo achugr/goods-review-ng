@@ -54,15 +54,13 @@ public class ReviewTokens {
 
                 currToken = currToken.trim();
 
-                if (!currToken.equals("")) {
+                if (!currToken.isEmpty()) {
                     currToken = currToken.toLowerCase();
 
                     List<Token> list = null;
-                    try {
+
                         list = wordAnalyzer.getTokenList(currToken);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
+
 
                     dictionaryCheck(list);
 
