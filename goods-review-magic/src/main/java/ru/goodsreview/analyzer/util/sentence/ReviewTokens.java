@@ -9,6 +9,7 @@ package ru.goodsreview.analyzer.util.sentence;
 
 
 import ru.goodsreview.analyzer.util.dictionary.*;
+import ru.goodsreview.analyzer.util.sentence.mystem.PartOfSpeech;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;

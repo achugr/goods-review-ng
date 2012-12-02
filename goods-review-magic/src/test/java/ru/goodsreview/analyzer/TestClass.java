@@ -38,14 +38,7 @@ public class TestClass {
 
     }
 
-    public void testFeatureDictionary() throws UnsupportedEncodingException {
-        ReviewTokens.getFeatureDictionary().print();
-    }
 
-    public void testOpinionDictionary() throws UnsupportedEncodingException {
-        ReviewTokens.getMapDictionary().print();
-
-    }
 
 
 

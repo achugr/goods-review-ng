@@ -2,13 +2,11 @@ package ru.goodsreview.analyzer.word.analyzer;
 
 import ru.goodsreview.analyzer.util.sentence.mystem.GrammarCase;
 import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
-import ru.goodsreview.analyzer.util.sentence.GrammarNumber;
-import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
+import ru.goodsreview.analyzer.util.sentence.mystem.PartOfSpeech;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Date: 13.07.12

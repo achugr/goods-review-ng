@@ -9,12 +9,11 @@ package ru.goodsreview.analyzer.word.analyzer;
 
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.analyzer.util.sentence.*;
 import ru.goodsreview.analyzer.util.sentence.mystem.GrammarCase;
 import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
 import ru.goodsreview.analyzer.util.sentence.GrammarNumber;
-import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
+import ru.goodsreview.analyzer.util.sentence.mystem.PartOfSpeech;
 
 import java.io.IOException;
 import java.io.PrintStream;
