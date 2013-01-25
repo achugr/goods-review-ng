@@ -1,3 +1,5 @@
 secure-api.properties
+secure-ya-xml.properties
 *OSValidator.java
 *.scala
+db.properties
