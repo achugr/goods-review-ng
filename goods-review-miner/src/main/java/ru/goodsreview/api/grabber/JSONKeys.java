@@ -1,9 +1,9 @@
 package ru.goodsreview.api.grabber;
 
 /**
- * User: timur
- * Date: 03.08.12
- * Time: 4:06
+ * @author: Mokaev Timur
+ * Date: 11.11.12
+ * Time: 12:26
  */
 public enum JSONKeys {
 

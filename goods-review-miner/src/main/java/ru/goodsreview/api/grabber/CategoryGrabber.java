@@ -14,14 +14,14 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * User: timur
- * Date: 03.08.12
- * Time: 4:06
+ * @author: Mokaev Timur
+ * Date: 11.11.12
+ * Time: 12:26
  */
 public class CategoryGrabber extends AbstractGrabber {
     private final static Logger log = Logger.getLogger(CategoryGrabber.class);
 
-    private static final Integer COUNT_MAX_VALUE = 30;
+    private static final int MAX_CATEGORIES_NUM_PER_PAGE = 30;
 
     public CategoryGrabber(){
         this.entityType = EntityType.CATEGORY;
@@ -31,7 +31,7 @@ public class CategoryGrabber extends AbstractGrabber {
         log.info("Grabbing main categories started");
         CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
         Map<String,String> parameters = new HashMap<String, String>();
-        parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
+        parameters.put(RequestParams.COUNT.getKey(), Integer.toString(MAX_CATEGORIES_NUM_PER_PAGE));
         UrlRequest urlRequest = categoryRequestBuilder.requestForListOfCategories(parameters);
         List<JSONObject> mainCategories = new ArrayList<JSONObject>();
         try {
@@ -40,6 +40,20 @@ public class CategoryGrabber extends AbstractGrabber {
 
             //Here can be thrown JSONException - if something wrong with received json object
             mainCategories.addAll(JSONUtil.extractList(mainObject, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey()));
+
+            JSONObject categoriesJSONObject = mainObject.getJSONObject(JSONKeys.CATEGORIES.getKey());
+            int mainCategoriesCount = categoriesJSONObject.getInt(JSONKeys.TOTAL.getKey());
+
+            if(mainCategoriesCount > MAX_CATEGORIES_NUM_PER_PAGE ){
+                int pageCount = (mainCategoriesCount % MAX_CATEGORIES_NUM_PER_PAGE == 0) ? (mainCategoriesCount / MAX_CATEGORIES_NUM_PER_PAGE) : (mainCategoriesCount / MAX_CATEGORIES_NUM_PER_PAGE) + 1;
+                for(int pageNumber = 2; pageNumber <= pageCount; pageNumber++){
+                    parameters.put(RequestParams.PAGE.getKey(), Integer.toString(MAX_CATEGORIES_NUM_PER_PAGE));
+                    urlRequest = categoryRequestBuilder.requestForListOfCategories(parameters);
+
+                    mainObject = contentApiProvider.provide(urlRequest);
+                    mainCategories.addAll(JSONUtil.extractList(mainObject, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey()));
+                }
+            }
         }catch (HTTPException e){
             log.error("Http error. " + e.getMessage());
         } catch (IOException e) {
@@ -86,9 +100,9 @@ public class CategoryGrabber extends AbstractGrabber {
             int childrenCount = parentCategory.getInt(JSONKeys.CHILDREN_COUNT.getKey());
             if(childrenCount != 0){
 
-                int pageCount = (childrenCount % COUNT_MAX_VALUE == 0) ? (childrenCount / COUNT_MAX_VALUE) : (childrenCount / COUNT_MAX_VALUE) + 1;
+                int pageCount = (childrenCount % MAX_CATEGORIES_NUM_PER_PAGE == 0) ? (childrenCount / MAX_CATEGORIES_NUM_PER_PAGE) : (childrenCount / MAX_CATEGORIES_NUM_PER_PAGE) + 1;
 
-                for(Integer pageNum = 1; pageNum <= pageCount; pageNum++){
+                for(int pageNumber = 1; pageNumber <= pageCount; pageNumber++){
 
                     // Using category's id to construct request for it's child categories
                     long currId = parentCategory.getLong(JSONKeys.ID.getKey());
@@ -96,15 +110,15 @@ public class CategoryGrabber extends AbstractGrabber {
                     CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
 
                     Map<String,String> parameters = new HashMap<String, String>();
-                    parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
-                    parameters.put(RequestParams.PAGE.getKey(), pageNum.toString());
+                    parameters.put(RequestParams.COUNT.getKey(), Integer.toString(MAX_CATEGORIES_NUM_PER_PAGE));
+                    parameters.put(RequestParams.PAGE.getKey(), Integer.toString(pageNumber));
 
                     UrlRequest urlRequest = categoryRequestBuilder.requestForListOfChildrenCategoriesById(currId, parameters);
                     try {
                         //Getting child categories of the current category
 
                         //Here can be thrown HttpException or IOException - if something wrong in json object downloading
-                        JSONObject mainObject = getContentApiProvider().provide(urlRequest);
+                        JSONObject mainObject = contentApiProvider.provide(urlRequest);
 
                         //Here can be thrown JSONException - if something wrong with received json object
                         childCategories.addAll(JSONUtil.extractList(mainObject, JSONKeys.ITEMS.getKey(), JSONKeys.CATEGORIES.getKey()));

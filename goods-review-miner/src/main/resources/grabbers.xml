@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+    <import resource="classpath:ssh_db.xml"/>
+    <import resource="content-api-provider.xml"/>
+
+    <bean id="entityService" class="ru.goodsreview.core.db.entity.EntityService">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="grabberBatch" class="ru.goodsreview.api.grabber.batch.GrabberBatch">
+        <property name="entityService" ref="entityService"/>
+    </bean>
+
+    <bean id="categoryGrabber" class="ru.goodsreview.api.grabber.CategoryGrabber">
+        <property name="contentApiProvider" ref="contentApiProvider"/>
+        <property name="grabberBatch" ref="grabberBatch"/>
+    </bean>
+
+    <bean id="modelGrabber" class="ru.goodsreview.api.grabber.ModelGrabber">
+        <property name="contentApiProvider" ref="contentApiProvider"/>
+        <property name="grabberBatch" ref="grabberBatch"/>
+    </bean>
+
+    <bean id="reviewGrabber" class="ru.goodsreview.api.grabber.ReviewGrabber">
+        <property name="contentApiProvider" ref="contentApiProvider"/>
+        <property name="grabberBatch" ref="grabberBatch"/>
+    </bean>
+
+</beans>

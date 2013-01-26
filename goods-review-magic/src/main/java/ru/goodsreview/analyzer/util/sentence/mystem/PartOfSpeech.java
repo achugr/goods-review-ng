@@ -1,4 +1,4 @@
-package ru.goodsreview.analyzer.util.sentence;
+package ru.goodsreview.analyzer.util.sentence.mystem;
 
 
 import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
@@ -23,15 +23,4 @@ public enum PartOfSpeech {
         return this.value;
     }
 
-    public static PartOfSpeech getByName(String name) {
-        if (name.equals("П")||name.equals("КР_ПРИЛ")) {
-            return ADJECTIVE;
-        } else if (name.equals("С")) {
-            return NOUN;
-        } else if (name.equals("Г")) {
-            return VERB;
-        }   else {
-            return UNKNOWN;
-        }
-    }
 }

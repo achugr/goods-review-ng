@@ -20,7 +20,6 @@ public final class Phrase implements Thesis {
     private double sentiment = 0;
 
 
-
     public Phrase(final String feature, final String opinion, String normFeature, String normOpinion, double sentiment) {
         this.opinion = opinion;
         this.feature = feature;

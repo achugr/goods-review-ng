@@ -4,8 +4,9 @@
 
 <beans>
 
-    <bean id="dbPropertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="classpath:db.properties"/>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="ssh_db.properties"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
     </bean>
 
     <bean id="sshDataSource" class="ru.goodsreview.core.util.db.SSHTunnelDataSource">

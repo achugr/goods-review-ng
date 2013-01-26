@@ -29,10 +29,5 @@ public final class ObserveDict implements Dictionary<String>{
         return dictionary.contains(key);
     }
 
-    public void print() {
-        for (String word : dictionary) {
-            System.out.println(word);
-        }
-    }
 
 }

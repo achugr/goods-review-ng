@@ -1,11 +1,9 @@
 package ru.goodsreview.api;
 
 /**
- * Created with IntelliJ IDEA.
  * User: 123
  * Date: 27.09.12
  * Time: 14:25
- * To change this template use File | Settings | File Templates.
  */
 
 import org.springframework.beans.factory.annotation.Required;
@@ -21,11 +19,6 @@ public class MinerTask implements SchedulerTask {
     @Required
     public void setReviewGrabber(ReviewGrabber reviewGrabber){
         this.reviewGrabber = reviewGrabber;
-    }
-
-    @Required
-    public ReviewGrabber getReviewGrabber(){
-        return reviewGrabber;
     }
 
     @Override

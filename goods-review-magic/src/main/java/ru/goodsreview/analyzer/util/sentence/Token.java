@@ -8,6 +8,8 @@ package ru.goodsreview.analyzer.util.sentence;
  */
 
 
+import ru.goodsreview.analyzer.util.sentence.mystem.PartOfSpeech;
+
 //TODO мутабл модельные классы -- зло полное
 public final class Token {
     private String content;

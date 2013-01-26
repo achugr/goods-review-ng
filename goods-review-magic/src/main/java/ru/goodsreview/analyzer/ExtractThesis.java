@@ -11,7 +11,7 @@ package ru.goodsreview.analyzer;
 import ru.goodsreview.analyzer.util.Phrase;
 import ru.goodsreview.analyzer.util.ThesisPattern;
 import ru.goodsreview.analyzer.util.sentence.*;
-import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
+import ru.goodsreview.analyzer.util.sentence.mystem.PartOfSpeech;
 import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
 import ru.goodsreview.analyzer.word.analyzer.MystemReportAnalyzer;
 

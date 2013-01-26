@@ -11,23 +11,20 @@ import ru.goodsreview.core.util.JSONUtil;
 
 import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
- * User: timur
- * Date: 29.08.12
- * Time: 0:46
- * To change this template use File | Settings | File Templates.
+ * @author: Mokaev Timur
+ * Date: 11.11.12
+ * Time: 12:26
  */
 
 public class ReviewGrabber extends AbstractGrabber{
     private static final Logger log = Logger.getLogger(ReviewGrabber.class);
 
-    private static final Integer COUNT_MAX_VALUE = 30;
+    private static final int MAX_REVIEWS_NUM_PER_PAGE = 30;
 
     public ReviewGrabber(){
         entityType = EntityType.REVIEW;
@@ -38,29 +35,29 @@ public class ReviewGrabber extends AbstractGrabber{
     *In order to save time it is possible to mine models once and further get them from DB
     *and use to mine reviews.
     */
-    public List<JSONObject> grabReviewsForModelsFromDB(){
+    public void grabReviewsForModelsFromDB(){
         List<JSONObject> modelsFromDB = getModelsFromDB();
-        return grabReviews(modelsFromDB);
+        grabReviews(modelsFromDB);
     }
 
     /*
     *For some purpose it is needed to have reviews on models of some specific categories.
     *This method does this task!
     */
-    public List<JSONObject> grabReviews(String... categories){
+    public void grabReviews(String... categories){
         ModelGrabber modelGrabber = setUpModelGrabber();
         List<JSONObject> specificModels = modelGrabber.grabModels(categories);
-        return grabReviews(specificModels);
+        grabReviews(specificModels);
     }
 
     /*
     *NB: This method at first grabs ALL model from market and then grabs all reviews,
     *so it works really long time!
     */
-    public List<JSONObject> grabAllReviews(){
+    public void grabAllReviews(){
         ModelGrabber modelGrabber = setUpModelGrabber();
         List<JSONObject> allModels = modelGrabber.grabAllModels();
-        return grabReviews(allModels);
+        grabReviews(allModels);
     }
 
     private List<JSONObject> getModelsFromDB() {
@@ -105,8 +102,7 @@ public class ReviewGrabber extends AbstractGrabber{
         }
     }
 
-    private List<JSONObject> grabReviews(List<JSONObject> models) {
-        List<JSONObject> reviews = new ArrayList<JSONObject>();
+    private void grabReviews(List<JSONObject> models) {
         log.info("Grabbing reviews to DB started");
         for(JSONObject model : models){
             try {
@@ -114,7 +110,7 @@ public class ReviewGrabber extends AbstractGrabber{
                 long modelId = model.getLong(JSONKeys.ID.getKey());
 
                 Map<String,String> parameters = new HashMap<String, String>();
-                parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
+                parameters.put(RequestParams.COUNT.getKey(), Integer.toString(MAX_REVIEWS_NUM_PER_PAGE));
                 parameters.put(RequestParams.PAGE.getKey(), "1");
 
                 OpinionRequestBuilder opinionRequestBuilder = new OpinionRequestBuilder();
@@ -131,7 +127,6 @@ public class ReviewGrabber extends AbstractGrabber{
                     //If everything Ok - processing valid json object
                     setModelId(reviewsList, modelId);
                     processEntityList(reviewsList);
-                    reviews.addAll(reviewsList);
 
                     try{
                         //Here can be thrown JSONException - if there are no such keys in json object "modelOpinions"
@@ -140,13 +135,12 @@ public class ReviewGrabber extends AbstractGrabber{
                             //Here can be thrown JSONException - if there are no such keys in json object "total"
                             int opinionsCount = opinionsInnerData.getInt(JSONKeys.TOTAL.getKey());
 
-                            if(opinionsCount > COUNT_MAX_VALUE){
-                                int pageCount = (opinionsCount % COUNT_MAX_VALUE == 0) ? (opinionsCount / COUNT_MAX_VALUE) : (opinionsCount / COUNT_MAX_VALUE) + 1;
-                                for(Integer pageNum = 2; pageNum <= pageCount; pageNum++){
+                            if(opinionsCount > MAX_REVIEWS_NUM_PER_PAGE){
+                                int pageCount = (opinionsCount % MAX_REVIEWS_NUM_PER_PAGE == 0) ? (opinionsCount / MAX_REVIEWS_NUM_PER_PAGE) : (opinionsCount / MAX_REVIEWS_NUM_PER_PAGE) + 1;
+                                for(int pageNumber = 2; pageNumber <= pageCount; pageNumber++){
 
                                     parameters = new HashMap<String, String>();
-                                    parameters.put(RequestParams.COUNT.getKey(), COUNT_MAX_VALUE.toString());
-                                    parameters.put(RequestParams.PAGE.getKey(), pageNum.toString());
+                                    parameters.put(RequestParams.PAGE.getKey(), Integer.toString(pageNumber));
 
                                     urlRequest = opinionRequestBuilder.requestForOpinionOnModelById(modelId, parameters);
                                     try{
@@ -159,12 +153,6 @@ public class ReviewGrabber extends AbstractGrabber{
                                         //If everything Ok - processing valid json object
                                         setModelId(reviewsList, modelId);
                                         processEntityList(reviewsList);
-                                        reviews.addAll(reviewsList);
-                                    }catch (HTTPException e){
-                                        log.error("Http error. " + e.getMessage());
-                                    } catch (IOException e) {
-                                        log.error("Error in JSON object transfer. " + "\n" +
-                                                "Request url: " + urlRequest.getUrl());
                                     }catch (JSONException e) {
                                         log.error("Error while parsing json object, received " +
                                                 "by url: " + urlRequest.getUrl(), e);
@@ -197,7 +185,5 @@ public class ReviewGrabber extends AbstractGrabber{
             }
         }
         log.info("Grabbing reviews to DB ended");
-
-        return reviews;
     }
 }

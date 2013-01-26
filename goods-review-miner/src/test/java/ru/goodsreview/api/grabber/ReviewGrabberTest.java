@@ -11,15 +11,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: timur
- * Date: 01.09.12
- * Time: 3:49
- * To change this template use File | Settings | File Templates.
+ * @author: Mokaev Timur
+ * Date: 11.11.12
+ * Time: 12:26
  */
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/grabber-test-bean.xml")
+@ContextConfiguration("/grabbers.xml")
 public class ReviewGrabberTest {
     public static final Logger log = Logger.getLogger(ReviewGrabber.class);
 

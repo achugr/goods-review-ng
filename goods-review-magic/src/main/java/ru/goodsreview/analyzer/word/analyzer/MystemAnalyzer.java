@@ -9,12 +9,11 @@ package ru.goodsreview.analyzer.word.analyzer;
 
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Required;
 import ru.goodsreview.analyzer.util.sentence.*;
 import ru.goodsreview.analyzer.util.sentence.mystem.GrammarCase;
 import ru.goodsreview.analyzer.util.sentence.mystem.GrammarGender;
 import ru.goodsreview.analyzer.util.sentence.GrammarNumber;
-import ru.goodsreview.analyzer.util.sentence.PartOfSpeech;
+import ru.goodsreview.analyzer.util.sentence.mystem.PartOfSpeech;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -73,7 +72,7 @@ public class MystemAnalyzer implements WordAnalyzer{
         analyzerProcess.destroy();
     }
 
-    public  List<Token> getTokenList(String word) throws UnsupportedEncodingException {
+    public  List<Token> getTokenList(String word) {
         ArrayList<Token> tokensList = new ArrayList<Token>();
 
         String mystemReport =  report(word);
@@ -119,12 +118,7 @@ public class MystemAnalyzer implements WordAnalyzer{
         String mystemReport =  report(word);
 
         if (!mystemReport.equals(EMPTY_REPORT)) {
-            List<String> reportList = null;
-            try {
-                reportList = MystemReportAnalyzer.buildReportList(mystemReport);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
+            List<String> reportList=MystemReportAnalyzer.buildReportList(mystemReport);
 
             for (String rep : reportList) {
                 if (!rep.equals(EMPTY_REPORT)) {

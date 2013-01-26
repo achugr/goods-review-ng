@@ -5,10 +5,11 @@
 <beans>
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="classpath:secure-api.properties"/>
+        <property name="location" value="secure-api.properties"/>
+        <property name="ignoreUnresolvablePlaceholders" value="false"/>
     </bean>
 
-    <bean id="secureProperties" class="ru.goodsreview.api.provider.ContentAPIProvider" lazy-init="false">
+    <bean id="contentApiProvider" class="ru.goodsreview.api.provider.ContentAPIProvider" lazy-init="false">
         <property name="apiKey" value="${api-key}"/>
     </bean>
 

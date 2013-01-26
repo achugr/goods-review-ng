@@ -1,7 +1,6 @@
 package ru.goodsreview.analyzer.util.dictionary;
 
 import org.apache.log4j.Logger;
-import org.junit.Test;
 import ru.goodsreview.core.util.FileUtils;
 
 import java.util.HashMap;
@@ -31,7 +30,12 @@ public class MapDictionary implements KeyValueDictionary<String, Double> {
         final List<String> fileLines = FileUtils.readAsListOfLines(dictionaryFileName, MapDictionary.class);
         for(String line : fileLines){
             final String [] record = line.split("\\s");
-            dictionary.put(record[WORD_INDEX], Double.parseDouble(record[WEIGHT_INDEX]));
+            if(record.length==1){
+                dictionary.put(record[WORD_INDEX], 0.0);
+            } else{
+                dictionary.put(record[WORD_INDEX], Double.parseDouble(record[WEIGHT_INDEX]));
+            }
+
         }
     }
 
@@ -45,19 +49,4 @@ public class MapDictionary implements KeyValueDictionary<String, Double> {
         return dictionary.get(key);
     }
 
-    public void print() {
-        for (String word : dictionary.keySet()) {
-            System.out.println(word + " " + dictionary.get(word));
-        }
-    }
-
-
-
-
-    @Test
-    public  void test(){
-        MapDictionary md = MapDictionary.getInstance("/ru/goodsreview/analyzer/util/dictionary/adjective_opinion_words.txt");
-        Double value = md.getValue("бессмысленный");
-        System.out.print(value);
-    }
 }

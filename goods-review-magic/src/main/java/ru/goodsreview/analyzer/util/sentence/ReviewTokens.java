@@ -9,6 +9,7 @@ package ru.goodsreview.analyzer.util.sentence;
 
 
 import ru.goodsreview.analyzer.util.dictionary.*;
+import ru.goodsreview.analyzer.util.sentence.mystem.PartOfSpeech;
 import ru.goodsreview.analyzer.word.analyzer.MystemAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 import ru.goodsreview.analyzer.word.analyzer.WordAnalyzer;
@@ -53,15 +54,13 @@ public class ReviewTokens {
 
                 currToken = currToken.trim();
 
-                if (!currToken.equals("")) {
+                if (!currToken.isEmpty()) {
                     currToken = currToken.toLowerCase();
 
                     List<Token> list = null;
-                    try {
+
                         list = wordAnalyzer.getTokenList(currToken);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
+
 
                     dictionaryCheck(list);
 

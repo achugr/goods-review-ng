@@ -27,7 +27,7 @@ import java.util.HashMap;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/content-api-provider-test-bean.xml")
+@ContextConfiguration("/content-api-provider.xml")
 public class ContentAPIProviderTest {
     private final static Logger log = Logger.getLogger(ContentAPIProviderTest.class);
 

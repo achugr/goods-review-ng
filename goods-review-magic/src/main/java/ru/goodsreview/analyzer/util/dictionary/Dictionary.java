@@ -10,6 +10,4 @@ public interface Dictionary<E> {
 
     boolean contains(E key);
 
-    public void print();
-
 }
