@@ -19,6 +19,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+        <dependency>
             <groupId>ru.goodsreview</groupId>
             <artifactId>goods-review-scheduler</artifactId>
             <version>1.0-SNAPSHOT</version>
