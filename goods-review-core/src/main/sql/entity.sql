@@ -1,4 +1,4 @@
-use ba_db;
+use gr_db;
 
 drop table if exists ENTITY;
 create table ENTITY(

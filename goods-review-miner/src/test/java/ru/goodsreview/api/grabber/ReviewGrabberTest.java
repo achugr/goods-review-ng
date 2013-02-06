@@ -1,14 +1,11 @@
 package ru.goodsreview.api.grabber;
 
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.List;
 
 /**
  * @author: Mokaev Timur
@@ -25,25 +22,16 @@ public class ReviewGrabberTest {
 
     @Test
     public void grabReviewsTest(){
-        List<JSONObject> reviews = reviewGrabber.grabAllReviews();
-        for(JSONObject review : reviews){
-            log.debug(review.toString());
-        }
+        reviewGrabber.grabAllReviews();
     }
 
     @Test
     public void grabReviewsForModelsFromDBTest(){
-        List<JSONObject> reviews = reviewGrabber.grabReviewsForModelsFromDB();
-        /*for(JSONObject review : reviews){
-            log.debug(review.toString());
-        }*/
+        reviewGrabber.grabReviewsForModelsFromDB();
     }
 
     @Test
     public void grabReviewsForSpecificCategoriesTest(){
-        List<JSONObject> specificReviews = reviewGrabber.grabReviews("Ноутбуки");
-        /*for(JSONObject review : specificReviews){
-            log.debug(review.toString());
-        }*/
+        reviewGrabber.grabReviews("Ноутбуки");
     }
 }
