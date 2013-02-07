@@ -102,10 +102,6 @@ public class ProductInfo {
             prepareModel(id);
         }
 
-        // int modelId = 6504630;
-        //  int modelId = 6456057;
-        //   prepareModel(modelId);
-
     }
 
     @Test

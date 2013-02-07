@@ -15,7 +15,7 @@
           class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
 
     <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg index="0" ref="dataSourceSSH"/>
+        <constructor-arg index="0" ref="dataSource"/>
     </bean>
 
     <bean id="timeTableService" class="ru.goodsreview.scheduler.TimeTableService">

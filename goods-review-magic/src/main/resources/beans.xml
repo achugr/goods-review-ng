@@ -14,25 +14,18 @@
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
     </bean>
 
-    <bean id="dataSourceSSH" class="ru.goodsreview.core.util.db.SSHTunnelDataSource">
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="${url}"/>
-        <property name="username" value="${username}"/>
-        <property name="password" value="${password}"/>
-        <property name="host" value="${host}"/>
-        <property name="port" value="${port}"/>
-        <property name="sshUsername" value="${ssh.username}"/>
-        <property name="sshPassword" value="${ssh.password}"/>
-        <property name="tunnelLocalPort" value="${tunnel.local.port}"/>
-        <property name="tunnelRemotePort" value="${tunnel.remote.port}"/>
-        <property name="tunnelRemoteHost" value="${tunnel.remote.host}"/>
-        <property name="validationQuery" value="select 1"/>
+        <property name="url" value="jdbc:mysql://37.140.195.118:3306/gr_db?useUnicode=true&amp;characterEncoding=utf8" />
+        <property name="username" value="root" />
+        <property name="password" value="gr123" />
     </bean>
+
 
     <!--Specifying dataSource here -->
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <!--<property name="dataSource" ref="dataSourceLocal"/>-->
-        <property name="dataSource" ref="dataSourceSSH"/>
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <bean id="entityService" class="ru.goodsreview.core.db.entity.EntityService">
