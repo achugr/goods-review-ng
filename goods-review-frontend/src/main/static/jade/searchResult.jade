@@ -8,19 +8,11 @@ html
         div.row-fluid
             include leftMenu
             div.span9
-                div.hero-unit
-                    div.row
-                        div.span8
-                            h1 К вашим услугам!
-                            p Команда GoodsReview рада приветствовать вас на нашем сервисе!
-                            p тут потом будет что-нибудь красивое :)
-                            p Результаты по запросу #{searchQuery}, всего #{models.length} результатов.
-                        div.span4
-                            img(src='http://i.imgur.com/Cg8br.png', height='75%', width='75%')
+                div.search-panel
+                    form(method='GET', action='/search').form-search
+                        input#searchField.input-xxlarge.search-query(type="text", name="query", size="30")
+                        input(type='submit', value='Найти').btn.search-btn.btn-danger
                 div.tabbable
-                    ul.nav.nav-tabs
-                        li.active
-                            a(href='#tab1', data-toggle='tab') Популярные товары
                     div.tab-content
                         #tab1.tab-pane.active
                             div.row-fluid
@@ -29,22 +21,23 @@ html
                                         div.span4
                                             h3
                                                 a#id(href="/product/#{model.id}") #{model.name}
-                                            img(src="#{model.mainPhoto}")
-                                            p Тут инфа. Какая - еще решим.
+                                            a(href="/product/#{model.id}")
+                                                img(src="#{model.mainPhoto}")
                                             p
-                                                a.btn(href='#') Подробнее »
+                                                a.btn(href='/product/#{model.id}') Подробнее »
 
 
                             div.row-fluid
                                 each model, index in models
-                                    if index > 2 && index < 6
+                                    if index > 2
                                         div.span4
                                             h3
                                                 a#id(href="/product/#{model.id}") #{model.name}
-                                            img(src="#{model.mainPhoto}")
-                                            p Тут инфа. Какая - еще решим.
+                                            a(href="/product/#{model.id}")
+                                                img(src="#{model.mainPhoto}")
                                             p
-                                                a.btn(href='#') Подробнее »
+                                                a.btn(href='/product/#{model.id}') Подробнее »
+
 
 
 

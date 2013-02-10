@@ -58,3 +58,15 @@ body {
 .sidebar-nav {
     padding: 9px 0;
 }
+
+.search-panel {
+    background-color: #EEE;
+    -webkit-border-radius: 4px;
+    padding: 15px;
+    width: 660px;
+    height: 30px;
+    margin-bottom: 30px;
+}
+.search-btn {
+    margin-left: 10px;
+}
