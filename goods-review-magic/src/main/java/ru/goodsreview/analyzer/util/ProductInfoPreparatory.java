@@ -34,6 +34,7 @@ public final class ProductInfoPreparatory {
         return productInfo;
     }
 
+
     private static JSONObject buildProductInfo(Map<String, Map<String, JSONObject>> info) {
         List<String> featureNames = new ArrayList<String>(info.keySet());
         Collections.sort(featureNames);
@@ -46,15 +47,22 @@ public final class ProductInfoPreparatory {
                 JSONArray opinions = new JSONArray();
                 List<String> opinionNames = new ArrayList<String>(info.get(featureName).keySet());
                 Collections.sort(opinionNames);
+                int plusesNumber = 0;
                 for (String opinionName : opinionNames) {
                     JSONObject opinion = new JSONObject();
                     opinion.put("opinion", opinionName);
                     opinion.put("sentiment", info.get(featureName).get(opinionName).getInt("sentiment"));
+                    if (info.get(featureName).get(opinionName).getInt("sentiment") >= 0) {
+                        plusesNumber++;
+                    }
                     opinion.put("importance", info.get(featureName).get(opinionName).getDouble("importance"));
                     opinion.put("sentences", info.get(featureName).get(opinionName).getJSONArray("sentences"));
                     opinions.put(opinion);
                 }
+                feature.put("pluses-number", plusesNumber);
+                feature.put("minuses-number", opinionNames.size() - plusesNumber);
                 feature.put("opinions", opinions);
+
                 features.put(feature);
             }
             productInfo.put("features", features);
