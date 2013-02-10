@@ -127,7 +127,10 @@ public class ExtractThesis{
                                         if (proem.length() != 0) {
                                             opinion = proem + " " + opinion;
                                             normOpinion = proem + " " + normOpinion;
-                                           // System.out.println(feature+" "+opinion+" # "+normFeature+" "+normOpinion);
+                                            if (proem.equals("не")) {
+                                                sentiment = -sentiment;
+                                            }
+                                            // System.out.println(feature+" "+opinion+" # "+normFeature+" "+normOpinion);
                                         }
 
                                         newPhrase = new Phrase(feature, opinion, normFeature, normOpinion, sentiment);
