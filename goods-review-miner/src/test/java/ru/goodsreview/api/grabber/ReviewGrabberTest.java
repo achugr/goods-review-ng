@@ -21,17 +21,17 @@ public class ReviewGrabberTest {
     ReviewGrabber reviewGrabber;
 
     @Test
-    public void grabReviewsTest() {
+    public void grabReviewsTest(){
         reviewGrabber.grabAllReviews();
     }
 
     @Test
-    public void grabReviewsForModelsFromDBTest() {
+    public void grabReviewsForModelsFromDBTest(){
         reviewGrabber.grabReviewsForModelsFromDB();
     }
 
     @Test
-    public void grabReviewsForSpecificCategoriesTest() {
-        reviewGrabber.grabReviews("Ноутбуки");
+    public void grabReviewsForSpecificCategoriesTest(){
+        reviewGrabber.grabReviews("Планшеты");
     }
 }

@@ -40,7 +40,7 @@ public class EntityServiceTest {
     @Test
     public void improveEntitiesTest() throws JSONException {
 
-        entityService.visitEntities(4, new Visitor<JSONObject>() {
+        entityService.visitEntities(2, new Visitor<JSONObject>() {
             @Override
             public void visit(JSONObject jsonObject) {
                     System.out.println(jsonObject);

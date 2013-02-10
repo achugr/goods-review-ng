@@ -5,6 +5,8 @@
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
         default-autowire="byType">
 
+    <import resource="classpath:ssh_db.xml"/>
+
     <bean id="entityService" class="ru.goodsreview.core.db.entity.EntityService"/>
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
@@ -15,13 +17,6 @@
 
     <bean id="dbPropertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:db.properties"/>
-    </bean>
-
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://37.140.195.118:3306/gr_db?useUnicode=true&amp;characterEncoding=utf8" />
-        <property name="username" value="root" />
-        <property name="password" value="gr123" />
     </bean>
 
     <!--<bean id="dataSource" class="ru.goodsreview.core.util.db.SSHTunnelDataSource">-->
@@ -38,5 +33,12 @@
         <!--<property name="tunnelRemoteHost" value="${tunnel.remote.host}"/>-->
         <!--<property name="validationQuery" value="select 1"/>-->
     <!--</bean>-->
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="${url}" />
+        <property name="username" value="${username}" />
+        <property name="password" value="${password}" />
+    </bean>
 
 </beans>
