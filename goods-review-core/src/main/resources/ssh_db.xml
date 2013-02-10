@@ -26,7 +26,7 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://37.140.195.118:3306/gr_db?useUnicode=true&amp;characterEncoding=utf8" />
+        <property name="url" value="jdbc:mysql://37.140.195.118:3306/gr_tablet_db?useUnicode=true&amp;characterEncoding=utf8" />
         <property name="username" value="root" />
         <property name="password" value="gr123" />
     </bean>

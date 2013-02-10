@@ -10,11 +10,21 @@ public class TemplatePathsHolder {
     private static final String MAIN_PAGE_TEMPLATE = "mainPage.jade";
     private static final String SEARCH_RESULT_PAGE_TEMPLATE = "searchResult.jade";
     private static final String MODEL_PAGE_TEMPLATE = "modelPage.jade";
+    private static final String ABOUT_PAGE_TEMPLATE = "about.jade";
+    private static final String CONTACTS_PAGE_TEMPLATE = "contacts.jade";
 
     private static String TEMPLATES_DIR;
 
     private static String makePath(final String templateName) {
         return TEMPLATES_DIR + templateName;
+    }
+
+    public static String getAboutPageTemplate() {
+        return makePath(ABOUT_PAGE_TEMPLATE);
+    }
+
+    public static String getContactsPageTemplate() {
+        return makePath(CONTACTS_PAGE_TEMPLATE);
     }
 
     public static String getTestPageTemplate() {
