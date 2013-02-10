@@ -26,7 +26,7 @@ public class ContentAPIProvider {
     private static final String TYPE_ID = "typeId";
     private static final int TIME_OUT = 500;
 
-    private String apiKey;
+    public String apiKey;
 
     private final HttpClient httpClient;
     private long lastQueryTime = 0;

@@ -26,10 +26,10 @@ public class EntityServiceTest {
 
     @Test
     public void testIt() throws Exception {
-        JSONObject object = new JSONObject("{\"id\":\"3\",\"typeId\":\"4\",\"key\":\"va1lue\"}");
-        entityService.writeEntities(Collections.singletonList(object));
+//        JSONObject object = new JSONObject("{\"id\":\"3\",\"typeId\":\"4\",\"key\":\"va1lue\"}");
+//        entityService.writeEntities(Collections.singletonList(object));
 
-        entityService.visitEntities(2, new Visitor<JSONObject>() {
+        entityService.visitEntities(4, new Visitor<JSONObject>() {
             @Override
             public void visit(JSONObject jsonObject) {
                 System.out.println(jsonObject);

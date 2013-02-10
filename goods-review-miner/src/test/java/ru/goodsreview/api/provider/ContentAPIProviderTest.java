@@ -45,6 +45,8 @@ public class ContentAPIProviderTest {
 
     @Test
     public void isValidAnswerTestOnCategoryRequest() throws IOException, JSONException {
+        System.out.println("key: " + contentApiProvider.apiKey);
+
         CategoryRequestBuilder categoryRequestBuilder = new CategoryRequestBuilder();
         UrlRequest urlRequest = categoryRequestBuilder.requestForListOfCategories(new HashMap<String, String>());
         JSONObject result = contentApiProvider.provide(urlRequest);

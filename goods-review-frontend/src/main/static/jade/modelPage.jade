@@ -40,20 +40,18 @@ html
                                                         else
                                                             div.accordion-heading
                                                                 span.accordion-toggle.collapsed(style="color:green") #{opinion.getValue()}
-
                                                     else
-                                                        if opinion.getSentiment() >= 0
-                                                            if opinion.getSentences().size()>0
-                                                                div.accordion-heading
-                                                                    a.accordion-toggle.collapsed(data-toggle="collapse", data-parent="#accordion-#{feature.getValue()}", href="##{opinion.getValue().hashCode()}", style="color:red") #{opinion.getValue()} >>
-                                                                div.accordion-body.collapse(style="height: 0px; ", id="#{opinion.getValue().hashCode()}")
-                                                                    div.accordion-inner
-                                                                        ul
-                                                                            each sentence in opinion.getSentences()
-                                                                                li #{sentence}
-                                                            else
-                                                                div.accordion-heading
-                                                                    span.accordion-toggle.collapsed(style="color:green") #{opinion.getValue()}
+                                                        if opinion.getSentences().size()>0
+                                                            div.accordion-heading
+                                                                a.accordion-toggle.collapsed(data-toggle="collapse", data-parent="#accordion-#{feature.getValue()}", href="##{opinion.getValue().hashCode()}", style="color:red") #{opinion.getValue()} >>
+                                                            div.accordion-body.collapse(style="height: 0px; ", id="#{opinion.getValue().hashCode()}")
+                                                                div.accordion-inner
+                                                                    ul
+                                                                        each sentence in opinion.getSentences()
+                                                                            li #{sentence}
+                                                        else
+                                                            div.accordion-heading
+                                                                span.accordion-toggle.collapsed(style="color:green") #{opinion.getValue()}
 
 
 

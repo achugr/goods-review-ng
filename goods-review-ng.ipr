@@ -70,6 +70,22 @@
   </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/goods-review-indexer/target/generated-sources/annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-indexer/target/generated-test-sources/test-annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-server/target/generated-sources/annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-server/target/generated-test-sources/test-annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-core/target/generated-sources/annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-core/target/generated-test-sources/test-annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-magic/target/generated-sources/annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-magic/target/generated-test-sources/test-annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-scheduler/target/generated-sources/annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-scheduler/target/generated-test-sources/test-annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-frontend/target/generated-sources/annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-frontend/target/generated-test-sources/test-annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-miner/target/generated-sources/annotations" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/goods-review-miner/target/generated-test-sources/test-annotations" includeSubdirectories="true" />
+    </excludeFromCompile>
     <resourceExtensions />
     <wildcardResourcePatterns>
       <entry name="?*.properties" />
@@ -83,7 +99,34 @@
       <entry name="?*.tld" />
       <entry name="?*.ftl" />
     </wildcardResourcePatterns>
-    <annotationProcessing enabled="false" useClasspath="true" />
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="goods-review-core" />
+        <module name="goods-review-frontend" />
+        <module name="goods-review-indexer" />
+        <module name="goods-review-magic" />
+        <module name="goods-review-miner" />
+        <module name="goods-review-scheduler" />
+        <module name="goods-review-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="goods-review-core" target="1.6" />
+      <module name="goods-review-frontend" target="1.6" />
+      <module name="goods-review-indexer" target="1.6" />
+      <module name="goods-review-magic" target="1.6" />
+      <module name="goods-review-miner" target="1.6" />
+      <module name="goods-review-parent" target="1.6" />
+      <module name="goods-review-scheduler" target="1.6" />
+      <module name="goods-review-server" target="1.6" />
+    </bytecodeTargetLevel>
   </component>
   <component name="CopyrightManager" default="">
     <module2copyright />
@@ -109,9 +152,6 @@
     <option name="propertiesSettings">
       <PropertiesSettings />
     </option>
-  </component>
-  <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_STRING" value="-target 1.6" />
   </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
@@ -145,10 +185,10 @@
         <option value="$PROJECT_DIR$/goods-review-miner/src/assembly/pom.xml" />
       </list>
     </option>
-    <option name="activeProfiles">
-      <list>
-        <option value="upload-component" />
-      </list>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/goods-review-magic/src/assembly/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="Palette2">
@@ -294,6 +334,9 @@
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/goods-review-scheduler/src/main/sql/sch.sql" dialect="MySQL" />
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
