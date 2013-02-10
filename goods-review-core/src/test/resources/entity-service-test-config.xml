@@ -15,30 +15,4 @@
 
     <bean id="jdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.SimpleNativeJdbcExtractor"/>
 
-    <bean id="dbPropertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="classpath:db.properties"/>
-    </bean>
-
-    <!--<bean id="dataSource" class="ru.goodsreview.core.util.db.SSHTunnelDataSource">-->
-        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
-        <!--<property name="url" value="${url}"/>-->
-        <!--<property name="username" value="${username}"/>-->
-        <!--<property name="password" value="${password}"/>-->
-        <!--<property name="host" value="${host}"/>-->
-        <!--<property name="port" value="${port}"/>-->
-        <!--<property name="sshUsername" value="${ssh.username}"/>-->
-        <!--<property name="sshPassword" value="${ssh.password}"/>-->
-        <!--<property name="tunnelLocalPort" value="${tunnel.local.port}"/>-->
-        <!--<property name="tunnelRemotePort" value="${tunnel.remote.port}"/>-->
-        <!--<property name="tunnelRemoteHost" value="${tunnel.remote.host}"/>-->
-        <!--<property name="validationQuery" value="select 1"/>-->
-    <!--</bean>-->
-
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="${url}" />
-        <property name="username" value="${username}" />
-        <property name="password" value="${password}" />
-    </bean>
-
 </beans>
