@@ -4,3 +4,4 @@ secure-ya-xml.properties
 *.scala
 db.properties
 ssh_db.properties
+upload.properties
