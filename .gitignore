@@ -3,3 +3,4 @@ secure-ya-xml.properties
 *OSValidator.java
 *.scala
 db.properties
+ssh_db.properties

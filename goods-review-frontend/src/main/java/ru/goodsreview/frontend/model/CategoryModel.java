@@ -26,7 +26,7 @@ public class CategoryModel {
         final int indexFrom = (page - 1) * modelsOnPage;
         return SettingsHolder.getJdbcTemplate().query(
                 "SELECT ENTITY_ATTRS from ENTITY where ENTITY_TYPE_ID = 1 AND ENTITY_ATTRS like ? LIMIT ?, ?",
-                new Object[]{"%\"categoryId\":" + categoryId + "%", indexFrom, indexFrom},
+                new Object[]{"%\"categoryId\":" + categoryId + "%", indexFrom, indexFrom+modelsOnPage},
                 new RowMapper<JSONObject>() {
                     @Override
                     public JSONObject mapRow(ResultSet rs, int line) throws SQLException, DataAccessException {

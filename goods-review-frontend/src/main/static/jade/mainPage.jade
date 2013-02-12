@@ -1,7 +1,7 @@
 !!! 5
 html
     include head
-    body
+    body(onload="setTimeout(function(){processMenu();}, 1000);")
     include header
 
     div.container-fluid
@@ -15,7 +15,7 @@ html
                 div.tabbable
                     div.tab-content
                         #tab1.tab-pane.active
-                            div.row-fluid
+                            div.row-fluid.models-row
                                 each model, index in models
                                     if index < 3
                                         div.span4
@@ -24,10 +24,10 @@ html
                                             a(href="/product/#{model.id}")
                                                 img(src="#{model.mainPhoto}")
                                             p
-                                                a.btn(href='/product/#{model.id}') Подробнее »
+                                                a.btn.btn-more(href='/product/#{model.id}') Подробнее »
 
 
-                            div.row-fluid
+                            div.row-fluid.models-row
                                 each model, index in models
                                     if index > 2
                                         div.span4
@@ -36,7 +36,7 @@ html
                                             a(href="/product/#{model.id}")
                                                 img(src="#{model.mainPhoto}")
                                             p
-                                                a.btn(href='/product/#{model.id}') Подробнее »
+                                                a.btn.btn-more(href='/product/#{model.id}') Подробнее »
 
 
 

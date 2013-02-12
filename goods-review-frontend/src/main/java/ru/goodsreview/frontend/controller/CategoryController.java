@@ -2,8 +2,8 @@ package ru.goodsreview.frontend.controller;
 
 import org.json.JSONObject;
 import ru.goodsreview.frontend.model.CategoryModel;
-import ru.goodsreview.frontend.view.velocity.SimpleViewBuilder;
-import ru.goodsreview.frontend.view.velocity.TemplatePathsHolder;
+import ru.goodsreview.frontend.view.jade.JadeViewBuilder;
+import ru.goodsreview.frontend.view.jade.TemplatePathsHolder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +15,8 @@ import java.util.Map;
  * Time: 15:42
  */
 public class CategoryController {
-    private final SimpleViewBuilder viewBuilder =  new SimpleViewBuilder(TemplatePathsHolder.getCategoryTemplatePath());
-
+//    private final SimpleViewBuilder viewBuilder =  new SimpleViewBuilder(TemplatePathsHolder.getCategoryTemplatePath());
+    private final JadeViewBuilder jadeViewBuilder = new JadeViewBuilder(TemplatePathsHolder.getMainPageTemplate());
     private final CategoryModel categoryPageModel = new CategoryModel();
 
     public String generatePage(final long categoryId, final int pageNumber, final int modelsOnPage){
@@ -25,6 +25,6 @@ public class CategoryController {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("pagesNumbers", pagesNumber);
         data.put("models", models);
-        return viewBuilder.build(data);
+        return jadeViewBuilder.build(data);
     }
 }

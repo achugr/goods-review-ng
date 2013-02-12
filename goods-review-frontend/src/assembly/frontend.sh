@@ -22,7 +22,7 @@ start() {
         -Dfile.encoding=UTF8 \
         -showversion -server -Xverify:none \
         -Xmx128m -Xms64m -XX:+UseConcMarkSweepGC -XX:+HeapDumpOnOutOfMemoryError \
-         ru.goodsreview.core.util.Main classpath:beans.xml >> $LOG 2>&1 &
+         ru.goodsreview.core.util.Main classpath:frontend-beans.xml >> $LOG 2>&1 &
 
     echo $! > $PID
     echo server started

@@ -22,14 +22,21 @@ html
                         each feature in featureForViewList
                             div.accordion-group
                                 div.accordion-heading
-                                    a.accordion-toggle.collapsed(data-toggle="collapse", data-parent="#accordion", href="##{feature.getValue()}", style="color:black") #{feature.getValue()} >>
+                                    a.accordion-toggle.collapsed(data-toggle="collapse", data-parent="#accordion", href="##{feature.getValue()}", style="color:black")
+                                        span(style="margin-right:5px") #{feature.getValue()}
+                                        span [
+                                        span(style="color:green") #{feature.getPlusesNumber()}+
+                                        span /
+                                        span(style="color:red") #{feature.getMinusesNumber()}-
+                                        span ]
+                                        span >>
                                 div.accordion-body.collapse(style="height: 0px; ", id="#{feature.getValue()}")
                                     div.accordion-inner
                                         div.accordion(id="accordion-#{feature.getValue()}")
                                             each opinion in feature.getOpinions()
                                                 div.accordion-group
                                                     if opinion.getSentiment() >= 0
-                                                        if opinion.getSentences().size()>0
+                                                        if opinion.getSentences().size() > 0
                                                             div.accordion-heading
                                                                 a.accordion-toggle.collapsed(data-toggle="collapse", data-parent="#accordion-#{feature.getValue()}", href="##{opinion.getValue().hashCode()}", style="color:green") #{opinion.getValue()} >>
                                                             div.accordion-body.collapse(style="height: 0px; ", id="#{opinion.getValue().hashCode()}")
@@ -41,7 +48,7 @@ html
                                                             div.accordion-heading
                                                                 span.accordion-toggle.collapsed(style="color:green") #{opinion.getValue()}
                                                     else
-                                                        if opinion.getSentences().size()>0
+                                                        if opinion.getSentences().size() > 0
                                                             div.accordion-heading
                                                                 a.accordion-toggle.collapsed(data-toggle="collapse", data-parent="#accordion-#{feature.getValue()}", href="##{opinion.getValue().hashCode()}", style="color:red") #{opinion.getValue()} >>
                                                             div.accordion-body.collapse(style="height: 0px; ", id="#{opinion.getValue().hashCode()}")
@@ -51,7 +58,7 @@ html
                                                                             li #{sentence}
                                                         else
                                                             div.accordion-heading
-                                                                span.accordion-toggle.collapsed(style="color:green") #{opinion.getValue()}
+                                                                span.accordion-toggle.collapsed(style="color:red") #{opinion.getValue()}
 
 
 

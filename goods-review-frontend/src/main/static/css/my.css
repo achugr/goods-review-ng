@@ -25,6 +25,7 @@
 
 .footer {
     text-align: center;
+    margin-top: 30px;
 }
 
 .commentLabel {
@@ -69,4 +70,18 @@ body {
 }
 .search-btn {
     margin-left: 10px;
+}
+
+.paragraph{
+    margin-left: 20px;
+    font-size: 130%;
+}
+
+.btn-more{
+    margin-left: 20%;
+    margin-top: 5%;
+}
+
+.models-row{
+    margin-bottom: 5%;
 }

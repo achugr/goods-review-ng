@@ -28,6 +28,7 @@
         <!--<property name="tunnelRemoteHost" value="${tunnel.remote.host}"/>-->
         <!--<property name="validationQuery" value="select 1"/>-->
     <!--</bean>-->
+
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="${url}" />

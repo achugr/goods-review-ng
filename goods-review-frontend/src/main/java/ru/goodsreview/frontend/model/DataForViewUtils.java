@@ -42,7 +42,9 @@ public final class DataForViewUtils {
                     opinionForViewList.add(opinionForView);
                 }
                 final String featureValue = jsonFeature.getString("feature");
-                FeatureForView featureForView = new FeatureForView(featureValue, opinionForViewList);
+                final int plusesNumber = jsonFeature.getInt("pluses-number");
+                final int minusesNumber = jsonFeature.getInt("minuses-number");
+                FeatureForView featureForView = new FeatureForView(featureValue, opinionForViewList, plusesNumber, minusesNumber);
                 featureForViewList.add(featureForView);
             }
         } catch (JSONException e) {

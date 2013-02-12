@@ -14,9 +14,9 @@ import javax.ws.rs.core.MediaType;
  * Time: 15:36
  */
 
-@Path("/category_api")
+@Path("/category")
 public class CategoryPageServlet {
-    private final static int DEFAULT_MODELS_ON_PAGE = 9;
+    private final static int DEFAULT_MODELS_ON_PAGE = 6;
     private final CategoryController controller = new CategoryController();
 
     @GET

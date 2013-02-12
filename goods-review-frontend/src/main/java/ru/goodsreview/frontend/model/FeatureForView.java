@@ -9,11 +9,15 @@ import java.util.StringTokenizer;
  */
 public final class FeatureForView {
     private final String value;
+    private final int plusesNumber;
+    private final int minusesNumber;
     private final List<OpinionForView> opinions;
 
-    public FeatureForView(String value, List<OpinionForView> opinions) {
+    public FeatureForView(String value, List<OpinionForView> opinions, int plusesNumber, int minusesNumber) {
         this.value = value;
         this.opinions = opinions;
+        this.plusesNumber = plusesNumber;
+        this.minusesNumber = minusesNumber;
     }
 
     public String getValue() {
@@ -22,5 +26,13 @@ public final class FeatureForView {
 
     public List<OpinionForView> getOpinions() {
         return opinions;
+    }
+
+    public int getPlusesNumber() {
+        return plusesNumber;
+    }
+
+    public int getMinusesNumber() {
+        return minusesNumber;
     }
 }
