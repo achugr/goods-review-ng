@@ -10,7 +10,7 @@ package ru.goodsreview.analyzer.test;
 
 import org.junit.Test;
 import ru.goodsreview.analyzer.ExtractThesis;
-import ru.goodsreview.analyzer.util.sentence.ReviewTokens;
+
 import ru.goodsreview.analyzer.word.analyzer.ReportAnalyzer;
 
 
@@ -28,7 +28,7 @@ public class ExtractionTest {
 
     //private static final String filePath = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/input.xml";
     private static final String filePath = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/tInput.xml";
-   // private static final String filePath = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/marking_output.xml";
+    // private static final String filePath = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/marking_output.xml";
     private static double successExtract = 0;
     private static double numAlgo = 0;
     private static double numHum = 0;
@@ -43,6 +43,10 @@ public class ExtractionTest {
 
         String path = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/result.xml";
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path)));
+
+        String path1 = "goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/tomitaInput.txt";
+        PrintWriter out1 = new PrintWriter(new BufferedWriter(new FileWriter(path1)));
+
         int k1 = 1;
         for (Product product : productList.productList) {
             out.println("<product name=\"" + product.getName() + "\">");
@@ -51,11 +55,13 @@ public class ExtractionTest {
                     String content = review.getContent();
                     out.println("     <review>");
                     out.println("        <content>" + content + "</content>");
-                    System.out.println( "#"+k1++ + content );
+
+                    out1.println("#" + k1++ + content);
+
                     List<ru.goodsreview.analyzer.util.Phrase> algoList = ExtractThesis.doExtraction(content);
 
                     for (ru.goodsreview.analyzer.util.Phrase algoPhrase : algoList) {
-                        // System.out.println("algo:  " + algoPhrase.getFeature() + " " + algoPhrase.getOpinion());
+
                         if (review.phraseList != null) {
                             for (Phrase phrase : review.phraseList) {
                                 if (contains(phrase.getFeature(), algoPhrase.getNormFeature())) {
@@ -118,6 +124,7 @@ public class ExtractionTest {
         }
 
         out.flush();
+        out1.flush();
 
         System.out.println("successExtract = " + successExtract);
         System.out.println("numAlgo = " + numAlgo);
@@ -136,8 +143,8 @@ public class ExtractionTest {
 
     @Test
     public void tomitaExtractionTest() throws JAXBException, IOException, InterruptedException {
-        HashMap<String, List<String>> tomitaData = TomitaParser.getData();
-      //  System.out.println( tomitaData.size());
+        HashMap<String, List<ru.goodsreview.analyzer.util.Phrase>> tomitaData = TomitaParser.getData();
+
         JAXBContext context = JAXBContext.newInstance(ProductList.class);
 
         Unmarshaller um = context.createUnmarshaller();
@@ -152,51 +159,49 @@ public class ExtractionTest {
                 for (Review review : product.reviewList) {
                     String content = review.getContent();
                     out.println("     <review>");
-                    out.println("        <content>" + content + "</content>");
+                    out.println("        <content>" + content.trim() + "</content>");
                     k1++;
-                   // System.out.println(k1);
-                   // System.out.println( "#"+k1 + content );
-                    //List<ru.goodsreview.analyzer.util.Phrase> algoList = ExtractThesis.doExtraction(content);
 
-                    List<String> algoList;
+
+                    List<ru.goodsreview.analyzer.util.Phrase> algoList;
                     String key = Integer.toString(k1);
-                    if(tomitaData.containsKey(key)){
+                    if (tomitaData.containsKey(key)) {
                         algoList = tomitaData.get(key);
 
-                    }else{
-                        algoList = new ArrayList<String>();
+                    } else {
+                        algoList = new ArrayList<ru.goodsreview.analyzer.util.Phrase>();
                     }
 
 
-                    for (String algoPhrase : algoList) {
-                        // System.out.println("algo:  " + algoPhrase.getFeature() + " " + algoPhrase.getOpinion());
+                    for (ru.goodsreview.analyzer.util.Phrase algoPhrase : algoList) {
+
                         if (review.phraseList != null) {
                             for (Phrase phrase : review.phraseList) {
-                                if (symContains(algoPhrase,phrase.getFeature())) {
+                                if (symContains(algoPhrase.getNormFeature(), phrase.getFeature())) {
 
-                                        successExtract++;
-                                        out.println("            <OK>" + algoPhrase + "</OK>");
-                                        break;
+                                    successExtract++;
+                                    out.println("            <OK>" + algoPhrase.toString() + "</OK>");
+                                    break;
 
                                 }
                             }
                         }
                     }
 
-                    for (String algoPhrase : algoList) {
+                    for (ru.goodsreview.analyzer.util.Phrase algoPhrase : algoList) {
                         boolean t = false;
                         if (review.phraseList != null) {
                             for (Phrase phrase : review.phraseList) {
-                                if (symContains(algoPhrase,phrase.getFeature())){
+                                if (symContains(algoPhrase.getNormFeature(), phrase.getFeature())) {
 
-                                        t = true;
-                                        break;
+                                    t = true;
+                                    break;
 
                                 }
                             }
                         }
                         if (!t) {
-                            out.println("            <algo>" + algoPhrase+  "</algo>");
+                            out.println("            <algo>" + algoPhrase.toString() + "</algo>");
                         }
                     }
 
@@ -204,16 +209,14 @@ public class ExtractionTest {
                     if (review.phraseList != null) {
                         for (Phrase phrase : review.phraseList) {
                             boolean t = false;
-                            for (String algoPhrase : algoList) {
-                                if (symContains(algoPhrase,phrase.getFeature())){
-                                   // if (contains(phrase.getContext(), algoPhrase.getFeature()) && contains(phrase.getContext(), algoPhrase.getOpinion())) {
-                                        t = true;
-                                        break;
-                                    //}
+                            for (ru.goodsreview.analyzer.util.Phrase algoPhrase : algoList) {
+                                if (symContains(algoPhrase.getNormFeature(), phrase.getFeature())) {
+                                    t = true;
+                                    break;
                                 }
                             }
                             if (!t) {
-                                out.println("            <hum>" + phrase.getFeature() + "</hum>");
+                                out.println("            <hum>" + phrase.toString() + "</hum>");
                             }
                         }
                     }
@@ -244,7 +247,6 @@ public class ExtractionTest {
             System.out.println("recall = " + successExtract / numHum);
         }
 
-//        ReviewTokens.getWordAnalyzer().close();
 
     }
 
@@ -260,9 +262,9 @@ public class ExtractionTest {
     }
 
     static boolean symContains(String s1, String s2) {
-        s1 = s1.toLowerCase();
-        s2 = s2.toLowerCase();
-        return s1.contains(s2)||s2.contains(s1);
+        s1 = s1.toLowerCase().trim();
+        s2 = s2.toLowerCase().trim();
+        return s1.contains(s2) || s2.contains(s1);
     }
 
     static boolean equals(String s1, String s2) {

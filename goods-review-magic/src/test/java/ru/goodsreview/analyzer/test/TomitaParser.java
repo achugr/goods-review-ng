@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import ru.goodsreview.analyzer.util.Phrase;
+
 /**
  * author : Ilya Makeev
  * date: 17.06.13
@@ -17,38 +19,51 @@ import java.util.List;
 public class TomitaParser {
 
 
-    public static HashMap<String, List<String>> getData() {
-        HashMap<String, List<String>> list = new HashMap<String, List<String>>();
+    public static HashMap<String, List<Phrase>> getData() {
+        HashMap<String, List<Phrase>> list = new HashMap<String, List<Phrase>>();
         try {
 
-            FileInputStream fstream = new FileInputStream("goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/tomitaInput.txt");
+            FileInputStream fstream = new FileInputStream("goods-review-magic/src/test/resources/ru/goodsreview/analyzer/test/data/tomitaOutput.txt");
 
             DataInputStream in = new DataInputStream(fstream);
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String strLine;
 
             String lastNum = "";
-            String attribute = "";
+            String lastAttribute = "";
+            String lastParticle = "";
+            String opinion = "";
             while ((strLine = br.readLine()) != null) {
                 strLine = strLine.trim();
                 if (strLine.startsWith("#")) {
-                    lastNum = strLine.substring(1, strLine.indexOf(" "));
+                    lastNum = strLine.substring(1, strLine.indexOf(" ")).trim();
                 }
                 if (strLine.startsWith("Attribute")) {
-                    attribute = strLine.substring(strLine.indexOf("=") + 1);
+                    lastAttribute = strLine.substring(strLine.indexOf("=") + 1).trim();
+                }
+                if (strLine.startsWith("Particle")) {
+                    lastParticle = strLine.substring(strLine.indexOf("=") + 1).trim();
+                }
+                if (strLine.startsWith("Opinion")) {
+                    opinion = strLine.substring(strLine.indexOf("=") + 1).trim();
+                    if (lastParticle.length() != 0) {
+                        opinion = lastParticle + " " + opinion;
+                    }
 
                     if (list.containsKey(lastNum)) {
-                        List<String> list1 = list.get(lastNum);
-                        list1.add(attribute);
+                        List<Phrase> list1 = list.get(lastNum);
+                        list1.add(new Phrase(lastAttribute, opinion, "", "", 0.0));
                     } else {
-                        List<String> list1 = new ArrayList<String>();
-                        list1.add(attribute);
+                        List<Phrase> list1 = new ArrayList<Phrase>();
+                        list1.add(new Phrase(lastAttribute, opinion, "", "", 0.0));
                         list.put(lastNum, list1);
                     }
+                    lastAttribute = "";
+                    lastParticle = "";
 
                 }
 
-             //   System.out.println(lastNum);
+
             }
 
             in.close();
@@ -61,13 +76,13 @@ public class TomitaParser {
 
     @Test
     public void tomitaTest() {
-        HashMap<String, List<String>> tomitaData = getData();
+        HashMap<String, List<Phrase>> tomitaData = getData();
         for (String key : tomitaData.keySet()) {
-            System.out.println();
-            List<String> list = tomitaData.get(key);
-            for (String s:list){
-                System.out.print(s+"; ");
+            List<Phrase> list = tomitaData.get(key);
+            for (Phrase phrase : list) {
+                System.out.print(phrase.toString() + "; ");
             }
+            System.out.println();
         }
     }
 }

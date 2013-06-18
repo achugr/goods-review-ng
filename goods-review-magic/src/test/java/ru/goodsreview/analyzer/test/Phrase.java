@@ -49,6 +49,9 @@ public class Phrase {
         this.value = value;
     }
 
+    public String toString() {
+        return (feature + " " + opinion).trim();
+    }
 
 
 }
